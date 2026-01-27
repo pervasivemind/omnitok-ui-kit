@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos - Omnitok Admin</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .product-cell {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+    
+    .product-img {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      background-color: var(--color-gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gray-400);
+      flex-shrink: 0;
+    }
+    
+    .product-info {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .product-name {
+      font-weight: var(--font-medium);
+      color: var(--color-gray-800);
+    }
+    
+    .product-sku {
+      font-size: var(--text-xs);
+      color: var(--color-gray-500);
+    }
+    
+    .checkbox-cell {
+      width: 40px;
+    }
+    
+    .actions-cell {
+      width: 120px;
+    }
+    
+    /* Modal styles */
+    .modal-backdrop.hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img src="logos/logo_largo.png" alt="Omnitok">
+          <span class="sidebar-system-name">Sistema de Homologación</span>
+        </div>
+        <button class="sidebar-toggle">
+          <i data-lucide="panel-left-close" style="width:18px;height:18px"></i>
+        </button>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Principal</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="01-dashboard.html">
+                <span class="sidebar-icon"><i data-lucide="layout-dashboard"></i></span>
+                <span class="sidebar-text">Dashboard</span>
+              </a>
+            </li>
+            <li class="sidebar-item active">
+              <a href="02-crud-list.html">
+                <span class="sidebar-icon"><i data-lucide="package"></i></span>
+                <span class="sidebar-text">Productos</span>
+                <span class="sidebar-badge">24</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="shopping-cart"></i></span>
+                <span class="sidebar-text">Pedidos</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="users"></i></span>
+                <span class="sidebar-text">Clientes</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Analítica</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="03-bi-powerbi.html">
+                <span class="sidebar-icon"><i data-lucide="bar-chart-2"></i></span>
+                <span class="sidebar-text">Power BI</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="04-bi-metabase.html">
+                <span class="sidebar-icon"><i data-lucide="pie-chart"></i></span>
+                <span class="sidebar-text">Metabase</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Sistema</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="05-components.html">
+                <span class="sidebar-icon"><i data-lucide="component"></i></span>
+                <span class="sidebar-text">Componentes</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="settings"></i></span>
+                <span class="sidebar-text">Configuración</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="avatar avatar-sm">PM</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name">Pedro Martínez</span>
+            <span class="sidebar-user-role">Administrador</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="header">
+        <div class="header-left">
+          <nav class="breadcrumb">
+            <a href="01-dashboard.html" class="breadcrumb-item">Dashboard</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Productos</span>
+          </nav>
+        </div>
+        <div class="header-right">
+          <input type="search" class="search-input" placeholder="Buscar...">
+          <button class="header-icon-btn">
+            <i data-lucide="bell" style="width:20px;height:20px"></i>
+            <span class="notification-dot"></span>
+          </button>
+          <div class="header-user">
+            <div class="avatar avatar-sm">PM</div>
+            <span class="header-user-name">Pedro</span>
+          </div>
+        </div>
+      </header>
+      
+      <main class="content">
+        <div class="page-header">
+          <div class="page-header-left">
+            <h1 class="page-title">Productos</h1>
+            <p class="page-subtitle">Gestiona el catálogo de productos</p>
+          </div>
+          <div class="page-header-actions">
+            <button class="btn btn-secondary btn-md">
+              <i data-lucide="download" style="width:16px;height:16px"></i>
+              Exportar
+            </button>
+            <button class="btn btn-primary btn-md" onclick="window.location.href='02-crud-form.html'">
+              <i data-lucide="plus" style="width:16px;height:16px"></i>
+              Nuevo Producto
+            </button>
+          </div>
+        </div>
+        
+        <!-- Filters -->
+        <div class="filters-bar">
+          <div class="filters-left">
+            <input type="search" class="form-input" placeholder="Buscar productos..." style="width:280px">
+            <select class="form-select" style="width:180px">
+              <option>Todas las categorías</option>
+              <option>Electrónica</option>
+              <option>Ropa</option>
+              <option>Hogar</option>
+            </select>
+            <select class="form-select" style="width:150px">
+              <option>Todos los estados</option>
+              <option>Activo</option>
+              <option>Borrador</option>
+              <option>Archivado</option>
+            </select>
+          </div>
+          <div class="filters-right">
+            <span class="results-count">24 productos</span>
+          </div>
+        </div>
+        
+        <!-- Table -->
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="checkbox-cell"><input type="checkbox"></th>
+                <th>Producto</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Estado</th>
+                <th class="actions-cell"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>
+                  <div class="product-cell">
+                    <div class="product-img">
+                      <i data-lucide="image" style="width:20px;height:20px"></i>
+                    </div>
+                    <div class="product-info">
+                      <span class="product-name">Laptop HP Pavilion 15</span>
+                      <span class="product-sku">SKU-001</span>
+                    </div>
+                  </div>
+                </td>
+                <td>Electrónica</td>
+                <td>$899.00</td>
+                <td>45</td>
+                <td><span class="badge badge-success">Activo</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn btn-ghost btn-sm">Editar</button>
+                    <button class="btn btn-icon btn-ghost btn-sm" onclick="showDeleteModal()">
+                      <i data-lucide="trash-2" style="width:16px;height:16px"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>
+                  <div class="product-cell">
+                    <div class="product-img">
+                      <i data-lucide="image" style="width:20px;height:20px"></i>
+                    </div>
+                    <div class="product-info">
+                      <span class="product-name">Monitor Samsung 27"</span>
+                      <span class="product-sku">SKU-002</span>
+                    </div>
+                  </div>
+                </td>
+                <td>Electrónica</td>
+                <td>$349.00</td>
+                <td>23</td>
+                <td><span class="badge badge-success">Activo</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn btn-ghost btn-sm">Editar</button>
+                    <button class="btn btn-icon btn-ghost btn-sm">
+                      <i data-lucide="trash-2" style="width:16px;height:16px"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>
+                  <div class="product-cell">
+                    <div class="product-img">
+                      <i data-lucide="image" style="width:20px;height:20px"></i>
+                    </div>
+                    <div class="product-info">
+                      <span class="product-name">Teclado Mecánico RGB</span>
+                      <span class="product-sku">SKU-003</span>
+                    </div>
+                  </div>
+                </td>
+                <td>Electrónica</td>
+                <td>$129.00</td>
+                <td>0</td>
+                <td><span class="badge badge-error">Sin stock</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn btn-ghost btn-sm">Editar</button>
+                    <button class="btn btn-icon btn-ghost btn-sm">
+                      <i data-lucide="trash-2" style="width:16px;height:16px"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>
+                  <div class="product-cell">
+                    <div class="product-img">
+                      <i data-lucide="image" style="width:20px;height:20px"></i>
+                    </div>
+                    <div class="product-info">
+                      <span class="product-name">Camiseta Básica Algodón</span>
+                      <span class="product-sku">SKU-004</span>
+                    </div>
+                  </div>
+                </td>
+                <td>Ropa</td>
+                <td>$29.00</td>
+                <td>150</td>
+                <td><span class="badge badge-success">Activo</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn btn-ghost btn-sm">Editar</button>
+                    <button class="btn btn-icon btn-ghost btn-sm">
+                      <i data-lucide="trash-2" style="width:16px;height:16px"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>
+                  <div class="product-cell">
+                    <div class="product-img">
+                      <i data-lucide="image" style="width:20px;height:20px"></i>
+                    </div>
+                    <div class="product-info">
+                      <span class="product-name">Lámpara de Escritorio LED</span>
+                      <span class="product-sku">SKU-005</span>
+                    </div>
+                  </div>
+                </td>
+                <td>Hogar</td>
+                <td>$59.00</td>
+                <td>8</td>
+                <td><span class="badge badge-warning">Stock bajo</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn btn-ghost btn-sm">Editar</button>
+                    <button class="btn btn-icon btn-ghost btn-sm">
+                      <i data-lucide="trash-2" style="width:16px;height:16px"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>
+                  <div class="product-cell">
+                    <div class="product-img">
+                      <i data-lucide="image" style="width:20px;height:20px"></i>
+                    </div>
+                    <div class="product-info">
+                      <span class="product-name">Auriculares Bluetooth</span>
+                      <span class="product-sku">SKU-006</span>
+                    </div>
+                  </div>
+                </td>
+                <td>Electrónica</td>
+                <td>$79.00</td>
+                <td>67</td>
+                <td><span class="badge badge-gray">Borrador</span></td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn btn-ghost btn-sm">Editar</button>
+                    <button class="btn btn-icon btn-ghost btn-sm">
+                      <i data-lucide="trash-2" style="width:16px;height:16px"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="table-footer">
+          <div class="table-footer-info">
+            Mostrando 1-6 de 24 productos
+          </div>
+          <nav class="pagination">
+            <button class="pagination-btn" disabled>Anterior</button>
+            <div class="pagination-pages">
+              <button class="pagination-page active">1</button>
+              <button class="pagination-page">2</button>
+              <button class="pagination-page">3</button>
+              <button class="pagination-page">4</button>
+            </div>
+            <button class="pagination-btn">Siguiente</button>
+          </nav>
+        </div>
+      </main>
+    </div>
+  </div>
+  
+  <!-- Delete Modal -->
+  <div class="modal-backdrop hidden" id="deleteModal">
+    <div class="modal" style="max-width:400px">
+      <div class="modal-header">
+        <h3 class="modal-title">Eliminar producto</h3>
+        <button class="modal-close" onclick="hideDeleteModal()">
+          <i data-lucide="x" style="width:20px;height:20px"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom:var(--spacing-md)">¿Estás seguro de que deseas eliminar <strong>"Laptop HP Pavilion 15"</strong>?</p>
+        <p style="color:var(--color-gray-500);font-size:var(--text-sm)">Esta acción no se puede deshacer.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-md" onclick="hideDeleteModal()">Cancelar</button>
+        <button class="btn btn-danger btn-md">Eliminar</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    lucide.createIcons();
+    
+    function showDeleteModal() {
+      document.getElementById('deleteModal').classList.remove('hidden');
+    }
+    
+    function hideDeleteModal() {
+      document.getElementById('deleteModal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

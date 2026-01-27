@@ -1,0 +1,25 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand Colors */
+    --color-sidebar: #211f4b;
+    --color-primary: #4D4A9D;
+    --color-accent: #FF177B;
+  }
+
+  html {
+    font-family: 'Nunito Sans', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .gradient-active {
+    background: linear-gradient(90deg, #FF177B 0%, #4D4A9D 100%);
+  }
+}

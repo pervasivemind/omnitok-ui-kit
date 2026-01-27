@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuevo Producto - Omnitok Admin</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .form-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: var(--spacing-lg);
+    }
+    
+    .form-main {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-lg);
+    }
+    
+    .form-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-lg);
+    }
+    
+    .form-row {
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .form-row:last-child {
+      margin-bottom: 0;
+    }
+    
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-lg);
+    }
+    
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-lg);
+    }
+    
+    .form-actions {
+      position: sticky;
+      bottom: 0;
+      background-color: var(--color-white);
+      border-top: 1px solid var(--color-border);
+      padding: var(--spacing-lg) var(--content-padding);
+      margin: var(--spacing-lg) calc(var(--content-padding) * -1) 0;
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--spacing-md);
+    }
+    
+    .upload-area {
+      border: 2px dashed var(--color-gray-300);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-sm);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    
+    .upload-area:hover {
+      border-color: var(--color-primary);
+      background-color: rgba(77, 74, 157, 0.05);
+    }
+    
+    .upload-icon {
+      color: var(--color-gray-400);
+    }
+    
+    .upload-text {
+      font-size: var(--text-sm);
+      color: var(--color-gray-500);
+      text-align: center;
+    }
+    
+    .upload-hint {
+      font-size: var(--text-xs);
+      color: var(--color-gray-400);
+    }
+    
+    @media (max-width: 1023px) {
+      .form-layout {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-sidebar {
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img src="logos/logo_largo.png" alt="Omnitok">
+          <span class="sidebar-system-name">Sistema de Homologación</span>
+        </div>
+        <button class="sidebar-toggle">
+          <i data-lucide="panel-left-close" style="width:18px;height:18px"></i>
+        </button>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Principal</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="01-dashboard.html">
+                <span class="sidebar-icon"><i data-lucide="layout-dashboard"></i></span>
+                <span class="sidebar-text">Dashboard</span>
+              </a>
+            </li>
+            <li class="sidebar-item active">
+              <a href="02-crud-list.html">
+                <span class="sidebar-icon"><i data-lucide="package"></i></span>
+                <span class="sidebar-text">Productos</span>
+                <span class="sidebar-badge">24</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="shopping-cart"></i></span>
+                <span class="sidebar-text">Pedidos</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="users"></i></span>
+                <span class="sidebar-text">Clientes</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Analítica</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="03-bi-powerbi.html">
+                <span class="sidebar-icon"><i data-lucide="bar-chart-2"></i></span>
+                <span class="sidebar-text">Power BI</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="04-bi-metabase.html">
+                <span class="sidebar-icon"><i data-lucide="pie-chart"></i></span>
+                <span class="sidebar-text">Metabase</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Sistema</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="05-components.html">
+                <span class="sidebar-icon"><i data-lucide="component"></i></span>
+                <span class="sidebar-text">Componentes</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="settings"></i></span>
+                <span class="sidebar-text">Configuración</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="avatar avatar-sm">PM</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name">Pedro Martínez</span>
+            <span class="sidebar-user-role">Administrador</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="header">
+        <div class="header-left">
+          <nav class="breadcrumb">
+            <a href="01-dashboard.html" class="breadcrumb-item">Dashboard</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="02-crud-list.html" class="breadcrumb-item">Productos</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Nuevo</span>
+          </nav>
+        </div>
+        <div class="header-right">
+          <input type="search" class="search-input" placeholder="Buscar...">
+          <button class="header-icon-btn">
+            <i data-lucide="bell" style="width:20px;height:20px"></i>
+            <span class="notification-dot"></span>
+          </button>
+          <div class="header-user">
+            <div class="avatar avatar-sm">PM</div>
+            <span class="header-user-name">Pedro</span>
+          </div>
+        </div>
+      </header>
+      
+      <main class="content">
+        <div class="page-header">
+          <div class="page-header-left">
+            <h1 class="page-title">Nuevo Producto</h1>
+            <p class="page-subtitle">Agrega un nuevo producto al catálogo</p>
+          </div>
+        </div>
+        
+        <form class="form-layout">
+          <!-- Main Form -->
+          <div class="form-main">
+            <!-- Información Básica -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Información básica</h3>
+              </div>
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Nombre del producto *</label>
+                    <input type="text" class="form-input" placeholder="Ej: Laptop HP Pavilion 15">
+                  </div>
+                </div>
+                <div class="form-row form-row-2">
+                  <div class="form-group">
+                    <label class="form-label">SKU *</label>
+                    <input type="text" class="form-input" placeholder="SKU-001">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Categoría *</label>
+                    <select class="form-select">
+                      <option value="">Seleccionar categoría</option>
+                      <option>Electrónica</option>
+                      <option>Ropa</option>
+                      <option>Hogar</option>
+                      <option>Deportes</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Descripción</label>
+                    <textarea class="form-textarea" rows="4" placeholder="Descripción detallada del producto..."></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Precios -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Precios e inventario</h3>
+              </div>
+              <div class="card-body">
+                <div class="form-row form-row-3">
+                  <div class="form-group">
+                    <label class="form-label">Precio *</label>
+                    <input type="number" class="form-input" placeholder="0.00">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Precio comparación</label>
+                    <input type="number" class="form-input" placeholder="0.00">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Costo</label>
+                    <input type="number" class="form-input" placeholder="0.00">
+                  </div>
+                </div>
+                <div class="form-row form-row-2">
+                  <div class="form-group">
+                    <label class="form-label">Stock disponible</label>
+                    <input type="number" class="form-input" placeholder="0">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Stock mínimo (alerta)</label>
+                    <input type="number" class="form-input" placeholder="10">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Especificaciones -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Especificaciones</h3>
+              </div>
+              <div class="card-body">
+                <div class="form-row form-row-2">
+                  <div class="form-group">
+                    <label class="form-label">Peso (kg)</label>
+                    <input type="number" class="form-input" placeholder="0.00">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Dimensiones (cm)</label>
+                    <input type="text" class="form-input" placeholder="Largo x Ancho x Alto">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Marca</label>
+                    <input type="text" class="form-input" placeholder="Nombre de la marca">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Sidebar Form -->
+          <div class="form-sidebar">
+            <!-- Estado -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Estado</h3>
+              </div>
+              <div class="card-body">
+                <div class="form-group" style="margin-bottom:0">
+                  <select class="form-select">
+                    <option>Borrador</option>
+                    <option>Activo</option>
+                    <option>Archivado</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Imagen -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Imagen principal</h3>
+              </div>
+              <div class="card-body">
+                <div class="upload-area">
+                  <div class="upload-icon">
+                    <i data-lucide="upload-cloud" style="width:32px;height:32px"></i>
+                  </div>
+                  <span class="upload-text">Arrastra una imagen o haz clic para seleccionar</span>
+                  <span class="upload-hint">PNG, JPG hasta 5MB</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Etiquetas -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Etiquetas</h3>
+              </div>
+              <div class="card-body">
+                <div class="form-group" style="margin-bottom:0">
+                  <input type="text" class="form-input" placeholder="Agregar etiquetas...">
+                  <p style="font-size:var(--text-xs);color:var(--color-gray-500);margin-top:var(--spacing-xs)">
+                    Separa las etiquetas con comas
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button class="btn btn-secondary btn-md" onclick="window.location.href='02-crud-list.html'">Cancelar</button>
+          <button class="btn btn-primary btn-md">
+            <i data-lucide="save" style="width:16px;height:16px"></i>
+            Guardar Producto
+          </button>
+        </div>
+      </main>
+    </div>
+  </div>
+  
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

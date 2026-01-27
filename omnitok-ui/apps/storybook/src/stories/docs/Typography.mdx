@@ -1,0 +1,110 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Design System/Typography" />
+
+# Tipografía
+
+Sistema tipográfico para interfaces administrativas.
+
+## Familias Tipográficas
+
+### Primary (UI)
+**Nunito Sans** - Para interfaz de usuario, botones, navegación
+
+```css
+font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+```
+
+**Características**:
+- Humanista sans-serif
+- Alta legibilidad en pantalla
+- Soporta múltiples pesos
+- Excelente para UI elements
+
+### Secondary (Contenido)
+**Open Sans** - Para contenido, tablas, texto largo
+
+```css
+font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+```
+
+**Características**:
+- Neutral y profesional
+- Optimizada para lectura
+- Excelente en tablas y datos
+
+## Escala Tipográfica
+
+| Nombre | Tamaño | Line Height | Uso |
+|--------|--------|-------------|-----|
+| xs | 12px | 16px | Labels pequeños, badges |
+| sm | 14px | 20px | Texto secundario, inputs |
+| base | 16px | 24px | Texto principal |
+| lg | 18px | 28px | Subtítulos |
+| xl | 20px | 28px | Títulos de sección |
+| 2xl | 24px | 32px | Títulos de página |
+| 3xl | 30px | 36px | Títulos destacados |
+| 4xl | 36px | 40px | Hero titles |
+
+## Pesos de Fuente
+
+| Peso | Valor | Uso |
+|------|-------|-----|
+| Regular | 400 | Texto normal |
+| Medium | 500 | Énfasis ligero, labels |
+| Semibold | 600 | Botones, títulos de sección |
+| Bold | 700 | Títulos principales |
+
+## Ejemplos de Uso
+
+### Títulos de Página
+```css
+.page-title {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  color: #1F2937;
+}
+```
+
+### Texto de Contenido
+```css
+.content-text {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #374151;
+}
+```
+
+### Labels de Formulario
+```css
+.form-label {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #374151;
+}
+```
+
+### Texto en Tablas
+```css
+.table-text {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #374151;
+}
+```
+
+## Buenas Prácticas
+
+1. **Jerarquía clara**: Usar tamaños y pesos para establecer jerarquía visual
+2. **Consistencia**: Mantener la misma familia para elementos similares
+3. **Legibilidad**: Line-height mínimo de 1.5 para texto de contenido
+4. **Contraste**: Asegurar contraste suficiente con el fondo (mínimo 4.5:1)
+5. **Responsive**: Reducir tamaños en móvil si es necesario

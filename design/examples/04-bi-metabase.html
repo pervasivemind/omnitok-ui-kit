@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metabase Dashboard - Omnitok Admin</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chat-panel.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* Metabase Mock Dashboard */
+    .metabase-mock {
+      background-color: #F9FAFB;
+      padding: var(--spacing-lg);
+      height: 100%;
+      overflow-y: auto;
+    }
+    
+    .metabase-header {
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .metabase-title {
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: var(--color-gray-800);
+      margin-bottom: var(--spacing-xs);
+    }
+    
+    .metabase-description {
+      font-size: var(--text-sm);
+      color: var(--color-gray-500);
+    }
+    
+    .metabase-filters {
+      display: flex;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+      padding: var(--spacing-md);
+      background-color: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .metabase-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .metabase-card {
+      background-color: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    
+    .metabase-card-header {
+      padding: var(--spacing-md);
+      border-bottom: 1px solid var(--color-gray-100);
+    }
+    
+    .metabase-card-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      color: var(--color-gray-700);
+    }
+    
+    .metabase-card-body {
+      padding: var(--spacing-md);
+    }
+    
+    .metabase-number {
+      text-align: center;
+      padding: var(--spacing-lg);
+    }
+    
+    .metabase-number-value {
+      font-size: var(--text-3xl);
+      font-weight: var(--font-bold);
+      color: var(--color-gray-800);
+    }
+    
+    .metabase-number-label {
+      font-size: var(--text-sm);
+      color: var(--color-gray-500);
+      margin-top: var(--spacing-xs);
+    }
+    
+    .metabase-number-trend {
+      font-size: var(--text-sm);
+      margin-top: var(--spacing-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    
+    .metabase-number-trend.up { color: var(--color-success); }
+    .metabase-number-trend.down { color: var(--color-error); }
+    
+    .metabase-chart-area {
+      height: 180px;
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      padding: var(--spacing-sm);
+    }
+    
+    .metabase-line-chart {
+      height: 180px;
+      position: relative;
+      padding: var(--spacing-sm);
+    }
+    
+    .metabase-line {
+      position: absolute;
+      bottom: 20px;
+      left: 10px;
+      right: 10px;
+      height: 140px;
+      background: linear-gradient(to top, rgba(77, 74, 157, 0.1), transparent);
+      clip-path: polygon(
+        0% 80%, 
+        10% 60%, 
+        20% 70%, 
+        30% 40%, 
+        40% 50%, 
+        50% 30%, 
+        60% 45%, 
+        70% 20%, 
+        80% 35%, 
+        90% 15%, 
+        100% 25%,
+        100% 100%,
+        0% 100%
+      );
+    }
+    
+    .metabase-line::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-top: 2px solid var(--color-chart-1);
+      clip-path: polygon(
+        0% 80%, 
+        10% 60%, 
+        20% 70%, 
+        30% 40%, 
+        40% 50%, 
+        50% 30%, 
+        60% 45%, 
+        70% 20%, 
+        80% 35%, 
+        90% 15%, 
+        100% 25%
+      );
+    }
+    
+    .metabase-bar {
+      flex: 1;
+      border-radius: 2px 2px 0 0;
+      min-width: 8px;
+    }
+    
+    .metabase-wide {
+      grid-column: span 2;
+    }
+    
+    .metabase-full {
+      grid-column: span 4;
+    }
+    
+    .metabase-table {
+      width: 100%;
+      font-size: var(--text-sm);
+    }
+    
+    .metabase-table th {
+      text-align: left;
+      padding: var(--spacing-sm);
+      font-weight: var(--font-semibold);
+      color: var(--color-gray-600);
+      border-bottom: 1px solid var(--color-gray-200);
+    }
+    
+    .metabase-table td {
+      padding: var(--spacing-sm);
+      color: var(--color-gray-700);
+      border-bottom: 1px solid var(--color-gray-100);
+    }
+    
+    .metabase-progress {
+      width: 100%;
+      height: 6px;
+      background-color: var(--color-gray-200);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    
+    .metabase-progress-bar {
+      height: 100%;
+      border-radius: 3px;
+    }
+    
+    @media (max-width: 1200px) {
+      .metabase-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .metabase-wide {
+        grid-column: span 2;
+      }
+      .metabase-full {
+        grid-column: span 2;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img src="logos/logo_largo.png" alt="Omnitok">
+          <span class="sidebar-system-name">Connect Dashboard</span>
+        </div>
+        <button class="sidebar-toggle">
+          <i data-lucide="panel-left-close" style="width:18px;height:18px"></i>
+        </button>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Principal</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="01-dashboard.html">
+                <span class="sidebar-icon"><i data-lucide="layout-dashboard"></i></span>
+                <span class="sidebar-text">Dashboard</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="02-crud-list.html">
+                <span class="sidebar-icon"><i data-lucide="package"></i></span>
+                <span class="sidebar-text">Productos</span>
+                <span class="sidebar-badge">24</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="shopping-cart"></i></span>
+                <span class="sidebar-text">Pedidos</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="users"></i></span>
+                <span class="sidebar-text">Clientes</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Analítica</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="03-bi-powerbi.html">
+                <span class="sidebar-icon"><i data-lucide="bar-chart-2"></i></span>
+                <span class="sidebar-text">Power BI</span>
+              </a>
+            </li>
+            <li class="sidebar-item active">
+              <a href="04-bi-metabase.html">
+                <span class="sidebar-icon"><i data-lucide="pie-chart"></i></span>
+                <span class="sidebar-text">Metabase</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Sistema</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="05-components.html">
+                <span class="sidebar-icon"><i data-lucide="component"></i></span>
+                <span class="sidebar-text">Componentes</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="settings"></i></span>
+                <span class="sidebar-text">Configuración</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="avatar avatar-sm">PM</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name">Pedro Martínez</span>
+            <span class="sidebar-user-role">Administrador</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="header">
+        <div class="header-left">
+          <nav class="breadcrumb">
+            <a href="01-dashboard.html" class="breadcrumb-item">Dashboard</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Metabase - Operaciones</span>
+          </nav>
+        </div>
+        <div class="header-right">
+          <input type="search" class="search-input" placeholder="Buscar...">
+          <button class="header-icon-btn">
+            <i data-lucide="bell" style="width:20px;height:20px"></i>
+            <span class="notification-dot"></span>
+          </button>
+          <div class="header-user">
+            <div class="avatar avatar-sm">PM</div>
+            <span class="header-user-name">Pedro</span>
+          </div>
+        </div>
+      </header>
+      
+      <main class="content" style="padding:var(--spacing-lg)">
+        <!-- BI Layout with Chat -->
+        <div class="bi-layout">
+          <!-- Metabase Content (Embedded) -->
+          <div class="bi-content">
+            <div class="bi-embed">
+              <!-- Mock Metabase Dashboard -->
+              <div class="metabase-mock">
+                <div class="metabase-header">
+                  <h2 class="metabase-title">Dashboard de Operaciones</h2>
+                  <p class="metabase-description">Métricas operativas en tiempo real • Actualizado hace 5 min</p>
+                </div>
+                
+                <!-- Filters -->
+                <div class="metabase-filters">
+                  <select class="form-select" style="width:180px;height:36px;font-size:var(--text-sm)">
+                    <option>Últimos 30 días</option>
+                    <option>Últimos 7 días</option>
+                    <option>Hoy</option>
+                    <option>Personalizado</option>
+                  </select>
+                  <select class="form-select" style="width:150px;height:36px;font-size:var(--text-sm)">
+                    <option>Todos los canales</option>
+                    <option>Web</option>
+                    <option>App</option>
+                    <option>Marketplace</option>
+                  </select>
+                  <button class="btn btn-secondary btn-sm">
+                    <i data-lucide="refresh-cw" style="width:14px;height:14px"></i>
+                    Actualizar
+                  </button>
+                </div>
+                
+                <!-- Cards Grid -->
+                <div class="metabase-grid">
+                  <!-- Number Cards -->
+                  <div class="metabase-card">
+                    <div class="metabase-number">
+                      <div class="metabase-number-value">2,847</div>
+                      <div class="metabase-number-label">Pedidos Procesados</div>
+                      <div class="metabase-number-trend up">
+                        <i data-lucide="arrow-up" style="width:14px;height:14px"></i>
+                        +18% vs periodo anterior
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="metabase-card">
+                    <div class="metabase-number">
+                      <div class="metabase-number-value">98.2%</div>
+                      <div class="metabase-number-label">Tasa de Cumplimiento</div>
+                      <div class="metabase-number-trend up">
+                        <i data-lucide="arrow-up" style="width:14px;height:14px"></i>
+                        +2.1% vs periodo anterior
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="metabase-card">
+                    <div class="metabase-number">
+                      <div class="metabase-number-value">1.8 días</div>
+                      <div class="metabase-number-label">Tiempo Promedio Entrega</div>
+                      <div class="metabase-number-trend down">
+                        <i data-lucide="arrow-down" style="width:14px;height:14px"></i>
+                        -0.3 días (mejora)
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="metabase-card">
+                    <div class="metabase-number">
+                      <div class="metabase-number-value">47</div>
+                      <div class="metabase-number-label">Incidencias Abiertas</div>
+                      <div class="metabase-number-trend down">
+                        <i data-lucide="arrow-down" style="width:14px;height:14px"></i>
+                        -12 vs ayer
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Line Chart -->
+                  <div class="metabase-card metabase-wide">
+                    <div class="metabase-card-header">
+                      <div class="metabase-card-title">Pedidos por Día</div>
+                    </div>
+                    <div class="metabase-card-body">
+                      <div class="metabase-line-chart">
+                        <div class="metabase-line"></div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Bar Chart -->
+                  <div class="metabase-card metabase-wide">
+                    <div class="metabase-card-header">
+                      <div class="metabase-card-title">Pedidos por Canal</div>
+                    </div>
+                    <div class="metabase-card-body">
+                      <div class="metabase-chart-area">
+                        <div class="metabase-bar" style="height:85%;background:var(--color-chart-1)"></div>
+                        <div class="metabase-bar" style="height:60%;background:var(--color-chart-2)"></div>
+                        <div class="metabase-bar" style="height:45%;background:var(--color-chart-3)"></div>
+                        <div class="metabase-bar" style="height:30%;background:var(--color-chart-4)"></div>
+                      </div>
+                      <div style="display:flex;justify-content:space-around;font-size:var(--text-xs);color:var(--color-gray-500);margin-top:var(--spacing-sm)">
+                        <span>Web</span>
+                        <span>App</span>
+                        <span>Marketplace</span>
+                        <span>Otros</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Table -->
+                  <div class="metabase-card metabase-full">
+                    <div class="metabase-card-header">
+                      <div class="metabase-card-title">Top Productos por Volumen</div>
+                    </div>
+                    <div class="metabase-card-body" style="padding:0">
+                      <table class="metabase-table">
+                        <thead>
+                          <tr>
+                            <th>Producto</th>
+                            <th>Unidades</th>
+                            <th>% del Total</th>
+                            <th>Progreso</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Laptop HP Pavilion 15</td>
+                            <td>456</td>
+                            <td>16%</td>
+                            <td>
+                              <div class="metabase-progress">
+                                <div class="metabase-progress-bar" style="width:80%;background:var(--color-chart-1)"></div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Monitor Samsung 27"</td>
+                            <td>389</td>
+                            <td>14%</td>
+                            <td>
+                              <div class="metabase-progress">
+                                <div class="metabase-progress-bar" style="width:68%;background:var(--color-chart-1)"></div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Camiseta Básica Algodón</td>
+                            <td>312</td>
+                            <td>11%</td>
+                            <td>
+                              <div class="metabase-progress">
+                                <div class="metabase-progress-bar" style="width:55%;background:var(--color-chart-2)"></div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Auriculares Bluetooth</td>
+                            <td>278</td>
+                            <td>10%</td>
+                            <td>
+                              <div class="metabase-progress">
+                                <div class="metabase-progress-bar" style="width:49%;background:var(--color-chart-2)"></div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Lámpara LED Escritorio</td>
+                            <td>234</td>
+                            <td>8%</td>
+                            <td>
+                              <div class="metabase-progress">
+                                <div class="metabase-progress-bar" style="width:41%;background:var(--color-chart-3)"></div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Chat Panel -->
+          <aside class="bi-chat-panel">
+            <div class="chat-panel">
+              <header class="chat-header">
+                <div class="chat-header-icon">
+                  <i data-lucide="sparkles" style="width:18px;height:18px"></i>
+                </div>
+                <h3 class="chat-header-title">Asistente IA</h3>
+                <button class="chat-toggle">
+                  <i data-lucide="chevron-right" style="width:18px;height:18px"></i>
+                </button>
+              </header>
+              
+              <div class="chat-insights">
+                <span class="chat-insights-title">Alertas operativas</span>
+                <div class="insight-card positive">
+                  <span class="insight-icon">✅</span>
+                  <div class="insight-content">
+                    <strong>Excelente rendimiento</strong>
+                    <p>Tasa de cumplimiento en máximo histórico: 98.2%</p>
+                  </div>
+                </div>
+                <div class="insight-card">
+                  <span class="insight-icon">📦</span>
+                  <div class="insight-content">
+                    <strong>Pico de demanda</strong>
+                    <p>Volumen 18% superior al promedio mensual</p>
+                  </div>
+                </div>
+                <div class="insight-card warning">
+                  <span class="insight-icon">🔔</span>
+                  <div class="insight-content">
+                    <strong>Revisar inventario</strong>
+                    <p>3 productos top con stock bajo</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="chat-messages">
+                <div class="chat-message assistant">
+                  Bienvenido al dashboard de operaciones. Veo que tienes un excelente día con 98.2% de cumplimiento. ¿En qué puedo ayudarte?
+                  <div class="chat-message-time">10:15</div>
+                </div>
+                <div class="chat-message user">
+                  ¿Cuáles son los productos con stock bajo?
+                  <div class="chat-message-time">10:16</div>
+                </div>
+                <div class="chat-message assistant">
+                  Los productos con stock crítico son:
+                  <br><br>
+                  1. <strong>Teclado Mecánico RGB</strong> - 0 unidades (agotado)
+                  <br>
+                  2. <strong>Lámpara LED</strong> - 8 unidades (bajo mínimo)
+                  <br>
+                  3. <strong>Mouse Inalámbrico</strong> - 12 unidades
+                  <br><br>
+                  ¿Quieres que genere una orden de reposición?
+                  <div class="chat-message-time">10:16</div>
+                </div>
+              </div>
+              
+              <div class="chat-input-area">
+                <div class="chat-suggestions">
+                  <button class="chat-suggestion">Generar reporte</button>
+                  <button class="chat-suggestion">Ver incidencias</button>
+                  <button class="chat-suggestion">Proyección semanal</button>
+                </div>
+                <div class="chat-input-wrapper">
+                  <textarea class="chat-input" placeholder="Pregunta sobre operaciones..." rows="1"></textarea>
+                  <button class="btn btn-primary btn-sm chat-send">
+                    <i data-lucide="send" style="width:16px;height:16px"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+  
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

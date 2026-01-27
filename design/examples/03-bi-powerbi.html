@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Power BI Dashboard - Omnitok Admin</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chat-panel.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* Power BI Mock Dashboard */
+    .bi-mock {
+      background-color: var(--color-gray-50);
+      padding: var(--spacing-lg);
+      height: 100%;
+      overflow-y: auto;
+    }
+    
+    .bi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-lg);
+      padding-bottom: var(--spacing-md);
+      border-bottom: 1px solid var(--color-border);
+    }
+    
+    .bi-title {
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: var(--color-gray-800);
+    }
+    
+    .bi-filters {
+      display: flex;
+      gap: var(--spacing-md);
+    }
+    
+    .bi-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .bi-kpi {
+      background-color: var(--color-white);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-md);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .bi-kpi-label {
+      font-size: var(--text-xs);
+      color: var(--color-gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .bi-kpi-value {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-bold);
+      color: var(--color-gray-800);
+      margin: var(--spacing-xs) 0;
+    }
+    
+    .bi-kpi-change {
+      font-size: var(--text-xs);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .bi-kpi-change.positive { color: var(--color-success); }
+    .bi-kpi-change.negative { color: var(--color-error); }
+    
+    .bi-charts {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .bi-chart {
+      background-color: var(--color-white);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-md);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .bi-chart-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      color: var(--color-gray-700);
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .bi-chart-area {
+      height: 200px;
+      display: flex;
+      align-items: flex-end;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-md) 0;
+    }
+    
+    .bi-bar {
+      flex: 1;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      transition: all 0.3s ease;
+    }
+    
+    .bi-bar:hover {
+      opacity: 0.8;
+    }
+    
+    .bi-donut {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin: 0 auto;
+      position: relative;
+      background: conic-gradient(
+        var(--color-chart-1) 0deg 144deg,
+        var(--color-chart-2) 144deg 234deg,
+        var(--color-chart-3) 234deg 288deg,
+        var(--color-chart-4) 288deg 360deg
+      );
+    }
+    
+    .bi-donut::after {
+      content: '';
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      right: 30px;
+      bottom: 30px;
+      background: white;
+      border-radius: 50%;
+    }
+    
+    .bi-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-md);
+      justify-content: center;
+    }
+    
+    .bi-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: var(--text-xs);
+      color: var(--color-gray-600);
+    }
+    
+    .bi-legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    
+    .bi-table {
+      background-color: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    
+    @media (max-width: 1200px) {
+      .bi-kpis {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .bi-charts {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img src="logos/logo_largo.png" alt="Omnitok">
+          <span class="sidebar-system-name">Content Analytics</span>
+        </div>
+        <button class="sidebar-toggle">
+          <i data-lucide="panel-left-close" style="width:18px;height:18px"></i>
+        </button>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Principal</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="01-dashboard.html">
+                <span class="sidebar-icon"><i data-lucide="layout-dashboard"></i></span>
+                <span class="sidebar-text">Dashboard</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="02-crud-list.html">
+                <span class="sidebar-icon"><i data-lucide="package"></i></span>
+                <span class="sidebar-text">Productos</span>
+                <span class="sidebar-badge">24</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="shopping-cart"></i></span>
+                <span class="sidebar-text">Pedidos</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="users"></i></span>
+                <span class="sidebar-text">Clientes</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Analítica</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item active">
+              <a href="03-bi-powerbi.html">
+                <span class="sidebar-icon"><i data-lucide="bar-chart-2"></i></span>
+                <span class="sidebar-text">Power BI</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="04-bi-metabase.html">
+                <span class="sidebar-icon"><i data-lucide="pie-chart"></i></span>
+                <span class="sidebar-text">Metabase</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Sistema</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="05-components.html">
+                <span class="sidebar-icon"><i data-lucide="component"></i></span>
+                <span class="sidebar-text">Componentes</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="settings"></i></span>
+                <span class="sidebar-text">Configuración</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="avatar avatar-sm">PM</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name">Pedro Martínez</span>
+            <span class="sidebar-user-role">Administrador</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="header">
+        <div class="header-left">
+          <nav class="breadcrumb">
+            <a href="01-dashboard.html" class="breadcrumb-item">Dashboard</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Power BI - Ventas</span>
+          </nav>
+        </div>
+        <div class="header-right">
+          <input type="search" class="search-input" placeholder="Buscar...">
+          <button class="header-icon-btn">
+            <i data-lucide="bell" style="width:20px;height:20px"></i>
+            <span class="notification-dot"></span>
+          </button>
+          <div class="header-user">
+            <div class="avatar avatar-sm">PM</div>
+            <span class="header-user-name">Pedro</span>
+          </div>
+        </div>
+      </header>
+      
+      <main class="content" style="padding:var(--spacing-lg)">
+        <!-- BI Layout with Chat -->
+        <div class="bi-layout">
+          <!-- Power BI Content -->
+          <div class="bi-content">
+            <div class="bi-embed">
+              <!-- Mock Power BI Dashboard -->
+              <div class="bi-mock">
+                <div class="bi-header">
+                  <h2 class="bi-title">Análisis de Ventas - Q4 2024</h2>
+                  <div class="bi-filters">
+                    <select class="form-select" style="width:150px;height:36px;font-size:var(--text-sm)">
+                      <option>Este mes</option>
+                      <option>Último trimestre</option>
+                      <option>Este año</option>
+                    </select>
+                    <select class="form-select" style="width:150px;height:36px;font-size:var(--text-sm)">
+                      <option>Todas las regiones</option>
+                      <option>Norte</option>
+                      <option>Sur</option>
+                      <option>Este</option>
+                      <option>Oeste</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <!-- KPIs -->
+                <div class="bi-kpis">
+                  <div class="bi-kpi">
+                    <div class="bi-kpi-label">Ventas Totales</div>
+                    <div class="bi-kpi-value">$1.24M</div>
+                    <div class="bi-kpi-change positive">
+                      <i data-lucide="trending-up" style="width:12px;height:12px"></i>
+                      +12.5% vs Q3
+                    </div>
+                  </div>
+                  <div class="bi-kpi">
+                    <div class="bi-kpi-label">Pedidos</div>
+                    <div class="bi-kpi-value">8,472</div>
+                    <div class="bi-kpi-change positive">
+                      <i data-lucide="trending-up" style="width:12px;height:12px"></i>
+                      +8.2% vs Q3
+                    </div>
+                  </div>
+                  <div class="bi-kpi">
+                    <div class="bi-kpi-label">Ticket Promedio</div>
+                    <div class="bi-kpi-value">$146</div>
+                    <div class="bi-kpi-change negative">
+                      <i data-lucide="trending-down" style="width:12px;height:12px"></i>
+                      -3.1% vs Q3
+                    </div>
+                  </div>
+                  <div class="bi-kpi">
+                    <div class="bi-kpi-label">Conversión</div>
+                    <div class="bi-kpi-value">3.24%</div>
+                    <div class="bi-kpi-change positive">
+                      <i data-lucide="trending-up" style="width:12px;height:12px"></i>
+                      +0.5% vs Q3
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Charts -->
+                <div class="bi-charts">
+                  <div class="bi-chart">
+                    <div class="bi-chart-title">Ventas por Mes</div>
+                    <div class="bi-chart-area">
+                      <div class="bi-bar" style="height:60%;background:var(--color-chart-1)"></div>
+                      <div class="bi-bar" style="height:75%;background:var(--color-chart-1)"></div>
+                      <div class="bi-bar" style="height:45%;background:var(--color-chart-1)"></div>
+                      <div class="bi-bar" style="height:90%;background:var(--color-chart-1)"></div>
+                      <div class="bi-bar" style="height:70%;background:var(--color-chart-1)"></div>
+                      <div class="bi-bar" style="height:85%;background:var(--color-chart-1)"></div>
+                      <div class="bi-bar" style="height:65%;background:var(--color-chart-1)"></div>
+                      <div class="bi-bar" style="height:95%;background:var(--color-chart-1)"></div>
+                      <div class="bi-bar" style="height:80%;background:var(--color-chart-1)"></div>
+                      <div class="bi-bar" style="height:100%;background:var(--color-chart-2)"></div>
+                      <div class="bi-bar" style="height:88%;background:var(--color-chart-2)"></div>
+                      <div class="bi-bar" style="height:92%;background:var(--color-chart-2)"></div>
+                    </div>
+                  </div>
+                  <div class="bi-chart">
+                    <div class="bi-chart-title">Ventas por Categoría</div>
+                    <div class="bi-donut"></div>
+                    <div class="bi-legend">
+                      <div class="bi-legend-item">
+                        <div class="bi-legend-dot" style="background:var(--color-chart-1)"></div>
+                        Electrónica 40%
+                      </div>
+                      <div class="bi-legend-item">
+                        <div class="bi-legend-dot" style="background:var(--color-chart-2)"></div>
+                        Ropa 25%
+                      </div>
+                      <div class="bi-legend-item">
+                        <div class="bi-legend-dot" style="background:var(--color-chart-3)"></div>
+                        Hogar 15%
+                      </div>
+                      <div class="bi-legend-item">
+                        <div class="bi-legend-dot" style="background:var(--color-chart-4)"></div>
+                        Otros 20%
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Table -->
+                <div class="bi-table">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Producto</th>
+                        <th>Categoría</th>
+                        <th>Unidades</th>
+                        <th>Ingresos</th>
+                        <th>Tendencia</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Laptop HP Pavilion</td>
+                        <td>Electrónica</td>
+                        <td>234</td>
+                        <td>$210,600</td>
+                        <td><span class="badge badge-success">+15%</span></td>
+                      </tr>
+                      <tr>
+                        <td>Monitor Samsung 27"</td>
+                        <td>Electrónica</td>
+                        <td>189</td>
+                        <td>$65,961</td>
+                        <td><span class="badge badge-success">+8%</span></td>
+                      </tr>
+                      <tr>
+                        <td>Camiseta Básica</td>
+                        <td>Ropa</td>
+                        <td>1,245</td>
+                        <td>$36,105</td>
+                        <td><span class="badge badge-error">-3%</span></td>
+                      </tr>
+                      <tr>
+                        <td>Lámpara LED</td>
+                        <td>Hogar</td>
+                        <td>456</td>
+                        <td>$26,904</td>
+                        <td><span class="badge badge-warning">+2%</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Chat Panel -->
+          <aside class="bi-chat-panel">
+            <div class="chat-panel">
+              <header class="chat-header">
+                <div class="chat-header-icon">
+                  <i data-lucide="sparkles" style="width:18px;height:18px"></i>
+                </div>
+                <h3 class="chat-header-title">Asistente IA</h3>
+                <button class="chat-toggle">
+                  <i data-lucide="chevron-right" style="width:18px;height:18px"></i>
+                </button>
+              </header>
+              
+              <div class="chat-insights">
+                <span class="chat-insights-title">Insights detectados</span>
+                <div class="insight-card positive">
+                  <span class="insight-icon">📈</span>
+                  <div class="insight-content">
+                    <strong>Tendencia positiva</strong>
+                    <p>Las ventas de Q4 superan en 12.5% al trimestre anterior</p>
+                  </div>
+                </div>
+                <div class="insight-card warning">
+                  <span class="insight-icon">⚠️</span>
+                  <div class="insight-content">
+                    <strong>Atención</strong>
+                    <p>La categoría Ropa muestra una caída del 3%</p>
+                  </div>
+                </div>
+                <div class="insight-card">
+                  <span class="insight-icon">💡</span>
+                  <div class="insight-content">
+                    <strong>Oportunidad</strong>
+                    <p>Electrónica representa el 40% de ventas totales</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="chat-messages">
+                <div class="chat-message assistant">
+                  ¡Hola! Soy tu asistente de análisis. Puedo ayudarte a entender los datos del dashboard. ¿Qué te gustaría saber?
+                  <div class="chat-message-time">14:32</div>
+                </div>
+                <div class="chat-message user">
+                  ¿Por qué bajaron las ventas de ropa?
+                  <div class="chat-message-time">14:33</div>
+                </div>
+                <div class="chat-message assistant">
+                  La caída del 3% en la categoría Ropa se debe principalmente a:
+                  <br><br>
+                  1. <strong>Estacionalidad</strong>: Q4 típicamente tiene menor demanda de ropa casual
+                  <br>
+                  2. <strong>Stock</strong>: 3 productos top estuvieron sin stock por 2 semanas
+                  <br><br>
+                  Te recomiendo revisar el inventario de camisetas básicas.
+                  <div class="chat-message-time">14:33</div>
+                </div>
+              </div>
+              
+              <div class="chat-input-area">
+                <div class="chat-suggestions">
+                  <button class="chat-suggestion">¿Cuál es el mejor producto?</button>
+                  <button class="chat-suggestion">Comparar con Q3</button>
+                  <button class="chat-suggestion">Proyección Q1</button>
+                </div>
+                <div class="chat-input-wrapper">
+                  <textarea class="chat-input" placeholder="Pregunta sobre los datos..." rows="1"></textarea>
+                  <button class="btn btn-primary btn-sm chat-send">
+                    <i data-lucide="send" style="width:16px;height:16px"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+  
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

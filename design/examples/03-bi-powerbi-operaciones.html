@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Power BI - Operaciones - Omnitok Admin</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chat-panel.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* Power BI Operations Dashboard */
+    .bi-mock {
+      background-color: #f3f2f1;
+      padding: var(--spacing-lg);
+      height: 100%;
+      overflow-y: auto;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    
+    .bi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-lg);
+      padding-bottom: var(--spacing-md);
+      border-bottom: 2px solid #e1dfdd;
+    }
+    
+    .bi-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #323130;
+    }
+    
+    .bi-subtitle {
+      font-size: 12px;
+      color: #605e5c;
+      margin-top: 4px;
+    }
+    
+    .bi-live-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #107c10;
+    }
+    
+    .bi-live-dot {
+      width: 8px;
+      height: 8px;
+      background: #107c10;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    /* Status Cards */
+    .ops-status-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .ops-status-card {
+      background: white;
+      border: 1px solid #e1dfdd;
+      border-radius: 4px;
+      padding: var(--spacing-md);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .ops-status-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+    
+    .ops-status-card.healthy::before { background: #107c10; }
+    .ops-status-card.warning::before { background: #f59e0b; }
+    .ops-status-card.critical::before { background: #d13438; }
+    .ops-status-card.info::before { background: var(--color-chart-1); }
+    
+    .ops-status-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    .ops-status-card.healthy .ops-status-icon { background: #dff6dd; color: #107c10; }
+    .ops-status-card.warning .ops-status-icon { background: #fff4ce; color: #f59e0b; }
+    .ops-status-card.critical .ops-status-icon { background: #fde7e9; color: #d13438; }
+    .ops-status-card.info .ops-status-icon { background: rgba(77,74,157,0.1); color: var(--color-chart-1); }
+    
+    .ops-status-label {
+      font-size: 12px;
+      color: #605e5c;
+      margin-bottom: 4px;
+    }
+    
+    .ops-status-value {
+      font-size: 28px;
+      font-weight: 600;
+      color: #323130;
+    }
+    
+    .ops-status-meta {
+      font-size: 11px;
+      color: #a19f9d;
+      margin-top: 4px;
+    }
+    
+    /* Main Grid */
+    .ops-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .ops-chart {
+      background: white;
+      border: 1px solid #e1dfdd;
+      border-radius: 4px;
+      padding: var(--spacing-md);
+    }
+    
+    .ops-chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-md);
+      padding-bottom: var(--spacing-sm);
+      border-bottom: 1px solid #f3f2f1;
+    }
+    
+    .ops-chart-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #323130;
+    }
+    
+    /* Production Line Status */
+    .production-lines {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+    
+    .production-line {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      padding: var(--spacing-sm) var(--spacing-md);
+      background: #faf9f8;
+      border-radius: 4px;
+    }
+    
+    .production-line-status {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .production-line-status.running { background: #107c10; }
+    .production-line-status.idle { background: #f59e0b; }
+    .production-line-status.stopped { background: #d13438; }
+    .production-line-status.maintenance { background: #0078d4; }
+    
+    .production-line-name {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 500;
+      color: #323130;
+    }
+    
+    .production-line-efficiency {
+      font-size: 13px;
+      font-weight: 600;
+    }
+    
+    .production-line-efficiency.high { color: #107c10; }
+    .production-line-efficiency.medium { color: #f59e0b; }
+    .production-line-efficiency.low { color: #d13438; }
+    
+    .production-line-bar {
+      width: 100px;
+      height: 8px;
+      background: #e1dfdd;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .production-line-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    
+    .production-line-bar-fill.high { background: linear-gradient(90deg, #107c10, #5dc75d); }
+    .production-line-bar-fill.medium { background: linear-gradient(90deg, #f59e0b, #ffc107); }
+    .production-line-bar-fill.low { background: linear-gradient(90deg, #d13438, #ff6b6b); }
+    
+    /* Real-time Chart */
+    .realtime-chart {
+      height: 200px;
+      position: relative;
+      background: linear-gradient(180deg, rgba(77,74,157,0.05) 0%, transparent 100%);
+      border-radius: 4px;
+      padding: var(--spacing-md);
+    }
+    
+    .realtime-chart svg {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .realtime-line {
+      fill: none;
+      stroke: var(--color-chart-1);
+      stroke-width: 2;
+    }
+    
+    .realtime-area {
+      fill: url(#gradient);
+      opacity: 0.3;
+    }
+    
+    .realtime-dot {
+      fill: var(--color-chart-1);
+    }
+    
+    .realtime-value {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: white;
+      padding: 8px 12px;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .realtime-value-number {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--color-chart-1);
+    }
+    
+    .realtime-value-label {
+      font-size: 11px;
+      color: #605e5c;
+    }
+    
+    /* Alerts Panel */
+    .ops-alerts {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+    
+    .ops-alert {
+      display: flex;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    
+    .ops-alert.critical {
+      background: #fde7e9;
+      border-left: 3px solid #d13438;
+    }
+    
+    .ops-alert.warning {
+      background: #fff4ce;
+      border-left: 3px solid #f59e0b;
+    }
+    
+    .ops-alert.info {
+      background: #deecf9;
+      border-left: 3px solid #0078d4;
+    }
+    
+    .ops-alert-icon {
+      flex-shrink: 0;
+    }
+    
+    .ops-alert-content {
+      flex: 1;
+    }
+    
+    .ops-alert-title {
+      font-weight: 600;
+      color: #323130;
+    }
+    
+    .ops-alert-desc {
+      color: #605e5c;
+      margin-top: 2px;
+    }
+    
+    .ops-alert-time {
+      font-size: 10px;
+      color: #a19f9d;
+      margin-top: 4px;
+    }
+    
+    /* Inventory Grid */
+    .inventory-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-md);
+    }
+    
+    .inventory-item {
+      background: #faf9f8;
+      border-radius: 4px;
+      padding: var(--spacing-md);
+      text-align: center;
+    }
+    
+    .inventory-item-name {
+      font-size: 12px;
+      color: #605e5c;
+      margin-bottom: 8px;
+    }
+    
+    .inventory-item-value {
+      font-size: 20px;
+      font-weight: 600;
+      color: #323130;
+    }
+    
+    .inventory-item-bar {
+      height: 6px;
+      background: #e1dfdd;
+      border-radius: 3px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+    
+    .inventory-item-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+    
+    .inventory-item-bar-fill.critical { background: #d13438; }
+    .inventory-item-bar-fill.warning { background: #f59e0b; }
+    .inventory-item-bar-fill.healthy { background: #107c10; }
+    
+    .inventory-item-status {
+      font-size: 10px;
+      margin-top: 4px;
+    }
+    
+    .inventory-item-status.critical { color: #d13438; }
+    .inventory-item-status.warning { color: #f59e0b; }
+    .inventory-item-status.healthy { color: #107c10; }
+    
+    /* Bottom Grid */
+    .ops-bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-md);
+    }
+    
+    @media (max-width: 1400px) {
+      .ops-status-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 1200px) {
+      .ops-grid, .ops-bottom-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img src="logos/logo_largo.png" alt="Omnitok">
+          <span class="sidebar-system-name">Operations Center</span>
+        </div>
+        <button class="sidebar-toggle">
+          <i data-lucide="panel-left-close" style="width:18px;height:18px"></i>
+        </button>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Reportes</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="03-bi-powerbi.html">
+                <span class="sidebar-icon"><i data-lucide="trending-up"></i></span>
+                <span class="sidebar-text">Ventas</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="03-bi-powerbi-finanzas.html">
+                <span class="sidebar-icon"><i data-lucide="wallet"></i></span>
+                <span class="sidebar-text">Finanzas</span>
+              </a>
+            </li>
+            <li class="sidebar-item active">
+              <a href="03-bi-powerbi-operaciones.html">
+                <span class="sidebar-icon"><i data-lucide="factory"></i></span>
+                <span class="sidebar-text">Operaciones</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="03-bi-powerbi-rrhh.html">
+                <span class="sidebar-icon"><i data-lucide="users"></i></span>
+                <span class="sidebar-text">Recursos Humanos</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Monitoreo</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="activity"></i></span>
+                <span class="sidebar-text">Tiempo Real</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="alert-triangle"></i></span>
+                <span class="sidebar-text">Alertas</span>
+                <span class="sidebar-badge">3</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="avatar avatar-sm">MR</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name">Miguel Rodríguez</span>
+            <span class="sidebar-user-role">Jefe de Planta</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="header">
+        <div class="header-left">
+          <nav class="breadcrumb">
+            <a href="#" class="breadcrumb-item">Reportes</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Centro de Operaciones</span>
+          </nav>
+        </div>
+        <div class="header-right">
+          <div class="bi-live-indicator">
+            <span class="bi-live-dot"></span>
+            Datos en vivo
+          </div>
+          <button class="header-icon-btn">
+            <i data-lucide="bell" style="width:20px;height:20px"></i>
+            <span class="notification-dot"></span>
+          </button>
+          <div class="header-user">
+            <div class="avatar avatar-sm">MR</div>
+            <span class="header-user-name">Miguel</span>
+          </div>
+        </div>
+      </header>
+      
+      <main class="content" style="padding:var(--spacing-lg)">
+        <div class="bi-layout">
+          <div class="bi-content">
+            <div class="bi-embed">
+              <div class="bi-mock">
+                <!-- Header -->
+                <div class="bi-header">
+                  <div>
+                    <h2 class="bi-title">Centro de Operaciones</h2>
+                    <p class="bi-subtitle">Planta Principal | Última actualización: hace 30 segundos</p>
+                  </div>
+                </div>
+                
+                <!-- Status Cards -->
+                <div class="ops-status-grid">
+                  <div class="ops-status-card healthy">
+                    <div class="ops-status-icon">
+                      <i data-lucide="gauge" style="width:20px;height:20px"></i>
+                    </div>
+                    <div class="ops-status-label">OEE General</div>
+                    <div class="ops-status-value">87.3%</div>
+                    <div class="ops-status-meta">Meta: 85% ✓</div>
+                  </div>
+                  <div class="ops-status-card info">
+                    <div class="ops-status-icon">
+                      <i data-lucide="package" style="width:20px;height:20px"></i>
+                    </div>
+                    <div class="ops-status-label">Producción Hoy</div>
+                    <div class="ops-status-value">12,450</div>
+                    <div class="ops-status-meta">unidades producidas</div>
+                  </div>
+                  <div class="ops-status-card warning">
+                    <div class="ops-status-icon">
+                      <i data-lucide="clock" style="width:20px;height:20px"></i>
+                    </div>
+                    <div class="ops-status-label">Tiempo Muerto</div>
+                    <div class="ops-status-value">2.4h</div>
+                    <div class="ops-status-meta">+0.6h vs ayer</div>
+                  </div>
+                  <div class="ops-status-card critical">
+                    <div class="ops-status-icon">
+                      <i data-lucide="alert-circle" style="width:20px;height:20px"></i>
+                    </div>
+                    <div class="ops-status-label">Defectos</div>
+                    <div class="ops-status-value">1.8%</div>
+                    <div class="ops-status-meta">Meta: 1.5%</div>
+                  </div>
+                </div>
+                
+                <!-- Main Grid -->
+                <div class="ops-grid">
+                  <!-- Production Chart -->
+                  <div class="ops-chart">
+                    <div class="ops-chart-header">
+                      <span class="ops-chart-title">Producción en Tiempo Real (unidades/hora)</span>
+                    </div>
+                    <div class="realtime-chart">
+                      <svg viewBox="0 0 500 150">
+                        <defs>
+                          <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:var(--color-chart-1);stop-opacity:0.4"/>
+                            <stop offset="100%" style="stop-color:var(--color-chart-1);stop-opacity:0"/>
+                          </linearGradient>
+                        </defs>
+                        <!-- Grid lines -->
+                        <line x1="0" y1="37.5" x2="500" y2="37.5" stroke="#e1dfdd" stroke-dasharray="4"/>
+                        <line x1="0" y1="75" x2="500" y2="75" stroke="#e1dfdd" stroke-dasharray="4"/>
+                        <line x1="0" y1="112.5" x2="500" y2="112.5" stroke="#e1dfdd" stroke-dasharray="4"/>
+                        
+                        <!-- Area -->
+                        <path d="M0,100 L50,95 L100,85 L150,90 L200,70 L250,65 L300,75 L350,55 L400,50 L450,45 L500,40 L500,150 L0,150 Z" 
+                              class="realtime-area"/>
+                        
+                        <!-- Line -->
+                        <path d="M0,100 L50,95 L100,85 L150,90 L200,70 L250,65 L300,75 L350,55 L400,50 L450,45 L500,40" 
+                              class="realtime-line"/>
+                        
+                        <!-- Current point -->
+                        <circle cx="500" cy="40" r="5" class="realtime-dot"/>
+                      </svg>
+                      <div class="realtime-value">
+                        <div class="realtime-value-number">847</div>
+                        <div class="realtime-value-label">unidades/hora</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Alerts -->
+                  <div class="ops-chart">
+                    <div class="ops-chart-header">
+                      <span class="ops-chart-title">Alertas Activas</span>
+                    </div>
+                    <div class="ops-alerts">
+                      <div class="ops-alert critical">
+                        <div class="ops-alert-icon">
+                          <i data-lucide="alert-circle" style="width:16px;height:16px;color:#d13438"></i>
+                        </div>
+                        <div class="ops-alert-content">
+                          <div class="ops-alert-title">Línea 3 - Temperatura Alta</div>
+                          <div class="ops-alert-desc">Sensor T-304 reporta 85°C (límite: 80°C)</div>
+                          <div class="ops-alert-time">Hace 5 minutos</div>
+                        </div>
+                      </div>
+                      <div class="ops-alert warning">
+                        <div class="ops-alert-icon">
+                          <i data-lucide="alert-triangle" style="width:16px;height:16px;color:#f59e0b"></i>
+                        </div>
+                        <div class="ops-alert-content">
+                          <div class="ops-alert-title">Stock Bajo - Componente A-102</div>
+                          <div class="ops-alert-desc">Quedan 234 unidades (mínimo: 500)</div>
+                          <div class="ops-alert-time">Hace 23 minutos</div>
+                        </div>
+                      </div>
+                      <div class="ops-alert info">
+                        <div class="ops-alert-icon">
+                          <i data-lucide="info" style="width:16px;height:16px;color:#0078d4"></i>
+                        </div>
+                        <div class="ops-alert-content">
+                          <div class="ops-alert-title">Mantenimiento Programado</div>
+                          <div class="ops-alert-desc">Línea 2 - Mañana 06:00-08:00</div>
+                          <div class="ops-alert-time">Hace 1 hora</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Bottom Grid -->
+                <div class="ops-bottom-grid">
+                  <!-- Production Lines -->
+                  <div class="ops-chart">
+                    <div class="ops-chart-header">
+                      <span class="ops-chart-title">Estado de Líneas de Producción</span>
+                    </div>
+                    <div class="production-lines">
+                      <div class="production-line">
+                        <div class="production-line-status running"></div>
+                        <span class="production-line-name">Línea 1 - Ensamblaje</span>
+                        <span class="production-line-efficiency high">94%</span>
+                        <div class="production-line-bar">
+                          <div class="production-line-bar-fill high" style="width:94%"></div>
+                        </div>
+                      </div>
+                      <div class="production-line">
+                        <div class="production-line-status running"></div>
+                        <span class="production-line-name">Línea 2 - Empaque</span>
+                        <span class="production-line-efficiency high">89%</span>
+                        <div class="production-line-bar">
+                          <div class="production-line-bar-fill high" style="width:89%"></div>
+                        </div>
+                      </div>
+                      <div class="production-line">
+                        <div class="production-line-status idle"></div>
+                        <span class="production-line-name">Línea 3 - Soldadura</span>
+                        <span class="production-line-efficiency medium">72%</span>
+                        <div class="production-line-bar">
+                          <div class="production-line-bar-fill medium" style="width:72%"></div>
+                        </div>
+                      </div>
+                      <div class="production-line">
+                        <div class="production-line-status running"></div>
+                        <span class="production-line-name">Línea 4 - Control Calidad</span>
+                        <span class="production-line-efficiency high">91%</span>
+                        <div class="production-line-bar">
+                          <div class="production-line-bar-fill high" style="width:91%"></div>
+                        </div>
+                      </div>
+                      <div class="production-line">
+                        <div class="production-line-status maintenance"></div>
+                        <span class="production-line-name">Línea 5 - Pintura</span>
+                        <span class="production-line-efficiency low">0%</span>
+                        <div class="production-line-bar">
+                          <div class="production-line-bar-fill low" style="width:0%"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="display:flex;gap:16px;margin-top:16px;font-size:11px;color:#605e5c">
+                      <div style="display:flex;align-items:center;gap:4px">
+                        <div style="width:8px;height:8px;border-radius:50%;background:#107c10"></div>
+                        Operando
+                      </div>
+                      <div style="display:flex;align-items:center;gap:4px">
+                        <div style="width:8px;height:8px;border-radius:50%;background:#f59e0b"></div>
+                        Ralentizado
+                      </div>
+                      <div style="display:flex;align-items:center;gap:4px">
+                        <div style="width:8px;height:8px;border-radius:50%;background:#0078d4"></div>
+                        Mantenimiento
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Inventory -->
+                  <div class="ops-chart">
+                    <div class="ops-chart-header">
+                      <span class="ops-chart-title">Inventario de Materiales Críticos</span>
+                    </div>
+                    <div class="inventory-grid">
+                      <div class="inventory-item">
+                        <div class="inventory-item-name">Componente A-102</div>
+                        <div class="inventory-item-value">234</div>
+                        <div class="inventory-item-bar">
+                          <div class="inventory-item-bar-fill critical" style="width:23%"></div>
+                        </div>
+                        <div class="inventory-item-status critical">Stock crítico</div>
+                      </div>
+                      <div class="inventory-item">
+                        <div class="inventory-item-name">Tornillos M8</div>
+                        <div class="inventory-item-value">1,450</div>
+                        <div class="inventory-item-bar">
+                          <div class="inventory-item-bar-fill warning" style="width:48%"></div>
+                        </div>
+                        <div class="inventory-item-status warning">Stock bajo</div>
+                      </div>
+                      <div class="inventory-item">
+                        <div class="inventory-item-name">Cable AWG-12</div>
+                        <div class="inventory-item-value">3,200m</div>
+                        <div class="inventory-item-bar">
+                          <div class="inventory-item-bar-fill healthy" style="width:80%"></div>
+                        </div>
+                        <div class="inventory-item-status healthy">Óptimo</div>
+                      </div>
+                      <div class="inventory-item">
+                        <div class="inventory-item-name">Resina Epoxi</div>
+                        <div class="inventory-item-value">45L</div>
+                        <div class="inventory-item-bar">
+                          <div class="inventory-item-bar-fill warning" style="width:38%"></div>
+                        </div>
+                        <div class="inventory-item-status warning">Stock bajo</div>
+                      </div>
+                      <div class="inventory-item">
+                        <div class="inventory-item-name">Placas PCB</div>
+                        <div class="inventory-item-value">890</div>
+                        <div class="inventory-item-bar">
+                          <div class="inventory-item-bar-fill healthy" style="width:74%"></div>
+                        </div>
+                        <div class="inventory-item-status healthy">Óptimo</div>
+                      </div>
+                      <div class="inventory-item">
+                        <div class="inventory-item-name">Empaques</div>
+                        <div class="inventory-item-value">2,100</div>
+                        <div class="inventory-item-bar">
+                          <div class="inventory-item-bar-fill healthy" style="width:88%"></div>
+                        </div>
+                        <div class="inventory-item-status healthy">Óptimo</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Chat Panel -->
+          <aside class="bi-chat-panel">
+            <div class="chat-panel">
+              <header class="chat-header">
+                <div class="chat-header-icon">
+                  <i data-lucide="sparkles" style="width:18px;height:18px"></i>
+                </div>
+                <h3 class="chat-header-title">Asistente de Planta</h3>
+                <button class="chat-toggle">
+                  <i data-lucide="chevron-right" style="width:18px;height:18px"></i>
+                </button>
+              </header>
+              
+              <div class="chat-insights">
+                <span class="chat-insights-title">Alertas Críticas</span>
+                <div class="insight-card negative">
+                  <span class="insight-icon">🔴</span>
+                  <div class="insight-content">
+                    <strong>Línea 3 detenida</strong>
+                    <p>Temperatura excede límite seguro. Revisar sensor T-304.</p>
+                  </div>
+                </div>
+                <div class="insight-card warning">
+                  <span class="insight-icon">📦</span>
+                  <div class="insight-content">
+                    <strong>Reorden urgente</strong>
+                    <p>Componente A-102 se agotará en ~4 horas</p>
+                  </div>
+                </div>
+                <div class="insight-card positive">
+                  <span class="insight-icon">✅</span>
+                  <div class="insight-content">
+                    <strong>OEE en meta</strong>
+                    <p>87.3% supera el objetivo de 85%</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="chat-messages">
+                <div class="chat-message assistant">
+                  ¡Alerta! La Línea 3 presenta temperatura elevada. ¿Deseas que genere una orden de mantenimiento?
+                  <div class="chat-message-time">10:45</div>
+                </div>
+                <div class="chat-message user">
+                  Sí, genera la orden y notifica al equipo de mantenimiento
+                  <div class="chat-message-time">10:46</div>
+                </div>
+                <div class="chat-message assistant">
+                  ✅ Orden de mantenimiento #MT-2024-1847 creada.
+                  <br><br>
+                  He notificado a:
+                  <br>• Juan Pérez (Técnico Senior)
+                  <br>• María García (Supervisor)
+                  <br><br>
+                  Tiempo estimado de reparación: 45 minutos.
+                  <div class="chat-message-time">10:46</div>
+                </div>
+              </div>
+              
+              <div class="chat-input-area">
+                <div class="chat-suggestions">
+                  <button class="chat-suggestion">Estado de pedido urgente</button>
+                  <button class="chat-suggestion">Proyección de producción</button>
+                </div>
+                <div class="chat-input-wrapper">
+                  <textarea class="chat-input" placeholder="Pregunta sobre operaciones..." rows="1"></textarea>
+                  <button class="btn btn-primary btn-sm chat-send">
+                    <i data-lucide="send" style="width:16px;height:16px"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+  
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

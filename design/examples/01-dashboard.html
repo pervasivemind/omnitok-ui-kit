@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Omnitok Admin</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-xl);
+    }
+    
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-xl);
+    }
+    
+    .chart-placeholder {
+      background: linear-gradient(135deg, var(--color-gray-100) 0%, var(--color-gray-50) 100%);
+      border-radius: var(--radius-md);
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gray-400);
+      font-size: var(--text-sm);
+    }
+    
+    .recent-activity {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+    
+    .activity-item {
+      display: flex;
+      gap: var(--spacing-md);
+      padding: var(--spacing-md);
+      background-color: var(--color-gray-50);
+      border-radius: var(--radius-md);
+    }
+    
+    .activity-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .activity-icon.success { background-color: var(--color-success-light); color: var(--color-success); }
+    .activity-icon.warning { background-color: var(--color-warning-light); color: var(--color-warning); }
+    .activity-icon.info { background-color: var(--color-info-light); color: var(--color-info); }
+    
+    .activity-content {
+      flex: 1;
+    }
+    
+    .activity-title {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-gray-700);
+    }
+    
+    .activity-time {
+      font-size: var(--text-xs);
+      color: var(--color-gray-500);
+    }
+    
+    @media (max-width: 1200px) {
+      .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .chart-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img src="logos/logo_largo.png" alt="Omnitok">
+          <span class="sidebar-system-name">Sistema de Homologación</span>
+        </div>
+        <button class="sidebar-toggle">
+          <i data-lucide="panel-left-close" style="width:18px;height:18px"></i>
+        </button>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Principal</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item active">
+              <a href="01-dashboard.html">
+                <span class="sidebar-icon"><i data-lucide="layout-dashboard"></i></span>
+                <span class="sidebar-text">Dashboard</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="02-crud-list.html">
+                <span class="sidebar-icon"><i data-lucide="package"></i></span>
+                <span class="sidebar-text">Productos</span>
+                <span class="sidebar-badge">24</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="shopping-cart"></i></span>
+                <span class="sidebar-text">Pedidos</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="users"></i></span>
+                <span class="sidebar-text">Clientes</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Analítica</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="03-bi-powerbi.html">
+                <span class="sidebar-icon"><i data-lucide="bar-chart-2"></i></span>
+                <span class="sidebar-text">Power BI</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="04-bi-metabase.html">
+                <span class="sidebar-icon"><i data-lucide="pie-chart"></i></span>
+                <span class="sidebar-text">Metabase</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Sistema</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="05-components.html">
+                <span class="sidebar-icon"><i data-lucide="component"></i></span>
+                <span class="sidebar-text">Componentes</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="settings"></i></span>
+                <span class="sidebar-text">Configuración</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="avatar avatar-sm">PM</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name">Pedro Martínez</span>
+            <span class="sidebar-user-role">Administrador</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="header">
+        <div class="header-left">
+          <nav class="breadcrumb">
+            <span class="breadcrumb-item current">Dashboard</span>
+          </nav>
+        </div>
+        <div class="header-right">
+          <input type="search" class="search-input" placeholder="Buscar...">
+          <button class="header-icon-btn">
+            <i data-lucide="bell" style="width:20px;height:20px"></i>
+            <span class="notification-dot"></span>
+          </button>
+          <div class="header-user">
+            <div class="avatar avatar-sm">PM</div>
+            <span class="header-user-name">Pedro</span>
+          </div>
+        </div>
+      </header>
+      
+      <main class="content">
+        <div class="page-header">
+          <div class="page-header-left">
+            <h1 class="page-title">Dashboard</h1>
+            <p class="page-subtitle">Resumen general del sistema</p>
+          </div>
+          <div class="page-header-actions">
+            <button class="btn btn-secondary btn-md">
+              <i data-lucide="download" style="width:16px;height:16px"></i>
+              Exportar
+            </button>
+            <button class="btn btn-primary btn-md">
+              <i data-lucide="plus" style="width:16px;height:16px"></i>
+              Nuevo
+            </button>
+          </div>
+        </div>
+        
+        <!-- Stats Grid -->
+        <div class="dashboard-grid">
+          <div class="stat-card">
+            <div class="stat-label">Ventas Totales</div>
+            <div class="stat-value">$124,500</div>
+            <div class="stat-change positive">
+              <i data-lucide="trending-up" style="width:14px;height:14px"></i>
+              +12.5% vs mes anterior
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Pedidos</div>
+            <div class="stat-value">847</div>
+            <div class="stat-change positive">
+              <i data-lucide="trending-up" style="width:14px;height:14px"></i>
+              +8.2% vs mes anterior
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Clientes Nuevos</div>
+            <div class="stat-value">156</div>
+            <div class="stat-change negative">
+              <i data-lucide="trending-down" style="width:14px;height:14px"></i>
+              -3.1% vs mes anterior
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Tasa de Conversión</div>
+            <div class="stat-value">3.24%</div>
+            <div class="stat-change positive">
+              <i data-lucide="trending-up" style="width:14px;height:14px"></i>
+              +0.5% vs mes anterior
+            </div>
+          </div>
+        </div>
+        
+        <!-- Charts -->
+        <div class="chart-grid">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Ventas por Mes</h3>
+              <select class="form-select" style="width:auto;height:36px;font-size:var(--text-sm)">
+                <option>Últimos 12 meses</option>
+                <option>Últimos 6 meses</option>
+                <option>Este año</option>
+              </select>
+            </div>
+            <div class="card-body">
+              <div class="chart-placeholder">
+                <div style="text-align:center">
+                  <i data-lucide="bar-chart-2" style="width:48px;height:48px;margin-bottom:8px"></i>
+                  <p>Gráfico de barras aquí</p>
+                  <p style="font-size:var(--text-xs);color:var(--color-gray-400)">Integrar con Chart.js, Recharts, etc.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Actividad Reciente</h3>
+            </div>
+            <div class="card-body">
+              <div class="recent-activity">
+                <div class="activity-item">
+                  <div class="activity-icon success">
+                    <i data-lucide="check" style="width:18px;height:18px"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-title">Pedido #1234 completado</div>
+                    <div class="activity-time">Hace 5 minutos</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon info">
+                    <i data-lucide="user-plus" style="width:18px;height:18px"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-title">Nuevo cliente registrado</div>
+                    <div class="activity-time">Hace 12 minutos</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon warning">
+                    <i data-lucide="alert-triangle" style="width:18px;height:18px"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-title">Stock bajo: Producto XYZ</div>
+                    <div class="activity-time">Hace 1 hora</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon success">
+                    <i data-lucide="package" style="width:18px;height:18px"></i>
+                  </div>
+                  <div class="activity-content">
+                    <div class="activity-title">5 productos actualizados</div>
+                    <div class="activity-time">Hace 2 horas</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Recent Orders Table -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Pedidos Recientes</h3>
+            <a href="#" class="btn btn-ghost btn-sm">Ver todos</a>
+          </div>
+          <div class="table-container" style="box-shadow:none;border-radius:0">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Pedido</th>
+                  <th>Cliente</th>
+                  <th>Productos</th>
+                  <th>Total</th>
+                  <th>Estado</th>
+                  <th>Fecha</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>#1234</strong></td>
+                  <td>Juan García</td>
+                  <td>3 items</td>
+                  <td>$299.00</td>
+                  <td><span class="badge badge-success">Completado</span></td>
+                  <td>Hoy, 14:32</td>
+                </tr>
+                <tr>
+                  <td><strong>#1233</strong></td>
+                  <td>María López</td>
+                  <td>1 item</td>
+                  <td>$89.00</td>
+                  <td><span class="badge badge-warning">En proceso</span></td>
+                  <td>Hoy, 12:15</td>
+                </tr>
+                <tr>
+                  <td><strong>#1232</strong></td>
+                  <td>Carlos Ruiz</td>
+                  <td>5 items</td>
+                  <td>$542.00</td>
+                  <td><span class="badge badge-success">Completado</span></td>
+                  <td>Ayer, 18:45</td>
+                </tr>
+                <tr>
+                  <td><strong>#1231</strong></td>
+                  <td>Ana Martínez</td>
+                  <td>2 items</td>
+                  <td>$178.00</td>
+                  <td><span class="badge badge-error">Cancelado</span></td>
+                  <td>Ayer, 10:20</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

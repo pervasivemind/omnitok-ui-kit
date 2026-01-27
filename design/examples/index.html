@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omnitok Design System - Ejemplos</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-2xl);
+      background: linear-gradient(135deg, #211f4b 0%, #4D4A9D 100%);
+    }
+    
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: var(--spacing-2xl);
+    }
+    
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--spacing-lg);
+    }
+    
+    .title {
+      font-size: var(--text-3xl);
+      font-weight: var(--font-bold);
+      color: white;
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    .subtitle {
+      font-size: var(--text-lg);
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .examples-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: var(--spacing-lg);
+    }
+    
+    .example-card {
+      background-color: white;
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .example-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .example-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--spacing-md);
+      color: white;
+    }
+    
+    .example-icon.dashboard { background: linear-gradient(135deg, #4D4A9D, #6663B3); }
+    .example-icon.crud { background: linear-gradient(135deg, #FF177B, #ff4d9a); }
+    .example-icon.powerbi { background: linear-gradient(135deg, #F2B01E, #ffc94d); }
+    .example-icon.metabase { background: linear-gradient(135deg, #1BCDF8, #4dd9ff); }
+    .example-icon.components { background: linear-gradient(135deg, #22C55E, #4ade80); }
+    
+    .example-title {
+      font-size: var(--text-lg);
+      font-weight: var(--font-semibold);
+      color: var(--color-gray-800);
+      margin-bottom: var(--spacing-xs);
+    }
+    
+    .example-description {
+      font-size: var(--text-sm);
+      color: var(--color-gray-500);
+      line-height: 1.5;
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: var(--spacing-2xl);
+      color: rgba(255, 255, 255, 0.5);
+      font-size: var(--text-sm);
+    }
+    
+    .footer a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: underline;
+    }
+    
+    .footer a:hover {
+      color: white;
+    }
+  </style>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <img src="logos/logo_largo.png" alt="Omnitok" style="height:60px">
+      </div>
+      <h1 class="title">Design System</h1>
+      <p class="subtitle">Ejemplos visuales para sistemas administrativos</p>
+    </header>
+    
+    <div class="examples-grid">
+      <a href="00-login.html" class="example-card">
+        <div class="example-icon" style="background: linear-gradient(135deg, #211f4b, #4D4A9D);">
+          <i data-lucide="log-in" style="width:24px;height:24px"></i>
+        </div>
+        <h2 class="example-title">Login</h2>
+        <p class="example-description">Pantalla de inicio de sesión con branding y formulario.</p>
+      </a>
+      
+      <a href="01-dashboard.html" class="example-card">
+        <div class="example-icon dashboard">
+          <i data-lucide="layout-dashboard" style="width:24px;height:24px"></i>
+        </div>
+        <h2 class="example-title">Dashboard</h2>
+        <p class="example-description">Panel principal con KPIs, gráficos y actividad reciente.</p>
+      </a>
+      
+      <a href="02-crud-list.html" class="example-card">
+        <div class="example-icon crud">
+          <i data-lucide="table" style="width:24px;height:24px"></i>
+        </div>
+        <h2 class="example-title">CRUD - Listado</h2>
+        <p class="example-description">Tabla de datos con filtros, paginación y acciones.</p>
+      </a>
+      
+      <a href="02-crud-form.html" class="example-card">
+        <div class="example-icon crud">
+          <i data-lucide="file-edit" style="width:24px;height:24px"></i>
+        </div>
+        <h2 class="example-title">CRUD - Formulario</h2>
+        <p class="example-description">Formulario de creación/edición con layout de 2 columnas.</p>
+      </a>
+      
+      <a href="03-bi-powerbi.html" class="example-card">
+        <div class="example-icon powerbi">
+          <i data-lucide="bar-chart-2" style="width:24px;height:24px"></i>
+        </div>
+        <h2 class="example-title">Power BI - Ventas</h2>
+        <p class="example-description">Dashboard de ventas con KPIs y gráficos.</p>
+      </a>
+      
+      <a href="03-bi-powerbi-finanzas.html" class="example-card">
+        <div class="example-icon powerbi">
+          <i data-lucide="wallet" style="width:24px;height:24px"></i>
+        </div>
+        <h2 class="example-title">Power BI - Finanzas</h2>
+        <p class="example-description">Estado de resultados, cascada de utilidad, presupuesto.</p>
+      </a>
+      
+      <a href="03-bi-powerbi-operaciones.html" class="example-card">
+        <div class="example-icon powerbi">
+          <i data-lucide="factory" style="width:24px;height:24px"></i>
+        </div>
+        <h2 class="example-title">Power BI - Operaciones</h2>
+        <p class="example-description">Centro de operaciones en tiempo real, OEE, alertas.</p>
+      </a>
+      
+      <a href="03-bi-powerbi-rrhh.html" class="example-card">
+        <div class="example-icon powerbi">
+          <i data-lucide="users" style="width:24px;height:24px"></i>
+        </div>
+        <h2 class="example-title">Power BI - RRHH</h2>
+        <p class="example-description">People Analytics, headcount, satisfacción, rotación.</p>
+      </a>
+      
+      <a href="04-bi-metabase.html" class="example-card">
+        <div class="example-icon metabase">
+          <i data-lucide="pie-chart" style="width:24px;height:24px"></i>
+        </div>
+        <h2 class="example-title">Metabase Embebido</h2>
+        <p class="example-description">Dashboard Metabase embebido con Chat IA.</p>
+      </a>
+      
+      <a href="05-components.html" class="example-card">
+        <div class="example-icon components">
+          <i data-lucide="component" style="width:24px;height:24px"></i>
+        </div>
+        <h2 class="example-title">Componentes</h2>
+        <p class="example-description">Biblioteca completa: colores, tipografía, botones, inputs, cards.</p>
+      </a>
+    </div>
+    
+    <footer class="footer">
+      <p>Omnitok Design System • <a href="../design-system/README.md">Ver documentación</a></p>
+    </footer>
+  </div>
+  
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

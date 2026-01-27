@@ -1,0 +1,289 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Design System/Cursor Rules" />
+
+# Cursor Rules - UI/UX
+
+Reglas de UI/UX para sistemas administrativos internos basadas en identidad Omnitok.
+
+## Layout Obligatorio
+
+- **Sidebar izquierdo siempre presente** con fondo `#211f4b`
+- Ancho sidebar: 256px expandido (`w-64`), 64px colapsado (`w-16`)
+- Header sticky de 64px de altura
+- Contenido con padding de 24px
+- Logo **centrado** en header del sidebar
+- Botón de colapsar **siempre visible** en estado expandido
+
+## Paleta de Colores
+
+```css
+/* Colores de marca */
+Sidebar:     #211f4b  /* Azul muy oscuro - obligatorio */
+Primary:     #4D4A9D  /* Púrpura corporativo */
+Accent:      #FF177B  /* Magenta para CTAs destacados */
+
+/* Semánticos */
+Success:     #10B981  /* Verde */
+Error:       #EF4444  /* Rojo */
+Warning:     #F59E0B  /* Naranja */
+Info:        #3B82F6  /* Azul */
+
+/* Adicionales para gráficos */
+Purple:      #8B5CF6
+Pink:        #EC4899
+Teal:        #14B8A6
+
+/* Neutrales */
+Gray 50-900: #F9FAFB → #111827
+
+/* Texto */
+Principal:   #374151  /* Gray 700 */
+Secundario:  #6B7280  /* Gray 500 */
+
+/* Fondos */
+Principal:   #FFFFFF
+Alternativo: #F9FAFB  /* Gray 50 */
+Bordes:      #E5E7EB  /* Gray 200 */
+```
+
+## Gradientes
+
+### Sidebar - Elemento Activo
+```css
+background: linear-gradient(90deg, #FF177B 0%, #4D4A9D 100%);
+border-radius: 8px;
+margin: 2px 8px;
+color: #ffffff;
+font-weight: 500;
+```
+
+### Headers (Tables, Cards, Modals)
+```css
+background: linear-gradient(90deg, #4D4A9D 0%, #3B3880 100%);
+color: #FFFFFF;
+```
+
+### Tabs Pills (Activo)
+```css
+background: linear-gradient(90deg, #FF177B 0%, #4D4A9D 100%);
+color: #FFFFFF;
+```
+
+## Tipografía
+
+- **Fuente principal**: Nunito Sans (UI, botones, navegación)
+- **Fuente secundaria**: Open Sans (tablas, datos, contenido)
+- **Tamaños**: 12px (xs), 14px (sm), 16px (base), 18-30px (headings)
+- **Pesos**: 400 (normal), 500 (medium), 600 (semibold), 700 (bold)
+
+## Componentes Clave
+
+### Botones
+- **Primary**: fondo `#4D4A9D`, texto blanco
+- **Secondary**: fondo blanco, borde gris
+- **Danger**: fondo `#EF4444`, texto blanco
+- **Accent**: fondo `#FF177B`, texto blanco
+- **Altura**: 32px (sm), 40px (md), 48px (lg)
+- **Border-radius**: 8px
+
+### Sidebar
+- **Logo centrado** en header con nombre del sistema debajo
+- **Logos**:
+  - Expandido: `logo_largo_blanco.png` (horizontal blanco, 24px altura, max-width 140px)
+  - Colapsado: `logo_cuadrado_color.png` (cuadrado 32x32px)
+- **System name**: 11px, uppercase, `rgba(255,255,255,0.5)`, centrado, debajo del logo
+- **Botón colapsar**: Siempre visible en estado expandido (esquina superior derecha)
+- **Estado colapsado**: Solo logo cuadrado como botón de expandir
+- **Items**: 
+  - Hover: `rgba(255,255,255,0.1)`
+  - Activo: Gradiente magenta → púrpura
+  - Íconos: Siempre reservar espacio 20x20px para alineación
+- **Texto**: `rgba(255,255,255,0.8)`, hover: `#FFFFFF`
+
+### Cards
+- Fondo blanco, border-radius 12px, overflow hidden
+- Shadow: `0 1px 2px rgba(0,0,0,0.05)`
+- **Header**: Gradiente primary → primary-dark, texto blanco
+- Body: padding 16px
+- Footer: fondo `#F9FAFB`, padding 12px 16px
+
+### Tablas
+- **Header**: fondo `#4D4A9D` (primary), texto blanco, font-weight 600
+- Filas: hover con fondo `#F9FAFB`
+- Bordes: 1px solid `#E5E7EB`
+- Texto: 14px, color `#374151`
+
+### Modales
+- Backdrop: `rgba(0,0,0,0.5)`
+- Border-radius: 16px
+- **Header**: Gradiente primary → primary-dark, texto blanco
+- Tamaños: 400px (sm), 500px (md), 700px (lg), 900px (xl)
+
+### Tabs
+- **Variantes**: default, pills, underline
+- **Pills (recomendada)**: Activo con gradiente magenta → púrpura
+- **Default**: Fondo `rgba(77, 74, 157, 0.1)`, activo blanco con shadow
+- **Underline**: Border-bottom en activo con color accent `#FF177B`
+
+## Patrones de Pantalla
+
+### Listados (CRUD Read)
+1. Page header con título + botón "Nuevo"
+2. Barra de filtros + búsqueda
+3. Tabla con acciones por fila
+4. Paginación al pie
+
+### Formularios (CRUD Create/Update)
+1. Breadcrumb + título
+2. Cards agrupando campos relacionados
+3. Acciones en header y footer (Cancelar, Guardar)
+
+### Estados
+- **Vacío**: ícono + título + descripción + CTA
+- **Carga**: skeletons o spinner centrado
+- **Error**: alert rojo con mensaje
+
+## Iconos
+
+Usar **Lucide Icons** exclusivamente:
+- Tamaño en sidebar/nav: 20px
+- Tamaño en botones: 16-18px
+- Tamaño en estados vacíos: 32-48px
+- **IMPORTANTE**: Siempre reservar espacio 20x20px para íconos (incluso si no están presentes) para mantener alineación
+
+## Espaciado
+
+```css
+4px  (xs)  - gaps mínimos
+8px  (sm)  - padding badges, gaps pequeños
+16px (md)  - padding botones, gaps formularios
+24px (lg)  - padding cards, separación secciones
+32px (xl)  - separación grupos
+48px (2xl) - separación secciones principales
+```
+
+## Herramientas BI (PowerBI / Metabase)
+
+### Layout con BI + AI Insights
+
+```
+┌──────────┬────────────────────┬──────────┐
+│  Sidebar │   Contenido BI     │ AI Panel │
+│  #211f4b │   (embed)          │  360px   │
+│  256px   │   Gráficos         │ Insights │
+└──────────┴────────────────────┴──────────┘
+```
+
+### Colores para Gráficos BI
+
+```css
+--chart-1: #4D4A9D;  /* Primary - Púrpura */
+--chart-2: #FF177B;  /* Accent - Magenta */
+--chart-3: #10B981;  /* Success - Verde */
+--chart-4: #F59E0B;  /* Warning - Naranja */
+--chart-5: #3B82F6;  /* Info - Azul */
+--chart-6: #8B5CF6;  /* Purple - Violeta */
+--chart-7: #EC4899;  /* Pink - Rosa */
+--chart-8: #14B8A6;  /* Teal - Verde azulado */
+```
+
+### Tipos de Gráficos Recomendados
+
+- **Tendencias**: Líneas, áreas
+- **Comparación**: Barras horizontales/verticales
+- **Partes de todo**: Donut (max 5-6 categorías)
+- **KPIs**: Cards compactos con indicador y variación
+- **Objetivo vs Real**: Gauge, barras con línea de meta
+
+### Diferencias PowerBI vs Metabase
+
+| Aspecto | PowerBI | Metabase |
+|---------|----------|----------|
+| Embedding | Opcional | Siempre embebido |
+| Sidebar app | Puede no estar | Siempre visible |
+| Tema | JSON theme file | SDK theme object |
+
+### Panel AI Insights
+
+- Ancho: 360px (rightPanelWidth)
+- Fondo blanco con borde izquierdo
+- Header con gradiente primary
+- Insights automáticos con íconos de color
+- Oculto en móvil/tablet (< 1280px)
+
+## Componentes Adicionales
+
+### LoginPage
+- **Variantes**: gradient, split, centered
+- **Logos**: 
+  - Formulario: `logo_largo_color.png`
+  - Split panel izquierdo: `logo_largo_blanco.png`
+- **Campos**: Email, Password, Remember me, Forgot password
+- **Estados**: Normal, Loading, Error
+
+### Layout Component
+
+Props principales:
+```tsx
+<Layout
+  sidebarItems={items}
+  logo={<img src="logo_largo_blanco.png" />}
+  logoCollapsed={<img src="logo_cuadrado_color.png" />}
+  systemName="Mi Sistema"
+  activeSidebarId="dashboard"
+  headerTitle="Dashboard"
+  headerSubtitle="Resumen general"
+  user={{ name: 'Usuario', role: 'Admin' }}
+  rightPanel={<AIPanel />}  // Opcional
+  rightPanelWidth="360px"
+>
+  {/* Contenido */}
+</Layout>
+```
+
+## Instalación en Otros Proyectos
+
+```bash
+npm install @omnitok/ui lucide-react
+# o
+pnpm add @omnitok/ui lucide-react
+```
+
+## Uso Básico
+
+```tsx
+import { Layout, Button, Card, Table } from '@omnitok/ui';
+import '@omnitok/ui/styles.css';
+import { Home, Users } from 'lucide-react';
+
+function App() {
+  const sidebarItems = [
+    { id: 'home', label: 'Inicio', icon: <Home size={20} /> },
+    { id: 'users', label: 'Usuarios', icon: <Users size={20} />, badge: 5 },
+  ];
+
+  return (
+    <Layout
+      sidebarItems={sidebarItems}
+      logo={<img src="/logo_largo_blanco.png" alt="Logo" />}
+      logoCollapsed={<img src="/logo_cuadrado_color.png" alt="Logo" />}
+      systemName="Mi Sistema"
+      activeSidebarId="home"
+      headerTitle="Dashboard"
+      user={{ name: 'Usuario', role: 'Admin' }}
+    >
+      <Card>
+        <h2>Bienvenido</h2>
+        <Button variant="primary">Comenzar</Button>
+      </Card>
+    </Layout>
+  );
+}
+```
+
+## Recursos
+
+- **Storybook**: Documentación interactiva completa
+- **GitHub**: https://github.com/pervasivemind/omnitok-ui-kit
+- **Lucide Icons**: https://lucide.dev

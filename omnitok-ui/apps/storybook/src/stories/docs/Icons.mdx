@@ -1,0 +1,146 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Design System/Icons" />
+
+# Iconografía
+
+Sistema de íconos para interfaces administrativas.
+
+## Librería de Íconos
+
+**Lucide Icons** - Librería oficial para todos los proyectos
+
+- **Website**: https://lucide.dev
+- **Instalación**: `npm install lucide-react`
+- **Estilo**: Outline, consistente, moderno
+- **Tamaño base**: 20x20px
+
+## Tamaños de Íconos
+
+| Contexto | Tamaño | Uso |
+|----------|--------|-----|
+| Sidebar | 20px | Íconos de navegación |
+| Buttons | 16-18px | Íconos en botones |
+| Headers | 18-20px | Íconos en títulos |
+| Tables | 16px | Acciones en tablas |
+| Inputs | 18px | Íconos en campos de formulario |
+
+## Uso en React
+
+```tsx
+import { Home, Users, Settings, Search } from 'lucide-react';
+
+// En sidebar
+<Home size={20} />
+
+// En botones
+<Button leftIcon={<Plus size={18} />}>
+  Nuevo
+</Button>
+
+// En inputs
+<Input leftIcon={<Search size={18} />} />
+```
+
+## Íconos Comunes
+
+### Navegación
+- `Home` - Dashboard/Inicio
+- `Users` - Usuarios
+- `Package` - Productos/Inventario
+- `ShoppingCart` - Pedidos/Ventas
+- `BarChart3` - Analítica/Reportes
+- `Settings` - Configuración
+- `FileText` - Documentos/Contenido
+- `MessageSquare` - Mensajes/Chat
+
+### Acciones
+- `Plus` - Crear/Agregar
+- `Edit` - Editar
+- `Trash2` - Eliminar
+- `Save` - Guardar
+- `X` - Cerrar/Cancelar
+- `Check` - Confirmar
+- `Download` - Descargar
+- `Upload` - Subir
+- `Search` - Buscar
+- `Filter` - Filtrar
+- `MoreHorizontal` - Más opciones
+
+### Estados
+- `AlertCircle` - Advertencia
+- `CheckCircle` - Éxito
+- `XCircle` - Error
+- `Info` - Información
+- `Bell` - Notificaciones
+- `Eye` - Ver/Visualizar
+- `EyeOff` - Ocultar
+
+### UI
+- `ChevronDown` - Expandir/Colapsar
+- `ChevronRight` - Navegación
+- `ArrowLeft` - Volver
+- `ArrowRight` - Siguiente
+- `PanelLeftClose` - Colapsar sidebar
+- `PanelLeft` - Expandir sidebar
+
+## Colores de Íconos
+
+```css
+/* Sidebar */
+.sidebar-icon {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.sidebar-item:hover .sidebar-icon {
+  color: #FFFFFF;
+}
+
+.sidebar-item.active .sidebar-icon {
+  color: #FFFFFF;
+}
+
+/* Contenido general */
+.icon-default {
+  color: #6B7280; /* Gray 500 */
+}
+
+.icon-primary {
+  color: #4D4A9D;
+}
+
+.icon-accent {
+  color: #FF177B;
+}
+
+.icon-success {
+  color: #10B981;
+}
+
+.icon-error {
+  color: #EF4444;
+}
+```
+
+## Alineación de Íconos
+
+**IMPORTANTE**: Siempre reservar espacio para íconos (20x20px) incluso si no están presentes, para mantener alineación consistente en listas y menús.
+
+```css
+.icon-container {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+```
+
+## Buenas Prácticas
+
+1. **Consistencia**: Usar siempre Lucide Icons, no mezclar librerías
+2. **Tamaño**: Mantener tamaños consistentes por contexto
+3. **Color**: Usar colores semánticos apropiados
+4. **Accesibilidad**: Incluir `aria-label` en botones solo con ícono
+5. **Espaciado**: Mantener gap consistente entre ícono y texto (12px típicamente)

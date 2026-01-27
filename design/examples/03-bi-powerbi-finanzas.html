@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Power BI - Finanzas - Omnitok Admin</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chat-panel.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* Power BI Finance Dashboard Styles */
+    .bi-mock {
+      background-color: #f3f2f1;
+      padding: var(--spacing-lg);
+      height: 100%;
+      overflow-y: auto;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    
+    .bi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-lg);
+      padding-bottom: var(--spacing-md);
+      border-bottom: 2px solid #e1dfdd;
+    }
+    
+    .bi-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #323130;
+    }
+    
+    .bi-subtitle {
+      font-size: 12px;
+      color: #605e5c;
+      margin-top: 4px;
+    }
+    
+    .bi-toolbar {
+      display: flex;
+      gap: var(--spacing-sm);
+      align-items: center;
+    }
+    
+    .bi-toolbar-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      background: white;
+      border: 1px solid #8a8886;
+      border-radius: 2px;
+      font-size: 13px;
+      color: #323130;
+      cursor: pointer;
+    }
+    
+    .bi-toolbar-btn:hover {
+      background: #f3f2f1;
+    }
+    
+    /* Finance KPIs */
+    .finance-kpis {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .finance-kpi {
+      background: white;
+      border: 1px solid #e1dfdd;
+      border-left: 4px solid var(--color-chart-1);
+      padding: var(--spacing-md);
+    }
+    
+    .finance-kpi:nth-child(2) { border-left-color: var(--color-chart-2); }
+    .finance-kpi:nth-child(3) { border-left-color: var(--color-chart-3); }
+    .finance-kpi:nth-child(4) { border-left-color: var(--color-success); }
+    .finance-kpi:nth-child(5) { border-left-color: var(--color-error); }
+    
+    .finance-kpi-label {
+      font-size: 11px;
+      color: #605e5c;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .finance-kpi-value {
+      font-size: 28px;
+      font-weight: 600;
+      color: #323130;
+      margin: 8px 0 4px;
+    }
+    
+    .finance-kpi-meta {
+      font-size: 11px;
+      color: #a19f9d;
+    }
+    
+    .finance-kpi-change {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 2px;
+      margin-left: 8px;
+    }
+    
+    .finance-kpi-change.up {
+      background: #dff6dd;
+      color: #107c10;
+    }
+    
+    .finance-kpi-change.down {
+      background: #fde7e9;
+      color: #d13438;
+    }
+    
+    /* Charts Grid */
+    .finance-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .finance-chart {
+      background: white;
+      border: 1px solid #e1dfdd;
+      padding: var(--spacing-md);
+    }
+    
+    .finance-chart.wide {
+      grid-column: span 2;
+    }
+    
+    .finance-chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-md);
+      padding-bottom: var(--spacing-sm);
+      border-bottom: 1px solid #f3f2f1;
+    }
+    
+    .finance-chart-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #323130;
+    }
+    
+    .finance-chart-actions {
+      display: flex;
+      gap: 4px;
+    }
+    
+    .finance-chart-btn {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      color: #605e5c;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+    
+    .finance-chart-btn:hover {
+      background: #f3f2f1;
+    }
+    
+    /* Line Chart */
+    .line-chart {
+      height: 200px;
+      position: relative;
+      padding: var(--spacing-md) 0;
+    }
+    
+    .line-chart-svg {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .line-chart-grid {
+      stroke: #e1dfdd;
+      stroke-width: 1;
+    }
+    
+    .line-chart-line {
+      fill: none;
+      stroke-width: 2;
+    }
+    
+    .line-chart-area {
+      opacity: 0.1;
+    }
+    
+    /* Waterfall Chart */
+    .waterfall-chart {
+      height: 200px;
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      padding: var(--spacing-md) 0;
+    }
+    
+    .waterfall-bar {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    
+    .waterfall-bar-fill {
+      width: 100%;
+      border-radius: 2px 2px 0 0;
+      position: relative;
+    }
+    
+    .waterfall-bar-fill.positive {
+      background: linear-gradient(180deg, #107c10 0%, #0b5a0b 100%);
+    }
+    
+    .waterfall-bar-fill.negative {
+      background: linear-gradient(180deg, #d13438 0%, #a4262c 100%);
+    }
+    
+    .waterfall-bar-fill.total {
+      background: linear-gradient(180deg, var(--color-chart-1) 0%, #3d3a8c 100%);
+    }
+    
+    .waterfall-bar-label {
+      font-size: 10px;
+      color: #605e5c;
+      margin-top: 4px;
+      text-align: center;
+    }
+    
+    .waterfall-bar-value {
+      font-size: 10px;
+      font-weight: 600;
+      color: #323130;
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+    
+    /* Gauge Chart */
+    .gauge-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 180px;
+    }
+    
+    .gauge {
+      position: relative;
+      width: 180px;
+      height: 90px;
+      overflow: hidden;
+    }
+    
+    .gauge-bg {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: conic-gradient(
+        #e1dfdd 0deg 180deg,
+        transparent 180deg 360deg
+      );
+    }
+    
+    .gauge-fill {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--color-chart-1) 0deg 126deg,
+        transparent 126deg 360deg
+      );
+    }
+    
+    .gauge-center {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: white;
+      border-radius: 50%;
+      top: 30px;
+      left: 30px;
+    }
+    
+    .gauge-value {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+    
+    .gauge-value-number {
+      font-size: 32px;
+      font-weight: 600;
+      color: #323130;
+    }
+    
+    .gauge-value-label {
+      font-size: 11px;
+      color: #605e5c;
+    }
+    
+    .gauge-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 10px;
+      color: #a19f9d;
+    }
+    
+    /* Table */
+    .finance-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    
+    .finance-table th {
+      text-align: left;
+      padding: 10px 12px;
+      background: #faf9f8;
+      border-bottom: 1px solid #e1dfdd;
+      font-weight: 600;
+      color: #323130;
+      font-size: 12px;
+    }
+    
+    .finance-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #f3f2f1;
+      color: #323130;
+    }
+    
+    .finance-table tr:hover td {
+      background: #faf9f8;
+    }
+    
+    .finance-table .number {
+      text-align: right;
+      font-family: 'Consolas', monospace;
+    }
+    
+    .finance-table .positive {
+      color: #107c10;
+    }
+    
+    .finance-table .negative {
+      color: #d13438;
+    }
+    
+    /* Sparkline */
+    .sparkline {
+      width: 60px;
+      height: 20px;
+    }
+    
+    @media (max-width: 1400px) {
+      .finance-kpis {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    @media (max-width: 1200px) {
+      .finance-grid {
+        grid-template-columns: 1fr;
+      }
+      .finance-chart.wide {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img src="logos/logo_largo.png" alt="Omnitok">
+          <span class="sidebar-system-name">Financial Analytics</span>
+        </div>
+        <button class="sidebar-toggle">
+          <i data-lucide="panel-left-close" style="width:18px;height:18px"></i>
+        </button>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Reportes</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="03-bi-powerbi.html">
+                <span class="sidebar-icon"><i data-lucide="trending-up"></i></span>
+                <span class="sidebar-text">Ventas</span>
+              </a>
+            </li>
+            <li class="sidebar-item active">
+              <a href="03-bi-powerbi-finanzas.html">
+                <span class="sidebar-icon"><i data-lucide="wallet"></i></span>
+                <span class="sidebar-text">Finanzas</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="03-bi-powerbi-operaciones.html">
+                <span class="sidebar-icon"><i data-lucide="factory"></i></span>
+                <span class="sidebar-text">Operaciones</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="03-bi-powerbi-rrhh.html">
+                <span class="sidebar-icon"><i data-lucide="users"></i></span>
+                <span class="sidebar-text">Recursos Humanos</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Configuración</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="sliders"></i></span>
+                <span class="sidebar-text">Parámetros</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="download"></i></span>
+                <span class="sidebar-text">Exportar</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="avatar avatar-sm">CF</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name">Carlos Fernández</span>
+            <span class="sidebar-user-role">CFO</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="header">
+        <div class="header-left">
+          <nav class="breadcrumb">
+            <a href="#" class="breadcrumb-item">Reportes</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Estado Financiero</span>
+          </nav>
+        </div>
+        <div class="header-right">
+          <input type="search" class="search-input" placeholder="Buscar...">
+          <button class="header-icon-btn">
+            <i data-lucide="bell" style="width:20px;height:20px"></i>
+          </button>
+          <div class="header-user">
+            <div class="avatar avatar-sm">CF</div>
+            <span class="header-user-name">Carlos</span>
+          </div>
+        </div>
+      </header>
+      
+      <main class="content" style="padding:var(--spacing-lg)">
+        <div class="bi-layout">
+          <div class="bi-content">
+            <div class="bi-embed">
+              <div class="bi-mock">
+                <!-- Header -->
+                <div class="bi-header">
+                  <div>
+                    <h2 class="bi-title">Estado de Resultados</h2>
+                    <p class="bi-subtitle">Período: Enero - Diciembre 2024 | Actualizado: hace 2 horas</p>
+                  </div>
+                  <div class="bi-toolbar">
+                    <button class="bi-toolbar-btn">
+                      <i data-lucide="calendar" style="width:14px;height:14px"></i>
+                      2024
+                    </button>
+                    <button class="bi-toolbar-btn">
+                      <i data-lucide="filter" style="width:14px;height:14px"></i>
+                      Filtros
+                    </button>
+                    <button class="bi-toolbar-btn">
+                      <i data-lucide="refresh-cw" style="width:14px;height:14px"></i>
+                    </button>
+                  </div>
+                </div>
+                
+                <!-- KPIs -->
+                <div class="finance-kpis">
+                  <div class="finance-kpi">
+                    <div class="finance-kpi-label">Ingresos Totales</div>
+                    <div class="finance-kpi-value">$12.4M</div>
+                    <div class="finance-kpi-meta">
+                      vs Presupuesto
+                      <span class="finance-kpi-change up">
+                        <i data-lucide="arrow-up" style="width:10px;height:10px"></i>
+                        +8.2%
+                      </span>
+                    </div>
+                  </div>
+                  <div class="finance-kpi">
+                    <div class="finance-kpi-label">Costos Operativos</div>
+                    <div class="finance-kpi-value">$7.8M</div>
+                    <div class="finance-kpi-meta">
+                      vs Presupuesto
+                      <span class="finance-kpi-change down">
+                        <i data-lucide="arrow-up" style="width:10px;height:10px"></i>
+                        +3.1%
+                      </span>
+                    </div>
+                  </div>
+                  <div class="finance-kpi">
+                    <div class="finance-kpi-label">EBITDA</div>
+                    <div class="finance-kpi-value">$3.2M</div>
+                    <div class="finance-kpi-meta">
+                      Margen: 25.8%
+                      <span class="finance-kpi-change up">
+                        <i data-lucide="arrow-up" style="width:10px;height:10px"></i>
+                        +2.4pp
+                      </span>
+                    </div>
+                  </div>
+                  <div class="finance-kpi">
+                    <div class="finance-kpi-label">Utilidad Neta</div>
+                    <div class="finance-kpi-value">$1.9M</div>
+                    <div class="finance-kpi-meta">
+                      Margen: 15.3%
+                      <span class="finance-kpi-change up">
+                        <i data-lucide="arrow-up" style="width:10px;height:10px"></i>
+                        +12.5%
+                      </span>
+                    </div>
+                  </div>
+                  <div class="finance-kpi">
+                    <div class="finance-kpi-label">Flujo de Caja</div>
+                    <div class="finance-kpi-value">$2.1M</div>
+                    <div class="finance-kpi-meta">
+                      Disponible
+                      <span class="finance-kpi-change up">
+                        <i data-lucide="arrow-up" style="width:10px;height:10px"></i>
+                        +18.7%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Charts -->
+                <div class="finance-grid">
+                  <!-- Revenue Trend -->
+                  <div class="finance-chart wide">
+                    <div class="finance-chart-header">
+                      <span class="finance-chart-title">Ingresos vs Gastos (Mensual)</span>
+                      <div class="finance-chart-actions">
+                        <button class="finance-chart-btn">
+                          <i data-lucide="maximize-2" style="width:14px;height:14px"></i>
+                        </button>
+                        <button class="finance-chart-btn">
+                          <i data-lucide="more-horizontal" style="width:14px;height:14px"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="line-chart">
+                      <svg class="line-chart-svg" viewBox="0 0 600 180">
+                        <!-- Grid -->
+                        <line x1="50" y1="20" x2="50" y2="160" class="line-chart-grid"/>
+                        <line x1="50" y1="160" x2="580" y2="160" class="line-chart-grid"/>
+                        <line x1="50" y1="90" x2="580" y2="90" class="line-chart-grid" stroke-dasharray="4"/>
+                        <line x1="50" y1="55" x2="580" y2="55" class="line-chart-grid" stroke-dasharray="4"/>
+                        <line x1="50" y1="125" x2="580" y2="125" class="line-chart-grid" stroke-dasharray="4"/>
+                        
+                        <!-- Revenue Area -->
+                        <path d="M50,120 L94,110 L138,100 L182,95 L226,85 L270,80 L314,75 L358,70 L402,65 L446,55 L490,50 L534,45 L580,40 L580,160 L50,160 Z" 
+                              fill="var(--color-chart-1)" class="line-chart-area"/>
+                        
+                        <!-- Revenue Line -->
+                        <path d="M50,120 L94,110 L138,100 L182,95 L226,85 L270,80 L314,75 L358,70 L402,65 L446,55 L490,50 L534,45 L580,40" 
+                              stroke="var(--color-chart-1)" class="line-chart-line"/>
+                        
+                        <!-- Expenses Line -->
+                        <path d="M50,130 L94,125 L138,120 L182,118 L226,115 L270,112 L314,108 L358,105 L402,100 L446,95 L490,92 L534,88 L580,85" 
+                              stroke="var(--color-chart-2)" class="line-chart-line" stroke-dasharray="5,3"/>
+                        
+                        <!-- Labels -->
+                        <text x="50" y="175" font-size="10" fill="#605e5c">Ene</text>
+                        <text x="138" y="175" font-size="10" fill="#605e5c">Mar</text>
+                        <text x="226" y="175" font-size="10" fill="#605e5c">May</text>
+                        <text x="314" y="175" font-size="10" fill="#605e5c">Jul</text>
+                        <text x="402" y="175" font-size="10" fill="#605e5c">Sep</text>
+                        <text x="490" y="175" font-size="10" fill="#605e5c">Nov</text>
+                        
+                        <!-- Y Labels -->
+                        <text x="40" y="160" font-size="10" fill="#605e5c" text-anchor="end">$0</text>
+                        <text x="40" y="125" font-size="10" fill="#605e5c" text-anchor="end">$500K</text>
+                        <text x="40" y="90" font-size="10" fill="#605e5c" text-anchor="end">$1M</text>
+                        <text x="40" y="55" font-size="10" fill="#605e5c" text-anchor="end">$1.5M</text>
+                        <text x="40" y="25" font-size="10" fill="#605e5c" text-anchor="end">$2M</text>
+                      </svg>
+                    </div>
+                    <div style="display:flex;gap:24px;justify-content:center;margin-top:8px">
+                      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#605e5c">
+                        <div style="width:12px;height:3px;background:var(--color-chart-1);border-radius:2px"></div>
+                        Ingresos
+                      </div>
+                      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#605e5c">
+                        <div style="width:12px;height:3px;background:var(--color-chart-2);border-radius:2px;border:1px dashed var(--color-chart-2)"></div>
+                        Gastos
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Waterfall -->
+                  <div class="finance-chart">
+                    <div class="finance-chart-header">
+                      <span class="finance-chart-title">Cascada de Utilidad</span>
+                      <div class="finance-chart-actions">
+                        <button class="finance-chart-btn">
+                          <i data-lucide="maximize-2" style="width:14px;height:14px"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="waterfall-chart">
+                      <div class="waterfall-bar">
+                        <div class="waterfall-bar-fill total" style="height:160px">
+                          <span class="waterfall-bar-value">$12.4M</span>
+                        </div>
+                        <span class="waterfall-bar-label">Ingresos</span>
+                      </div>
+                      <div class="waterfall-bar">
+                        <div class="waterfall-bar-fill negative" style="height:80px">
+                          <span class="waterfall-bar-value">-$5.2M</span>
+                        </div>
+                        <span class="waterfall-bar-label">Costo Venta</span>
+                      </div>
+                      <div class="waterfall-bar">
+                        <div class="waterfall-bar-fill negative" style="height:50px">
+                          <span class="waterfall-bar-value">-$2.6M</span>
+                        </div>
+                        <span class="waterfall-bar-label">Gastos Op.</span>
+                      </div>
+                      <div class="waterfall-bar">
+                        <div class="waterfall-bar-fill negative" style="height:30px">
+                          <span class="waterfall-bar-value">-$1.4M</span>
+                        </div>
+                        <span class="waterfall-bar-label">Otros</span>
+                      </div>
+                      <div class="waterfall-bar">
+                        <div class="waterfall-bar-fill positive" style="height:20px">
+                          <span class="waterfall-bar-value">+$0.7M</span>
+                        </div>
+                        <span class="waterfall-bar-label">Ing. Fin.</span>
+                      </div>
+                      <div class="waterfall-bar">
+                        <div class="waterfall-bar-fill total" style="height:100px">
+                          <span class="waterfall-bar-value">$1.9M</span>
+                        </div>
+                        <span class="waterfall-bar-label">Utilidad</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Gauge -->
+                  <div class="finance-chart">
+                    <div class="finance-chart-header">
+                      <span class="finance-chart-title">Cumplimiento Presupuesto</span>
+                      <div class="finance-chart-actions">
+                        <button class="finance-chart-btn">
+                          <i data-lucide="maximize-2" style="width:14px;height:14px"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="gauge-container">
+                      <div class="gauge">
+                        <div class="gauge-bg"></div>
+                        <div class="gauge-fill"></div>
+                        <div class="gauge-center"></div>
+                        <div class="gauge-value">
+                          <div class="gauge-value-number">108%</div>
+                          <div class="gauge-value-label">del objetivo</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="gauge-labels" style="padding:0 20px">
+                      <span>0%</span>
+                      <span>50%</span>
+                      <span>100%</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Table -->
+                <div class="finance-chart">
+                  <div class="finance-chart-header">
+                    <span class="finance-chart-title">Detalle por Centro de Costo</span>
+                    <div class="finance-chart-actions">
+                      <button class="finance-chart-btn">
+                        <i data-lucide="download" style="width:14px;height:14px"></i>
+                      </button>
+                      <button class="finance-chart-btn">
+                        <i data-lucide="maximize-2" style="width:14px;height:14px"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <table class="finance-table">
+                    <thead>
+                      <tr>
+                        <th>Centro de Costo</th>
+                        <th class="number">Presupuesto</th>
+                        <th class="number">Real</th>
+                        <th class="number">Variación</th>
+                        <th class="number">%</th>
+                        <th>Tendencia</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Operaciones</td>
+                        <td class="number">$3,200,000</td>
+                        <td class="number">$3,050,000</td>
+                        <td class="number positive">+$150,000</td>
+                        <td class="number positive">+4.7%</td>
+                        <td>
+                          <svg class="sparkline" viewBox="0 0 60 20">
+                            <path d="M0,15 L10,12 L20,14 L30,10 L40,8 L50,6 L60,4" stroke="#107c10" fill="none" stroke-width="2"/>
+                          </svg>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Ventas y Marketing</td>
+                        <td class="number">$1,800,000</td>
+                        <td class="number">$1,920,000</td>
+                        <td class="number negative">-$120,000</td>
+                        <td class="number negative">-6.7%</td>
+                        <td>
+                          <svg class="sparkline" viewBox="0 0 60 20">
+                            <path d="M0,8 L10,10 L20,9 L30,12 L40,14 L50,13 L60,16" stroke="#d13438" fill="none" stroke-width="2"/>
+                          </svg>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Tecnología</td>
+                        <td class="number">$950,000</td>
+                        <td class="number">$890,000</td>
+                        <td class="number positive">+$60,000</td>
+                        <td class="number positive">+6.3%</td>
+                        <td>
+                          <svg class="sparkline" viewBox="0 0 60 20">
+                            <path d="M0,12 L10,11 L20,10 L30,9 L40,8 L50,7 L60,6" stroke="#107c10" fill="none" stroke-width="2"/>
+                          </svg>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Administración</td>
+                        <td class="number">$680,000</td>
+                        <td class="number">$695,000</td>
+                        <td class="number negative">-$15,000</td>
+                        <td class="number negative">-2.2%</td>
+                        <td>
+                          <svg class="sparkline" viewBox="0 0 60 20">
+                            <path d="M0,10 L10,10 L20,11 L30,10 L40,11 L50,12 L60,12" stroke="#f59e0b" fill="none" stroke-width="2"/>
+                          </svg>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Recursos Humanos</td>
+                        <td class="number">$420,000</td>
+                        <td class="number">$405,000</td>
+                        <td class="number positive">+$15,000</td>
+                        <td class="number positive">+3.6%</td>
+                        <td>
+                          <svg class="sparkline" viewBox="0 0 60 20">
+                            <path d="M0,14 L10,12 L20,11 L30,10 L40,9 L50,8 L60,7" stroke="#107c10" fill="none" stroke-width="2"/>
+                          </svg>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Chat Panel -->
+          <aside class="bi-chat-panel">
+            <div class="chat-panel">
+              <header class="chat-header">
+                <div class="chat-header-icon">
+                  <i data-lucide="sparkles" style="width:18px;height:18px"></i>
+                </div>
+                <h3 class="chat-header-title">Asistente Financiero</h3>
+                <button class="chat-toggle">
+                  <i data-lucide="chevron-right" style="width:18px;height:18px"></i>
+                </button>
+              </header>
+              
+              <div class="chat-insights">
+                <span class="chat-insights-title">Alertas Financieras</span>
+                <div class="insight-card positive">
+                  <span class="insight-icon">✅</span>
+                  <div class="insight-content">
+                    <strong>Meta superada</strong>
+                    <p>Utilidad neta 12.5% sobre presupuesto anual</p>
+                  </div>
+                </div>
+                <div class="insight-card warning">
+                  <span class="insight-icon">⚠️</span>
+                  <div class="insight-content">
+                    <strong>Revisar Marketing</strong>
+                    <p>Gastos 6.7% sobre presupuesto asignado</p>
+                  </div>
+                </div>
+                <div class="insight-card">
+                  <span class="insight-icon">📊</span>
+                  <div class="insight-content">
+                    <strong>Flujo de caja</strong>
+                    <p>Liquidez en niveles óptimos para Q1 2025</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="chat-messages">
+                <div class="chat-message assistant">
+                  Hola Carlos, el cierre financiero de 2024 muestra resultados positivos. ¿Qué aspecto te gustaría analizar?
+                  <div class="chat-message-time">09:15</div>
+                </div>
+                <div class="chat-message user">
+                  ¿Por qué Marketing excedió el presupuesto?
+                  <div class="chat-message-time">09:16</div>
+                </div>
+                <div class="chat-message assistant">
+                  El exceso de $120K en Marketing se debe a:
+                  <br><br>
+                  1. <strong>Campaña Q4</strong>: +$85K en publicidad digital para Black Friday
+                  <br>
+                  2. <strong>Eventos</strong>: +$35K en ferias no presupuestadas
+                  <br><br>
+                  Sin embargo, el ROI de estas inversiones fue de 3.2x, generando $384K adicionales en ventas.
+                  <div class="chat-message-time">09:16</div>
+                </div>
+              </div>
+              
+              <div class="chat-input-area">
+                <div class="chat-suggestions">
+                  <button class="chat-suggestion">Proyección Q1 2025</button>
+                  <button class="chat-suggestion">Análisis de márgenes</button>
+                </div>
+                <div class="chat-input-wrapper">
+                  <textarea class="chat-input" placeholder="Pregunta sobre finanzas..." rows="1"></textarea>
+                  <button class="btn btn-primary btn-sm chat-send">
+                    <i data-lucide="send" style="width:16px;height:16px"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+  
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

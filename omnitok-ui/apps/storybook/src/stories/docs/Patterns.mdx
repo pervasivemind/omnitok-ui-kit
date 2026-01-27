@@ -1,0 +1,263 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Design System/Patterns" />
+
+# Patrones de Diseño
+
+Patrones comunes para sistemas administrativos.
+
+## CRUD Screens
+
+### Lista (Index)
+
+**Estructura**:
+1. Header con título y botón "Nuevo"
+2. Filtros y búsqueda
+3. Tabla con datos
+4. Paginación
+
+**Elementos clave**:
+- Tabla con acciones (Ver, Editar, Eliminar)
+- Badges para estados
+- Búsqueda en tiempo real
+- Filtros colapsables
+- Exportar datos
+
+### Formulario (Create/Edit)
+
+**Estructura**:
+1. Breadcrumb para navegación
+2. Título del formulario
+3. Cards agrupando campos relacionados
+4. Footer con acciones (Cancelar, Guardar)
+
+**Elementos clave**:
+- Validación en tiempo real
+- Mensajes de error claros
+- Indicadores de campos requeridos (*)
+- Botones de acción en header y footer
+
+### Detalle (Show)
+
+**Estructura**:
+1. Header con título y acciones (Editar, Eliminar)
+2. Cards con información organizada
+3. Tabs para secciones relacionadas
+
+## Empty States
+
+Cuando no hay datos para mostrar:
+
+```tsx
+<div className="empty-state">
+  <Icon size={48} className="text-neutral-400" />
+  <h3>No hay datos disponibles</h3>
+  <p>Comienza agregando tu primer elemento</p>
+  <Button variant="primary">Agregar Elemento</Button>
+</div>
+```
+
+**CSS**:
+```css
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  color: #6B7280;
+}
+
+.empty-state h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #374151;
+  margin-top: 16px;
+}
+
+.empty-state p {
+  font-size: 14px;
+  color: #6B7280;
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+```
+
+## Loading States
+
+### Skeleton Loaders
+
+Para tablas y listas:
+
+```css
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #F3F4F6 0%,
+    #E5E7EB 50%,
+    #F3F4F6 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+```
+
+### Spinner
+
+Para acciones en proceso:
+
+```css
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(77, 74, 157, 0.2);
+  border-top-color: #4D4A9D;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+```
+
+## Confirmaciones
+
+Para acciones destructivas:
+
+```tsx
+<Modal
+  open={showConfirm}
+  onClose={() => setShowConfirm(false)}
+  title="Confirmar Eliminación"
+  size="sm"
+  footer={
+    <>
+      <Button variant="ghost" onClick={() => setShowConfirm(false)}>
+        Cancelar
+      </Button>
+      <Button variant="danger" onClick={handleDelete}>
+        Eliminar
+      </Button>
+    </>
+  }
+>
+  <p>¿Estás seguro de que deseas eliminar este elemento?</p>
+  <p className="text-sm text-neutral-500 mt-2">
+    Esta acción no se puede deshacer.
+  </p>
+</Modal>
+```
+
+## Filtros
+
+### Filtros Inline
+
+Para filtros simples en headers de tablas:
+
+```tsx
+<div className="flex items-center gap-2">
+  <Input
+    placeholder="Buscar..."
+    leftIcon={<Search size={16} />}
+    className="w-48"
+    size="sm"
+  />
+  <Select
+    options={statusOptions}
+    placeholder="Estado"
+    className="w-36"
+    size="sm"
+  />
+  <Button variant="secondary" leftIcon={<Filter size={16} />} size="sm">
+    Más Filtros
+  </Button>
+</div>
+```
+
+### Panel de Filtros
+
+Para filtros avanzados:
+
+```tsx
+<Card noPadding>
+  <CardHeader>
+    Filtros Avanzados
+  </CardHeader>
+  <CardBody className="space-y-4">
+    <Select label="Categoría" options={categories} />
+    <Select label="Estado" options={statuses} />
+    <div className="grid grid-cols-2 gap-4">
+      <Input type="date" label="Desde" />
+      <Input type="date" label="Hasta" />
+    </div>
+  </CardBody>
+  <CardFooter>
+    <Button variant="ghost">Limpiar</Button>
+    <Button variant="primary">Aplicar Filtros</Button>
+  </CardFooter>
+</Card>
+```
+
+## Dashboards
+
+### KPI Cards
+
+```tsx
+<Card variant="bordered" className="min-w-0">
+  <div className="flex items-start justify-between gap-3">
+    <div className="min-w-0">
+      <p className="text-sm text-neutral-500">Título</p>
+      <p className="text-3xl font-bold text-neutral-900">$124,500</p>
+      <div className="flex items-center gap-1 mt-2 text-sm text-success">
+        <TrendingUp size={16} />
+        <span>+12.5%</span>
+        <span className="text-neutral-400">vs mes anterior</span>
+      </div>
+    </div>
+    <div className="p-3 rounded-xl bg-primary/10 border border-primary/20">
+      <Icon className="w-6 h-6 text-primary" />
+    </div>
+  </div>
+</Card>
+```
+
+### Grid de KPIs
+
+```tsx
+<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+  <KPICard {...} />
+  <KPICard {...} />
+  <KPICard {...} />
+  <KPICard {...} />
+</div>
+```
+
+## Login Screen
+
+Ver componente `LoginPage` para implementación completa.
+
+**Variantes**:
+- `gradient`: Fondo con gradiente de marca
+- `split`: Panel izquierdo de branding + formulario derecho
+- `centered`: Formulario centrado con fondo neutro
+
+**Logos**:
+- Formulario: `logo_largo_color.png`
+- Split panel izquierdo: `logo_largo_blanco.png`
+
+## Buenas Prácticas
+
+1. **Consistencia**: Usar los mismos patrones en todo el sistema
+2. **Feedback**: Siempre mostrar loading/success/error states
+3. **Confirmaciones**: Pedir confirmación para acciones destructivas
+4. **Navegación**: Breadcrumbs para contexto de ubicación
+5. **Responsive**: Adaptar layouts para móvil
+6. **Accesibilidad**: Keyboard navigation, ARIA labels

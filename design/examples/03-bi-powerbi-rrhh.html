@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Power BI - Recursos Humanos - Omnitok Admin</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chat-panel.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* Power BI HR Dashboard */
+    .bi-mock {
+      background-color: #f3f2f1;
+      padding: var(--spacing-lg);
+      height: 100%;
+      overflow-y: auto;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    
+    .bi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-lg);
+      padding-bottom: var(--spacing-md);
+      border-bottom: 2px solid #e1dfdd;
+    }
+    
+    .bi-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #323130;
+    }
+    
+    .bi-subtitle {
+      font-size: 12px;
+      color: #605e5c;
+      margin-top: 4px;
+    }
+    
+    /* HR KPIs */
+    .hr-kpis {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .hr-kpi {
+      background: white;
+      border: 1px solid #e1dfdd;
+      border-radius: 8px;
+      padding: var(--spacing-md);
+      text-align: center;
+      position: relative;
+    }
+    
+    .hr-kpi-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--spacing-sm);
+    }
+    
+    .hr-kpi-icon.purple { background: rgba(77,74,157,0.1); color: var(--color-chart-1); }
+    .hr-kpi-icon.magenta { background: rgba(255,23,123,0.1); color: var(--color-chart-2); }
+    .hr-kpi-icon.cyan { background: rgba(27,205,248,0.1); color: var(--color-chart-3); }
+    .hr-kpi-icon.green { background: rgba(34,197,94,0.1); color: #22c55e; }
+    .hr-kpi-icon.yellow { background: rgba(242,176,30,0.1); color: var(--color-chart-4); }
+    
+    .hr-kpi-value {
+      font-size: 32px;
+      font-weight: 600;
+      color: #323130;
+    }
+    
+    .hr-kpi-label {
+      font-size: 12px;
+      color: #605e5c;
+      margin-top: 4px;
+    }
+    
+    .hr-kpi-change {
+      font-size: 11px;
+      margin-top: 8px;
+      padding: 4px 8px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+    
+    .hr-kpi-change.up {
+      background: #dff6dd;
+      color: #107c10;
+    }
+    
+    .hr-kpi-change.down {
+      background: #fde7e9;
+      color: #d13438;
+    }
+    
+    .hr-kpi-change.neutral {
+      background: #f3f2f1;
+      color: #605e5c;
+    }
+    
+    /* Main Grid */
+    .hr-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .hr-chart {
+      background: white;
+      border: 1px solid #e1dfdd;
+      border-radius: 8px;
+      padding: var(--spacing-md);
+    }
+    
+    .hr-chart.wide {
+      grid-column: span 2;
+    }
+    
+    .hr-chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .hr-chart-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #323130;
+    }
+    
+    /* Headcount by Department */
+    .dept-bars {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+    
+    .dept-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+    
+    .dept-bar-label {
+      width: 100px;
+      font-size: 12px;
+      color: #323130;
+      text-align: right;
+    }
+    
+    .dept-bar-track {
+      flex: 1;
+      height: 24px;
+      background: #f3f2f1;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .dept-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      padding-left: 8px;
+    }
+    
+    .dept-bar-value {
+      font-size: 11px;
+      font-weight: 600;
+      color: white;
+    }
+    
+    /* Age Distribution */
+    .age-pyramid {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: var(--spacing-md) 0;
+    }
+    
+    .age-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .age-label {
+      width: 50px;
+      font-size: 11px;
+      color: #605e5c;
+      text-align: center;
+    }
+    
+    .age-bar-container {
+      flex: 1;
+      display: flex;
+      gap: 4px;
+    }
+    
+    .age-bar-left {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    .age-bar-right {
+      flex: 1;
+    }
+    
+    .age-bar {
+      height: 20px;
+      border-radius: 2px;
+    }
+    
+    .age-bar.male { background: var(--color-chart-1); }
+    .age-bar.female { background: var(--color-chart-2); }
+    
+    /* Turnover Chart */
+    .turnover-chart {
+      height: 180px;
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      padding: var(--spacing-md) 0;
+    }
+    
+    .turnover-month {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .turnover-bars {
+      display: flex;
+      gap: 2px;
+      align-items: flex-end;
+      height: 140px;
+    }
+    
+    .turnover-bar {
+      width: 16px;
+      border-radius: 2px 2px 0 0;
+    }
+    
+    .turnover-bar.hired { background: #107c10; }
+    .turnover-bar.left { background: #d13438; }
+    
+    .turnover-label {
+      font-size: 10px;
+      color: #605e5c;
+    }
+    
+    /* Satisfaction Gauge */
+    .satisfaction-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: var(--spacing-lg) 0;
+    }
+    
+    .satisfaction-ring {
+      width: 160px;
+      height: 160px;
+      position: relative;
+    }
+    
+    .satisfaction-ring svg {
+      transform: rotate(-90deg);
+    }
+    
+    .satisfaction-ring-bg {
+      fill: none;
+      stroke: #e1dfdd;
+      stroke-width: 12;
+    }
+    
+    .satisfaction-ring-fill {
+      fill: none;
+      stroke: url(#satisfactionGradient);
+      stroke-width: 12;
+      stroke-linecap: round;
+      stroke-dasharray: 377;
+      stroke-dashoffset: 75;
+    }
+    
+    .satisfaction-value {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    
+    .satisfaction-number {
+      font-size: 36px;
+      font-weight: 600;
+      color: #323130;
+    }
+    
+    .satisfaction-label {
+      font-size: 11px;
+      color: #605e5c;
+    }
+    
+    .satisfaction-breakdown {
+      display: flex;
+      gap: var(--spacing-lg);
+      margin-top: var(--spacing-md);
+    }
+    
+    .satisfaction-item {
+      text-align: center;
+    }
+    
+    .satisfaction-item-value {
+      font-size: 18px;
+      font-weight: 600;
+      color: #323130;
+    }
+    
+    .satisfaction-item-label {
+      font-size: 10px;
+      color: #605e5c;
+    }
+    
+    /* Training Table */
+    .training-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+    
+    .training-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      padding: var(--spacing-sm) var(--spacing-md);
+      background: #faf9f8;
+      border-radius: 6px;
+    }
+    
+    .training-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(77,74,157,0.1);
+      color: var(--color-chart-1);
+    }
+    
+    .training-info {
+      flex: 1;
+    }
+    
+    .training-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: #323130;
+    }
+    
+    .training-meta {
+      font-size: 11px;
+      color: #605e5c;
+    }
+    
+    .training-progress {
+      width: 80px;
+    }
+    
+    .training-progress-bar {
+      height: 6px;
+      background: #e1dfdd;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    
+    .training-progress-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--color-chart-1), var(--color-chart-2));
+    }
+    
+    .training-progress-text {
+      font-size: 10px;
+      color: #605e5c;
+      text-align: right;
+      margin-top: 2px;
+    }
+    
+    /* Top Performers */
+    .performers-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+    
+    .performer-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      padding: var(--spacing-sm);
+    }
+    
+    .performer-rank {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .performer-rank.gold { background: #ffd700; color: #323130; }
+    .performer-rank.silver { background: #c0c0c0; color: #323130; }
+    .performer-rank.bronze { background: #cd7f32; color: white; }
+    .performer-rank.normal { background: #f3f2f1; color: #605e5c; }
+    
+    .performer-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--color-chart-1);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .performer-info {
+      flex: 1;
+    }
+    
+    .performer-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: #323130;
+    }
+    
+    .performer-dept {
+      font-size: 11px;
+      color: #605e5c;
+    }
+    
+    .performer-score {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-chart-1);
+    }
+    
+    /* Bottom Grid */
+    .hr-bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-md);
+    }
+    
+    @media (max-width: 1400px) {
+      .hr-kpis {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .hr-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .hr-chart.wide {
+        grid-column: span 1;
+      }
+    }
+    
+    @media (max-width: 1200px) {
+      .hr-grid, .hr-bottom-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img src="logos/logo_largo.png" alt="Omnitok">
+          <span class="sidebar-system-name">People Analytics</span>
+        </div>
+        <button class="sidebar-toggle">
+          <i data-lucide="panel-left-close" style="width:18px;height:18px"></i>
+        </button>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Reportes</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="03-bi-powerbi.html">
+                <span class="sidebar-icon"><i data-lucide="trending-up"></i></span>
+                <span class="sidebar-text">Ventas</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="03-bi-powerbi-finanzas.html">
+                <span class="sidebar-icon"><i data-lucide="wallet"></i></span>
+                <span class="sidebar-text">Finanzas</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="03-bi-powerbi-operaciones.html">
+                <span class="sidebar-icon"><i data-lucide="factory"></i></span>
+                <span class="sidebar-text">Operaciones</span>
+              </a>
+            </li>
+            <li class="sidebar-item active">
+              <a href="03-bi-powerbi-rrhh.html">
+                <span class="sidebar-icon"><i data-lucide="users"></i></span>
+                <span class="sidebar-text">Recursos Humanos</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Gestión</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="user-plus"></i></span>
+                <span class="sidebar-text">Reclutamiento</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="graduation-cap"></i></span>
+                <span class="sidebar-text">Capacitación</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="star"></i></span>
+                <span class="sidebar-text">Evaluaciones</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="avatar avatar-sm">AL</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name">Ana López</span>
+            <span class="sidebar-user-role">HR Director</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="header">
+        <div class="header-left">
+          <nav class="breadcrumb">
+            <a href="#" class="breadcrumb-item">Reportes</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">People Analytics</span>
+          </nav>
+        </div>
+        <div class="header-right">
+          <input type="search" class="search-input" placeholder="Buscar empleado...">
+          <button class="header-icon-btn">
+            <i data-lucide="bell" style="width:20px;height:20px"></i>
+          </button>
+          <div class="header-user">
+            <div class="avatar avatar-sm">AL</div>
+            <span class="header-user-name">Ana</span>
+          </div>
+        </div>
+      </header>
+      
+      <main class="content" style="padding:var(--spacing-lg)">
+        <div class="bi-layout">
+          <div class="bi-content">
+            <div class="bi-embed">
+              <div class="bi-mock">
+                <!-- Header -->
+                <div class="bi-header">
+                  <div>
+                    <h2 class="bi-title">People Analytics Dashboard</h2>
+                    <p class="bi-subtitle">Datos actualizados al 19 de Enero 2026</p>
+                  </div>
+                </div>
+                
+                <!-- KPIs -->
+                <div class="hr-kpis">
+                  <div class="hr-kpi">
+                    <div class="hr-kpi-icon purple">
+                      <i data-lucide="users" style="width:24px;height:24px"></i>
+                    </div>
+                    <div class="hr-kpi-value">847</div>
+                    <div class="hr-kpi-label">Total Empleados</div>
+                    <div class="hr-kpi-change up">+23 este mes</div>
+                  </div>
+                  <div class="hr-kpi">
+                    <div class="hr-kpi-icon magenta">
+                      <i data-lucide="user-plus" style="width:24px;height:24px"></i>
+                    </div>
+                    <div class="hr-kpi-value">34</div>
+                    <div class="hr-kpi-label">Nuevas Contrataciones</div>
+                    <div class="hr-kpi-change up">+12% vs mes ant.</div>
+                  </div>
+                  <div class="hr-kpi">
+                    <div class="hr-kpi-icon cyan">
+                      <i data-lucide="user-minus" style="width:24px;height:24px"></i>
+                    </div>
+                    <div class="hr-kpi-value">11</div>
+                    <div class="hr-kpi-label">Bajas</div>
+                    <div class="hr-kpi-change down">Rotación: 1.3%</div>
+                  </div>
+                  <div class="hr-kpi">
+                    <div class="hr-kpi-icon green">
+                      <i data-lucide="smile" style="width:24px;height:24px"></i>
+                    </div>
+                    <div class="hr-kpi-value">4.2</div>
+                    <div class="hr-kpi-label">Satisfacción (1-5)</div>
+                    <div class="hr-kpi-change up">+0.3 vs Q3</div>
+                  </div>
+                  <div class="hr-kpi">
+                    <div class="hr-kpi-icon yellow">
+                      <i data-lucide="briefcase" style="width:24px;height:24px"></i>
+                    </div>
+                    <div class="hr-kpi-value">12</div>
+                    <div class="hr-kpi-label">Vacantes Abiertas</div>
+                    <div class="hr-kpi-change neutral">5 en proceso</div>
+                  </div>
+                </div>
+                
+                <!-- Main Grid -->
+                <div class="hr-grid">
+                  <!-- Headcount by Department -->
+                  <div class="hr-chart wide">
+                    <div class="hr-chart-header">
+                      <span class="hr-chart-title">Headcount por Departamento</span>
+                    </div>
+                    <div class="dept-bars">
+                      <div class="dept-bar">
+                        <span class="dept-bar-label">Operaciones</span>
+                        <div class="dept-bar-track">
+                          <div class="dept-bar-fill" style="width:85%;background:var(--color-chart-1)">
+                            <span class="dept-bar-value">312</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="dept-bar">
+                        <span class="dept-bar-label">Ventas</span>
+                        <div class="dept-bar-track">
+                          <div class="dept-bar-fill" style="width:52%;background:var(--color-chart-2)">
+                            <span class="dept-bar-value">189</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="dept-bar">
+                        <span class="dept-bar-label">Tecnología</span>
+                        <div class="dept-bar-track">
+                          <div class="dept-bar-fill" style="width:38%;background:var(--color-chart-3)">
+                            <span class="dept-bar-value">142</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="dept-bar">
+                        <span class="dept-bar-label">Administración</span>
+                        <div class="dept-bar-track">
+                          <div class="dept-bar-fill" style="width:28%;background:var(--color-chart-4)">
+                            <span class="dept-bar-value">104</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="dept-bar">
+                        <span class="dept-bar-label">Marketing</span>
+                        <div class="dept-bar-track">
+                          <div class="dept-bar-fill" style="width:18%;background:#22c55e">
+                            <span class="dept-bar-value">67</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="dept-bar">
+                        <span class="dept-bar-label">RRHH</span>
+                        <div class="dept-bar-track">
+                          <div class="dept-bar-fill" style="width:9%;background:#8b5cf6">
+                            <span class="dept-bar-value">33</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Satisfaction -->
+                  <div class="hr-chart">
+                    <div class="hr-chart-header">
+                      <span class="hr-chart-title">Índice de Satisfacción</span>
+                    </div>
+                    <div class="satisfaction-container">
+                      <div class="satisfaction-ring">
+                        <svg width="160" height="160" viewBox="0 0 160 160">
+                          <defs>
+                            <linearGradient id="satisfactionGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                              <stop offset="0%" style="stop-color:var(--color-chart-2)"/>
+                              <stop offset="100%" style="stop-color:var(--color-chart-1)"/>
+                            </linearGradient>
+                          </defs>
+                          <circle cx="80" cy="80" r="60" class="satisfaction-ring-bg"/>
+                          <circle cx="80" cy="80" r="60" class="satisfaction-ring-fill"/>
+                        </svg>
+                        <div class="satisfaction-value">
+                          <div class="satisfaction-number">84%</div>
+                          <div class="satisfaction-label">satisfechos</div>
+                        </div>
+                      </div>
+                      <div class="satisfaction-breakdown">
+                        <div class="satisfaction-item">
+                          <div class="satisfaction-item-value" style="color:#107c10">42%</div>
+                          <div class="satisfaction-item-label">Muy satisfechos</div>
+                        </div>
+                        <div class="satisfaction-item">
+                          <div class="satisfaction-item-value" style="color:var(--color-chart-1)">42%</div>
+                          <div class="satisfaction-item-label">Satisfechos</div>
+                        </div>
+                        <div class="satisfaction-item">
+                          <div class="satisfaction-item-value" style="color:#f59e0b">12%</div>
+                          <div class="satisfaction-item-label">Neutral</div>
+                        </div>
+                        <div class="satisfaction-item">
+                          <div class="satisfaction-item-value" style="color:#d13438">4%</div>
+                          <div class="satisfaction-item-label">Insatisfechos</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Bottom Grid -->
+                <div class="hr-bottom-grid">
+                  <!-- Turnover -->
+                  <div class="hr-chart">
+                    <div class="hr-chart-header">
+                      <span class="hr-chart-title">Contrataciones vs Bajas (últimos 6 meses)</span>
+                    </div>
+                    <div class="turnover-chart">
+                      <div class="turnover-month">
+                        <div class="turnover-bars">
+                          <div class="turnover-bar hired" style="height:80px"></div>
+                          <div class="turnover-bar left" style="height:30px"></div>
+                        </div>
+                        <span class="turnover-label">Ago</span>
+                      </div>
+                      <div class="turnover-month">
+                        <div class="turnover-bars">
+                          <div class="turnover-bar hired" style="height:60px"></div>
+                          <div class="turnover-bar left" style="height:40px"></div>
+                        </div>
+                        <span class="turnover-label">Sep</span>
+                      </div>
+                      <div class="turnover-month">
+                        <div class="turnover-bars">
+                          <div class="turnover-bar hired" style="height:90px"></div>
+                          <div class="turnover-bar left" style="height:25px"></div>
+                        </div>
+                        <span class="turnover-label">Oct</span>
+                      </div>
+                      <div class="turnover-month">
+                        <div class="turnover-bars">
+                          <div class="turnover-bar hired" style="height:70px"></div>
+                          <div class="turnover-bar left" style="height:35px"></div>
+                        </div>
+                        <span class="turnover-label">Nov</span>
+                      </div>
+                      <div class="turnover-month">
+                        <div class="turnover-bars">
+                          <div class="turnover-bar hired" style="height:100px"></div>
+                          <div class="turnover-bar left" style="height:20px"></div>
+                        </div>
+                        <span class="turnover-label">Dic</span>
+                      </div>
+                      <div class="turnover-month">
+                        <div class="turnover-bars">
+                          <div class="turnover-bar hired" style="height:85px"></div>
+                          <div class="turnover-bar left" style="height:28px"></div>
+                        </div>
+                        <span class="turnover-label">Ene</span>
+                      </div>
+                    </div>
+                    <div style="display:flex;gap:16px;justify-content:center;font-size:11px;color:#605e5c">
+                      <div style="display:flex;align-items:center;gap:4px">
+                        <div style="width:12px;height:12px;background:#107c10;border-radius:2px"></div>
+                        Contrataciones
+                      </div>
+                      <div style="display:flex;align-items:center;gap:4px">
+                        <div style="width:12px;height:12px;background:#d13438;border-radius:2px"></div>
+                        Bajas
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Training Progress -->
+                  <div class="hr-chart">
+                    <div class="hr-chart-header">
+                      <span class="hr-chart-title">Programas de Capacitación Activos</span>
+                    </div>
+                    <div class="training-list">
+                      <div class="training-item">
+                        <div class="training-icon">
+                          <i data-lucide="shield" style="width:18px;height:18px"></i>
+                        </div>
+                        <div class="training-info">
+                          <div class="training-name">Seguridad Industrial</div>
+                          <div class="training-meta">312 participantes • Obligatorio</div>
+                        </div>
+                        <div class="training-progress">
+                          <div class="training-progress-bar">
+                            <div class="training-progress-fill" style="width:92%"></div>
+                          </div>
+                          <div class="training-progress-text">92%</div>
+                        </div>
+                      </div>
+                      <div class="training-item">
+                        <div class="training-icon">
+                          <i data-lucide="code" style="width:18px;height:18px"></i>
+                        </div>
+                        <div class="training-info">
+                          <div class="training-name">Transformación Digital</div>
+                          <div class="training-meta">156 participantes • Opcional</div>
+                        </div>
+                        <div class="training-progress">
+                          <div class="training-progress-bar">
+                            <div class="training-progress-fill" style="width:67%"></div>
+                          </div>
+                          <div class="training-progress-text">67%</div>
+                        </div>
+                      </div>
+                      <div class="training-item">
+                        <div class="training-icon">
+                          <i data-lucide="users" style="width:18px;height:18px"></i>
+                        </div>
+                        <div class="training-info">
+                          <div class="training-name">Liderazgo Efectivo</div>
+                          <div class="training-meta">48 participantes • Gerentes</div>
+                        </div>
+                        <div class="training-progress">
+                          <div class="training-progress-bar">
+                            <div class="training-progress-fill" style="width:45%"></div>
+                          </div>
+                          <div class="training-progress-text">45%</div>
+                        </div>
+                      </div>
+                      <div class="training-item">
+                        <div class="training-icon">
+                          <i data-lucide="heart" style="width:18px;height:18px"></i>
+                        </div>
+                        <div class="training-info">
+                          <div class="training-name">Bienestar Laboral</div>
+                          <div class="training-meta">234 participantes • Voluntario</div>
+                        </div>
+                        <div class="training-progress">
+                          <div class="training-progress-bar">
+                            <div class="training-progress-fill" style="width:78%"></div>
+                          </div>
+                          <div class="training-progress-text">78%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Top Performers -->
+                  <div class="hr-chart">
+                    <div class="hr-chart-header">
+                      <span class="hr-chart-title">Top Performers Q4 2024</span>
+                    </div>
+                    <div class="performers-list">
+                      <div class="performer-item">
+                        <div class="performer-rank gold">1</div>
+                        <div class="performer-avatar">MG</div>
+                        <div class="performer-info">
+                          <div class="performer-name">María González</div>
+                          <div class="performer-dept">Ventas</div>
+                        </div>
+                        <div class="performer-score">98.5</div>
+                      </div>
+                      <div class="performer-item">
+                        <div class="performer-rank silver">2</div>
+                        <div class="performer-avatar" style="background:var(--color-chart-2)">JP</div>
+                        <div class="performer-info">
+                          <div class="performer-name">Juan Pérez</div>
+                          <div class="performer-dept">Tecnología</div>
+                        </div>
+                        <div class="performer-score">97.2</div>
+                      </div>
+                      <div class="performer-item">
+                        <div class="performer-rank bronze">3</div>
+                        <div class="performer-avatar" style="background:var(--color-chart-3)">CR</div>
+                        <div class="performer-info">
+                          <div class="performer-name">Carmen Ruiz</div>
+                          <div class="performer-dept">Operaciones</div>
+                        </div>
+                        <div class="performer-score">96.8</div>
+                      </div>
+                      <div class="performer-item">
+                        <div class="performer-rank normal">4</div>
+                        <div class="performer-avatar" style="background:var(--color-chart-4)">RL</div>
+                        <div class="performer-info">
+                          <div class="performer-name">Roberto Luna</div>
+                          <div class="performer-dept">Marketing</div>
+                        </div>
+                        <div class="performer-score">95.4</div>
+                      </div>
+                      <div class="performer-item">
+                        <div class="performer-rank normal">5</div>
+                        <div class="performer-avatar" style="background:#22c55e">AS</div>
+                        <div class="performer-info">
+                          <div class="performer-name">Andrea Silva</div>
+                          <div class="performer-dept">Administración</div>
+                        </div>
+                        <div class="performer-score">94.9</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Age Distribution -->
+                  <div class="hr-chart">
+                    <div class="hr-chart-header">
+                      <span class="hr-chart-title">Distribución por Edad y Género</span>
+                    </div>
+                    <div class="age-pyramid">
+                      <div class="age-row">
+                        <div class="age-bar-left">
+                          <div class="age-bar male" style="width:15%"></div>
+                        </div>
+                        <span class="age-label">55+</span>
+                        <div class="age-bar-right">
+                          <div class="age-bar female" style="width:12%"></div>
+                        </div>
+                      </div>
+                      <div class="age-row">
+                        <div class="age-bar-left">
+                          <div class="age-bar male" style="width:35%"></div>
+                        </div>
+                        <span class="age-label">45-54</span>
+                        <div class="age-bar-right">
+                          <div class="age-bar female" style="width:28%"></div>
+                        </div>
+                      </div>
+                      <div class="age-row">
+                        <div class="age-bar-left">
+                          <div class="age-bar male" style="width:55%"></div>
+                        </div>
+                        <span class="age-label">35-44</span>
+                        <div class="age-bar-right">
+                          <div class="age-bar female" style="width:48%"></div>
+                        </div>
+                      </div>
+                      <div class="age-row">
+                        <div class="age-bar-left">
+                          <div class="age-bar male" style="width:70%"></div>
+                        </div>
+                        <span class="age-label">25-34</span>
+                        <div class="age-bar-right">
+                          <div class="age-bar female" style="width:65%"></div>
+                        </div>
+                      </div>
+                      <div class="age-row">
+                        <div class="age-bar-left">
+                          <div class="age-bar male" style="width:40%"></div>
+                        </div>
+                        <span class="age-label">18-24</span>
+                        <div class="age-bar-right">
+                          <div class="age-bar female" style="width:35%"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="display:flex;gap:16px;justify-content:center;font-size:11px;color:#605e5c;margin-top:8px">
+                      <div style="display:flex;align-items:center;gap:4px">
+                        <div style="width:12px;height:12px;background:var(--color-chart-1);border-radius:2px"></div>
+                        Masculino (54%)
+                      </div>
+                      <div style="display:flex;align-items:center;gap:4px">
+                        <div style="width:12px;height:12px;background:var(--color-chart-2);border-radius:2px"></div>
+                        Femenino (46%)
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Chat Panel -->
+          <aside class="bi-chat-panel">
+            <div class="chat-panel">
+              <header class="chat-header">
+                <div class="chat-header-icon">
+                  <i data-lucide="sparkles" style="width:18px;height:18px"></i>
+                </div>
+                <h3 class="chat-header-title">HR Assistant</h3>
+                <button class="chat-toggle">
+                  <i data-lucide="chevron-right" style="width:18px;height:18px"></i>
+                </button>
+              </header>
+              
+              <div class="chat-insights">
+                <span class="chat-insights-title">Insights de RRHH</span>
+                <div class="insight-card positive">
+                  <span class="insight-icon">📈</span>
+                  <div class="insight-content">
+                    <strong>Satisfacción en alza</strong>
+                    <p>+0.3 puntos vs trimestre anterior</p>
+                  </div>
+                </div>
+                <div class="insight-card warning">
+                  <span class="insight-icon">👥</span>
+                  <div class="insight-content">
+                    <strong>Rotación en Ventas</strong>
+                    <p>2.1% - superior al promedio (1.3%)</p>
+                  </div>
+                </div>
+                <div class="insight-card">
+                  <span class="insight-icon">🎓</span>
+                  <div class="insight-content">
+                    <strong>Capacitación</strong>
+                    <p>92% completó curso de seguridad</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="chat-messages">
+                <div class="chat-message assistant">
+                  Hola Ana, el dashboard muestra métricas positivas este mes. ¿En qué puedo ayudarte?
+                  <div class="chat-message-time">11:20</div>
+                </div>
+                <div class="chat-message user">
+                  ¿Por qué hay más rotación en Ventas?
+                  <div class="chat-message-time">11:21</div>
+                </div>
+                <div class="chat-message assistant">
+                  La rotación en Ventas (2.1%) se debe principalmente a:
+                  <br><br>
+                  1. <strong>Competencia salarial</strong>: 3 vendedores senior fueron contratados por competidores
+                  <br>
+                  2. <strong>Zona geográfica</strong>: 2 renuncias en sucursal Norte por reubicación
+                  <br><br>
+                  Recomiendo revisar la estructura de comisiones para el equipo senior.
+                  <div class="chat-message-time">11:21</div>
+                </div>
+              </div>
+              
+              <div class="chat-input-area">
+                <div class="chat-suggestions">
+                  <button class="chat-suggestion">Análisis de ausentismo</button>
+                  <button class="chat-suggestion">Proyección headcount</button>
+                </div>
+                <div class="chat-input-wrapper">
+                  <textarea class="chat-input" placeholder="Pregunta sobre RRHH..." rows="1"></textarea>
+                  <button class="btn btn-primary btn-sm chat-send">
+                    <i data-lucide="send" style="width:16px;height:16px"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+  
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

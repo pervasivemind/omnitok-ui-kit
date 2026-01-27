@@ -1,0 +1,227 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Introduction" />
+
+# Omnitok UI Kit
+
+Biblioteca completa de componentes React para sistemas administrativos y productos internos.
+
+## 🎨 Características
+
+- **React 18 + TypeScript** - React moderno con type safety completo
+- **Tailwind CSS** - Styling con tokens de diseño personalizados
+- **Accesible** - Construido con accesibilidad en mente
+- **Customizable** - Fácil de personalizar con CSS variables y Tailwind
+- **Monorepo** - Organizado con pnpm workspaces
+- **Storybook 8** - Documentación interactiva de componentes
+
+## 📦 Instalación
+
+```bash
+npm install @omnitok/ui lucide-react
+# o
+pnpm add @omnitok/ui lucide-react
+```
+
+## 🚀 Uso Básico
+
+```tsx
+import { Button, Card, Layout, Sidebar } from '@omnitok/ui';
+import '@omnitok/ui/styles.css';
+import { Home, Users, Settings } from 'lucide-react';
+
+function App() {
+  const sidebarItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: <Home size={20} /> },
+    { id: 'users', label: 'Usuarios', icon: <Users size={20} /> },
+    { id: 'settings', label: 'Configuración', icon: <Settings size={20} /> },
+  ];
+
+  return (
+    <Layout
+      sidebarItems={sidebarItems}
+      logo={<img src="logo_largo_blanco.png" alt="Logo" />}
+      logoCollapsed={<img src="logo_cuadrado_color.png" alt="Logo" />}
+      systemName="Mi Sistema"
+      activeSidebarId="dashboard"
+      headerTitle="Dashboard"
+      user={{ name: 'Usuario', role: 'Admin' }}
+    >
+      <Card>
+        <h2>Bienvenido</h2>
+        <Button variant="primary">Comenzar</Button>
+      </Card>
+    </Layout>
+  );
+}
+```
+
+## 📚 Componentes
+
+### Básicos
+- **Button** - Botones con múltiples variantes
+- **Input** - Campos de texto con validación
+- **Select** - Dropdowns personalizados
+- **Textarea** - Áreas de texto
+- **Checkbox** - Casillas de verificación
+- **Radio** - Botones de radio
+
+### Display
+- **Card** - Contenedores con header colorido
+- **Badge** - Etiquetas de estado
+- **Avatar** - Avatares de usuario
+- **Alert** - Mensajes de alerta
+
+### Layout
+- **Sidebar** - Navegación lateral con logo centrado
+- **Header** - Barra superior con búsqueda y usuario
+- **Layout** - Layout completo con sidebar + header
+- **Breadcrumb** - Migas de pan
+
+### Data
+- **Table** - Tablas con headers coloridos
+- **Tabs** - Pestañas con 3 variantes
+- **Pagination** - Paginación de datos
+
+### Feedback
+- **Modal** - Modales con header colorido
+- **Toast** - Notificaciones temporales
+
+### Pages
+- **LoginPage** - Página de login con 3 variantes
+
+## 🎨 Design System
+
+### Colores de Marca
+- **Sidebar**: `#211f4b` (obligatorio para sidebar)
+- **Primary**: `#4D4A9D` (púrpura)
+- **Accent**: `#FF177B` (magenta)
+
+### Gradientes
+- **Sidebar activo**: `linear-gradient(90deg, #FF177B 0%, #4D4A9D 100%)`
+- **Headers**: `linear-gradient(90deg, #4D4A9D 0%, #3B3880 100%)`
+
+### Tipografía
+- **UI**: Nunito Sans
+- **Contenido**: Open Sans
+
+### Logos
+- **Sidebar expandido**: `logo_largo_blanco.png` (horizontal blanco)
+- **Sidebar colapsado**: `logo_cuadrado_color.png` (cuadrado color)
+- **Login**: `logo_largo_color.png` (horizontal color)
+
+## 📖 Documentación
+
+Explora las secciones:
+
+- **Design System** - Colores, tipografía, layout, íconos, patrones
+- **Components** - Documentación de cada componente
+- **Layout** - Sidebar, Header, Layout completo
+- **Pages** - LoginPage y ejemplos completos
+- **Examples** - Dashboard, Forms, Tables
+- **PowerBI** - Integración de dashboards PowerBI
+- **Metabase** - Integración de dashboards Metabase
+
+## 🔧 Desarrollo Local
+
+### Setup del repositorio
+
+```bash
+# Clonar repositorio
+git clone https://github.com/pervasivemind/omnitok-ui-kit.git
+cd omnitok-ui-kit/omnitok-ui
+
+# Instalar pnpm (si no lo tienes)
+npm install -g pnpm
+
+# Instalar dependencias
+pnpm install
+
+# Ejecutar Storybook
+pnpm storybook
+
+# Build completo
+pnpm build
+```
+
+### Comandos útiles
+
+```bash
+# Desarrollar componentes
+cd packages/core && pnpm dev
+
+# Build solo core package
+cd packages/core && pnpm build
+
+# Lint
+pnpm lint
+
+# Format
+pnpm format
+```
+
+## 🐳 Docker
+
+### Deployar Storybook
+
+```bash
+# Build imagen
+docker build -t omnitok-ui-storybook .
+
+# Run container
+docker run -p 8080:80 omnitok-ui-storybook
+
+# O usar docker-compose
+docker-compose up -d
+```
+
+Acceder en: http://localhost:8080
+
+## 📦 Usar en Otros Proyectos
+
+### Instalación
+
+```bash
+npm install @omnitok/ui lucide-react
+```
+
+### Importar estilos
+
+```tsx
+// En tu main.tsx o App.tsx
+import '@omnitok/ui/styles.css';
+```
+
+### Ejemplo completo
+
+Ver sección "🚀 Uso Básico" arriba para código completo.
+
+### Assets (Logos)
+
+Descarga los logos del repositorio (`legacy/figma/`) y colócalos en tu carpeta `public/`:
+- `logo_largo_blanco.png` → Sidebar expandido
+- `logo_cuadrado_color.png` → Sidebar colapsado
+- `logo_largo_color.png` → Login
+
+## 📖 Documentación Completa
+
+**Storybook** (esta misma aplicación):
+- **Design System**: Colors, Typography, Icons, Patterns, Cursor Rules
+- **Components**: Docs interactivos de cada componente
+- **Examples**: Dashboard, Forms, Tables, AI Analytics
+- **PowerBI & Metabase**: Guías de integración BI
+
+## 📝 Convenciones
+
+1. **Sidebar siempre a la izquierda** - Patrón obligatorio
+2. **Logo centrado** en header del sidebar
+3. **Colores vibrantes** en headers (tables, cards, modals)
+4. **Botón de colapsar** siempre visible
+5. **Íconos de Lucide** exclusivamente
+6. **Responsive** - Mobile-first approach
+
+## 🌐 Recursos
+
+- [Lucide Icons](https://lucide.dev)
+- [Tailwind CSS](https://tailwindcss.com)
+- [React Documentation](https://react.dev)

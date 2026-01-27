@@ -1,0 +1,181 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Design System/PowerBI" />
+
+# PowerBI - Guía de Diseño
+
+Directrices para integración de dashboards PowerBI en sistemas administrativos.
+
+## Modos de Integración
+
+### 1. Standalone
+Dashboard ocupa toda la pantalla (sin sidebar ni header del sistema)
+
+**Uso**: Análisis profundo, reportes complejos, presentaciones
+
+### 2. Embedded
+Dashboard embebido dentro del layout del sistema
+
+**Uso**: Dashboards operativos, métricas rápidas, integración con workflow
+
+## Tema PowerBI
+
+Usar el siguiente tema JSON para mantener consistencia con el design system:
+
+```json
+{
+  "name": "Omnitok Theme",
+  "dataColors": [
+    "#4D4A9D",
+    "#FF177B",
+    "#10B981",
+    "#F59E0B",
+    "#3B82F6",
+    "#8B5CF6",
+    "#EC4899",
+    "#14B8A6"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#1F2937",
+  "tableAccent": "#4D4A9D",
+  "good": "#10B981",
+  "neutral": "#F59E0B",
+  "bad": "#EF4444",
+  "maximum": "#059669",
+  "center": "#F59E0B",
+  "minimum": "#DC2626",
+  "null": "#9CA3AF"
+}
+```
+
+## Layout con PowerBI
+
+### Embedded con Panel AI
+
+```
+┌──────────┬────────────────────┬──────────┐
+│  Sidebar │   PowerBI Report   │ AI Panel │
+│  (256px) │                    │ (360px)  │
+└──────────┴────────────────────┴──────────┘
+```
+
+**Implementación**:
+```tsx
+<Layout
+  sidebarItems={items}
+  logo={LogoExpanded}
+  logoCollapsed={LogoCollapsed}
+  systemName="Financial Analytics"
+  activeSidebarId="analytics"
+  headerTitle="Dashboard Financiero"
+  rightPanel={<AIInsightPanel />}
+>
+  <PowerBIEmbed
+    embedConfig={{
+      type: 'report',
+      id: reportId,
+      embedUrl: embedUrl,
+      accessToken: token,
+    }}
+    cssClassName="powerbi-report-container"
+  />
+</Layout>
+```
+
+## Casos de Uso
+
+### 1. Dashboard Financiero
+- **KPIs**: Ingresos, Gastos, Margen, ROI
+- **Gráficos**: Líneas para tendencias, Barras para comparaciones
+- **Filtros**: Período, Categoría, Centro de Costo
+- **Colores**: Primary para ingresos, Accent para destacados
+
+### 2. Dashboard Operacional
+- **KPIs**: Productividad, Eficiencia, Tiempos, Volumen
+- **Gráficos**: Barras apiladas, Gauges, Tablas
+- **Filtros**: Área, Turno, Fecha
+- **Colores**: Success para cumplimiento, Warning para alertas
+
+### 3. Dashboard RRHH
+- **KPIs**: Headcount, Rotación, Ausentismo, Satisfacción
+- **Gráficos**: Donuts para distribución, Líneas para evolución
+- **Filtros**: Departamento, Ubicación, Período
+- **Colores**: Info para datos demográficos, Success/Warning para métricas
+
+## Panel de AI Insights (Opcional)
+
+Agregar panel derecho con:
+- Insights automáticos del dashboard
+- Chat para consultas en lenguaje natural
+- Recomendaciones basadas en datos
+- Alertas y anomalías detectadas
+
+```tsx
+<AIInsightPanel>
+  <div className="insight-card">
+    <TrendingUp className="text-success" />
+    <p>Las ventas aumentaron 15% este mes</p>
+  </div>
+  <div className="chat-interface">
+    {/* Chat component */}
+  </div>
+</AIInsightPanel>
+```
+
+## Estilos CSS
+
+```css
+.powerbi-report-container {
+  width: 100%;
+  height: calc(100vh - 64px); /* Altura total menos header */
+  border: none;
+}
+
+/* Embedded en card */
+.powerbi-card {
+  background: #FFFFFF;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.powerbi-card .card-header {
+  background: linear-gradient(90deg, #4D4A9D 0%, #3B3880 100%);
+  color: #FFFFFF;
+  padding: 16px;
+}
+
+.powerbi-card iframe {
+  width: 100%;
+  height: 600px;
+  border: none;
+}
+```
+
+## Responsive
+
+### Desktop (> 1024px)
+- Dashboard a ancho completo
+- Panel AI visible si está configurado
+- Filtros en header
+
+### Tablet (768px - 1024px)
+- Dashboard a ancho completo
+- Panel AI oculto
+- Filtros colapsables
+
+### Mobile (< 768px)
+- Considerar versión mobile-specific del reporte
+- Sidebar oculto por defecto
+- Filtros en modal
+
+## Buenas Prácticas
+
+1. **Performance**: Usar filtros de página para reducir carga de datos
+2. **Consistencia**: Mantener colores del theme en todos los reportes
+3. **Accesibilidad**: Incluir tooltips descriptivos
+4. **Navegación**: Breadcrumbs para reportes con drill-through
+5. **Loading**: Mostrar skeleton o spinner mientras carga
+6. **Error Handling**: Mensaje claro si el reporte no carga
+7. **Refresh**: Botón para refrescar datos manualmente
+8. **Export**: Permitir exportar a PDF/Excel cuando sea relevante

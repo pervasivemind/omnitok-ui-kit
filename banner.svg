@@ -1,0 +1,60 @@
+<svg width="1200" height="400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#211f4b;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#4D4A9D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF177B;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FF177B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4D4A9D;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="400" fill="url(#bgGradient)"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="100" cy="80" r="40" fill="rgba(255, 255, 255, 0.1)"/>
+  <circle cx="1100" cy="320" r="60" fill="rgba(255, 255, 255, 0.1)"/>
+  <rect x="900" y="50" width="80" height="80" rx="12" fill="rgba(255, 255, 255, 0.08)"/>
+  <rect x="150" y="280" width="100" height="100" rx="12" fill="rgba(255, 255, 255, 0.08)"/>
+  
+  <!-- Main content -->
+  <text x="600" y="140" font-family="'Nunito Sans', sans-serif" font-size="64" font-weight="700" fill="white" text-anchor="middle">
+    Omnitok UI Kit
+  </text>
+  
+  <text x="600" y="190" font-family="'Open Sans', sans-serif" font-size="24" font-weight="400" fill="rgba(255, 255, 255, 0.9)" text-anchor="middle">
+    Biblioteca de componentes React para sistemas administrativos
+  </text>
+  
+  <!-- Feature badges -->
+  <g transform="translate(300, 240)">
+    <rect width="140" height="40" rx="20" fill="rgba(255, 255, 255, 0.15)"/>
+    <text x="70" y="26" font-family="'Nunito Sans', sans-serif" font-size="16" font-weight="600" fill="white" text-anchor="middle">
+      React 18 + TS
+    </text>
+  </g>
+  
+  <g transform="translate(460, 240)">
+    <rect width="140" height="40" rx="20" fill="rgba(255, 255, 255, 0.15)"/>
+    <text x="70" y="26" font-family="'Nunito Sans', sans-serif" font-size="16" font-weight="600" fill="white" text-anchor="middle">
+      Tailwind CSS
+    </text>
+  </g>
+  
+  <g transform="translate(620, 240)">
+    <rect width="140" height="40" rx="20" fill="rgba(255, 255, 255, 0.15)"/>
+    <text x="70" y="26" font-family="'Nunito Sans', sans-serif" font-size="16" font-weight="600" fill="white" text-anchor="middle">
+      Storybook 8
+    </text>
+  </g>
+  
+  <!-- Bottom line -->
+  <text x="600" y="340" font-family="'Open Sans', sans-serif" font-size="16" font-weight="400" fill="rgba(255, 255, 255, 0.7)" text-anchor="middle">
+    Design System • 20+ Components • PowerBI/Metabase Integration • Docker Ready
+  </text>
+</svg>

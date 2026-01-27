@@ -1,0 +1,296 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Drag and Drop/Introducción" />
+
+# Drag and Drop
+
+Sistema completo de componentes arrastrables para interfaces interactivas. Implementado con `@dnd-kit`, una librería moderna, accesible y performante.
+
+## Componentes Disponibles
+
+### 🔢 SortableList
+
+Lista de elementos reordenables mediante drag and drop.
+
+**Casos de uso:**
+- Priorización de tareas
+- Reordenamiento de categorías
+- Configuración de orden de visualización
+- Gestión de playlist o galleries
+
+**Características:**
+- ✅ Animaciones fluidas
+- ✅ Feedback visual durante el arrastre
+- ✅ Manija de arrastre opcional
+- ✅ Soporte para contenido rico (iconos, badges, etc.)
+- ✅ Accesible con teclado
+
+---
+
+### 📎 FileDropzone
+
+Zona de arrastrar y soltar archivos con validación y preview.
+
+**Casos de uso:**
+- Upload de documentos
+- Gestión de imágenes
+- Carga masiva de archivos
+- Importación de datos
+
+**Características:**
+- ✅ Drag and drop visual
+- ✅ Click para seleccionar archivos
+- ✅ Vista previa de imágenes
+- ✅ Validación de tipo y tamaño
+- ✅ Límite de archivos configurable
+- ✅ Feedback de errores claro
+
+**Validaciones:**
+- Tipo de archivo (accept)
+- Tamaño máximo por archivo
+- Cantidad máxima de archivos
+
+---
+
+### 📋 KanbanBoard
+
+Tablero estilo Trello/Kanban con columnas y tarjetas arrastrables.
+
+**Casos de uso:**
+- Gestión de proyectos
+- Pipeline de ventas
+- Workflow de desarrollo
+- Seguimiento de tickets
+
+**Características:**
+- ✅ Múltiples columnas configurables
+- ✅ Arrastrar tarjetas entre columnas
+- ✅ Colores personalizables por columna
+- ✅ Límite de tarjetas por columna
+- ✅ Badges de estado
+- ✅ Metadata customizable
+- ✅ Callback on card move
+
+**Estructura de datos:**
+```typescript
+interface KanbanColumn {
+  id: string;
+  title: string;
+  cards: KanbanCard[];
+  color?: string;        // Color de identificación
+  maxCards?: number;     // Límite de tarjetas
+}
+
+interface KanbanCard {
+  id: string;
+  title: string;
+  description?: string;
+  metadata?: React.ReactNode;
+  badge?: {
+    text: string;
+    variant: 'primary' | 'success' | 'warning' | 'error' | 'neutral';
+  };
+}
+```
+
+---
+
+### 🎴 DraggableCard
+
+Tarjeta arrastrable simple para implementaciones personalizadas.
+
+**Casos de uso:**
+- Dashboard widgets arrastrables
+- Diseñadores de interfaces
+- Organización de contenido
+- Gamification
+
+**Características:**
+- ✅ Componente de bajo nivel
+- ✅ Completamente personalizable
+- ✅ Feedback visual automático
+- ✅ Data customizable
+- ✅ Compatible con useDroppable
+
+---
+
+## Guía de Uso
+
+### Instalación
+
+Los componentes ya están incluidos en `@omnitok/ui`:
+
+```bash
+npm install @omnitok/ui @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
+```
+
+### Import
+
+```typescript
+import {
+  SortableList,
+  FileDropzone,
+  KanbanBoard,
+  DraggableCard
+} from '@omnitok/ui';
+```
+
+### Ejemplo Básico - SortableList
+
+```tsx
+import { SortableList, SortableListItem } from '@omnitok/ui';
+import { useState } from 'react';
+
+function MyComponent() {
+  const [items, setItems] = useState<SortableListItem[]>([
+    { id: '1', content: 'Primer item' },
+    { id: '2', content: 'Segundo item' },
+    { id: '3', content: 'Tercer item' },
+  ]);
+
+  return (
+    <SortableList
+      items={items}
+      onReorder={setItems}
+      showHandle
+    />
+  );
+}
+```
+
+### Ejemplo Básico - FileDropzone
+
+```tsx
+import { FileDropzone } from '@omnitok/ui';
+
+function MyComponent() {
+  return (
+    <FileDropzone
+      accept="image/*"
+      maxFiles={5}
+      maxSize={10 * 1024 * 1024} // 10MB
+      onFilesAdded={(files) => {
+        console.log('Archivos subidos:', files);
+      }}
+      showPreview
+    />
+  );
+}
+```
+
+### Ejemplo Básico - KanbanBoard
+
+```tsx
+import { KanbanBoard, KanbanColumn } from '@omnitok/ui';
+import { useState } from 'react';
+
+function MyComponent() {
+  const [columns, setColumns] = useState<KanbanColumn[]>([
+    {
+      id: 'todo',
+      title: 'Por Hacer',
+      cards: [
+        { id: '1', title: 'Tarea 1' },
+        { id: '2', title: 'Tarea 2' },
+      ],
+    },
+    {
+      id: 'doing',
+      title: 'En Progreso',
+      cards: [],
+    },
+  ]);
+
+  return (
+    <KanbanBoard
+      columns={columns}
+      onCardMove={(cardId, from, to) => {
+        console.log(`Card ${cardId} moved from ${from} to ${to}`);
+      }}
+    />
+  );
+}
+```
+
+---
+
+## Efectos Visuales
+
+Todos los componentes incluyen efectos visuales cuidadosamente diseñados:
+
+### Durante el arrastre:
+- 🎨 **Opacidad reducida** del elemento original
+- 🎨 **Shadow elevado** del overlay
+- 🎨 **Borde resaltado** con color primario
+- 🎨 **Escala suave** del elemento activo
+- 🎨 **Cursor** cambia a grab/grabbing
+
+### En hover:
+- 🎨 **Borde de color primario**
+- 🎨 **Shadow suave**
+- 🎨 **Transiciones fluidas** (200ms)
+
+### Feedback de estado:
+- ✅ **Zona activa** - fondo azul suave
+- ✅ **Zona válida** - borde verde
+- ✅ **Zona inválida** - borde rojo
+- ✅ **Elemento bloqueado** - cursor not-allowed
+
+---
+
+## Accesibilidad
+
+Todos los componentes son accesibles:
+
+- ♿ **Navegación por teclado** completa
+- ♿ **Screen reader** compatible
+- ♿ **ARIA labels** apropiados
+- ♿ **Focus indicators** visibles
+- ♿ **Semantic HTML**
+
+### Atajos de teclado (SortableList):
+- `Space` / `Enter` - Activar arrastre
+- `Arrow Keys` - Mover elemento
+- `Escape` - Cancelar
+
+---
+
+## Performance
+
+Optimizaciones incluidas:
+
+- ⚡ **Virtual DOM eficiente** con React
+- ⚡ **Animaciones CSS** nativas
+- ⚡ **Debounce** en eventos
+- ⚡ **Lazy calculations**
+- ⚡ **Memoization** de componentes pesados
+
+---
+
+## Personalización
+
+Todos los componentes aceptan:
+
+- `className` - Clases CSS personalizadas
+- `style` - Estilos inline
+- Variantes de Tailwind para colores
+- Props específicas por componente
+
+### Ejemplo de Customización
+
+```tsx
+<SortableList
+  items={items}
+  className="max-w-2xl mx-auto"
+  itemClassName="bg-gradient-to-r from-primary-50 to-primary-100"
+  showHandle={false}
+/>
+```
+
+---
+
+## Recursos
+
+- [Documentación @dnd-kit](https://docs.dndkit.com/)
+- [Ejemplos en Storybook](/?path=/story/drag-and-drop-sortablelist--default)
+- [GitHub Omnitok UI](https://github.com/pervasivemind/omnitok-ui-kit)

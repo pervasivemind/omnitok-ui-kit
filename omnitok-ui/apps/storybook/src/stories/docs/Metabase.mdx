@@ -1,0 +1,247 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Design System/Metabase" />
+
+# Metabase - Guía de Diseño
+
+Directrices para integración de dashboards Metabase en sistemas administrativos.
+
+## Modo de Integración
+
+**IMPORTANTE**: Metabase **siempre** debe estar embebido dentro del layout del sistema.
+
+```
+┌──────────┬────────────────────┬──────────┐
+│  Sidebar │  Metabase Embed    │ AI Panel │
+│  (256px) │                    │ (360px)  │
+└──────────┴────────────────────┴──────────┘
+```
+
+## Configuración de Embedding
+
+### Metabase SDK
+
+```tsx
+import { MetabaseProvider, StaticDashboard } from '@metabase/embedding-sdk-react';
+
+<MetabaseProvider
+  config={{
+    metabaseInstanceUrl: 'https://metabase.ejemplo.com',
+    jwtProviderUri: '/api/metabase-sso',
+  }}
+  theme={{
+    colors: {
+      brand: '#4D4A9D',
+      'brand-light': 'rgba(77, 74, 157, 0.1)',
+      text: '#1F2937',
+      'text-light': '#6B7280',
+      border: '#E5E7EB',
+      background: '#FFFFFF',
+      'background-hover': '#F9FAFB',
+    },
+    fontFamily: 'Open Sans, sans-serif',
+    fontSize: '14px',
+  }}
+>
+  <StaticDashboard dashboardId={dashboardId} />
+</MetabaseProvider>
+```
+
+## Tema Metabase
+
+### Colores
+
+```javascript
+const metabaseTheme = {
+  colors: {
+    // Brand colors
+    brand: '#4D4A9D',
+    'brand-light': 'rgba(77, 74, 157, 0.1)',
+    
+    // Text
+    text: '#1F2937',
+    'text-light': '#6B7280',
+    'text-medium': '#374151',
+    
+    // Backgrounds
+    background: '#FFFFFF',
+    'background-hover': '#F9FAFB',
+    'background-disabled': '#F3F4F6',
+    
+    // Borders
+    border: '#E5E7EB',
+    
+    // Chart colors (mismo que PowerBI)
+    'chart-1': '#4D4A9D',
+    'chart-2': '#FF177B',
+    'chart-3': '#10B981',
+    'chart-4': '#F59E0B',
+    'chart-5': '#3B82F6',
+    'chart-6': '#8B5CF6',
+    'chart-7': '#EC4899',
+    'chart-8': '#14B8A6',
+    
+    // Semantic colors
+    success: '#10B981',
+    warning: '#F59E0B',
+    error: '#EF4444',
+    info: '#3B82F6',
+  },
+  fontFamily: 'Open Sans, -apple-system, sans-serif',
+  fontSize: '14px',
+  lineHeight: '1.5',
+};
+```
+
+## Layout con Metabase
+
+### Embedded Básico
+
+```tsx
+<Layout
+  sidebarItems={items}
+  logo={LogoExpanded}
+  logoCollapsed={LogoCollapsed}
+  systemName="Connect Dashboard"
+  activeSidebarId="analytics"
+  headerTitle="Analítica de Contenido"
+>
+  <Card noPadding className="h-full">
+    <CardHeader>Dashboard de Métricas</CardHeader>
+    <CardBody className="p-0">
+      <div className="metabase-container">
+        <StaticDashboard dashboardId={123} />
+      </div>
+    </CardBody>
+  </Card>
+</Layout>
+```
+
+### Con Panel AI
+
+```tsx
+<Layout
+  sidebarItems={items}
+  logo={LogoExpanded}
+  logoCollapsed={LogoCollapsed}
+  systemName="Analytics"
+  activeSidebarId="analytics"
+  headerTitle="Dashboard"
+  rightPanel={<AIInsightPanel />}
+  rightPanelWidth="360px"
+>
+  <MetabaseProvider config={config} theme={metabaseTheme}>
+    <StaticDashboard dashboardId={dashboardId} />
+  </MetabaseProvider>
+</Layout>
+```
+
+## Estilos CSS
+
+```css
+.metabase-container {
+  width: 100%;
+  min-height: 600px;
+  background: #FFFFFF;
+}
+
+/* Override de estilos de Metabase si es necesario */
+.metabase-container .QueryBuilder-section {
+  border-color: #E5E7EB !important;
+}
+
+.metabase-container .Button--primary {
+  background-color: #4D4A9D !important;
+}
+
+.metabase-container .Button--primary:hover {
+  background-color: #3B3880 !important;
+}
+```
+
+## Panel de AI Insights
+
+Agregar panel derecho con:
+- Resumen automático de métricas clave
+- Explicaciones de tendencias
+- Recomendaciones basadas en datos
+- Chat para consultas en lenguaje natural
+
+```tsx
+<div className="ai-panel">
+  <div className="ai-panel-header">
+    <MessageSquare size={18} />
+    <h3>AI Insights</h3>
+  </div>
+  
+  <div className="ai-panel-insights">
+    <div className="insight-card">
+      <TrendingUp className="text-success" />
+      <p>Las conversiones aumentaron 23% esta semana</p>
+    </div>
+    <div className="insight-card">
+      <AlertCircle className="text-warning" />
+      <p>El tráfico de móvil está por debajo del promedio</p>
+    </div>
+  </div>
+  
+  <div className="ai-panel-chat">
+    {/* Chat interface */}
+  </div>
+</div>
+```
+
+## Tipos de Visualizaciones Recomendadas
+
+### Métricas Clave (KPIs)
+- **Tipo**: Number cards, Gauges
+- **Colores**: Primary para valores principales
+- **Formato**: Incluir comparación vs período anterior
+
+### Tendencias
+- **Tipo**: Line charts, Area charts
+- **Colores**: Primary para serie principal, Accent para destacar
+- **Ejes**: Formato claro de fechas
+
+### Comparaciones
+- **Tipo**: Bar charts, Column charts
+- **Colores**: Usar paleta de charts (chart-1 a chart-8)
+- **Orden**: De mayor a menor valor
+
+### Distribución
+- **Tipo**: Pie charts, Donut charts
+- **Colores**: Paleta de charts
+- **Límite**: Máximo 6-8 segmentos
+
+### Tablas
+- **Formato**: Usar formato de moneda/porcentaje apropiado
+- **Ordenamiento**: Permitir ordenar por columnas
+- **Paginación**: Para tablas con muchas filas
+
+## Responsive
+
+### Desktop (> 1024px)
+- Dashboard a ancho completo
+- Panel AI visible
+- Todas las visualizaciones visibles
+
+### Tablet (768px - 1024px)
+- Dashboard a ancho completo
+- Panel AI oculto
+- Visualizaciones apiladas si es necesario
+
+### Mobile (< 768px)
+- Considerar dashboard mobile-specific
+- Visualizaciones apiladas verticalmente
+- Filtros en modal
+
+## Buenas Prácticas
+
+1. **Consistencia**: Usar el tema Omnitok en todos los dashboards
+2. **Performance**: Limitar datos mostrados, usar agregaciones
+3. **Filtros**: Incluir filtros relevantes en la parte superior
+4. **Interactividad**: Habilitar drill-through cuando sea útil
+5. **Refresh**: Configurar auto-refresh apropiado (5-15 min)
+6. **Tooltips**: Incluir tooltips descriptivos en visualizaciones
+7. **Accesibilidad**: Usar colores con buen contraste
+8. **Mobile**: Crear versión mobile si el dashboard es crítico

@@ -1,0 +1,353 @@
+# ===================================
+# PM ia ui-ux - Proyecto Principal
+# ===================================
+
+# Dependencies
+node_modules/
+.pnpm-store/
+.yarn/
+.npm/
+
+# Build outputs
+dist/
+.next/
+out/
+build/
+storybook-static/
+*.tsbuildinfo
+
+# ===================================
+# IDE & Editors
+# ===================================
+
+# VSCode
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Cursor
+.cursor/
+!.cursor/rules/
+
+# JetBrains IDEs (WebStorm, IntelliJ, etc.)
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.vim/
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ===================================
+# Operating Systems
+# ===================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ===================================
+# Logs & Debug
+# ===================================
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# ===================================
+# Environment & Secrets
+# ===================================
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.*.local
+.env.backup
+
+# API Keys & Secrets
+secrets/
+*.pem
+*.key
+*.cert
+credentials.json
+service-account.json
+
+# ===================================
+# Testing & Coverage
+# ===================================
+
+# Test coverage
+coverage/
+.nyc_output/
+*.lcov
+
+# Test results
+test-results/
+junit.xml
+
+# Playwright
+playwright-report/
+playwright/.cache/
+
+# ===================================
+# Monorepo & Build Tools
+# ===================================
+
+# Turbo
+.turbo/
+
+# Nx
+.nx/
+
+# Rush
+common/temp/
+
+# Lerna
+.lerna/
+
+# ===================================
+# Package Managers
+# ===================================
+
+# npm
+package-lock.json
+npm-debug.log*
+
+# Yarn
+yarn.lock
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+# pnpm
+pnpm-lock.yaml
+.pnpm-debug.log
+
+# ===================================
+# Frameworks & Libraries
+# ===================================
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# Nuxt.js
+.nuxt/
+.output/
+
+# Gatsby
+.cache/
+public/
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Storybook
+storybook-static/
+
+# ===================================
+# Databases & Data
+# ===================================
+
+# SQLite
+*.sqlite
+*.sqlite3
+*.db
+
+# MongoDB
+*.mongo
+
+# Redis
+dump.rdb
+
+# Local data
+data/
+*.csv
+*.xlsx
+
+# ===================================
+# Docker & Containers
+# ===================================
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# ===================================
+# Temporary & Cache Files
+# ===================================
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+*.cache
+
+# Cache directories
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+
+# ===================================
+# Documentation & Assets
+# ===================================
+
+# Generated documentation (keep source docs)
+# docs/generated/
+
+# Large media files (optional - uncomment if needed)
+# *.mp4
+# *.mov
+# *.avi
+# *.mkv
+
+# ===================================
+# AI & ML
+# ===================================
+
+# Python virtual environments (if using AI tools)
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Model files
+*.h5
+*.pkl
+*.joblib
+*.model
+
+# ===================================
+# Miscellaneous
+# ===================================
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# System files
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# ===================================
+# Project Specific
+# ===================================
+
+# Omnitok UI specific
+omnitok-ui/.turbo/
+omnitok-ui/apps/storybook/storybook-static/
+
+# Design files (large files)
+# *.fig
+# *.sketch
+# *.xd
+
+# Generated types
+*.d.ts.map
+
+# Build artifacts
+*.chunk.js
+*.bundle.js
+*.min.js
+*.min.css
+
+# ===================================
+# Keep These Files
+# ===================================
+
+# Keep important config files
+!.gitignore
+!.editorconfig
+!.prettierrc
+!.eslintrc.json
+!tsconfig.json
+!package.json
+!README.md
+!LICENSE
+
+# Keep cursor rules
+!.cursor/rules/*.mdc

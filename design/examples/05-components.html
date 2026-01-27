@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Componentes - Omnitok Design System</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .component-section {
+      margin-bottom: var(--spacing-2xl);
+    }
+    
+    .component-title {
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: var(--color-gray-800);
+      margin-bottom: var(--spacing-md);
+      padding-bottom: var(--spacing-sm);
+      border-bottom: 2px solid var(--color-primary);
+    }
+    
+    .component-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-md);
+      align-items: flex-start;
+    }
+    
+    .component-box {
+      background-color: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .component-label {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-gray-500);
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--spacing-md);
+    }
+    
+    .color-swatch {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .color-preview {
+      height: 80px;
+    }
+    
+    .color-info {
+      padding: var(--spacing-sm);
+      background-color: var(--color-white);
+    }
+    
+    .color-name {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-gray-700);
+    }
+    
+    .color-hex {
+      font-size: var(--text-xs);
+      color: var(--color-gray-500);
+      font-family: monospace;
+    }
+    
+    .button-row {
+      display: flex;
+      gap: var(--spacing-md);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--spacing-lg);
+    }
+    
+    .badge-row {
+      display: flex;
+      gap: var(--spacing-sm);
+      flex-wrap: wrap;
+    }
+    
+    .avatar-row {
+      display: flex;
+      gap: var(--spacing-md);
+      align-items: center;
+    }
+    
+    .alert-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+      max-width: 500px;
+    }
+    
+    .typography-sample {
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .typography-label {
+      font-size: var(--text-xs);
+      color: var(--color-gray-500);
+      margin-bottom: var(--spacing-xs);
+    }
+    
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: var(--spacing-md);
+    }
+    
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-md);
+      border-radius: var(--radius-md);
+      background-color: var(--color-gray-50);
+    }
+    
+    .icon-item:hover {
+      background-color: var(--color-gray-100);
+    }
+    
+    .icon-name {
+      font-size: var(--text-xs);
+      color: var(--color-gray-500);
+    }
+    
+    .spacing-demo {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--spacing-md);
+    }
+    
+    .spacing-box {
+      background-color: var(--color-primary);
+      border-radius: var(--radius-sm);
+    }
+    
+    .spacing-label {
+      font-size: var(--text-xs);
+      color: var(--color-gray-500);
+      text-align: center;
+      margin-top: var(--spacing-xs);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img src="logos/logo_largo.png" alt="Omnitok">
+          <span class="sidebar-system-name">Design System</span>
+        </div>
+        <button class="sidebar-toggle">
+          <i data-lucide="panel-left-close" style="width:18px;height:18px"></i>
+        </button>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Principal</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="01-dashboard.html">
+                <span class="sidebar-icon"><i data-lucide="layout-dashboard"></i></span>
+                <span class="sidebar-text">Dashboard</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="02-crud-list.html">
+                <span class="sidebar-icon"><i data-lucide="package"></i></span>
+                <span class="sidebar-text">Productos</span>
+                <span class="sidebar-badge">24</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="shopping-cart"></i></span>
+                <span class="sidebar-text">Pedidos</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="users"></i></span>
+                <span class="sidebar-text">Clientes</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Analítica</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item">
+              <a href="03-bi-powerbi.html">
+                <span class="sidebar-icon"><i data-lucide="bar-chart-2"></i></span>
+                <span class="sidebar-text">Power BI</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="04-bi-metabase.html">
+                <span class="sidebar-icon"><i data-lucide="pie-chart"></i></span>
+                <span class="sidebar-text">Metabase</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Sistema</span>
+          <ul class="sidebar-menu">
+            <li class="sidebar-item active">
+              <a href="05-components.html">
+                <span class="sidebar-icon"><i data-lucide="component"></i></span>
+                <span class="sidebar-text">Componentes</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#">
+                <span class="sidebar-icon"><i data-lucide="settings"></i></span>
+                <span class="sidebar-text">Configuración</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="avatar avatar-sm">PM</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name">Pedro Martínez</span>
+            <span class="sidebar-user-role">Administrador</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="header">
+        <div class="header-left">
+          <nav class="breadcrumb">
+            <a href="01-dashboard.html" class="breadcrumb-item">Dashboard</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item current">Componentes</span>
+          </nav>
+        </div>
+        <div class="header-right">
+          <input type="search" class="search-input" placeholder="Buscar...">
+          <button class="header-icon-btn">
+            <i data-lucide="bell" style="width:20px;height:20px"></i>
+            <span class="notification-dot"></span>
+          </button>
+          <div class="header-user">
+            <div class="avatar avatar-sm">PM</div>
+            <span class="header-user-name">Pedro</span>
+          </div>
+        </div>
+      </header>
+      
+      <main class="content">
+        <div class="page-header">
+          <div class="page-header-left">
+            <h1 class="page-title">Componentes</h1>
+            <p class="page-subtitle">Biblioteca de componentes del Design System Omnitok</p>
+          </div>
+        </div>
+        
+        <!-- Colors -->
+        <section class="component-section">
+          <h2 class="component-title">Colores</h2>
+          
+          <div class="component-label">Marca</div>
+          <div class="color-grid" style="margin-bottom:var(--spacing-lg)">
+            <div class="color-swatch">
+              <div class="color-preview" style="background-color:#211f4b"></div>
+              <div class="color-info">
+                <div class="color-name">Sidebar</div>
+                <div class="color-hex">#211f4b</div>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-preview" style="background-color:#4D4A9D"></div>
+              <div class="color-info">
+                <div class="color-name">Primary</div>
+                <div class="color-hex">#4D4A9D</div>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-preview" style="background-color:#FF177B"></div>
+              <div class="color-info">
+                <div class="color-name">Accent</div>
+                <div class="color-hex">#FF177B</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="component-label">Semánticos</div>
+          <div class="color-grid" style="margin-bottom:var(--spacing-lg)">
+            <div class="color-swatch">
+              <div class="color-preview" style="background-color:#22C55E"></div>
+              <div class="color-info">
+                <div class="color-name">Success</div>
+                <div class="color-hex">#22C55E</div>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-preview" style="background-color:#EF4444"></div>
+              <div class="color-info">
+                <div class="color-name">Error</div>
+                <div class="color-hex">#EF4444</div>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-preview" style="background-color:#F59E0B"></div>
+              <div class="color-info">
+                <div class="color-name">Warning</div>
+                <div class="color-hex">#F59E0B</div>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-preview" style="background-color:#3B82F6"></div>
+              <div class="color-info">
+                <div class="color-name">Info</div>
+                <div class="color-hex">#3B82F6</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="component-label">Gráficos BI</div>
+          <div class="color-grid">
+            <div class="color-swatch">
+              <div class="color-preview" style="background-color:#4D4A9D"></div>
+              <div class="color-info">
+                <div class="color-name">Chart 1</div>
+                <div class="color-hex">#4D4A9D</div>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-preview" style="background-color:#FF177B"></div>
+              <div class="color-info">
+                <div class="color-name">Chart 2</div>
+                <div class="color-hex">#FF177B</div>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-preview" style="background-color:#1BCDF8"></div>
+              <div class="color-info">
+                <div class="color-name">Chart 3</div>
+                <div class="color-hex">#1BCDF8</div>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-preview" style="background-color:#F2B01E"></div>
+              <div class="color-info">
+                <div class="color-name">Chart 4</div>
+                <div class="color-hex">#F2B01E</div>
+              </div>
+            </div>
+            <div class="color-swatch">
+              <div class="color-preview" style="background-color:#22C55E"></div>
+              <div class="color-info">
+                <div class="color-name">Chart 5</div>
+                <div class="color-hex">#22C55E</div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Typography -->
+        <section class="component-section">
+          <h2 class="component-title">Tipografía</h2>
+          <div class="component-box">
+            <div class="typography-sample">
+              <div class="typography-label">Heading 1 - 30px Bold</div>
+              <div style="font-size:30px;font-weight:700;color:var(--color-gray-800)">Título Principal</div>
+            </div>
+            <div class="typography-sample">
+              <div class="typography-label">Heading 2 - 24px Bold</div>
+              <div style="font-size:24px;font-weight:700;color:var(--color-gray-800)">Título Secundario</div>
+            </div>
+            <div class="typography-sample">
+              <div class="typography-label">Heading 3 - 18px Semibold</div>
+              <div style="font-size:18px;font-weight:600;color:var(--color-gray-800)">Subtítulo</div>
+            </div>
+            <div class="typography-sample">
+              <div class="typography-label">Body - 16px Regular</div>
+              <div style="font-size:16px;color:var(--color-gray-700)">Este es el texto de cuerpo principal usado en párrafos y contenido general.</div>
+            </div>
+            <div class="typography-sample">
+              <div class="typography-label">Body Small - 14px Regular</div>
+              <div style="font-size:14px;color:var(--color-gray-600)">Texto secundario para descripciones y contenido de soporte.</div>
+            </div>
+            <div class="typography-sample" style="margin-bottom:0">
+              <div class="typography-label">Caption - 12px Regular</div>
+              <div style="font-size:12px;color:var(--color-gray-500)">Texto pequeño para etiquetas, hints y metadata.</div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Buttons -->
+        <section class="component-section">
+          <h2 class="component-title">Botones</h2>
+          
+          <div class="component-label">Variantes</div>
+          <div class="button-row" style="margin-bottom:var(--spacing-lg)">
+            <button class="btn btn-primary btn-md">Primary</button>
+            <button class="btn btn-secondary btn-md">Secondary</button>
+            <button class="btn btn-ghost btn-md">Ghost</button>
+            <button class="btn btn-danger btn-md">Danger</button>
+            <button class="btn btn-accent btn-md">Accent</button>
+            <button class="btn btn-primary btn-md" disabled>Disabled</button>
+          </div>
+          
+          <div class="component-label">Tamaños</div>
+          <div class="button-row" style="margin-bottom:var(--spacing-lg)">
+            <button class="btn btn-primary btn-sm">Small</button>
+            <button class="btn btn-primary btn-md">Medium</button>
+            <button class="btn btn-primary btn-lg">Large</button>
+          </div>
+          
+          <div class="component-label">Con iconos</div>
+          <div class="button-row">
+            <button class="btn btn-primary btn-md">
+              <i data-lucide="plus" style="width:16px;height:16px"></i>
+              Nuevo
+            </button>
+            <button class="btn btn-secondary btn-md">
+              <i data-lucide="download" style="width:16px;height:16px"></i>
+              Exportar
+            </button>
+            <button class="btn btn-icon btn-secondary btn-md">
+              <i data-lucide="settings" style="width:18px;height:18px"></i>
+            </button>
+            <button class="btn btn-icon btn-ghost btn-md">
+              <i data-lucide="trash-2" style="width:18px;height:18px"></i>
+            </button>
+          </div>
+        </section>
+        
+        <!-- Inputs -->
+        <section class="component-section">
+          <h2 class="component-title">Inputs</h2>
+          <div class="input-grid">
+            <div class="form-group">
+              <label class="form-label">Input de texto</label>
+              <input type="text" class="form-input" placeholder="Escribe aquí...">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Select</label>
+              <select class="form-select">
+                <option>Selecciona una opción</option>
+                <option>Opción 1</option>
+                <option>Opción 2</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Input con valor</label>
+              <input type="text" class="form-input" value="Valor ingresado">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Textarea</label>
+              <textarea class="form-textarea" rows="3" placeholder="Escribe un mensaje..."></textarea>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Badges -->
+        <section class="component-section">
+          <h2 class="component-title">Badges</h2>
+          <div class="badge-row">
+            <span class="badge badge-primary">Primary</span>
+            <span class="badge badge-success">Success</span>
+            <span class="badge badge-error">Error</span>
+            <span class="badge badge-warning">Warning</span>
+            <span class="badge badge-gray">Gray</span>
+          </div>
+        </section>
+        
+        <!-- Avatars -->
+        <section class="component-section">
+          <h2 class="component-title">Avatars</h2>
+          <div class="avatar-row">
+            <div class="avatar avatar-sm">SM</div>
+            <div class="avatar">MD</div>
+            <div class="avatar avatar-lg">LG</div>
+            <div class="avatar" style="background-color:var(--color-accent)">AB</div>
+            <div class="avatar" style="background-color:var(--color-success)">CD</div>
+          </div>
+        </section>
+        
+        <!-- Alerts -->
+        <section class="component-section">
+          <h2 class="component-title">Alerts</h2>
+          <div class="alert-stack">
+            <div class="alert alert-success">
+              <i data-lucide="check-circle" style="width:20px;height:20px;flex-shrink:0"></i>
+              <span>Operación completada exitosamente.</span>
+            </div>
+            <div class="alert alert-error">
+              <i data-lucide="x-circle" style="width:20px;height:20px;flex-shrink:0"></i>
+              <span>Ha ocurrido un error. Por favor intenta de nuevo.</span>
+            </div>
+            <div class="alert alert-warning">
+              <i data-lucide="alert-triangle" style="width:20px;height:20px;flex-shrink:0"></i>
+              <span>Atención: Esta acción no se puede deshacer.</span>
+            </div>
+            <div class="alert alert-info">
+              <i data-lucide="info" style="width:20px;height:20px;flex-shrink:0"></i>
+              <span>Información: Los cambios se guardarán automáticamente.</span>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Cards -->
+        <section class="component-section">
+          <h2 class="component-title">Cards</h2>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--spacing-lg)">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Card con Header</h3>
+              </div>
+              <div class="card-body">
+                <p style="color:var(--color-gray-600)">Contenido de la card. Puede incluir texto, formularios, tablas u otros componentes.</p>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Card con Footer</h3>
+                <button class="btn btn-ghost btn-sm">Acción</button>
+              </div>
+              <div class="card-body">
+                <p style="color:var(--color-gray-600)">Contenido de ejemplo para mostrar la estructura de una card completa.</p>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn-secondary btn-sm">Cancelar</button>
+                <button class="btn btn-primary btn-sm">Guardar</button>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Stat Card</div>
+              <div class="stat-value">$12,450</div>
+              <div class="stat-change positive">
+                <i data-lucide="trending-up" style="width:14px;height:14px"></i>
+                +12.5% vs mes anterior
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Icons -->
+        <section class="component-section">
+          <h2 class="component-title">Iconos (Lucide)</h2>
+          <div class="icon-grid">
+            <div class="icon-item">
+              <i data-lucide="home" style="width:24px;height:24px"></i>
+              <span class="icon-name">home</span>
+            </div>
+            <div class="icon-item">
+              <i data-lucide="settings" style="width:24px;height:24px"></i>
+              <span class="icon-name">settings</span>
+            </div>
+            <div class="icon-item">
+              <i data-lucide="users" style="width:24px;height:24px"></i>
+              <span class="icon-name">users</span>
+            </div>
+            <div class="icon-item">
+              <i data-lucide="package" style="width:24px;height:24px"></i>
+              <span class="icon-name">package</span>
+            </div>
+            <div class="icon-item">
+              <i data-lucide="shopping-cart" style="width:24px;height:24px"></i>
+              <span class="icon-name">shopping-cart</span>
+            </div>
+            <div class="icon-item">
+              <i data-lucide="bar-chart-2" style="width:24px;height:24px"></i>
+              <span class="icon-name">bar-chart-2</span>
+            </div>
+            <div class="icon-item">
+              <i data-lucide="bell" style="width:24px;height:24px"></i>
+              <span class="icon-name">bell</span>
+            </div>
+            <div class="icon-item">
+              <i data-lucide="search" style="width:24px;height:24px"></i>
+              <span class="icon-name">search</span>
+            </div>
+            <div class="icon-item">
+              <i data-lucide="plus" style="width:24px;height:24px"></i>
+              <span class="icon-name">plus</span>
+            </div>
+            <div class="icon-item">
+              <i data-lucide="edit" style="width:24px;height:24px"></i>
+              <span class="icon-name">edit</span>
+            </div>
+            <div class="icon-item">
+              <i data-lucide="trash-2" style="width:24px;height:24px"></i>
+              <span class="icon-name">trash-2</span>
+            </div>
+            <div class="icon-item">
+              <i data-lucide="check" style="width:24px;height:24px"></i>
+              <span class="icon-name">check</span>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Spacing -->
+        <section class="component-section">
+          <h2 class="component-title">Espaciado</h2>
+          <div class="spacing-demo">
+            <div>
+              <div class="spacing-box" style="width:4px;height:4px"></div>
+              <div class="spacing-label">4px (xs)</div>
+            </div>
+            <div>
+              <div class="spacing-box" style="width:8px;height:8px"></div>
+              <div class="spacing-label">8px (sm)</div>
+            </div>
+            <div>
+              <div class="spacing-box" style="width:16px;height:16px"></div>
+              <div class="spacing-label">16px (md)</div>
+            </div>
+            <div>
+              <div class="spacing-box" style="width:24px;height:24px"></div>
+              <div class="spacing-label">24px (lg)</div>
+            </div>
+            <div>
+              <div class="spacing-box" style="width:32px;height:32px"></div>
+              <div class="spacing-label">32px (xl)</div>
+            </div>
+            <div>
+              <div class="spacing-box" style="width:48px;height:48px"></div>
+              <div class="spacing-label">48px (2xl)</div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Tabs -->
+        <section class="component-section">
+          <h2 class="component-title">Tabs</h2>
+          <div class="tabs">
+            <button class="tab active">General</button>
+            <button class="tab">Detalles</button>
+            <button class="tab">Configuración</button>
+            <button class="tab" disabled>Deshabilitado</button>
+          </div>
+          <div class="component-box">
+            <p style="color:var(--color-gray-600)">Contenido del tab seleccionado.</p>
+          </div>
+        </section>
+        
+      </main>
+    </div>
+  </div>
+  
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
