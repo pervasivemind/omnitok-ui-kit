@@ -1203,7 +1203,7 @@ const li = ({
             "div",
             {
               className: S(
-                "flex items-center h-14 border-b border-white/10 px-3",
+                "flex items-center h-16 border-b border-white/10 px-3",
                 i && "justify-center px-2"
               ),
               children: i ? /* @__PURE__ */ m(
