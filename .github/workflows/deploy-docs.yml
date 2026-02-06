@@ -1,8 +1,8 @@
 name: Deploy Documentation
 
 on:
-  # push:
-  #   branches: [main]
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -41,23 +41,13 @@ jobs:
       - name: Build Storybook
         run: pnpm build:storybook
 
-      - name: Build Docusaurus
-        run: pnpm build:docs
-
-      - name: Combine outputs
-        run: |
-          mkdir -p combined-docs
-          cp -r apps/docs/build/* combined-docs/
-          mkdir -p combined-docs/storybook
-          cp -r storybook-static/* combined-docs/storybook/
-
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: combined-docs
+          path: storybook-static
 
   deploy:
     environment:

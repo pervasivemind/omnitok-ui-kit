@@ -3,7 +3,7 @@
 ![Omnitok UI Kit Banner](../banner.svg)
 
 <div align="center">
-  
+
 **Biblioteca completa de componentes React para sistemas administrativos y productos internos**
 
 [![NPM Version](https://img.shields.io/npm/v/@omnitok/ui)](https://www.npmjs.com/package/@omnitok/ui)
@@ -248,22 +248,30 @@ Coloca tus logos en la carpeta `public/` de tu proyecto:
 ## 🏗️ Estructura del Proyecto
 
 ```
-omnitok-ui/
+omnitok-ui-kit/
 ├── packages/
-│   └── core/              # Biblioteca de componentes (@omnitok/ui)
+│   └── core/                # Biblioteca de componentes (@omnitok/ui)
 │       ├── src/
-│       │   ├── components/
-│       │   ├── styles/
-│       │   └── utils/
-│       └── package.json
+│       │   ├── components/  # Componentes React
+│       │   ├── styles/      # Estilos CSS
+│       │   └── utils/       # Utilidades
+│       ├── package.json
+│       ├── tailwind.config.ts
+│       └── vite.config.ts
 ├── apps/
-│   └── storybook/         # Documentación interactiva
+│   └── storybook/           # Documentación interactiva
+│       ├── .storybook/      # Configuración de Storybook
 │       ├── src/stories/
-│       │   ├── docs/      # Documentación del Design System
-│       │   └── examples/  # Ejemplos de páginas completas
-│       └── package.json
-├── Dockerfile             # Para deployar Storybook
+│       │   ├── docs/        # Documentación del Design System
+│       │   └── examples/    # Ejemplos de páginas completas
+│       ├── package.json
+│       └── tailwind.config.ts
+├── docs/                    # Documentación adicional de componentes
+├── .github/workflows/       # CI/CD pipelines
+├── Dockerfile               # Para deployar Storybook
 ├── docker-compose.yml
+├── nginx.conf               # Configuración Nginx para Storybook
+├── turbo.json               # Configuración Turborepo
 └── pnpm-workspace.yaml
 ```
 
