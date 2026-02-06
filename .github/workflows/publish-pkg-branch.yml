@@ -1,0 +1,72 @@
+name: Publish Package Branch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/core/**'
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  publish-pkg-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build @omnitok/ui
+        run: pnpm --filter @omnitok/ui build
+
+      - name: Prepare and push to pkg branch
+        run: |
+          # Configure git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Create temp directory with package contents
+          mkdir -p /tmp/pkg
+          cp packages/core/package.json /tmp/pkg/
+          cp -r packages/core/dist /tmp/pkg/
+          cp packages/core/README.md /tmp/pkg/ 2>/dev/null || true
+          cp packages/core/LICENSE /tmp/pkg/ 2>/dev/null || true
+
+          # Get version for commit message
+          VERSION=$(cat packages/core/package.json | jq -r .version)
+
+          # Switch to pkg branch (create orphan if doesn't exist)
+          git fetch origin pkg:pkg 2>/dev/null || true
+          if git show-ref --verify --quiet refs/heads/pkg; then
+            git checkout pkg
+          else
+            git checkout --orphan pkg
+            git rm -rf . 2>/dev/null || true
+          fi
+
+          # Clean current directory and copy package contents
+          rm -rf ./* 2>/dev/null || true
+          cp -r /tmp/pkg/* .
+
+          # Commit and push
+          git add .
+          git commit -m "Release v${VERSION}" --allow-empty
+          git push origin pkg --force
