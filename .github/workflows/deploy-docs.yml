@@ -6,6 +6,7 @@ on:
     paths:
       - 'apps/storybook/**'
       - 'packages/core/**'
+      - '.github/workflows/deploy-docs.yml'
   workflow_dispatch:
 
 permissions:
@@ -25,8 +26,6 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: '10'
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
