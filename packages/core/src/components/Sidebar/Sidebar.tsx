@@ -176,7 +176,7 @@ export const Sidebar = forwardRef<HTMLElement, SidebarProps>(
         {/* Header */}
         <div
           className={cn(
-            'flex items-center h-14 border-b border-white/10 px-3',
+            'flex items-center h-16 border-b border-white/10 px-3',
             collapsed && 'justify-center px-2'
           )}
         >
