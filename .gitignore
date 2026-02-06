@@ -12,6 +12,7 @@ storybook-static
 # IDE
 .idea
 .vscode
+.cursor
 *.swp
 *.swo
 

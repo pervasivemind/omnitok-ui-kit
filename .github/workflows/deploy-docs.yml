@@ -3,6 +3,9 @@ name: Deploy Documentation
 on:
   push:
     branches: [main]
+    paths:
+      - 'apps/storybook/**'
+      - 'packages/core/**'
   workflow_dispatch:
 
 permissions:
