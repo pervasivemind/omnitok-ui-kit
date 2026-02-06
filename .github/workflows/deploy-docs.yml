@@ -41,9 +41,7 @@ jobs:
         run: pnpm build:storybook
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.OMNITOK_CLOUDFLARE_API_TOKEN_PAGES }}
-          accountId: ${{ secrets.OMNITOK_CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy storybook-static --project-name=omnitok-ui-kit
-          packageManager: npm
+        run: pnpm dlx wrangler pages deploy storybook-static --project-name=omnitok-ui-kit
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.OMNITOK_CLOUDFLARE_API_TOKEN_PAGES }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.OMNITOK_CLOUDFLARE_ACCOUNT_ID }}
