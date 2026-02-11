@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DraggableCard, DraggableCardItem } from '@omnitok/ui';
 import { Package, TrendingUp, Users, ShoppingCart, DollarSign } from 'lucide-react';
 

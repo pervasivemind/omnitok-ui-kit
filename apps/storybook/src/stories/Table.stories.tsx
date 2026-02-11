@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Table, Badge, Avatar, Button } from '@omnitok/ui';
 import { Edit, Trash2 } from 'lucide-react';

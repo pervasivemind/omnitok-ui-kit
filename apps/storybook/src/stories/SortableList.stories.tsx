@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { SortableList, SortableItem } from '@omnitok/ui';
 import { Package, Users, ShoppingCart, TrendingUp, Settings } from 'lucide-react';
 

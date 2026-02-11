@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Tabs, TabPanel, Card } from '@omnitok/ui';
 import { Home, User, Settings, Bell } from 'lucide-react';

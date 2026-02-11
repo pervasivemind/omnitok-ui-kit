@@ -1,9 +1,8 @@
-import type { Preview } from '@storybook/react';
+import type { Preview } from '@storybook/react-vite';
 import '../src/styles.css';
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -11,13 +10,12 @@ const preview: Preview = {
       },
     },
     backgrounds: {
-      default: 'light',
-      values: [
-        { name: 'light', value: '#fafafa' },
-        { name: 'white', value: '#ffffff' },
-        { name: 'dark', value: '#171717' },
-        { name: 'sidebar', value: '#211f4b' },
-      ],
+      options: {
+        light: { name: 'light', value: '#fafafa' },
+        white: { name: 'white', value: '#ffffff' },
+        dark: { name: 'dark', value: '#171717' },
+        sidebar: { name: 'sidebar', value: '#211f4b' }
+      }
     },
     options: {
       storySort: {
@@ -33,7 +31,14 @@ const preview: Preview = {
       },
     },
   },
+
   tags: ['autodocs'],
+
+  initialGlobals: {
+    backgrounds: {
+      value: 'light'
+    }
+  }
 };
 
 export default preview;
