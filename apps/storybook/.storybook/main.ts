@@ -1,5 +1,3 @@
-import { fileURLToPath } from "node:url";
-import { dirname } from "node:path";
 import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
@@ -12,22 +10,20 @@ const config: StorybookConfig = {
 
   staticDirs: ['../public'],
   addons: [
-    getAbsolutePath("@storybook/addon-docs"),
-    getAbsolutePath("@storybook/addon-mcp"),
+    '@storybook/addon-docs',
+    '@storybook/addon-mcp',
+    '@storybook/addon-vitest',
+    '@storybook/addon-a11y',
   ],
 
   framework: {
-    name: getAbsolutePath("@storybook/react-vite"),
+    name: '@storybook/react-vite',
     options: {},
   },
 
   features: {
     experimentalComponentsManifest: true,
-  }
+  },
 };
 
 export default config;
-
-function getAbsolutePath(value: string): any {
-  return dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
-}
