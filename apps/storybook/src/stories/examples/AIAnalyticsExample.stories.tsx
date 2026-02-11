@@ -27,8 +27,9 @@ import {
   Filter,
 } from 'lucide-react';
 
-const meta: Meta = {
+const meta: Meta<typeof Layout> = {
   title: 'Examples/AI Analytics',
+  component: Layout,
   parameters: {
     layout: 'fullscreen',
     viewport: {

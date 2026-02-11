@@ -33,8 +33,9 @@ import {
   MoreHorizontal,
 } from 'lucide-react';
 
-const meta: Meta = {
+const meta: Meta<typeof Layout> = {
   title: 'Examples/Tables',
+  component: Layout,
   parameters: {
     layout: 'fullscreen',
     viewport: {

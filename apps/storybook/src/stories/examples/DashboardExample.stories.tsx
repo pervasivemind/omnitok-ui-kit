@@ -27,8 +27,9 @@ import {
   ArrowUpRight,
 } from 'lucide-react';
 
-const meta: Meta = {
+const meta: Meta<typeof Layout> = {
   title: 'Examples/Dashboard',
+  component: Layout,
   parameters: {
     layout: 'fullscreen',
     viewport: {

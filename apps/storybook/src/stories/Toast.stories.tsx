@@ -2,8 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { ToastProvider, useToast, Button } from '@omnitok/ui';
 
-const meta: Meta = {
+const meta: Meta<typeof ToastProvider> = {
   title: 'Components/Toast',
+  component: ToastProvider,
   parameters: {
     layout: 'centered',
   },

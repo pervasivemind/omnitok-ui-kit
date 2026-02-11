@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@omnitok/ui": ["../../packages/core/src/index.ts"],
+      "@omnitok/ui/*": ["../../packages/core/src/*"]
+    }
+  },
+  "include": ["src", ".storybook"]
+}
