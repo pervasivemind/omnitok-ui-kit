@@ -225,8 +225,69 @@ Descarga los logos del repositorio (`legacy/figma/`) y colócalos en tu carpeta 
 5. **Íconos de Lucide** exclusivamente
 6. **Responsive** - Mobile-first approach
 
+## 🤖 MCP Server (AI IDE Integration)
+
+Omnitok UI Kit cuenta con un servidor **MCP (Model Context Protocol)** que permite a editores con IA consultar la documentación y especificaciones de los componentes directamente desde el IDE.
+
+**Endpoint**: `https://ui-kit.omnitok.cloud/mcp`
+
+### Configurar en Cursor
+
+Agrega la siguiente entrada en `.cursor/mcp.json` (a nivel de proyecto o global):
+
+```json
+{
+  "mcpServers": {
+    "omnitok-ui-kit": {
+      "url": "https://ui-kit.omnitok.cloud/mcp"
+    }
+  }
+}
+```
+
+### Configurar en VS Code (Copilot)
+
+Agrega la entrada en `.vscode/mcp.json`:
+
+```json
+{
+  "servers": {
+    "omnitok-ui-kit": {
+      "type": "sse",
+      "url": "https://ui-kit.omnitok.cloud/mcp"
+    }
+  }
+}
+```
+
+### Configurar en Windsurf
+
+Agrega la entrada en `~/.codeium/windsurf/mcp_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "omnitok-ui-kit": {
+      "serverUrl": "https://ui-kit.omnitok.cloud/mcp"
+    }
+  }
+}
+```
+
+### ¿Qué puedes hacer con el MCP?
+
+Una vez conectado, tu asistente de IA puede:
+
+- **Listar todos los componentes** disponibles en el UI Kit
+- **Consultar la documentación** de un componente (props, variantes, ejemplos)
+- **Generar código** usando los componentes correctos con sus props reales
+- **Entender el Design System** (colores, tipografía, patrones)
+
+> **Tip**: Después de configurar el MCP, prueba pedirle a tu asistente: *"Usa los componentes de Omnitok UI Kit para crear un formulario de registro"*.
+
 ## 🌐 Recursos
 
 - [Lucide Icons](https://lucide.dev)
 - [Tailwind CSS](https://tailwindcss.com)
 - [React Documentation](https://react.dev)
+- [MCP Server](https://ui-kit.omnitok.cloud/mcp)

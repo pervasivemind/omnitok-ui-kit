@@ -245,6 +245,66 @@ Coloca tus logos en la carpeta `public/` de tu proyecto:
 - `logo_cuadrado_color.png` - Para sidebar colapsado
 - `logo_largo_color.png` - Para login
 
+## 🤖 MCP Server (AI IDE Integration)
+
+Omnitok UI Kit expone un servidor **MCP (Model Context Protocol)** que permite a editores con IA —como **Cursor**, **Windsurf**, **VS Code con Copilot** u otros clientes MCP— consultar la documentación y especificaciones de los componentes directamente desde el IDE.
+
+**Endpoint**: `https://ui-kit.omnitok.cloud/mcp`
+
+### Configurar en Cursor
+
+Agrega la siguiente entrada en tu archivo `.cursor/mcp.json` (a nivel de proyecto o global):
+
+```json
+{
+  "mcpServers": {
+    "omnitok-ui-kit": {
+      "url": "https://ui-kit.omnitok.cloud/mcp"
+    }
+  }
+}
+```
+
+### Configurar en VS Code (Copilot)
+
+Agrega la entrada en tu archivo `.vscode/mcp.json`:
+
+```json
+{
+  "servers": {
+    "omnitok-ui-kit": {
+      "type": "sse",
+      "url": "https://ui-kit.omnitok.cloud/mcp"
+    }
+  }
+}
+```
+
+### Configurar en Windsurf
+
+Agrega la entrada en tu archivo `~/.codeium/windsurf/mcp_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "omnitok-ui-kit": {
+      "serverUrl": "https://ui-kit.omnitok.cloud/mcp"
+    }
+  }
+}
+```
+
+### ¿Qué puedes hacer con el MCP?
+
+Una vez conectado, tu asistente de IA puede:
+
+- **Listar todos los componentes** disponibles en el UI Kit
+- **Consultar la documentación** de un componente específico (props, variantes, ejemplos)
+- **Generar código** usando los componentes correctos con sus props reales
+- **Entender el Design System** (colores, tipografía, patrones)
+
+> **Tip**: Después de configurar el MCP, prueba pedirle a tu asistente de IA: *"Usa los componentes de Omnitok UI Kit para crear un formulario de registro"*.
+
 ## 🏗️ Estructura del Proyecto
 
 ```
@@ -266,6 +326,11 @@ omnitok-ui-kit/
 │       │   └── examples/    # Ejemplos de páginas completas
 │       ├── package.json
 │       └── tailwind.config.ts
+├── workers/
+│   └── mcp/                 # MCP Server (Cloudflare Worker)
+│       ├── src/index.ts     # Handler del MCP con @storybook/mcp
+│       ├── wrangler.toml    # Configuración Cloudflare
+│       └── package.json
 ├── docs/                    # Documentación adicional de componentes
 ├── .github/workflows/       # CI/CD pipelines
 ├── Dockerfile               # Para deployar Storybook
@@ -310,6 +375,7 @@ MIT © Omnitok
 
 - **GitHub**: https://github.com/pervasivemind/omnitok-ui-kit
 - **Storybook**: https://pervasivemind.github.io/omnitok-ui-kit
+- **MCP Server**: https://ui-kit.omnitok.cloud/mcp
 - **NPM**: https://www.npmjs.com/package/@omnitok/ui (cuando se publique)
 
 ## 💬 Soporte
