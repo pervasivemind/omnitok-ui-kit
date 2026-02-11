@@ -420,6 +420,57 @@ export declare interface ModalProps extends Omit<HTMLAttributes<HTMLDivElement>,
 
 export declare type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 
+export declare const MultiSelect: ForwardRefExoticComponent<MultiSelectProps & RefAttributes<HTMLDivElement>>;
+
+export declare interface MultiSelectOption {
+    value: string;
+    label: string;
+    disabled?: boolean;
+    /** Badge color for this specific option (overrides the component-level tagColor) */
+    color?: MultiSelectTagColor;
+}
+
+export declare interface MultiSelectProps {
+    /** Available options */
+    options: MultiSelectOption[];
+    /** Controlled selected values */
+    value?: string[];
+    /** Default selected values (uncontrolled) */
+    defaultValue?: string[];
+    /** Callback when selection changes */
+    onChange?: (values: string[]) => void;
+    /** Component size */
+    size?: MultiSelectSize;
+    /** Label text */
+    label?: string;
+    /** Helper text shown below the input */
+    helperText?: string;
+    /** Error message */
+    error?: string;
+    /** Placeholder when no items are selected */
+    placeholder?: string;
+    /** Full width component */
+    fullWidth?: boolean;
+    /** Disabled state */
+    disabled?: boolean;
+    /** Maximum number of selectable items */
+    maxItems?: number;
+    /** Enable search/filter functionality */
+    searchable?: boolean;
+    /** Icon to show on the left */
+    leftIcon?: ReactNode;
+    /** Badge color applied to all selected tags (can be overridden per option) */
+    tagColor?: MultiSelectTagColor;
+    /** Additional class name */
+    className?: string;
+    /** Element id */
+    id?: string;
+}
+
+export declare type MultiSelectSize = 'sm' | 'md' | 'lg';
+
+export declare type MultiSelectTagColor = 'primary' | 'accent' | 'success' | 'warning' | 'error' | 'info' | 'neutral';
+
 export declare const Pagination: ForwardRefExoticComponent<PaginationProps & RefAttributes<HTMLElement>>;
 
 export declare interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
