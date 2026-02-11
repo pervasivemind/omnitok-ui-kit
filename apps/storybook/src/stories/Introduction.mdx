@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta, ColorPalette, ColorItem } from '@storybook/addon-docs/blocks';
 
 <Meta title="Introduction" />
 
@@ -13,7 +13,7 @@ Biblioteca completa de componentes React para sistemas administrativos y product
 - **Accesible** - Construido con accesibilidad en mente
 - **Customizable** - Fácil de personalizar con CSS variables y Tailwind
 - **Monorepo** - Organizado con pnpm workspaces
-- **Storybook 8** - Documentación interactiva de componentes
+- **Storybook 10** - Documentación interactiva de componentes
 
 ## 📦 Instalación
 
@@ -45,8 +45,8 @@ function App() {
   return (
     <Layout
       sidebarItems={sidebarItems}
-      logo={<img src="logo_largo_blanco.png" alt="Logo" />}
-      logoCollapsed={<img src="logo_cuadrado_color.png" alt="Logo" />}
+      logo={<img src="omnitok-logo.svg" alt="Logo" />}
+      logoCollapsed={<img src="omnitok-icon-primary.svg" alt="Logo" />}
       systemName="Mi Sistema"
       activeSidebarId="dashboard"
       headerTitle="Dashboard"
@@ -98,22 +98,47 @@ function App() {
 ## 🎨 Design System
 
 ### Colores de Marca
-- **Sidebar**: `#211f4b` (obligatorio para sidebar)
-- **Primary**: `#4D4A9D` (púrpura)
-- **Accent**: `#FF177B` (magenta)
 
-### Gradientes
-- **Sidebar activo**: `linear-gradient(90deg, #FF177B 0%, #4D4A9D 100%)`
-- **Headers**: `linear-gradient(90deg, #4D4A9D 0%, #3B3880 100%)`
+<ColorPalette>
+  <ColorItem
+    title="Sidebar"
+    subtitle="Obligatorio para sidebar"
+    colors={{ Sidebar: '#211f4b' }}
+  />
+  <ColorItem
+    title="Primary"
+    subtitle="Púrpura principal"
+    colors={{ Primary: '#4D4A9D' }}
+  />
+  <ColorItem
+    title="Accent"
+    subtitle="Magenta"
+    colors={{ Accent: '#FF177B' }}
+  />
+  <ColorItem
+    title="Sidebar Activo"
+    subtitle="Gradiente"
+    colors={{
+      'Sidebar Activo': 'linear-gradient(90deg, #FF177B 0%, #4D4A9D 100%)',
+    }}
+  />
+  <ColorItem
+    title="Headers (Tables, Cards, Modals)"
+    subtitle="Gradiente"
+    colors={{
+      'Headers': 'linear-gradient(90deg, #4D4A9D 0%, #3B3880 100%)',
+    }}
+  />
+</ColorPalette>
 
 ### Tipografía
 - **UI**: Nunito Sans
 - **Contenido**: Open Sans
 
 ### Logos
-- **Sidebar expandido**: `logo_largo_blanco.png` (horizontal blanco)
-- **Sidebar colapsado**: `logo_cuadrado_color.png` (cuadrado color)
-- **Login**: `logo_largo_color.png` (horizontal color)
+- **Sidebar expandido**: `omnitok-logo.svg` (horizontal blanco)
+- **Sidebar colapsado**: `omnitok-icon-primary.svg` (cuadrado color)
+- **Login**: `omnitok-logo-primary.svg` (horizontal color)
 
 ## 📖 Documentación
 
@@ -182,31 +207,12 @@ docker-compose up -d
 
 Acceder en: http://localhost:8080
 
-## 📦 Usar en Otros Proyectos
-
-### Instalación
-
-```bash
-npm install @omnitok/ui lucide-react
-```
-
-### Importar estilos
-
-```tsx
-// En tu main.tsx o App.tsx
-import '@omnitok/ui/styles.css';
-```
-
-### Ejemplo completo
-
-Ver sección "🚀 Uso Básico" arriba para código completo.
-
 ### Assets (Logos)
 
-Descarga los logos del repositorio (`legacy/figma/`) y colócalos en tu carpeta `public/`:
-- `logo_largo_blanco.png` → Sidebar expandido
-- `logo_cuadrado_color.png` → Sidebar colapsado
-- `logo_largo_color.png` → Login
+Descarga los logos del repositorio (`assets/`) y colócalos en tu carpeta `public/`:
+- `omnitok-logo.svg` → Sidebar expandido
+- `omnitok-icon-primary.svg` → Sidebar colapsado
+- `omnitok-logo-primary.svg` → Login
 
 ## 📖 Documentación Completa
 

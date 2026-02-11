@@ -22,7 +22,7 @@
 - 🎯 **Tailwind CSS** - Tokens de diseño personalizados
 - ♿ **Accesible** - Cumple WCAG 2.1
 - 📦 **Tree-shakeable** - Solo importa lo que usas
-- 📚 **Storybook 8** - Documentación interactiva
+- 📚 **Storybook 10** - Documentación interactiva
 - 🔧 **Monorepo** - Organizado con pnpm workspaces
 
 ## 📦 Instalación

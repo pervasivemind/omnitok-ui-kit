@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>;
 
 const LogoWideColor = () => (
   <img
-    src="/logos/logo_largo_color.png"
+    src="/omnitok-logo-primary.svg"
     alt="Omnitok"
     className="h-10 w-auto object-contain"
   />
@@ -24,7 +24,7 @@ const LogoWideColor = () => (
 
 const LogoWideWhite = () => (
   <img
-    src="/logos/logo_largo_blanco.png"
+    src="/omnitok-logo.svg"
     alt="Omnitok"
     className="h-10 w-auto object-contain"
   />

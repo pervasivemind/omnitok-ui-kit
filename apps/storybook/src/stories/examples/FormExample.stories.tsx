@@ -45,14 +45,14 @@ type Story = StoryObj;
 
 const LogoExpanded = (
   <img
-    src="/logos/logo_largo_blanco.png"
+    src="/omnitok-logo.svg"
     alt="Omnitok"
     className="h-6 w-auto max-w-[140px] object-contain"
   />
 );
 const LogoCollapsed = (
   <img
-    src="/logos/logo_cuadrado_color.png"
+    src="/omnitok-icon-primary.svg"
     alt="Omnitok"
     className="h-8 w-8 object-contain"
   />

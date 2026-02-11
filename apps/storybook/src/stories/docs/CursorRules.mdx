@@ -90,8 +90,8 @@ color: #FFFFFF;
 ### Sidebar
 - **Logo centrado** en header con nombre del sistema debajo
 - **Logos**:
-  - Expandido: `logo_largo_blanco.png` (horizontal blanco, 24px altura, max-width 140px)
-  - Colapsado: `logo_cuadrado_color.png` (cuadrado 32x32px)
+  - Expandido: `omnitok-logo.svg` (horizontal blanco, 24px altura, max-width 140px)
+  - Colapsado: `omnitok-icon-primary.svg` (cuadrado 32x32px)
 - **System name**: 11px, uppercase, `rgba(255,255,255,0.5)`, centrado, debajo del logo
 - **Botón colapsar**: Siempre visible en estado expandido (esquina superior derecha)
 - **Estado colapsado**: Solo logo cuadrado como botón de expandir
@@ -217,8 +217,8 @@ Usar **Lucide Icons** exclusivamente:
 ### LoginPage
 - **Variantes**: gradient, split, centered
 - **Logos**: 
-  - Formulario: `logo_largo_color.png`
-  - Split panel izquierdo: `logo_largo_blanco.png`
+  - Formulario: `omnitok-logo-primary.svg`
+  - Split panel izquierdo: `omnitok-logo.svg`
 - **Campos**: Email, Password, Remember me, Forgot password
 - **Estados**: Normal, Loading, Error
 
@@ -228,8 +228,8 @@ Props principales:
 ```tsx
 <Layout
   sidebarItems={items}
-  logo={<img src="logo_largo_blanco.png" />}
-  logoCollapsed={<img src="logo_cuadrado_color.png" />}
+  logo={<img src="omnitok-logo.svg" />}
+  logoCollapsed={<img src="omnitok-icon-primary.svg" />}
   systemName="Mi Sistema"
   activeSidebarId="dashboard"
   headerTitle="Dashboard"
@@ -266,8 +266,8 @@ function App() {
   return (
     <Layout
       sidebarItems={sidebarItems}
-      logo={<img src="/logo_largo_blanco.png" alt="Logo" />}
-      logoCollapsed={<img src="/logo_cuadrado_color.png" alt="Logo" />}
+      logo={<img src="/omnitok-logo.svg" alt="Logo" />}
+      logoCollapsed={<img src="/omnitok-icon-primary.svg" alt="Logo" />}
       systemName="Mi Sistema"
       activeSidebarId="home"
       headerTitle="Dashboard"
