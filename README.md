@@ -1,6 +1,6 @@
 # Omnitok UI Kit
 
-![Omnitok UI Kit Banner](../banner.svg)
+![Omnitok UI Kit Banner](./banner.svg)
 
 <div align="center">
 
