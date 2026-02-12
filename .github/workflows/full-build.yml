@@ -1,4 +1,4 @@
-name: Deploy Storybook Documentation and MCP Worker
+name: Build Package, Deploy Documentation and MCP Worker
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - 'apps/storybook/**'
       - 'packages/core/**'
       - 'workers/mcp/**'
-      - '.github/workflows/deploy-storybook.yml'
+      - '.github/workflows/full-build.yml'
   workflow_dispatch:
 
 permissions:
@@ -39,6 +39,40 @@ jobs:
 
       - name: Build core package
         run: pnpm --filter @omnitok/ui build
+
+      - name: Prepare and push to pkg branch
+        run: |
+          # Configure git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Create temp directory with package contents
+          mkdir -p /tmp/pkg
+          cp packages/core/package.json /tmp/pkg/
+          cp -r packages/core/dist /tmp/pkg/
+          cp packages/core/README.md /tmp/pkg/ 2>/dev/null || true
+
+          # Get version for commit message
+          VERSION=$(cat packages/core/package.json | jq -r .version)
+
+          # Switch to pkg branch (create orphan if doesn't exist)
+          git fetch origin pkg:pkg 2>/dev/null || true
+          if git show-ref --verify --quiet refs/heads/pkg; then
+            git checkout pkg
+          else
+            git checkout --orphan pkg
+            git rm -rf . 2>/dev/null || true
+          fi
+
+          # Clean current directory and copy package contents
+          rm -rf ./* 2>/dev/null || true
+          cp -r /tmp/pkg/* .
+
+          # Commit and push
+          git add .
+          git commit -m "Release v${VERSION}" --allow-empty
+          git push origin pkg --force
+
 
       - name: Build Storybook
         run: pnpm build:storybook
