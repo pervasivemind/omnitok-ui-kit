@@ -1489,7 +1489,7 @@ const li = ({
     t && "justify-center px-2"
   );
   return /* @__PURE__ */ I("div", { children: [
-    e.href ? /* @__PURE__ */ m("a", { href: e.href, className: d, onClick: l, children: p }) : /* @__PURE__ */ m("button", { type: "button", className: O(d, "w-full text-left"), onClick: l, children: p }),
+    e.href ? /* @__PURE__ */ m("a", { href: e.href, className: d, onClick: l, title: t ? e.label : void 0, children: p }) : /* @__PURE__ */ m("button", { type: "button", className: O(d, "w-full text-left"), onClick: l, title: t ? e.label : void 0, children: p }),
     s && i && !t && /* @__PURE__ */ m("div", { className: "mt-1 space-y-1", children: e.children.map((u) => /* @__PURE__ */ m(
       li,
       {
