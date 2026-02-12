@@ -151,7 +151,7 @@ export const Sidebar = forwardRef<HTMLElement, SidebarProps>(
       footer,
       collapsed = false,
       onCollapsedChange,
-      collapsible = true,
+      collapsible = false,
       activeId,
       onItemClick,
       className,

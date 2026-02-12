@@ -27,18 +27,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const LogoExpanded = (
-  <img
-    src="/omnitok-logo.svg"
-    alt="Omnitok"
-    className="h-6 w-auto max-w-[140px] object-contain"
-  />
+  <img src="/omnitok-logo.svg" alt="Omnitok" className="h-6 w-auto max-w-[140px] object-contain" />
 );
 const LogoCollapsed = (
-  <img
-    src="/omnitok-icon.svg"
-    alt="Omnitok"
-    className="h-8 w-8 object-contain"
-  />
+  <img src="/omnitok-icon.svg" alt="Omnitok" className="h-8 w-8 object-contain" />
 );
 
 const sidebarItems = [
@@ -73,6 +65,26 @@ export const Default: Story = {
       />
     </div>
   ),
+};
+
+export const Collapsible: Story = {
+  render: () => {
+    const [collapsed, setCollapsed] = useState(false);
+    return (
+      <div className="h-screen">
+        <Sidebar
+          items={sidebarItems}
+          logo={LogoExpanded}
+          logoCollapsed={LogoCollapsed}
+          systemName="Admin"
+          activeId="dashboard"
+          collapsed={collapsed}
+          onCollapsedChange={setCollapsed}
+          collapsible
+        />
+      </div>
+    );
+  },
 };
 
 export const WithLogo: Story = {
@@ -122,26 +134,6 @@ export const WithFooter: Story = {
   ),
 };
 
-export const Collapsible: Story = {
-  render: () => {
-    const [collapsed, setCollapsed] = useState(false);
-    return (
-      <div className="h-screen">
-        <Sidebar
-          items={sidebarItems}
-          logo={LogoExpanded}
-          logoCollapsed={LogoCollapsed}
-          systemName="Admin"
-          activeId="dashboard"
-          collapsed={collapsed}
-          onCollapsedChange={setCollapsed}
-          collapsible
-        />
-      </div>
-    );
-  },
-};
-
 export const WithNestedItems: Story = {
   render: () => (
     <div className="h-screen">
@@ -175,25 +167,6 @@ export const WithNestedItems: Story = {
         logo={LogoExpanded}
         logoCollapsed={LogoCollapsed}
         systemName="E-Commerce"
-        activeId="dashboard"
-      />
-    </div>
-  ),
-};
-
-export const ActiveGradient: Story = {
-  render: () => (
-    <div className="h-screen">
-      <Sidebar
-        items={[
-          { id: 'dashboard', label: 'Dashboard', icon: <Home size={20} />, active: true },
-          { id: 'users', label: 'Users', icon: <Users size={20} /> },
-          { id: 'products', label: 'Products', icon: <Package size={20} /> },
-          { id: 'settings', label: 'Settings', icon: <Settings size={20} /> },
-        ]}
-        logo={LogoExpanded}
-        logoCollapsed={LogoCollapsed}
-        systemName="Homologación"
         activeId="dashboard"
       />
     </div>
