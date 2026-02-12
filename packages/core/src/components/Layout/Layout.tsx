@@ -10,6 +10,8 @@ export interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
   sidebar?: ReactNode;
   /** Sidebar navigation items */
   sidebarItems?: SidebarItem[];
+  /** Whether the default sidebar is collapsible */
+  collapsibleSidebar?: boolean;
   /** Logo element for sidebar */
   logo?: ReactNode;
   /** Logo element for collapsed sidebar */
@@ -64,6 +66,7 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
       children,
       sidebar,
       sidebarItems = [],
+      collapsibleSidebar = true,
       logo,
       logoCollapsed,
       systemName,
@@ -125,6 +128,7 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
                   logoCollapsed={logoCollapsed}
                   systemName={systemName}
                   footer={sidebarFooter}
+                  collapsible={collapsibleSidebar}
                   collapsed={sidebarCollapsed}
                   onCollapsedChange={setSidebarCollapsed}
                   activeId={activeSidebarId}
