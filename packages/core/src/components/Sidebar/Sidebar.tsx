@@ -115,11 +115,11 @@ const SidebarItemComponent = ({
   return (
     <div>
       {item.href ? (
-        <a href={item.href} className={itemClasses} onClick={handleClick}>
+        <a href={item.href} className={itemClasses} onClick={handleClick} title={collapsed ? item.label : undefined}>
           {content}
         </a>
       ) : (
-        <button type="button" className={cn(itemClasses, 'w-full text-left')} onClick={handleClick}>
+        <button type="button" className={cn(itemClasses, 'w-full text-left')} onClick={handleClick} title={collapsed ? item.label : undefined}>
           {content}
         </button>
       )}
