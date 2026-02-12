@@ -91,11 +91,11 @@ color: #FFFFFF;
 - **Logo centrado** en header con nombre del sistema debajo
 - **Logos**:
   - Expandido: `omnitok-logo.svg` (horizontal blanco, 24px altura, max-width 140px)
-  - Colapsado: `omnitok-icon-primary.svg` (cuadrado 32x32px)
+  - Colapsado: `omnitok-icon.svg` (cuadrado 32x32px)
 - **System name**: 11px, uppercase, `rgba(255,255,255,0.5)`, centrado, debajo del logo
 - **Botón colapsar**: Siempre visible en estado expandido (esquina superior derecha)
 - **Estado colapsado**: Solo logo cuadrado como botón de expandir
-- **Items**: 
+- **Items**:
   - Hover: `rgba(255,255,255,0.1)`
   - Activo: Gradiente magenta → púrpura
   - Íconos: Siempre reservar espacio 20x20px para alineación
@@ -216,7 +216,7 @@ Usar **Lucide Icons** exclusivamente:
 
 ### LoginPage
 - **Variantes**: gradient, split, centered
-- **Logos**: 
+- **Logos**:
   - Formulario: `omnitok-logo-primary.svg`
   - Split panel izquierdo: `omnitok-logo.svg`
 - **Campos**: Email, Password, Remember me, Forgot password
@@ -229,7 +229,7 @@ Props principales:
 <Layout
   sidebarItems={items}
   logo={<img src="omnitok-logo.svg" />}
-  logoCollapsed={<img src="omnitok-icon-primary.svg" />}
+  logoCollapsed={<img src="omnitok-icon.svg" />}
   systemName="Mi Sistema"
   activeSidebarId="dashboard"
   headerTitle="Dashboard"
@@ -267,7 +267,7 @@ function App() {
     <Layout
       sidebarItems={sidebarItems}
       logo={<img src="/omnitok-logo.svg" alt="Logo" />}
-      logoCollapsed={<img src="/omnitok-icon-primary.svg" alt="Logo" />}
+      logoCollapsed={<img src="/omnitok-icon.svg" alt="Logo" />}
       systemName="Mi Sistema"
       activeSidebarId="home"
       headerTitle="Dashboard"

@@ -35,7 +35,7 @@ const LogoExpanded = (
 );
 const LogoCollapsed = (
   <img
-    src="/omnitok-icon-primary.svg"
+    src="/omnitok-icon.svg"
     alt="Omnitok"
     className="h-8 w-8 object-contain"
   />

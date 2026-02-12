@@ -50,7 +50,7 @@ const LogoExpanded = (
 );
 const LogoCollapsed = (
   <img
-    src="/omnitok-icon-primary.svg"
+    src="/omnitok-icon.svg"
     alt="Omnitok"
     className="h-8 w-8 object-contain"
   />
@@ -171,7 +171,7 @@ const LineChart = () => {
                 strokeWidth="1"
               />
             ))}
-            
+
             {/* Línea Electrónica (Primary) */}
             <polyline
               points={data.map((d, i) => `${(i / (data.length - 1)) * 600},${200 - (d.value / 112) * 180}`).join(' ')}
@@ -179,14 +179,14 @@ const LineChart = () => {
               stroke="#4D4A9D"
               strokeWidth="3"
             />
-            
+
             {/* Área bajo la línea */}
             <polygon
               points={`0,200 ${data.map((d, i) => `${(i / (data.length - 1)) * 600},${200 - (d.value / 112) * 180}`).join(' ')} 600,200`}
               fill="url(#gradient-primary)"
               opacity="0.2"
             />
-            
+
             <defs>
               <linearGradient id="gradient-primary" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stopColor="#4D4A9D" />
@@ -194,7 +194,7 @@ const LineChart = () => {
               </linearGradient>
             </defs>
           </svg>
-          
+
           {/* Labels */}
           <div className="flex justify-between text-xs text-neutral-500 mt-2">
             <span>Ene</span>
@@ -259,7 +259,7 @@ const DonutChart = () => {
             {/* Inner circle (donut hole) */}
             <circle cx="100" cy="100" r="50" fill="white" />
           </svg>
-          
+
           {/* Legend */}
           <div className="space-y-2">
             {data.map((item, i) => (
