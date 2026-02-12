@@ -314,6 +314,8 @@ export declare interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
     sidebar?: ReactNode;
     /** Sidebar navigation items */
     sidebarItems?: SidebarItem[];
+    /** Whether the default sidebar is collapsible */
+    collapsibleSidebar?: boolean;
     /** Logo element for sidebar */
     logo?: ReactNode;
     /** Logo element for collapsed sidebar */
