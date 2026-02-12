@@ -362,6 +362,48 @@ export declare interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
     rightPanelWidth?: string;
 }
 
+export declare const ListMenu: ForwardRefExoticComponent<ListMenuProps & RefAttributes<HTMLDivElement>>;
+
+export declare interface ListMenuItem {
+    /** Display label */
+    label: string;
+    /** Unique value identifier */
+    value: string;
+    /** Icon component */
+    icon?: ReactNode;
+    /** Navigation href — renders item as an anchor tag */
+    href?: string;
+    /** Click handler for this specific item */
+    onClick?: () => void;
+    /** Disabled state */
+    disabled?: boolean;
+    /** Danger / destructive style */
+    danger?: boolean;
+    /** Render a divider line above this item */
+    dividerBefore?: boolean;
+}
+
+export declare type ListMenuPlacement = 'bottom-start' | 'bottom-end' | 'bottom' | 'top-start' | 'top-end' | 'top' | 'left-start' | 'left-end' | 'left' | 'right-start' | 'right-end' | 'right';
+
+export declare interface ListMenuProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'> {
+    /** Menu items */
+    items: ListMenuItem[];
+    /** Callback when any item is selected (fires in addition to item-level onClick) */
+    onSelect?: (value: string) => void;
+    /** Trigger element that opens the menu */
+    trigger: ReactNode;
+    /** Menu placement relative to trigger */
+    placement?: ListMenuPlacement;
+    /** Distance in pixels between the trigger and the menu panel */
+    offset?: number;
+    /** Menu item size */
+    size?: ListMenuSize;
+    /** Disabled state (prevents opening) */
+    disabled?: boolean;
+}
+
+export declare type ListMenuSize = 'sm' | 'md' | 'lg';
+
 export declare const LoginPage: ForwardRefExoticComponent<LoginPageProps & RefAttributes<HTMLDivElement>>;
 
 export declare interface LoginPageProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSubmit'> {
