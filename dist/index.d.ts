@@ -53,7 +53,7 @@ export declare const Badge: ForwardRefExoticComponent<BadgeProps & RefAttributes
 
 export declare interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
     /** Badge content */
-    children: ReactNode;
+    children?: ReactNode;
     /** Visual variant */
     variant?: BadgeVariant;
     /** Badge size */
@@ -66,7 +66,7 @@ export declare interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 
 export declare type BadgeSize = 'sm' | 'md' | 'lg';
 
-export declare type BadgeVariant = 'default' | 'primary' | 'accent' | 'success' | 'warning' | 'error' | 'info';
+export declare type BadgeVariant = 'primary' | 'accent' | 'neutral' | 'success' | 'warning' | 'error' | 'info' | 'violet' | 'rose' | 'teal';
 
 export declare const Breadcrumb: ForwardRefExoticComponent<BreadcrumbProps & RefAttributes<HTMLElement>>;
 
@@ -111,7 +111,7 @@ export declare interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElem
 
 export declare type ButtonSize = 'sm' | 'md' | 'lg';
 
-export declare type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'accent' | 'outline';
+export declare type ButtonVariant = 'default' | 'primary' | 'accent' | 'accept' | 'danger' | 'info' | 'violet' | 'rose' | 'teal' | 'ghost' | 'outline';
 
 export declare const Card: ForwardRefExoticComponent<CardProps & RefAttributes<HTMLDivElement>>;
 
@@ -513,7 +513,7 @@ export declare interface MultiSelectProps {
 
 export declare type MultiSelectSize = 'sm' | 'md' | 'lg';
 
-export declare type MultiSelectTagColor = 'primary' | 'accent' | 'success' | 'warning' | 'error' | 'info' | 'neutral';
+export declare type MultiSelectTagColor = 'primary' | 'accent' | 'neutral' | 'success' | 'warning' | 'error' | 'info' | 'violet' | 'rose' | 'teal';
 
 export declare const Pagination: ForwardRefExoticComponent<PaginationProps & RefAttributes<HTMLElement>>;
 
@@ -538,7 +538,11 @@ export declare interface PaginationProps extends Omit<HTMLAttributes<HTMLElement
     disabled?: boolean;
     /** Size variant */
     size?: 'sm' | 'md' | 'lg';
+    /** Color variant */
+    variant?: PaginationVariant;
 }
+
+export declare type PaginationVariant = 'primary' | 'accent' | 'neutral' | 'success' | 'warning' | 'error' | 'info' | 'violet' | 'rose' | 'teal';
 
 export declare const Radio: ForwardRefExoticComponent<RadioProps & RefAttributes<HTMLInputElement>>;
 
