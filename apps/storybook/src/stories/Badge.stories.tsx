@@ -30,54 +30,50 @@ export const Default: Story = {
   },
 };
 
-export const Primary: Story = {
-  args: {
-    variant: 'primary',
-    children: 'Primary',
-  },
+export const Principales: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-2">
+      <Badge variant="default">Default</Badge>
+      <Badge variant="primary">Primary</Badge>
+      <Badge variant="accent">Accent</Badge>
+    </div>
+  ),
 };
 
-export const Accent: Story = {
-  args: {
-    variant: 'accent',
-    children: 'Accent',
-  },
+export const Semanticos: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-2">
+      <Badge variant="success">Success</Badge>
+      <Badge variant="warning">Warning</Badge>
+      <Badge variant="error">Error</Badge>
+      <Badge variant="info">Info</Badge>
+    </div>
+  ),
 };
 
-export const Success: Story = {
-  args: {
-    variant: 'success',
-    children: 'Success',
-  },
-};
-
-export const Warning: Story = {
-  args: {
-    variant: 'warning',
-    children: 'Warning',
-  },
-};
-
-export const Error: Story = {
-  args: {
-    variant: 'error',
-    children: 'Error',
-  },
-};
-
-export const Info: Story = {
-  args: {
-    variant: 'info',
-    children: 'Info',
-  },
+export const Auxiliares: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-2">
+      <Badge variant="violet">Violet</Badge>
+      <Badge variant="rose">Rose</Badge>
+      <Badge variant="teal">Teal</Badge>
+    </div>
+  ),
 };
 
 export const Pill: Story = {
-  args: {
-    variant: 'primary',
-    children: 'Pill Badge',
-    pill: true,
-  },
+  render: () => (
+    <div className="flex items-center gap-4">
+      <Badge variant="default" pill>Default</Badge>
+      <Badge variant="success" pill>Success</Badge>
+      <Badge variant="warning" pill>Warning</Badge>
+      <Badge variant="error" pill>Error</Badge>
+      <Badge variant="info" pill>Info</Badge>
+      <Badge variant="violet" pill>Violet</Badge>
+      <Badge variant="rose" pill>Rose</Badge>
+      <Badge variant="teal" pill>Teal</Badge>
+    </div>
+  ),
 };
 
 export const Dot: Story = {
@@ -87,6 +83,10 @@ export const Dot: Story = {
       <Badge variant="success" dot />
       <Badge variant="warning" dot />
       <Badge variant="error" dot />
+      <Badge variant="info" dot />
+      <Badge variant="violet" dot />
+      <Badge variant="rose" dot />
+      <Badge variant="teal" dot />
     </div>
   ),
 };
@@ -97,20 +97,6 @@ export const Sizes: Story = {
       <Badge size="sm">Small</Badge>
       <Badge size="md">Medium</Badge>
       <Badge size="lg">Large</Badge>
-    </div>
-  ),
-};
-
-export const AllVariants: Story = {
-  render: () => (
-    <div className="flex flex-wrap gap-2">
-      <Badge variant="default">Default</Badge>
-      <Badge variant="primary">Primary</Badge>
-      <Badge variant="accent">Accent</Badge>
-      <Badge variant="success">Success</Badge>
-      <Badge variant="warning">Warning</Badge>
-      <Badge variant="error">Error</Badge>
-      <Badge variant="info">Info</Badge>
     </div>
   ),
 };

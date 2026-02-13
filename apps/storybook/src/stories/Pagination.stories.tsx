@@ -10,6 +10,21 @@ const meta: Meta<typeof Pagination> = {
   },
   tags: ['autodocs'],
   argTypes: {
+    variant: {
+      control: 'select',
+      options: [
+        'default',
+        'primary',
+        'accent',
+        'success',
+        'warning',
+        'error',
+        'info',
+        'violet',
+        'rose',
+        'teal',
+      ],
+    },
     size: {
       control: 'select',
       options: ['sm', 'md', 'lg'],
@@ -136,6 +151,42 @@ export const CustomSiblingCount: Story = {
         onChange={setPage}
         siblingCount={2}
       />
+    );
+  },
+};
+
+const variants = [
+  'default',
+  'primary',
+  'accent',
+  'success',
+  'warning',
+  'error',
+  'info',
+  'violet',
+  'rose',
+  'teal',
+] as const;
+
+export const Variants: Story = {
+  render: () => {
+    const [page, setPage] = useState(5);
+    return (
+      <div className="flex flex-col gap-4">
+        {variants.map((variant) => (
+          <div key={variant} className="flex items-center gap-4">
+            <span className="w-20 text-sm font-medium text-neutral-600 capitalize">
+              {variant}
+            </span>
+            <Pagination
+              currentPage={page}
+              totalPages={10}
+              onChange={setPage}
+              variant={variant}
+            />
+          </div>
+        ))}
+      </div>
     );
   },
 };

@@ -18,6 +18,23 @@ const config: Config = {
           light: '#ff4a96',
         },
 
+        // Auxiliary Colors
+        violet: {
+          DEFAULT: '#8B5CF6',
+          light: '#A78BFA',
+          dark: '#7C3AED',
+        },
+        rose: {
+          DEFAULT: '#EC4899',
+          light: '#F472B6',
+          dark: '#DB2777',
+        },
+        teal: {
+          DEFAULT: '#14B8A6',
+          light: '#2DD4BF',
+          dark: '#0D9488',
+        },
+
         // Neutral Colors
         neutral: {
           50: '#fafafa',

@@ -1,6 +1,31 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta, Typeset } from '@storybook/addon-docs/blocks';
 
 <Meta title="Design System/Typography" />
+
+export const typography = {
+  type: {
+    primary: "'Nunito Sans', system-ui, sans-serif",
+    secondary: "'Open Sans', system-ui, sans-serif",
+  },
+  weight: {
+    regular: 400,
+    medium: 500,
+    semibold: 600,
+    bold: 700,
+  },
+  size: {
+    xs: 12,
+    sm: 14,
+    base: 16,
+    lg: 18,
+    xl: 20,
+    '2xl': 24,
+    '3xl': 30,
+    '4xl': 36,
+  },
+};
+
+export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
 # Tipografía
 
@@ -15,6 +40,15 @@ Sistema tipográfico para interfaces administrativas.
 font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 ```
 
+**Clase Tailwind**: `font-sans`
+
+<Typeset
+  fontSizes={[Number(typography.size.base), Number(typography.size.xl), Number(typography.size['2xl'])]}
+  fontWeight={typography.weight.regular}
+  sampleText={SampleText}
+  fontFamily={typography.type.primary}
+/>
+
 **Características**:
 - Humanista sans-serif
 - Alta legibilidad en pantalla
@@ -27,6 +61,15 @@ font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-
 ```css
 font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 ```
+
+**Clase Tailwind**: `font-mono`
+
+<Typeset
+  fontSizes={[Number(typography.size.base), Number(typography.size.xl), Number(typography.size['2xl'])]}
+  fontWeight={typography.weight.regular}
+  sampleText={SampleText}
+  fontFamily={typography.type.secondary}
+/>
 
 **Características**:
 - Neutral y profesional
@@ -46,6 +89,13 @@ font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-se
 | 3xl | 30px | 36px | Títulos destacados |
 | 4xl | 36px | 40px | Hero titles |
 
+<Typeset
+  fontSizes={Object.values(typography.size).map(Number)}
+  fontWeight={typography.weight.regular}
+  sampleText={SampleText}
+  fontFamily={typography.type.primary}
+/>
+
 ## Pesos de Fuente
 
 | Peso | Valor | Uso |
@@ -55,51 +105,284 @@ font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-se
 | Semibold | 600 | Botones, títulos de sección |
 | Bold | 700 | Títulos principales |
 
+<Typeset fontSizes={[20]} fontWeight={typography.weight.regular} sampleText="Regular (400) — Texto normal de contenido" fontFamily={typography.type.primary} />
+<Typeset fontSizes={[20]} fontWeight={typography.weight.medium} sampleText="Medium (500) — Labels y énfasis ligero" fontFamily={typography.type.primary} />
+<Typeset fontSizes={[20]} fontWeight={typography.weight.semibold} sampleText="Semibold (600) — Botones y títulos de sección" fontFamily={typography.type.primary} />
+<Typeset fontSizes={[20]} fontWeight={typography.weight.bold} sampleText="Bold (700) — Títulos principales" fontFamily={typography.type.primary} />
+
+## Colores de Texto
+
+Los colores de texto del design system se aplican mediante clases de Tailwind CSS o variables CSS. A continuación se muestran los colores disponibles organizados por categoría.
+
+### Colores de Marca
+
+<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px' }}>
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-primary)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-primary</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-primary)' }}>Texto con color primary — enlaces, elementos interactivos</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-primary-dark)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-primary-dark</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-primary-dark)' }}>Texto con color primary dark — hover de enlaces</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-primary-light)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-primary-light</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-primary-light)' }}>Texto con color primary light — estados deshabilitados</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-accent)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-accent</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-accent)' }}>Texto con color accent — CTAs y énfasis importante</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-accent-dark)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-accent-dark</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-accent-dark)' }}>Texto con color accent dark — hover de CTAs</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-accent-light)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-accent-light</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-accent-light)' }}>Texto con color accent light</span>
+    </div>
+  </div>
+</div>
+
+### Colores Auxiliares
+
+<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px' }}>
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-violet)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-violet</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-violet)' }}>Texto violet — categorías, tags, agrupación</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-violet-light)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-violet-light</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-violet-light)' }}>Texto violet light — estados hover</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-violet-dark)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-violet-dark</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-violet-dark)' }}>Texto violet dark — estados activos</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-rose)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-rose</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-rose)' }}>Texto rose — highlights, badges secundarios</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-rose-light)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-rose-light</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-rose-light)' }}>Texto rose light — estados hover</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-rose-dark)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-rose-dark</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-rose-dark)' }}>Texto rose dark — estados activos</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-teal)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-teal</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-teal)' }}>Texto teal — estados alternativos, indicadores</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-teal-light)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-teal-light</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-teal-light)' }}>Texto teal light — estados hover</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-teal-dark)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-teal-dark</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-teal-dark)' }}>Texto teal dark — estados activos</span>
+    </div>
+  </div>
+</div>
+
+### Colores Neutros
+
+<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px' }}>
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-neutral-900)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-neutral-900</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-neutral-900)' }}>Títulos principales y texto de máximo contraste</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-neutral-800)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-neutral-800</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-neutral-800)' }}>Títulos secundarios y texto enfatizado</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-neutral-700)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-neutral-700</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-neutral-700)' }}>Texto principal de contenido y labels</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-neutral-600)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-neutral-600</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-neutral-600)' }}>Texto secundario enfatizado</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-neutral-500)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-400)', minWidth: '160px' }}>text-neutral-500</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-neutral-500)' }}>Texto secundario y descripciones</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-neutral-400)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-400)', minWidth: '160px' }}>text-neutral-400</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-neutral-400)' }}>Placeholders y texto deshabilitado</span>
+    </div>
+  </div>
+</div>
+
+### Colores Semánticos
+
+<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px' }}>
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-success)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-success</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-success)' }}>Operación exitosa — registro guardado correctamente</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-warning)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-warning</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-warning)' }}>Advertencia — esta acción no se puede deshacer</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-error)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-error</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-error)' }}>Error — el campo es obligatorio</span>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-info)', flexShrink: 0 }} />
+      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-info</code>
+      <span style={{ fontSize: '16px', color: 'var(--color-info)' }}>Información — se encontraron 24 resultados</span>
+    </div>
+  </div>
+</div>
+
+### Uso Recomendado
+
+| Contexto | Clase Tailwind | Variable CSS |
+|----------|---------------|--------------|
+| Títulos principales | `text-neutral-900` | `var(--color-neutral-900)` |
+| Texto de contenido | `text-neutral-700` | `var(--color-neutral-700)` |
+| Texto secundario | `text-neutral-500` | `var(--color-neutral-500)` |
+| Placeholders / deshabilitado | `text-neutral-400` | `var(--color-neutral-400)` |
+| Enlaces e interactivos | `text-primary` | `var(--color-primary)` |
+| CTAs y énfasis | `text-accent` | `var(--color-accent)` |
+| Categorías y tags | `text-violet` | `var(--color-violet)` |
+| Highlights y badges | `text-rose` | `var(--color-rose)` |
+| Indicadores complementarios | `text-teal` | `var(--color-teal)` |
+| Mensajes de éxito | `text-success` | `var(--color-success)` |
+| Mensajes de error | `text-error` | `var(--color-error)` |
+| Advertencias | `text-warning` | `var(--color-warning)` |
+| Información | `text-info` | `var(--color-info)` |
+
 ## Ejemplos de Uso
 
 ### Títulos de Página
+
 ```css
 .page-title {
   font-family: 'Nunito Sans', sans-serif;
   font-size: 24px;
   font-weight: 700;
   line-height: 32px;
-  color: #1F2937;
+  color: var(--color-neutral-900);
 }
 ```
 
+**Clases Tailwind**: `font-sans text-2xl font-bold text-neutral-900`
+
+<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px', backgroundColor: 'var(--color-neutral-50)' }}>
+  <p style={{ fontFamily: "'Nunito Sans', sans-serif", fontSize: '24px', fontWeight: 700, lineHeight: '32px', color: 'var(--color-neutral-900)', margin: 0 }}>Dashboard de Administración</p>
+</div>
+
 ### Texto de Contenido
+
 ```css
 .content-text {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #374151;
+  color: var(--color-neutral-700);
 }
 ```
 
+**Clases Tailwind**: `font-mono text-base font-normal text-neutral-700`
+
+<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px', backgroundColor: 'var(--color-neutral-50)' }}>
+  <p style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '16px', fontWeight: 400, lineHeight: '24px', color: 'var(--color-neutral-700)', margin: 0 }}>
+    Este es un ejemplo de texto de contenido. La tipografía Open Sans proporciona una lectura cómoda en párrafos extensos, tablas de datos y descripciones dentro de la aplicación.
+  </p>
+</div>
+
 ### Labels de Formulario
+
 ```css
 .form-label {
   font-family: 'Nunito Sans', sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
-  color: #374151;
+  color: var(--color-neutral-700);
 }
 ```
 
+**Clases Tailwind**: `font-sans text-sm font-medium text-neutral-700`
+
+<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px', backgroundColor: 'var(--color-neutral-50)' }}>
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+    <label style={{ fontFamily: "'Nunito Sans', sans-serif", fontSize: '14px', fontWeight: 500, lineHeight: '20px', color: 'var(--color-neutral-700)' }}>Nombre completo</label>
+    <div style={{ padding: '8px 12px', border: '1px solid var(--color-neutral-300)', borderRadius: '6px', backgroundColor: 'white', color: 'var(--color-neutral-400)', fontFamily: "'Open Sans', sans-serif", fontSize: '14px' }}>Ingrese su nombre...</div>
+  </div>
+</div>
+
 ### Texto en Tablas
+
 ```css
 .table-text {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
-  color: #374151;
+  color: var(--color-neutral-700);
 }
 ```
+
+**Clases Tailwind**: `font-mono text-sm font-normal text-neutral-700`
+
+<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px', backgroundColor: 'var(--color-neutral-50)' }}>
+  <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: "'Open Sans', sans-serif", fontSize: '14px', lineHeight: '20px' }}>
+    <thead>
+      <tr style={{ borderBottom: '2px solid var(--color-neutral-200)' }}>
+        <th style={{ textAlign: 'left', padding: '8px', fontWeight: 600, color: 'var(--color-neutral-900)' }}>Nombre</th>
+        <th style={{ textAlign: 'left', padding: '8px', fontWeight: 600, color: 'var(--color-neutral-900)' }}>Rol</th>
+        <th style={{ textAlign: 'left', padding: '8px', fontWeight: 600, color: 'var(--color-neutral-900)' }}>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style={{ borderBottom: '1px solid var(--color-neutral-200)' }}>
+        <td style={{ padding: '8px', color: 'var(--color-neutral-700)' }}>Ana García</td>
+        <td style={{ padding: '8px', color: 'var(--color-neutral-700)' }}>Administrador</td>
+        <td style={{ padding: '8px', color: 'var(--color-success)' }}>Activo</td>
+      </tr>
+      <tr style={{ borderBottom: '1px solid var(--color-neutral-200)' }}>
+        <td style={{ padding: '8px', color: 'var(--color-neutral-700)' }}>Carlos López</td>
+        <td style={{ padding: '8px', color: 'var(--color-neutral-700)' }}>Editor</td>
+        <td style={{ padding: '8px', color: 'var(--color-neutral-400)' }}>Inactivo</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## Buenas Prácticas
 

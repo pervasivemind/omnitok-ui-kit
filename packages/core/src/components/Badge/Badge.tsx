@@ -1,12 +1,22 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '../../utils/cn';
 
-export type BadgeVariant = 'default' | 'primary' | 'accent' | 'success' | 'warning' | 'error' | 'info';
+export type BadgeVariant =
+  | 'default'
+  | 'primary'
+  | 'accent'
+  | 'success'
+  | 'warning'
+  | 'error'
+  | 'info'
+  | 'violet'
+  | 'rose'
+  | 'teal';
 export type BadgeSize = 'sm' | 'md' | 'lg';
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   /** Badge content */
-  children: ReactNode;
+  children?: ReactNode;
   /** Visual variant */
   variant?: BadgeVariant;
   /** Badge size */
@@ -25,6 +35,9 @@ const variantStyles: Record<BadgeVariant, string> = {
   warning: 'bg-warning/10 text-warning-dark',
   error: 'bg-error/10 text-error-dark',
   info: 'bg-info/10 text-info-dark',
+  violet: 'bg-violet/10 text-violet-dark',
+  rose: 'bg-rose/10 text-rose-dark',
+  teal: 'bg-teal/10 text-teal-dark',
 };
 
 const sizeStyles: Record<BadgeSize, string> = {
@@ -41,10 +54,24 @@ const dotVariantStyles: Record<BadgeVariant, string> = {
   warning: 'bg-warning',
   error: 'bg-error',
   info: 'bg-info',
+  violet: 'bg-violet',
+  rose: 'bg-rose',
+  teal: 'bg-teal',
 };
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
-  ({ children, variant = 'default', size = 'md', pill = false, dot = false, className, ...props }, ref) => {
+  (
+    {
+      children,
+      variant = 'default',
+      size = 'md',
+      pill = false,
+      dot = false,
+      className,
+      ...props
+    },
+    ref
+  ) => {
     if (dot) {
       return (
         <span

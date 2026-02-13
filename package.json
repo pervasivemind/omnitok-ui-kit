@@ -4,23 +4,35 @@
   "private": true,
   "description": "Omnitok UI Kit - React Component Library",
   "scripts": {
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
+    "dev": "pnpm run '/^watch:.*/'",
+    "build": "pnpm run '/^build:.*/'",
     "storybook": "pnpm --filter storybook dev",
     "build:storybook": "pnpm --filter storybook build",
-    "build:core": "pnpm --filter @omnitok/ui build"
+    "build:core": "pnpm --filter @omnitok/ui build",
+    "watch:storybook": "pnpm --filter storybook dev",
+    "watch:core": "pnpm --filter @omnitok/ui dev"
   },
   "devDependencies": {
     "@types/node": "^20.19.32",
     "eslint": "^8.57.1",
     "prettier": "^3.8.1",
-    "turbo": "^2.8.3",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@10.28.2",
   "engines": {
-    "node": ">=18.0.0"
-  }
+    "node": ">=22",
+    "pnpm": ">=10",
+    "runtime": {
+      "name": "node",
+      "version": "^22.21.0",
+      "onFail": "download"
+    }
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^22.21.0",
+      "onFail": "download"
+    }
+  },
+  "dependencies": {}
 }

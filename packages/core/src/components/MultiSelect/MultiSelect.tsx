@@ -14,7 +14,7 @@ import { cn } from '../../utils/cn';
 
 export type MultiSelectSize = 'sm' | 'md' | 'lg';
 
-export type MultiSelectTagColor = 'primary' | 'accent' | 'success' | 'warning' | 'error' | 'info' | 'neutral';
+export type MultiSelectTagColor = 'default' | 'primary' | 'accent' | 'success' | 'warning' | 'error' | 'info' | 'violet' | 'rose' | 'teal';
 
 export interface MultiSelectOption {
   value: string;
@@ -92,13 +92,16 @@ const chevronSize: Record<MultiSelectSize, number> = {
 };
 
 const tagColorStyles: Record<MultiSelectTagColor, { base: string; hover: string }> = {
+  default: { base: 'bg-neutral-100 text-neutral-700', hover: 'hover:bg-neutral-200' },
   primary: { base: 'bg-primary/10 text-primary', hover: 'hover:bg-primary/20' },
   accent: { base: 'bg-accent/10 text-accent', hover: 'hover:bg-accent/20' },
   success: { base: 'bg-success/10 text-success', hover: 'hover:bg-success/20' },
   warning: { base: 'bg-warning/10 text-warning', hover: 'hover:bg-warning/20' },
   error: { base: 'bg-error/10 text-error', hover: 'hover:bg-error/20' },
   info: { base: 'bg-info/10 text-info', hover: 'hover:bg-info/20' },
-  neutral: { base: 'bg-neutral-100 text-neutral-700', hover: 'hover:bg-neutral-200' },
+  violet: { base: 'bg-violet/10 text-violet', hover: 'hover:bg-violet/20' },
+  rose: { base: 'bg-rose/10 text-rose', hover: 'hover:bg-rose/20' },
+  teal: { base: 'bg-teal/10 text-teal', hover: 'hover:bg-teal/20' },
 };
 
 export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
@@ -118,7 +121,7 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
       maxItems,
       searchable = true,
       leftIcon,
-      tagColor = 'primary',
+      tagColor = 'default',
       className,
       id,
     },

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Button } from '@omnitok/ui';
-import { Plus, Save, Trash2, Send } from 'lucide-react';
+import { Plus, Trash2, Send, Check, Info } from 'lucide-react';
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
@@ -13,7 +13,19 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'ghost', 'danger', 'accent', 'outline'],
+      options: [
+        'primary',
+        'secondary',
+        'ghost',
+        'accept',
+        'danger',
+        'accent',
+        'info',
+        'violet',
+        'rose',
+        'teal',
+        'outline',
+      ],
     },
     size: {
       control: 'select',
@@ -25,79 +37,156 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
-    variant: 'primary',
-    children: 'Primary Button',
+    children: 'Button',
   },
 };
 
-export const Secondary: Story = {
-  args: {
-    variant: 'secondary',
-    children: 'Secondary Button',
-  },
+export const Principales: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-4">
+      <Button variant="default">Default</Button>
+      <Button variant="primary">Primary</Button>
+      <Button variant="accent">Accent</Button>
+    </div>
+  ),
 };
 
-export const Ghost: Story = {
-  args: {
-    variant: 'ghost',
-    children: 'Ghost Button',
-  },
+export const Especiales: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-4">
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="outline">Outline</Button>
+    </div>
+  ),
 };
 
-export const Danger: Story = {
-  args: {
-    variant: 'danger',
-    children: 'Delete',
-    leftIcon: <Trash2 size={16} />,
-  },
+export const Auxiliares: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-4">
+      <Button variant="violet">Violet</Button>
+      <Button variant="rose">Rose</Button>
+      <Button variant="teal">Teal</Button>
+    </div>
+  ),
 };
 
-export const Accent: Story = {
-  args: {
-    variant: 'accent',
-    children: 'Accent Button',
-  },
+export const WithIcon: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-4">
+      <Button variant="primary" leftIcon={<Plus size={16} />}>
+        Create New
+      </Button>
+      <Button variant="primary" rightIcon={<Send size={16} />}>
+        Send Message
+      </Button>
+    </div>
+  ),
 };
 
-export const Outline: Story = {
-  args: {
-    variant: 'outline',
-    children: 'Outline Button',
-  },
-};
-
-export const WithLeftIcon: Story = {
-  args: {
-    variant: 'primary',
-    children: 'Create New',
-    leftIcon: <Plus size={16} />,
-  },
-};
-
-export const WithRightIcon: Story = {
-  args: {
-    variant: 'primary',
-    children: 'Send Message',
-    rightIcon: <Send size={16} />,
-  },
+export const Funcionales: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-4">
+      <Button variant="accept" leftIcon={<Check size={16} />}>
+        Aceptar
+      </Button>
+      <Button variant="danger" leftIcon={<Trash2 size={16} />}>
+        Eliminar
+      </Button>
+      <Button variant="info" leftIcon={<Info size={16} />}>
+        Info
+      </Button>
+    </div>
+  ),
 };
 
 export const Loading: Story = {
-  args: {
-    variant: 'primary',
-    children: 'Saving...',
-    loading: true,
-  },
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap justify-center gap-4">
+        <Button variant="default" loading>
+          Saving...
+        </Button>
+        <Button variant="primary" loading>
+          Sending...
+        </Button>
+        <Button variant="accent" loading>
+          Loading...
+        </Button>
+        <Button variant="accept" loading>
+          Accepting...
+        </Button>
+        <Button variant="danger" loading>
+          Deleting...
+        </Button>
+        <Button variant="info" loading>
+          Updating...
+        </Button>
+      </div>
+      <div className="flex flex-wrap justify-center gap-4">
+        <Button variant="violet" loading>
+          Creating...
+        </Button>
+        <Button variant="rose" loading>
+          Verifying...
+        </Button>
+        <Button variant="teal" loading>
+          Confirming...
+        </Button>
+        <Button variant="ghost" loading>
+          Ghosting...
+        </Button>
+        <Button variant="outline" loading>
+          Outlining...
+        </Button>
+      </div>
+    </div>
+  ),
 };
 
 export const Disabled: Story = {
-  args: {
-    variant: 'primary',
-    children: 'Disabled',
-    disabled: true,
-  },
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap justify-center gap-4">
+        <Button variant="default" disabled>
+          Disabled
+        </Button>
+        <Button variant="primary" disabled>
+          Primary
+        </Button>
+        <Button variant="accent" disabled>
+          Accent
+        </Button>
+        <Button variant="accept" disabled>
+          Accept
+        </Button>
+        <Button variant="danger" disabled>
+          Danger
+        </Button>
+        <Button variant="info" disabled>
+          Info
+        </Button>
+      </div>
+      <div className="flex flex-wrap justify-center gap-4">
+        <Button variant="violet" disabled>
+          Violet
+        </Button>
+        <Button variant="rose" disabled>
+          Rose
+        </Button>
+        <Button variant="teal" disabled>
+          Teal
+        </Button>
+        <Button variant="ghost" disabled>
+          Ghost
+        </Button>
+        <Button variant="outline" disabled>
+          Outline
+        </Button>
+      </div>
+    </div>
+  ),
 };
 
 export const FullWidth: Story = {
@@ -117,19 +206,6 @@ export const Sizes: Story = {
       <Button size="sm">Small</Button>
       <Button size="md">Medium</Button>
       <Button size="lg">Large</Button>
-    </div>
-  ),
-};
-
-export const AllVariants: Story = {
-  render: () => (
-    <div className="flex flex-wrap gap-4">
-      <Button variant="primary">Primary</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="ghost">Ghost</Button>
-      <Button variant="danger">Danger</Button>
-      <Button variant="accent">Accent</Button>
-      <Button variant="outline">Outline</Button>
     </div>
   ),
 };

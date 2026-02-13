@@ -85,7 +85,16 @@ const meta: Meta<typeof MultiSelect> = {
           '### Badge colors',
           '',
           'Use `tagColor` to set a global badge color for all selected items, or set `color` on individual options to override per item.',
-          'Available colors: `primary`, `accent`, `success`, `warning`, `error`, `info`, `neutral`.',
+          '',
+          'Available colors: `default`, `primary`, `accent`, `success`, `warning`, `error`, `info`, `violet`, `rose`, `teal`.',
+          '',
+          '```tsx',
+          '<MultiSelect',
+          '  options={options}',
+          '  tagColor="primary"',
+          '/>',
+          '```',
+          '',
         ].join('\n'),
       },
     },
@@ -93,7 +102,14 @@ const meta: Meta<typeof MultiSelect> = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div style={{ maxWidth: 384, minHeight: 300, paddingTop: 16, margin: '0 auto' }}>
+      <div
+        style={{
+          maxWidth: 384,
+          minHeight: 300,
+          paddingTop: 16,
+          margin: '0 auto',
+        }}
+      >
         <Story />
       </div>
     ),
@@ -111,7 +127,15 @@ const meta: Meta<typeof MultiSelect> = {
     },
     tagColor: {
       control: 'select',
-      options: ['primary', 'accent', 'success', 'warning', 'error', 'info', 'neutral'],
+      options: [
+        'primary',
+        'accent',
+        'success',
+        'warning',
+        'error',
+        'info',
+        'neutral',
+      ],
     },
   },
 };
@@ -190,7 +214,8 @@ export const Controlled: Story = {
           leftIcon={<Tag size={18} />}
         />
         <div className="text-sm text-neutral-500">
-          Selected values: {selected.length > 0 ? JSON.stringify(selected) : '[]'}
+          Selected values:{' '}
+          {selected.length > 0 ? JSON.stringify(selected) : '[]'}
         </div>
       </div>
     );
@@ -377,7 +402,18 @@ export const FullWidth: Story = {
 /** Demonstrates the `tagColor` prop applied globally to all badges. */
 export const TagColors: Story = {
   render: () => {
-    const colors = ['primary', 'accent', 'success', 'warning', 'error', 'info', 'neutral'] as const;
+    const colors = [
+      'default',
+      'primary',
+      'accent',
+      'success',
+      'warning',
+      'error',
+      'info',
+      'violet',
+      'rose',
+      'teal',
+    ] as const;
 
     return (
       <div className="flex flex-col gap-6 w-96">
@@ -401,13 +437,16 @@ export const PerOptionColors: Story = {
   args: {
     label: 'Team Skills',
     options: [
-      { value: 'frontend', label: 'Frontend', color: 'info' },
+      { value: 'database', label: 'Database', color: 'default' },
+      { value: 'mobile', label: 'Mobile', color: 'primary' },
+      { value: 'design', label: 'Design', color: 'accent' },
       { value: 'backend', label: 'Backend', color: 'success' },
       { value: 'devops', label: 'DevOps', color: 'warning' },
-      { value: 'design', label: 'Design', color: 'accent' },
       { value: 'security', label: 'Security', color: 'error' },
-      { value: 'mobile', label: 'Mobile', color: 'primary' },
-      { value: 'database', label: 'Database', color: 'neutral' },
+      { value: 'frontend', label: 'Frontend', color: 'info' },
+      { value: 'ai', label: 'AI/ML', color: 'violet' },
+      { value: 'integration', label: 'Integration', color: 'rose' },
+      { value: 'testing', label: 'Testing', color: 'teal' },
     ],
     placeholder: 'Select skills...',
     defaultValue: ['frontend', 'backend', 'devops', 'design', 'security'],

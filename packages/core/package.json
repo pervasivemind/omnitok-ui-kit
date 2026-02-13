@@ -21,7 +21,9 @@
     "**/*.css"
   ],
   "scripts": {
-    "dev": "vite build --watch",
+    "dev": "pnpm run '/^watch:.*/'",
+    "watch:dev": "vite build --watch",
+    "watch:css": "tailwindcss -i ./src/styles/index.css -o ./dist/styles.css --watch",
     "build": "vite build && npm run build:css",
     "build:css": "tailwindcss -i ./src/styles/index.css -o ./dist/styles.css --minify",
     "lint": "eslint src --ext ts,tsx",
