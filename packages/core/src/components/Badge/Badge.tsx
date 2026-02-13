@@ -2,9 +2,9 @@ import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '../../utils/cn';
 
 export type BadgeVariant =
-  | 'default'
   | 'primary'
   | 'accent'
+  | 'neutral'
   | 'success'
   | 'warning'
   | 'error'
@@ -28,9 +28,9 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  default: 'bg-neutral-100 text-neutral-700',
   primary: 'bg-primary/10 text-primary',
   accent: 'bg-accent/10 text-accent',
+  neutral: 'bg-neutral-100 text-neutral-700',
   success: 'bg-success/10 text-success-dark',
   warning: 'bg-warning/10 text-warning-dark',
   error: 'bg-error/10 text-error-dark',
@@ -47,9 +47,9 @@ const sizeStyles: Record<BadgeSize, string> = {
 };
 
 const dotVariantStyles: Record<BadgeVariant, string> = {
-  default: 'bg-neutral-400',
   primary: 'bg-primary',
   accent: 'bg-accent',
+  neutral: 'bg-neutral-400',
   success: 'bg-success',
   warning: 'bg-warning',
   error: 'bg-error',
@@ -63,7 +63,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
   (
     {
       children,
-      variant = 'default',
+      variant = 'primary',
       size = 'md',
       pill = false,
       dot = false,

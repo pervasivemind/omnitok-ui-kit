@@ -14,7 +14,17 @@ import { cn } from '../../utils/cn';
 
 export type MultiSelectSize = 'sm' | 'md' | 'lg';
 
-export type MultiSelectTagColor = 'default' | 'primary' | 'accent' | 'success' | 'warning' | 'error' | 'info' | 'violet' | 'rose' | 'teal';
+export type MultiSelectTagColor =
+  | 'primary'
+  | 'accent'
+  | 'neutral'
+  | 'success'
+  | 'warning'
+  | 'error'
+  | 'info'
+  | 'violet'
+  | 'rose'
+  | 'teal';
 
 export interface MultiSelectOption {
   value: string;
@@ -92,9 +102,9 @@ const chevronSize: Record<MultiSelectSize, number> = {
 };
 
 const tagColorStyles: Record<MultiSelectTagColor, { base: string; hover: string }> = {
-  default: { base: 'bg-neutral-100 text-neutral-700', hover: 'hover:bg-neutral-200' },
   primary: { base: 'bg-primary/10 text-primary', hover: 'hover:bg-primary/20' },
   accent: { base: 'bg-accent/10 text-accent', hover: 'hover:bg-accent/20' },
+  neutral: { base: 'bg-neutral-100 text-neutral-700', hover: 'hover:bg-neutral-200' },
   success: { base: 'bg-success/10 text-success', hover: 'hover:bg-success/20' },
   warning: { base: 'bg-warning/10 text-warning', hover: 'hover:bg-warning/20' },
   error: { base: 'bg-error/10 text-error', hover: 'hover:bg-error/20' },
@@ -121,7 +131,7 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
       maxItems,
       searchable = true,
       leftIcon,
-      tagColor = 'default',
+      tagColor = 'primary',
       className,
       id,
     },
@@ -156,8 +166,7 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
       return options.filter((option) => {
         const isAlreadySelected = selectedValues.includes(option.value);
         const matchesSearch =
-          !searchQuery ||
-          option.label.toLowerCase().includes(searchQuery.toLowerCase());
+          !searchQuery || option.label.toLowerCase().includes(searchQuery.toLowerCase());
         return !isAlreadySelected && matchesSearch;
       });
     }, [options, selectedValues, searchQuery]);
@@ -275,10 +284,7 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
     // Close dropdown on outside click
     useEffect(() => {
       const handleClickOutside = (e: Event) => {
-        if (
-          containerRef.current &&
-          !containerRef.current.contains(e.target as Node)
-        ) {
+        if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
           setIsOpen(false);
           setHighlightedIndex(-1);
           setSearchQuery('');
@@ -312,15 +318,9 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
     };
 
     return (
-      <div
-        ref={ref}
-        className={cn('flex flex-col gap-1.5', fullWidth && 'w-full')}
-      >
+      <div ref={ref} className={cn('flex flex-col gap-1.5', fullWidth && 'w-full')}>
         {label && (
-          <label
-            htmlFor={`${componentId}-input`}
-            className="text-sm font-medium text-neutral-700"
-          >
+          <label htmlFor={`${componentId}-input`} className="text-sm font-medium text-neutral-700">
             {label}
           </label>
         )}
@@ -346,20 +346,14 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
               isOpen && !hasError && 'ring-2 ring-primary border-primary',
               isOpen && hasError && 'ring-2 ring-error border-error',
               // Border color
-              hasError
-                ? 'border-error'
-                : 'border-neutral-300',
+              hasError ? 'border-error' : 'border-neutral-300',
               // Disabled state
               disabled && 'bg-neutral-100 cursor-not-allowed opacity-60',
               className
             )}
             aria-invalid={hasError}
             aria-describedby={
-              hasError
-                ? `${componentId}-error`
-                : helperText
-                  ? `${componentId}-helper`
-                  : undefined
+              hasError ? `${componentId}-error` : helperText ? `${componentId}-helper` : undefined
             }
           >
             {selectedValues.map((val) => {
@@ -419,9 +413,7 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
                 aria-expanded={isOpen}
                 aria-controls={`${componentId}-listbox`}
                 aria-activedescendant={
-                  highlightedIndex >= 0
-                    ? `${componentId}-option-${highlightedIndex}`
-                    : undefined
+                  highlightedIndex >= 0 ? `${componentId}-option-${highlightedIndex}` : undefined
                 }
                 aria-autocomplete="list"
                 autoComplete="off"
@@ -446,9 +438,7 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
                   aria-expanded={isOpen}
                   aria-controls={`${componentId}-listbox`}
                   aria-activedescendant={
-                    highlightedIndex >= 0
-                      ? `${componentId}-option-${highlightedIndex}`
-                      : undefined
+                    highlightedIndex >= 0 ? `${componentId}-option-${highlightedIndex}` : undefined
                   }
                   readOnly
                 />

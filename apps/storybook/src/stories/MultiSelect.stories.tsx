@@ -130,11 +130,14 @@ const meta: Meta<typeof MultiSelect> = {
       options: [
         'primary',
         'accent',
+        'neutral',
         'success',
         'warning',
         'error',
         'info',
-        'neutral',
+        'violet',
+        'rose',
+        'teal',
       ],
     },
   },
@@ -403,9 +406,9 @@ export const FullWidth: Story = {
 export const TagColors: Story = {
   render: () => {
     const colors = [
-      'default',
       'primary',
       'accent',
+      'neutral',
       'success',
       'warning',
       'error',
@@ -437,9 +440,9 @@ export const PerOptionColors: Story = {
   args: {
     label: 'Team Skills',
     options: [
-      { value: 'database', label: 'Database', color: 'default' },
       { value: 'mobile', label: 'Mobile', color: 'primary' },
       { value: 'design', label: 'Design', color: 'accent' },
+      { value: 'database', label: 'Database', color: 'neutral' },
       { value: 'backend', label: 'Backend', color: 'success' },
       { value: 'devops', label: 'DevOps', color: 'warning' },
       { value: 'security', label: 'Security', color: 'error' },

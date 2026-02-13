@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Pagination } from '@omnitok/ui';
+import { Badge, Pagination } from '@omnitok/ui';
 
 const meta: Meta<typeof Pagination> = {
   title: 'Components/Pagination',
@@ -156,9 +156,9 @@ export const CustomSiblingCount: Story = {
 };
 
 const variants = [
-  'default',
   'primary',
   'accent',
+  'neutral',
   'success',
   'warning',
   'error',
@@ -175,15 +175,13 @@ export const Variants: Story = {
       <div className="flex flex-col gap-4">
         {variants.map((variant) => (
           <div key={variant} className="flex items-center gap-4">
-            <span className="w-20 text-sm font-medium text-neutral-600 capitalize">
-              {variant}
-            </span>
             <Pagination
               currentPage={page}
               totalPages={10}
               onChange={setPage}
               variant={variant}
             />
+            <Badge variant={variant}>{variant}</Badge>
           </div>
         ))}
       </div>

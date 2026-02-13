@@ -1,11 +1,16 @@
 import { forwardRef, type HTMLAttributes } from 'react';
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from 'lucide-react';
 import { cn } from '../../utils/cn';
 
 export type PaginationVariant =
-  | 'default'
   | 'primary'
   | 'accent'
+  | 'neutral'
   | 'success'
   | 'warning'
   | 'error'
@@ -14,7 +19,10 @@ export type PaginationVariant =
   | 'rose'
   | 'teal';
 
-export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
+export interface PaginationProps extends Omit<
+  HTMLAttributes<HTMLElement>,
+  'onChange'
+> {
   /** Current page (1-indexed) */
   currentPage: number;
   /** Total number of pages */
@@ -52,9 +60,9 @@ const iconSizes = {
 };
 
 const activeVariantStyles: Record<PaginationVariant, string> = {
-  default: 'bg-neutral-700 text-white',
   primary: 'bg-primary text-white',
   accent: 'bg-accent text-white',
+  neutral: 'bg-neutral-700 text-white',
   success: 'bg-success text-white',
   warning: 'bg-warning text-white',
   error: 'bg-error text-white',
@@ -65,9 +73,9 @@ const activeVariantStyles: Record<PaginationVariant, string> = {
 };
 
 const focusVariantStyles: Record<PaginationVariant, string> = {
-  default: 'focus:ring-neutral-700',
   primary: 'focus:ring-primary',
   accent: 'focus:ring-accent',
+  neutral: 'focus:ring-neutral-700',
   success: 'focus:ring-success',
   warning: 'focus:ring-warning',
   error: 'focus:ring-error',
@@ -90,7 +98,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       itemsPerPage,
       disabled = false,
       size = 'md',
-      variant = 'default',
+      variant = 'primary',
       className,
       ...props
     },
@@ -106,7 +114,10 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       }
 
       const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
-      const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPages);
+      const rightSiblingIndex = Math.min(
+        currentPage + siblingCount,
+        totalPages
+      );
 
       const showLeftEllipsis = leftSiblingIndex > 2;
       const showRightEllipsis = rightSiblingIndex < totalPages - 1;
@@ -124,7 +135,8 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       } else {
         pages.push(1);
         pages.push('ellipsis');
-        for (let i = leftSiblingIndex; i <= rightSiblingIndex; i++) pages.push(i);
+        for (let i = leftSiblingIndex; i <= rightSiblingIndex; i++)
+          pages.push(i);
         pages.push('ellipsis');
         pages.push(totalPages);
       }
@@ -176,20 +188,37 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     }) => {
       const isPrev = direction === 'prev';
       const targetPage = double
-        ? isPrev ? 1 : totalPages
-        : isPrev ? currentPage - 1 : currentPage + 1;
-      const isDisabled = disabled || (isPrev ? currentPage === 1 : currentPage === totalPages);
+        ? isPrev
+          ? 1
+          : totalPages
+        : isPrev
+          ? currentPage - 1
+          : currentPage + 1;
+      const isDisabled =
+        disabled || (isPrev ? currentPage === 1 : currentPage === totalPages);
 
       const Icon = double
-        ? isPrev ? ChevronsLeft : ChevronsRight
-        : isPrev ? ChevronLeft : ChevronRight;
+        ? isPrev
+          ? ChevronsLeft
+          : ChevronsRight
+        : isPrev
+          ? ChevronLeft
+          : ChevronRight;
 
       return (
         <button
           type="button"
           onClick={() => !isDisabled && onChange(targetPage)}
           disabled={isDisabled}
-          aria-label={double ? (isPrev ? 'First page' : 'Last page') : (isPrev ? 'Previous page' : 'Next page')}
+          aria-label={
+            double
+              ? isPrev
+                ? 'First page'
+                : 'Last page'
+              : isPrev
+                ? 'Previous page'
+                : 'Next page'
+          }
           className={cn(
             buttonClasses,
             isDisabled
@@ -203,12 +232,14 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     };
 
     // Calculate info text
-    const startItem = totalItems && itemsPerPage
-      ? (currentPage - 1) * itemsPerPage + 1
-      : undefined;
-    const endItem = totalItems && itemsPerPage
-      ? Math.min(currentPage * itemsPerPage, totalItems)
-      : undefined;
+    const startItem =
+      totalItems && itemsPerPage
+        ? (currentPage - 1) * itemsPerPage + 1
+        : undefined;
+    const endItem =
+      totalItems && itemsPerPage
+        ? Math.min(currentPage * itemsPerPage, totalItems)
+        : undefined;
 
     return (
       <nav

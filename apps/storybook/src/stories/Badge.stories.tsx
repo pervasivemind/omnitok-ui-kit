@@ -12,7 +12,7 @@ const meta: Meta<typeof Badge> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'primary', 'accent', 'success', 'warning', 'error', 'info'],
+      options: ['primary', 'accent', 'neutral', 'success', 'warning', 'error', 'info'],
     },
     size: {
       control: 'select',
@@ -33,9 +33,9 @@ export const Default: Story = {
 export const Principales: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">
-      <Badge variant="default">Default</Badge>
       <Badge variant="primary">Primary</Badge>
       <Badge variant="accent">Accent</Badge>
+      <Badge variant="neutral">Neutral</Badge>
     </div>
   ),
 };
@@ -64,7 +64,9 @@ export const Auxiliares: Story = {
 export const Pill: Story = {
   render: () => (
     <div className="flex items-center gap-4">
-      <Badge variant="default" pill>Default</Badge>
+      <Badge variant="primary" pill>Primary</Badge>
+      <Badge variant="accent" pill>Accent</Badge>
+      <Badge variant="neutral" pill>Neutral</Badge>
       <Badge variant="success" pill>Success</Badge>
       <Badge variant="warning" pill>Warning</Badge>
       <Badge variant="error" pill>Error</Badge>
@@ -79,7 +81,9 @@ export const Pill: Story = {
 export const Dot: Story = {
   render: () => (
     <div className="flex items-center gap-4">
-      <Badge variant="default" dot />
+      <Badge variant="primary" dot />
+      <Badge variant="accent" dot />
+      <Badge variant="neutral" dot />
       <Badge variant="success" dot />
       <Badge variant="warning" dot />
       <Badge variant="error" dot />
