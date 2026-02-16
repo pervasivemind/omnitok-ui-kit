@@ -48,9 +48,9 @@ export interface PaginationProps extends Omit<
 }
 
 const sizeStyles = {
-  sm: 'h-8 min-w-8 text-sm',
-  md: 'h-10 min-w-10 text-base',
-  lg: 'h-12 min-w-12 text-lg',
+  sm: 'h-8 w-8 text-sm',
+  md: 'h-10 w-10 text-base',
+  lg: 'h-12 w-12 text-lg',
 };
 
 const iconSizes = {
@@ -148,7 +148,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     const iconSize = iconSizes[size];
 
     const buttonClasses = cn(
-      'flex items-center justify-center rounded-md transition-colors',
+      'flex items-center justify-center rounded-full transition-colors',
       'focus:outline-none focus:ring-2 focus:ring-offset-2',
       focusVariantStyles[variant],
       sizeStyles[size],
