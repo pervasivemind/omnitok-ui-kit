@@ -2290,9 +2290,9 @@ const Qc = ce(
 );
 Qc.displayName = "TabPanel";
 const Br = {
-  sm: "h-8 min-w-8 text-sm",
-  md: "h-10 min-w-10 text-base",
-  lg: "h-12 min-w-12 text-lg"
+  sm: "h-8 w-8 text-sm",
+  md: "h-10 w-10 text-base",
+  lg: "h-12 w-12 text-lg"
 }, el = {
   sm: 14,
   md: 16,
@@ -2359,7 +2359,7 @@ const Br = {
       }
       return E;
     })(), x = el[l], w = O(
-      "flex items-center justify-center rounded-md transition-colors",
+      "flex items-center justify-center rounded-full transition-colors",
       "focus:outline-none focus:ring-2 focus:ring-offset-2",
       nl[p],
       Br[l],
