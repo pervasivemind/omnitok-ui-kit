@@ -169,15 +169,20 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
 
           {/* Content */}
           <div className="flex-1 flex overflow-hidden">
-            <main className="flex-1 overflow-y-auto p-6">
+            <main
+              className={cn(
+                'flex-1 overflow-y-auto p-6',
+                rightPanel && 'hidden md:block'
+              )}
+            >
               {children}
             </main>
 
-            {/* Right panel */}
+            {/* Right panel: full width on mobile, configured width on md+ */}
             {rightPanel && (
               <aside
-                className="hidden xl:block border-l border-neutral-200 bg-white overflow-y-auto"
-                style={{ width: rightPanelWidth }}
+                className="w-full md:w-[var(--panel-width)] border-l border-neutral-200 bg-white overflow-y-auto flex-shrink-0"
+                style={{ '--panel-width': rightPanelWidth } as React.CSSProperties}
               >
                 {rightPanel}
               </aside>

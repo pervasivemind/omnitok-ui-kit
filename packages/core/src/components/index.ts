@@ -19,6 +19,7 @@ export * from './Sidebar';
 export * from './Header';
 export * from './Layout';
 export * from './Breadcrumb';
+export * from './SidePanel';
 
 // Data Components
 export * from './Table';
