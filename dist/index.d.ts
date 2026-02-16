@@ -628,6 +628,21 @@ export declare interface SidebarProps extends HTMLAttributes<HTMLElement> {
     onItemClick?: (item: SidebarItem) => void;
 }
 
+export declare const SidePanel: ForwardRefExoticComponent<SidePanelProps & RefAttributes<HTMLDivElement>>;
+
+export declare interface SidePanelProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
+    /** Close handler (called by X button; parent removes from rightPanel to close) */
+    onClose: () => void;
+    /** Header title */
+    title?: ReactNode;
+    /** Header description */
+    description?: string;
+    /** Panel body content */
+    children: ReactNode;
+    /** Sticky footer content (e.g., action buttons) */
+    footer?: ReactNode;
+}
+
 export declare function SingleDraggableCard({ title, children, className, isDragging, dragHandleProps, }: SingleDraggableCardProps): JSX_2.Element;
 
 export declare interface SingleDraggableCardProps {
