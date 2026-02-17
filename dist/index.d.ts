@@ -103,6 +103,8 @@ export declare interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElem
     leftIcon?: ReactNode;
     /** Icon to show after text */
     rightIcon?: ReactNode;
+    /** Render as ghost (transparent bg, colored text) */
+    ghost?: boolean;
     /** Full width button */
     fullWidth?: boolean;
     /** Button content */
@@ -111,7 +113,7 @@ export declare interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElem
 
 export declare type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
-export declare type ButtonVariant = 'primary' | 'accent' | 'neutral' | 'accept' | 'danger' | 'info' | 'violet' | 'rose' | 'teal' | 'ghost' | 'outline';
+export declare type ButtonVariant = 'primary' | 'accent' | 'neutral' | 'accept' | 'danger' | 'info' | 'violet' | 'rose' | 'teal' | 'outline';
 
 export declare const Card: ForwardRefExoticComponent<CardProps & RefAttributes<HTMLDivElement>>;
 
