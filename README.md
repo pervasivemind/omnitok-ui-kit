@@ -27,7 +27,7 @@
 ## 📚 Storybook
 Documentacion completa para uso con ejemplos
 
-https://ui-kit.omnitok.cloud/
+<a href="https://ui-kit.omnitok.cloud/" target="_blank">https://ui-kit.omnitok.cloud/</a>
 
 ## 📦 Instalación
 
