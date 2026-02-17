@@ -13,11 +13,10 @@
       "types": "./dist/index.d.ts"
     },
     "./styles.css": "./dist/styles.css",
-    "./tailwind-preset": "./tailwind.preset.js"
+    "./tailwind-preset": "./dist/tailwind.preset.js"
   },
   "files": [
-    "dist",
-    "tailwind.preset.js"
+    "dist"
   ],
   "sideEffects": [
     "**/*.css"
