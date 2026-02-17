@@ -3,9 +3,9 @@ import { Loader2 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
 export type ButtonVariant =
-  | 'default'
   | 'primary'
   | 'accent'
+  | 'neutral'
   | 'accept'
   | 'danger'
   | 'info'
@@ -34,19 +34,14 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  default:
+  primary: 'bg-primary text-white hover:bg-primary-dark active:bg-primary-dark focus:ring-primary',
+  accent: 'bg-accent text-white hover:bg-accent-dark active:bg-accent-dark focus:ring-accent',
+  neutral:
     'bg-neutral-200 text-neutral-800 hover:bg-neutral-300 active:bg-neutral-400 focus:ring-neutral-400',
-  primary:
-    'bg-primary text-white hover:bg-primary-dark active:bg-primary-dark focus:ring-primary',
-  accent:
-    'bg-accent text-white hover:bg-accent-dark active:bg-accent-dark focus:ring-accent',
-  accept:
-    'bg-success text-white hover:bg-success-dark active:bg-success-dark focus:ring-success',
-  danger:
-    'bg-error text-white hover:bg-error-dark active:bg-error-dark focus:ring-error',
+  accept: 'bg-success text-white hover:bg-success-dark active:bg-success-dark focus:ring-success',
+  danger: 'bg-error text-white hover:bg-error-dark active:bg-error-dark focus:ring-error',
   info: 'bg-info text-white hover:bg-info-dark active:bg-info-dark focus:ring-info',
-  violet:
-    'bg-violet text-white hover:bg-violet-dark active:bg-violet-dark focus:ring-violet',
+  violet: 'bg-violet text-white hover:bg-violet-dark active:bg-violet-dark focus:ring-violet',
   rose: 'bg-rose text-white hover:bg-rose-dark active:bg-rose-dark focus:ring-rose',
   teal: 'bg-teal text-white hover:bg-teal-dark active:bg-teal-dark focus:ring-teal',
   ghost:
@@ -72,7 +67,7 @@ const loaderSize: Record<ButtonSize, number> = {
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
-      variant = 'default',
+      variant = 'primary',
       size = 'md',
       loading = false,
       leftIcon,
@@ -108,14 +103,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         {...props}
       >
-        {loading ? (
-          <Loader2
-            className="animate-spin"
-            size={loaderSize[size]}
-          />
-        ) : (
-          leftIcon
-        )}
+        {loading ? <Loader2 className="animate-spin" size={loaderSize[size]} /> : leftIcon}
         {children}
         {!loading && rightIcon}
       </button>

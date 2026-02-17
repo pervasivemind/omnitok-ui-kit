@@ -46,9 +46,9 @@ export const Default: Story = {
 export const Principales: Story = {
   render: () => (
     <div className="flex flex-wrap gap-4">
-      <Button variant="default">Default</Button>
       <Button variant="primary">Primary</Button>
       <Button variant="accent">Accent</Button>
+      <Button variant="neutral">Neutral</Button>
     </div>
   ),
 };
@@ -105,14 +105,14 @@ export const Loading: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap justify-center gap-4">
-        <Button variant="default" loading>
-          Saving...
-        </Button>
         <Button variant="primary" loading>
           Sending...
         </Button>
         <Button variant="accent" loading>
           Loading...
+        </Button>
+        <Button variant="neutral" loading>
+          Saving...
         </Button>
         <Button variant="accept" loading>
           Accepting...
@@ -149,14 +149,14 @@ export const Disabled: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap justify-center gap-4">
-        <Button variant="default" disabled>
-          Disabled
-        </Button>
         <Button variant="primary" disabled>
           Primary
         </Button>
         <Button variant="accent" disabled>
           Accent
+        </Button>
+        <Button variant="neutral" disabled>
+          Neutral
         </Button>
         <Button variant="accept" disabled>
           Accept
