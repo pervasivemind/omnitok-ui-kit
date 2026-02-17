@@ -172,3 +172,48 @@ export const WithNestedItems: Story = {
     </div>
   ),
 };
+
+export const CollapsedWithNestedItems: Story = {
+  render: () => {
+    const [collapsed, setCollapsed] = useState(true);
+    return (
+      <div className="h-screen">
+        <Sidebar
+          items={[
+            { id: 'dashboard', label: 'Dashboard', icon: <Home size={20} /> },
+            {
+              id: 'products',
+              label: 'Products',
+              icon: <Package size={20} />,
+              children: [
+                { id: 'all-products', label: 'All Products' },
+                { id: 'add-product', label: 'Add Product' },
+                { id: 'categories', label: 'Categories' },
+                { id: 'inventory', label: 'Inventory' },
+              ],
+            },
+            {
+              id: 'orders',
+              label: 'Orders',
+              icon: <ShoppingCart size={20} />,
+              children: [
+                { id: 'all-orders', label: 'All Orders' },
+                { id: 'pending', label: 'Pending', badge: 8 },
+                { id: 'completed', label: 'Completed' },
+              ],
+            },
+            { id: 'analytics', label: 'Analytics', icon: <BarChart3 size={20} /> },
+            { id: 'settings', label: 'Settings', icon: <Settings size={20} /> },
+          ]}
+          logo={LogoExpanded}
+          logoCollapsed={LogoCollapsed}
+          systemName="E-Commerce"
+          activeId="dashboard"
+          collapsed={collapsed}
+          onCollapsedChange={setCollapsed}
+          collapsible
+        />
+      </div>
+    );
+  },
+};

@@ -1,5 +1,5 @@
 import { forwardRef, type HTMLAttributes, type ReactNode, useState } from 'react';
-import { ChevronDown, PanelLeftClose } from 'lucide-react';
+import { ChevronDown, ChevronRight, PanelLeftClose } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
 export interface SidebarItem {
@@ -50,6 +50,7 @@ export interface SidebarItemProps {
   level?: number;
   activeId?: string;
   onItemClick?: (item: SidebarItem) => void;
+  onCollapsedChange?: (collapsed: boolean) => void;
 }
 
 const SidebarItemComponent = ({
@@ -58,6 +59,7 @@ const SidebarItemComponent = ({
   level = 0,
   activeId,
   onItemClick,
+  onCollapsedChange,
 }: SidebarItemProps) => {
   const [expanded, setExpanded] = useState(false);
   const hasChildren = item.children && item.children.length > 0;
@@ -65,7 +67,12 @@ const SidebarItemComponent = ({
 
   const handleClick = () => {
     if (hasChildren) {
-      setExpanded(!expanded);
+      if (collapsed) {
+        onCollapsedChange?.(false);
+        setExpanded(true);
+      } else {
+        setExpanded(!expanded);
+      }
     } else {
       onItemClick?.(item);
       item.onClick?.();
@@ -74,8 +81,11 @@ const SidebarItemComponent = ({
 
   const content = (
     <>
-      <span className="flex-shrink-0 w-4 h-4 flex items-center justify-center text-[16px]">
+      <span className="relative flex-shrink-0 w-4 h-4 flex items-center justify-center text-[16px]">
         {item.icon || <span className="w-1" />}
+        {collapsed && hasChildren && (
+          <ChevronRight className="absolute -right-2.5 top-1/2 -translate-y-1/2 w-2.5 h-2.5 text-white/50" />
+        )}
       </span>
       {!collapsed && (
         <>
@@ -133,6 +143,7 @@ const SidebarItemComponent = ({
               level={level + 1}
               activeId={activeId}
               onItemClick={onItemClick}
+              onCollapsedChange={onCollapsedChange}
             />
           ))}
         </div>
@@ -226,6 +237,7 @@ export const Sidebar = forwardRef<HTMLElement, SidebarProps>(
               collapsed={collapsed}
               activeId={activeId}
               onItemClick={onItemClick}
+              onCollapsedChange={onCollapsedChange}
             />
           ))}
         </nav>
