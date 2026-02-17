@@ -25,7 +25,7 @@
     "dev": "pnpm run '/^watch:.*/'",
     "watch:dev": "vite build --watch",
     "watch:css": "tailwindcss -i ./src/styles/index.css -o ./dist/styles.css --watch",
-    "build": "vite build && npm run build:css",
+    "build": "vite build && npm run build:css && cp tailwind.preset.js dist/tailwind.preset.js",
     "build:css": "tailwindcss -i ./src/styles/index.css -o ./dist/styles.css --minify",
     "lint": "eslint src --ext ts,tsx",
     "test": "vitest run",
