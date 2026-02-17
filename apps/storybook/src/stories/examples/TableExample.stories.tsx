@@ -149,16 +149,17 @@ export const UsersList: Story = {
         align: 'right' as const,
         render: (row: User) => (
           <div className="flex items-center justify-end gap-1">
-            <Button variant="ghost" size="sm" className="p-2">
+            <Button variant="neutral" ghost size="sm" className="p-2">
               <Eye size={16} />
             </Button>
-            <Button variant="ghost" size="sm" className="p-2">
+            <Button variant="neutral" ghost size="sm" className="p-2">
               <Edit size={16} />
             </Button>
             <Button
-              variant="ghost"
+              variant="danger"
+              ghost
               size="sm"
-              className="p-2 text-error hover:bg-error/10"
+              className="p-2"
               onClick={() => setDeleteModal(row)}
             >
               <Trash2 size={16} />
@@ -222,7 +223,8 @@ export const UsersList: Story = {
                   Filtros
                 </Button>
                 <Button
-                  variant="ghost"
+                  variant="neutral"
+                  ghost
                   size="sm"
                   leftIcon={<Download size={16} />}
                   className="text-white/90 hover:bg-white/10 hover:text-white"
@@ -261,7 +263,7 @@ export const UsersList: Story = {
           size="sm"
           footer={
             <>
-              <Button variant="ghost" onClick={() => setDeleteModal(null)}>
+              <Button variant="neutral" ghost onClick={() => setDeleteModal(null)}>
                 Cancelar
               </Button>
               <Button variant="danger" onClick={() => setDeleteModal(null)}>
@@ -352,7 +354,7 @@ export const ProductsList: Story = {
         header: '',
         align: 'right' as const,
         render: () => (
-          <Button variant="ghost" size="sm" className="p-2">
+          <Button variant="neutral" ghost size="sm" className="p-2">
             <MoreHorizontal size={16} />
           </Button>
         ),

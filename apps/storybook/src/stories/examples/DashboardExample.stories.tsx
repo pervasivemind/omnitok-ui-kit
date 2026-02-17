@@ -114,7 +114,7 @@ const ChartPlaceholder = ({ title, height = 'h-64' }: { title: string; height?: 
 
 const RecentActivity = () => (
   <Card noPadding>
-    <CardHeader action={<Button variant="ghost" size="sm">Ver todo</Button>}>
+    <CardHeader action={<Button variant="neutral" ghost size="sm">Ver todo</Button>}>
       Actividad Reciente
     </CardHeader>
     <CardBody className="space-y-4">

@@ -15,11 +15,10 @@ const meta: Meta<typeof Button> = {
       control: 'select',
       options: [
         'primary',
-        'secondary',
-        'ghost',
+        'accent',
+        'neutral',
         'accept',
         'danger',
-        'accent',
         'info',
         'violet',
         'rose',
@@ -30,6 +29,9 @@ const meta: Meta<typeof Button> = {
     size: {
       control: 'select',
       options: ['xs', 'sm', 'md', 'lg'],
+    },
+    ghost: {
+      control: 'boolean',
     },
   },
 };
@@ -56,7 +58,7 @@ export const Principales: Story = {
 export const Especiales: Story = {
   render: () => (
     <div className="flex flex-wrap gap-4">
-      <Button variant="ghost">Ghost</Button>
+      <Button variant="neutral" ghost>Ghost</Button>
       <Button variant="outline">Outline</Button>
     </div>
   ),
@@ -68,6 +70,28 @@ export const Auxiliares: Story = {
       <Button variant="violet">Violet</Button>
       <Button variant="rose">Rose</Button>
       <Button variant="teal">Teal</Button>
+    </div>
+  ),
+};
+
+export const Ghost: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap gap-4">
+        <Button variant="primary" ghost>Primary</Button>
+        <Button variant="accent" ghost>Accent</Button>
+        <Button variant="neutral" ghost>Neutral</Button>
+      </div>
+      <div className="flex flex-wrap gap-4">
+        <Button variant="accept" ghost>Accept</Button>
+        <Button variant="danger" ghost>Danger</Button>
+        <Button variant="info" ghost>Info</Button>
+      </div>
+      <div className="flex flex-wrap gap-4">
+        <Button variant="violet" ghost>Violet</Button>
+        <Button variant="rose" ghost>Rose</Button>
+        <Button variant="teal" ghost>Teal</Button>
+      </div>
     </div>
   ),
 };
@@ -134,7 +158,7 @@ export const Loading: Story = {
         <Button variant="teal" loading>
           Confirming...
         </Button>
-        <Button variant="ghost" loading>
+        <Button variant="neutral" ghost loading>
           Ghosting...
         </Button>
         <Button variant="outline" loading>
@@ -178,7 +202,7 @@ export const Disabled: Story = {
         <Button variant="teal" disabled>
           Teal
         </Button>
-        <Button variant="ghost" disabled>
+        <Button variant="neutral" ghost disabled>
           Ghost
         </Button>
         <Button variant="outline" disabled>

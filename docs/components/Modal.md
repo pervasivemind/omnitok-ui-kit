@@ -71,7 +71,7 @@ function ModalWithFooter() {
       title="Editar Usuario"
       footer={
         <>
-          <Button variant="ghost" onClick={() => setOpen(false)}>
+          <Button variant="neutral" ghost onClick={() => setOpen(false)}>
             Cancelar
           </Button>
           <Button variant="primary" onClick={handleSave}>
@@ -220,7 +220,8 @@ function FormModal() {
         footer={
           <>
             <Button 
-              variant="ghost" 
+              variant="neutral" 
+              ghost
               onClick={() => setOpen(false)}
               disabled={loading}
             >
@@ -437,7 +438,7 @@ function SelectModal() {
       size="md"
       footer={
         <>
-          <Button variant="ghost" onClick={() => setOpen(false)}>
+          <Button variant="neutral" ghost onClick={() => setOpen(false)}>
             Cancelar
           </Button>
           <Button variant="primary" onClick={handleConfirm}>

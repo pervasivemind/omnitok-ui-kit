@@ -82,10 +82,10 @@ export const WithCustomRender: Story = {
         align: 'right',
         render: () => (
           <div className="flex items-center justify-end gap-2">
-            <Button variant="ghost" size="sm">
+            <Button variant="neutral" ghost size="sm">
               <Edit size={14} />
             </Button>
-            <Button variant="ghost" size="sm">
+            <Button variant="neutral" ghost size="sm">
               <Trash2 size={14} />
             </Button>
           </div>

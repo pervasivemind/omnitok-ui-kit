@@ -53,7 +53,7 @@ export const WithFooter: Story = {
           title="Edit Profile"
           footer={
             <>
-              <Button variant="ghost" onClick={() => setOpen(false)}>
+              <Button variant="neutral" ghost onClick={() => setOpen(false)}>
                 Cancel
               </Button>
               <Button variant="primary" onClick={() => setOpen(false)}>

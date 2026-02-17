@@ -69,7 +69,7 @@ export const WithFooter: Story = {
         </p>
       </CardBody>
       <CardFooter>
-        <Button variant="ghost">Cancel</Button>
+        <Button variant="neutral" ghost>Cancel</Button>
         <Button variant="primary">Save Changes</Button>
       </CardFooter>
     </Card>

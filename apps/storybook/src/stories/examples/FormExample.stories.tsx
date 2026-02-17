@@ -101,7 +101,7 @@ export const ProductForm: Story = {
         }
         headerActions={
           <div className="flex items-center gap-3">
-            <Button variant="ghost" leftIcon={<X size={18} />}>
+            <Button variant="neutral" ghost leftIcon={<X size={18} />}>
               Cancelar
             </Button>
             <Button variant="primary" leftIcon={<Save size={18} />}>
@@ -280,7 +280,7 @@ export const ProductForm: Story = {
               </div>
             </CardBody>
             <CardFooter>
-              <Button variant="ghost">Cancelar</Button>
+              <Button variant="neutral" ghost>Cancelar</Button>
               <Button variant="primary" leftIcon={<Save size={18} />}>
                 Guardar Producto
               </Button>
@@ -367,7 +367,7 @@ export const UserForm: Story = {
               </div>
             </CardBody>
             <CardFooter>
-              <Button variant="ghost">Cancelar</Button>
+              <Button variant="neutral" ghost>Cancelar</Button>
               <Button variant="primary" onClick={() => setSaved(true)}>
                 Guardar Cambios
               </Button>

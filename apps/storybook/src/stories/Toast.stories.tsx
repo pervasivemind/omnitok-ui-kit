@@ -45,7 +45,8 @@ const ToastDemo = () => {
         Warning Toast
       </Button>
       <Button
-        variant="ghost"
+        variant="neutral"
+        ghost
         onClick={() => info('New updates are available.')}
       >
         Info Toast

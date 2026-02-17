@@ -155,7 +155,7 @@ function ProductForm() {
         />
       </CardBody>
       <CardFooter>
-        <Button variant="ghost" leftIcon={<X size={18} />}>
+        <Button variant="neutral" ghost leftIcon={<X size={18} />}>
           Cancelar
         </Button>
         <Button variant="primary" leftIcon={<Save size={18} />}>

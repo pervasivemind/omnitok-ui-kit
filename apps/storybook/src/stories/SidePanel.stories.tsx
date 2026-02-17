@@ -125,7 +125,8 @@ export const WithSidebar: Story = {
                   </div>
                   <Button
                     size="sm"
-                    variant="ghost"
+                    variant="neutral"
+                    ghost
                     onClick={() => openEditor(product)}
                   >
                     <Pencil size={16} className="mr-1" />
@@ -196,7 +197,8 @@ export const WithoutSidebar: Story = {
                   </div>
                   <Button
                     size="sm"
-                    variant="ghost"
+                    variant="neutral"
+                    ghost
                     onClick={() => openEditor(product)}
                   >
                     <Pencil size={16} className="mr-1" />
@@ -238,7 +240,7 @@ export const WithForm: Story = {
               onClose={() => setEditorOpen(false)}
               footer={
                 <>
-                  <Button variant="ghost" onClick={() => setEditorOpen(false)}>
+                  <Button variant="neutral" ghost onClick={() => setEditorOpen(false)}>
                     Cancel
                   </Button>
                   <Button type="submit" form="create-user-form">
@@ -321,7 +323,7 @@ export const CustomWidth: Story = {
               onClose={() => setEditorOpen(false)}
               footer={
                 <>
-                  <Button variant="ghost" onClick={() => setEditorOpen(false)}>
+                  <Button variant="neutral" ghost onClick={() => setEditorOpen(false)}>
                     Close
                   </Button>
                   <Button variant="primary">
