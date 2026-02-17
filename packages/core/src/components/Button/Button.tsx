@@ -14,7 +14,7 @@ export type ButtonVariant =
   | 'teal'
   | 'ghost'
   | 'outline';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Visual style variant */
@@ -56,9 +56,17 @@ const variantStyles: Record<ButtonVariant, string> = {
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
+  xs: 'px-2 py-0.5 text-xs gap-1',
   sm: 'px-3 py-1.5 text-sm gap-1.5',
   md: 'px-4 py-2 text-base gap-2',
   lg: 'px-6 py-3 text-lg gap-2.5',
+};
+
+const loaderSize: Record<ButtonSize, number> = {
+  xs: 12,
+  sm: 14,
+  md: 16,
+  lg: 20,
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -103,7 +111,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {loading ? (
           <Loader2
             className="animate-spin"
-            size={size === 'sm' ? 14 : size === 'lg' ? 20 : 16}
+            size={loaderSize[size]}
           />
         ) : (
           leftIcon

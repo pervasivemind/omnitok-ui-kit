@@ -202,10 +202,33 @@ export const FullWidth: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
-      <Button size="sm">Small</Button>
-      <Button size="md">Medium</Button>
-      <Button size="lg">Large</Button>
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center gap-4">
+        <Button size="xs">Extra Small</Button>
+        <Button size="sm">Small</Button>
+        <Button size="md">Medium</Button>
+        <Button size="lg">Large</Button>
+      </div>
+      <div className="flex items-center gap-4">
+        <Button size="xs" leftIcon={<Plus size={12} />}>Extra Small</Button>
+        <Button size="sm" rightIcon={<Plus size={14} />}>Small</Button>
+        <Button size="md" leftIcon={<Plus size={16} />}>Medium</Button>
+        <Button size="lg" rightIcon={<Plus size={20} />}>Large</Button>
+      </div>
+      <div className="flex items-center gap-4">
+        <Button size="xs" loading>
+          Extra Small
+        </Button>
+        <Button size="sm" loading>
+          Small
+        </Button>
+        <Button size="md" loading>
+          Medium
+        </Button>
+        <Button size="lg" loading>
+          Large
+        </Button>
+      </div>
     </div>
   ),
 };
