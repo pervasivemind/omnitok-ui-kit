@@ -27,12 +27,20 @@
 
 ## 📦 Instalación
 
+Requisito para usar iconos
 ```bash
-npm install @omnitok/ui lucide-react
-# o
-pnpm add @omnitok/ui lucide-react
-# o
-yarn add @omnitok/ui lucide-react
+npm lucide-react
+```
+
+```bash
+# SSH
+npm install git+ssh://git@github.com:pervasivemind/omnitok-ui-kit.git#pkg
+
+# HTTPS
+npm install git+https://github.com/pervasivemind/omnitok-ui-kit.git#pkg
+
+# package.json
+"@omnitok/ui": "git+ssh://git@github.com:pervasivemind/omnitok-ui-kit.git#pkg"
 ```
 
 **Para usar componentes drag and drop:**
