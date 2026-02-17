@@ -12,12 +12,6 @@ npm install git+ssh://git@github.com:pervasivemind/omnitok-ui-kit.git#pkg
 
 # Using npm (HTTPS)
 npm install git+https://github.com/pervasivemind/omnitok-ui-kit.git#pkg
-
-# Using yarn
-yarn add git+ssh://git@github.com:pervasivemind/omnitok-ui-kit.git#pkg
-
-# Using pnpm
-pnpm add git+ssh://git@github.com:pervasivemind/omnitok-ui-kit.git#pkg
 ```
 
 Or add to your `package.json`:

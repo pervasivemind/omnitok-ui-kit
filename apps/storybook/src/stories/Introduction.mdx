@@ -156,38 +156,36 @@ Explora las secciones:
 
 ### Setup del repositorio
 
+Recomendamos usar pnpm como package manager.
+
+https://pnpm.io/installation
+
+
 ```bash
 # Clonar repositorio
 git clone https://github.com/pervasivemind/omnitok-ui-kit.git
-cd omnitok-ui-kit/omnitok-ui
-
-# Instalar pnpm (si no lo tienes)
-npm install -g pnpm
 
 # Instalar dependencias
 pnpm install
 
-# Ejecutar Storybook
-pnpm storybook
-
-# Build completo
-pnpm build
+# Levantar instancia local
+pnpm dev
 ```
 
 ### Comandos útiles
 
 ```bash
 # Desarrollar componentes
-cd packages/core && pnpm dev
+pnpm --filter @omnitok/ui dev
 
 # Build solo core package
-cd packages/core && pnpm build
+pnpm --filter @omnitok/ui build
 
-# Lint
-pnpm lint
+# Ejecutar Storybook
+pnpm --filter storybook dev
 
-# Format
-pnpm format
+# Build Storybook
+pnpm --filter storybook build
 ```
 
 ## 🐳 Docker

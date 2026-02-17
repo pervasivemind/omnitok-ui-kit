@@ -148,42 +148,38 @@ function App() {
 
 ## 🔧 Desarrollo
 
-### Setup
+### Setup del repositorio
+
+Recomendamos usar pnpm como package manager.
+
+https://pnpm.io/installation
+
 
 ```bash
 # Clonar repositorio
 git clone https://github.com/pervasivemind/omnitok-ui-kit.git
-cd omnitok-ui-kit/omnitok-ui
-
-# Instalar pnpm (si no lo tienes)
-npm install -g pnpm
 
 # Instalar dependencias
 pnpm install
+
+# Levantar instancia local
+pnpm dev
 ```
 
-### Comandos
+### Comandos útiles
 
 ```bash
 # Desarrollar componentes
-cd packages/core
-pnpm dev
-
-# Ejecutar Storybook
-pnpm storybook
-
-# Build todo el proyecto
-pnpm build
+pnpm --filter @omnitok/ui dev
 
 # Build solo core package
-cd packages/core
-pnpm build
+pnpm --filter @omnitok/ui build
 
-# Lint
-pnpm lint
+# Ejecutar Storybook
+pnpm --filter storybook dev
 
-# Format
-pnpm format
+# Build Storybook
+pnpm --filter storybook build
 ```
 
 ## 🐳 Docker
