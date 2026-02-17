@@ -31,10 +31,16 @@ Documentacion completa para uso con ejemplos
 
 ## 📦 Instalación
 
+### Pre-requisitos
+
 Requisito para usar iconos
 ```bash
 npm lucide-react
 ```
+
+Si tu proyecto usa Tailwind CSS, consulta la sección [4. Configurar Tailwind Preset](#4-configurar-tailwind-preset-opcional) para usar los tokens de diseño del UI Kit.
+
+### Paquete principal
 
 ```bash
 # SSH
@@ -246,7 +252,50 @@ import { Home, Users, Settings } from 'lucide-react';
 // Ver ejemplos completos en Storybook
 ```
 
-### 4. Agregar logos
+### 4. Configurar Tailwind Preset (opcional)
+
+Si tu proyecto usa Tailwind CSS, puedes importar el **preset** de Omnitok para tener acceso a los mismos tokens de diseño (colores, tipografía, spacing, sombras, animaciones, etc.) que usa el UI Kit.
+
+#### Instalar Tailwind CSS
+
+Si tu proyecto aún no tiene Tailwind CSS, instálalo junto a sus dependencias:
+
+```bash
+npm install -D tailwindcss @tailwindcss/postcss postcss autoprefixer
+```
+
+Crea un archivo `postcss.config.js` (o `.mjs`) en la raíz de tu proyecto:
+
+```js
+export default {
+  plugins: {
+    '@tailwindcss/postcss': {},
+    autoprefixer: {},
+  },
+};
+```
+
+#### Configurar el preset
+
+Importa el preset en tu `tailwind.config.ts` (o `.js`):
+
+```ts
+import type { Config } from 'tailwindcss';
+import omnitokPreset from '@omnitok/ui/tailwind-preset';
+
+const config: Config = {
+  presets: [omnitokPreset],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+};
+
+export default config;
+```
+
+Esto habilita clases como `bg-primary`, `text-accent`, `font-sans` (Nunito Sans), `shadow-card`, `animate-fade-in`, etc. en tu proyecto, manteniendo consistencia visual con los componentes del UI Kit.
+
+> **Nota:** El preset proporciona solo los tokens de diseño. La importación de `@omnitok/ui/styles.css` sigue siendo necesaria para los estilos de los componentes.
+
+### 5. Agregar logos
 
 Coloca tus logos en la carpeta `public/` de tu proyecto:
 - `logo_largo_blanco.png` - Para sidebar expandido
@@ -325,6 +374,7 @@ omnitok-ui-kit/
 │       │   └── utils/       # Utilidades
 │       ├── package.json
 │       ├── tailwind.config.ts
+│       ├── tailwind.preset.js
 │       └── vite.config.ts
 ├── apps/
 │   └── storybook/           # Documentación interactiva

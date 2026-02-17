@@ -17,6 +17,16 @@ Biblioteca completa de componentes React para sistemas administrativos y product
 
 ## 📦 Instalación
 
+### Pre-requisitos
+
+```bash
+npm install lucide-react
+```
+
+Si tu proyecto usa Tailwind CSS, consulta la sección [🎯 Tailwind Preset](#-tailwind-preset) para configurar los tokens de diseño del UI Kit.
+
+### Paquete principal
+
 ```bash
 # SSH
 npm install git+ssh://git@github.com:pervasivemind/omnitok-ui-kit.git#pkg
@@ -60,6 +70,68 @@ function App() {
   );
 }
 ```
+
+## 🎯 Tailwind Preset
+
+El UI Kit exporta un **preset de Tailwind CSS** con todos los tokens de diseño (colores, tipografía, spacing, sombras, animaciones, etc.).
+Esto permite que tu proyecto use las mismas clases utilitarias que los componentes internos del kit, manteniendo consistencia visual.
+
+### Instalar Tailwind CSS
+
+Si tu proyecto aún no tiene Tailwind CSS, instálalo junto con sus dependencias:
+
+```bash
+npm install -D tailwindcss @tailwindcss/postcss postcss autoprefixer
+```
+
+Crea un archivo `postcss.config.js` (o `.mjs`) en la raíz de tu proyecto:
+
+```js
+export default {
+  plugins: {
+    '@tailwindcss/postcss': {},
+    autoprefixer: {},
+  },
+};
+```
+
+### Configurar el preset
+
+Importa el preset de `@omnitok/ui` en tu `tailwind.config.ts` (o `.js`) y agrégalo al array `presets`:
+
+```ts
+import type { Config } from 'tailwindcss';
+import omnitokPreset from '@omnitok/ui/tailwind-preset';
+
+const config: Config = {
+  presets: [omnitokPreset],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+};
+
+export default config;
+```
+
+### ¿Qué incluye el preset?
+
+| Token | Ejemplo de clase | Descripción |
+|---|---|---|
+| **Colores** | `bg-primary`, `text-accent`, `border-success` | Colores de marca, semánticos, chart |
+| **Tipografía** | `font-sans` (Nunito Sans), `font-mono` (Open Sans) | Familias y tamaños |
+| **Spacing** | `w-sidebar`, `w-sidebar-collapsed` | Espaciados personalizados |
+| **Sombras** | `shadow-card`, `shadow-modal` | Box shadows |
+| **Gradientes** | `bg-gradient-brand`, `bg-gradient-active` | Gradientes de marca |
+| **Animaciones** | `animate-fade-in`, `animate-slide-in` | Transiciones |
+
+### Importar estilos de componentes
+
+El preset solo agrega los tokens de diseño. Para usar los componentes estilizados del kit, también necesitas importar el CSS compilado:
+
+```tsx
+// En tu entry point (main.tsx o App.tsx)
+import '@omnitok/ui/styles.css';
+```
+
+> **Tip**: Puedes usar el preset sin los componentes si solo necesitas los tokens, o combinar ambos para el flujo completo.
 
 ## 📚 Componentes
 
