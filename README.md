@@ -6,9 +6,8 @@
 
 **Biblioteca completa de componentes React para sistemas administrativos y productos internos**
 
-[![NPM Version](https://img.shields.io/npm/v/@omnitok/ui)](https://www.npmjs.com/package/@omnitok/ui)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Storybook](https://img.shields.io/badge/Storybook-Docs-FF4785?logo=storybook)](https://pervasivemind.github.io/omnitok-ui-kit)
+[![Storybook](https://img.shields.io/badge/Storybook-Docs-FF4785?logo=storybook)](https://storybook.js.org/docs)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -24,6 +23,11 @@
 - 📦 **Tree-shakeable** - Solo importa lo que usas
 - 📚 **Storybook 10** - Documentación interactiva
 - 🔧 **Monorepo** - Organizado con pnpm workspaces
+
+## 📚 Storybook
+Documentacion completa para uso con ejemplos
+
+https://ui-kit.omnitok.cloud/
 
 ## 📦 Instalación
 
