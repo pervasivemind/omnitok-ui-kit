@@ -108,7 +108,22 @@ interface SidebarItem {
   badge?: string | number;
   /** Estado activo */
   active?: boolean;
+  /** Renderizar un separador encima de este item */
+  dividerBefore?: boolean;
 }
+```
+
+### Separadores
+
+Usa `dividerBefore: true` en un item para renderizar una línea separadora encima de él, agrupando visualmente las secciones de navegación:
+
+```tsx
+const items = [
+  { id: 'dashboard', label: 'Dashboard', icon: <Home /> },
+  { id: 'users', label: 'Usuarios', icon: <Users /> },
+  { id: 'analytics', label: 'Analíticas', icon: <BarChart />, dividerBefore: true },
+  { id: 'settings', label: 'Configuración', icon: <Settings />, dividerBefore: true },
+];
 ```
 
 ## Ejemplos Completos

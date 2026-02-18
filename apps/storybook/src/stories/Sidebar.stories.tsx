@@ -33,6 +33,17 @@ const LogoCollapsed = (
   <img src="/omnitok-icon.svg" alt="Omnitok" className="h-8 w-8 object-contain" />
 );
 
+const CustomLogoExpanded = (
+  <img
+    src="/omnitok-logo-accent.svg"
+    alt="Omnitok"
+    className="h-6 w-auto max-w-[140px] object-contain"
+  />
+);
+const CustomLogoCollapsed = (
+  <img src="/omnitok-icon-accent.svg" alt="Omnitok" className="h-8 w-8 object-contain" />
+);
+
 const sidebarItems = [
   { id: 'dashboard', label: 'Dashboard', icon: <Home size={20} />, active: true },
   { id: 'users', label: 'Users', icon: <Users size={20} />, badge: 5 },
@@ -87,18 +98,24 @@ export const Collapsible: Story = {
   },
 };
 
-export const WithLogo: Story = {
-  render: () => (
-    <div className="h-screen">
-      <Sidebar
-        items={sidebarItems}
-        logo={LogoExpanded}
-        logoCollapsed={LogoCollapsed}
-        systemName="Content Manager"
-        activeId="dashboard"
-      />
-    </div>
-  ),
+export const WithCustomLogo: Story = {
+  render: () => {
+    const [collapsed, setCollapsed] = useState(false);
+    return (
+      <div className="h-screen">
+        <Sidebar
+          items={sidebarItems}
+          logo={CustomLogoExpanded}
+          logoCollapsed={CustomLogoCollapsed}
+          systemName="Content Manager"
+          activeId="dashboard"
+          collapsed={collapsed}
+          onCollapsedChange={setCollapsed}
+          collapsible
+        />
+      </div>
+    );
+  },
 };
 
 export const WithFooter: Story = {
@@ -171,6 +188,44 @@ export const WithNestedItems: Story = {
       />
     </div>
   ),
+};
+
+export const WithSeparators: Story = {
+  render: () => {
+    const [collapsed, setCollapsed] = useState(false);
+    return (
+      <div className="h-screen">
+        <Sidebar
+          items={[
+            { id: 'dashboard', label: 'Dashboard', icon: <Home size={20} />, active: true },
+            { id: 'users', label: 'Users', icon: <Users size={20} />, badge: 5 },
+            { id: 'products', label: 'Products', icon: <Package size={20} /> },
+            { id: 'orders', label: 'Orders', icon: <ShoppingCart size={20} />, badge: 12 },
+            {
+              id: 'analytics',
+              label: 'Analytics',
+              icon: <BarChart3 size={20} />,
+              dividerBefore: true,
+            },
+            { id: 'messages', label: 'Messages', icon: <MessageSquare size={20} /> },
+            {
+              id: 'settings',
+              label: 'Settings',
+              icon: <Settings size={20} />,
+              dividerBefore: true,
+            },
+          ]}
+          logo={LogoExpanded}
+          logoCollapsed={LogoCollapsed}
+          systemName="Admin Panel"
+          activeId="dashboard"
+          collapsed={collapsed}
+          onCollapsedChange={setCollapsed}
+          collapsible
+        />
+      </div>
+    );
+  },
 };
 
 export const CollapsedWithNestedItems: Story = {

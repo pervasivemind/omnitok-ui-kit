@@ -19,6 +19,8 @@ export interface SidebarItem {
   badge?: string | number;
   /** Is this item active */
   active?: boolean;
+  /** Render a separator line above this item */
+  dividerBefore?: boolean;
 }
 
 export interface SidebarProps extends HTMLAttributes<HTMLElement> {
@@ -124,6 +126,9 @@ const SidebarItemComponent = ({
 
   return (
     <div>
+      {item.dividerBefore && (
+        <div className="my-2 border-t border-white/10" role="separator" />
+      )}
       {item.href ? (
         <a href={item.href} className={itemClasses} onClick={handleClick} title={collapsed ? item.label : undefined}>
           {content}
