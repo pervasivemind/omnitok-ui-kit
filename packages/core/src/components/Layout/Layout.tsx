@@ -1,4 +1,5 @@
 import { forwardRef, type HTMLAttributes, type ReactNode, useState } from 'react';
+import { Menu } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { Sidebar, type SidebarItem } from '../Sidebar';
 import { Header } from '../Header';
@@ -140,6 +141,18 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
               )}
             </div>
           </>
+        )}
+
+        {/* Mobile sidebar toggle when header is hidden */}
+        {!hideSidebar && hideHeader && !hasCustomHeader && (
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="fixed top-4 left-4 z-50 p-2 rounded-lg bg-white shadow-md border border-neutral-200 lg:hidden"
+            aria-label="Toggle menu"
+          >
+            <Menu className="w-5 h-5 text-neutral-600" />
+          </button>
         )}
 
         {/* Main content area */}
