@@ -164,7 +164,13 @@ export declare interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInpu
     error?: string;
     /** Indeterminate state */
     indeterminate?: boolean;
+    /** Color variant */
+    variant?: CheckboxVariant;
+    /** Render as a toggle switch */
+    toggle?: boolean;
 }
+
+export declare type CheckboxVariant = 'primary' | 'accent' | 'neutral' | 'success' | 'info' | 'violet' | 'rose' | 'teal';
 
 /**
  * Utility function to merge class names with clsx
