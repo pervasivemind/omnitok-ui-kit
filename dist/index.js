@@ -1800,6 +1800,7 @@ const pi = ({
     t && "justify-center px-2"
   );
   return /* @__PURE__ */ S("div", { children: [
+    e.dividerBefore && /* @__PURE__ */ m("div", { className: "my-2 border-t border-white/10", role: "separator" }),
     e.href ? /* @__PURE__ */ m("a", { href: e.href, className: u, onClick: p, title: t ? e.label : void 0, children: d }) : /* @__PURE__ */ m("button", { type: "button", className: D(u, "w-full text-left"), onClick: p, title: t ? e.label : void 0, children: d }),
     c && a && !t && /* @__PURE__ */ m("div", { className: "mt-1 space-y-1", children: e.children.map((f) => /* @__PURE__ */ m(
       pi,

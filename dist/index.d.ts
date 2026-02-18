@@ -611,6 +611,8 @@ export declare interface SidebarItem {
     badge?: string | number;
     /** Is this item active */
     active?: boolean;
+    /** Render a separator line above this item */
+    dividerBefore?: boolean;
 }
 
 export declare interface SidebarProps extends HTMLAttributes<HTMLElement> {
