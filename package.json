@@ -10,7 +10,8 @@
     "build:storybook": "pnpm --filter storybook build",
     "build:core": "pnpm --filter @omnitok/ui build",
     "watch:storybook": "pnpm --filter storybook dev",
-    "watch:core": "pnpm --filter @omnitok/ui dev"
+    "watch:core": "pnpm --filter @omnitok/ui dev",
+    "prepare": "git config core.hooksPath .githooks && chmod +x .githooks/pre-commit"
   },
   "devDependencies": {
     "@types/node": "^20.19.32",

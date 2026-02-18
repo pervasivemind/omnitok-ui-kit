@@ -24,6 +24,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check version bump
+        run: |
+          CURRENT=$(jq -r .version packages/core/package.json)
+          PREVIOUS=$(git show HEAD~1:packages/core/package.json 2>/dev/null | jq -r .version || echo "")
+          CORE_FILES_CHANGED=$(git diff --name-only HEAD~1 HEAD -- 'packages/core/src/')
+
+          if [ -n "$CORE_FILES_CHANGED" ] && [ "$CURRENT" = "$PREVIOUS" ]; then
+            echo "::warning::packages/core version ($CURRENT) was not bumped from the previous commit. Did the pre-commit hook run?"
+          fi
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4

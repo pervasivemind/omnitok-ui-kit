@@ -1,0 +1,13 @@
+#!/bin/sh
+
+STAGED_CORE_FILES=$(git diff --cached --name-only -- 'packages/core/src/')
+
+if [ -z "$STAGED_CORE_FILES" ]; then
+  exit 0
+fi
+
+echo "Core source files changed -- bumping patch version..."
+cd packages/core || exit 1
+npm version patch --no-git-tag-version
+cd ../.. || exit 1
+git add packages/core/package.json
