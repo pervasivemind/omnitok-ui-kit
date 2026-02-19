@@ -3,6 +3,7 @@ import { Menu } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { Sidebar, type SidebarItem } from '../Sidebar';
 import { Header } from '../Header';
+import { ListMenuItem } from '../ListMenu';
 
 export interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
   /** Main content */
@@ -27,14 +28,14 @@ export interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
   onSidebarItemClick?: (item: SidebarItem) => void;
   /** Header title */
   headerTitle?: string;
-  /** Header breadcrumb */
-  headerBreadcrumb?: ReactNode;
   /** User info for header */
   user?: {
     name: string;
     avatar?: string;
     role?: string;
   };
+  /** User menu items */
+  userMenuItems?: ListMenuItem[];
   /** User click handler */
   onUserClick?: () => void;
   /** Notification count */
@@ -75,8 +76,8 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
       activeSidebarId,
       onSidebarItemClick,
       headerTitle,
-      headerBreadcrumb,
       user,
+      userMenuItems,
       onUserClick,
       notificationCount,
       onNotificationClick,
@@ -164,7 +165,6 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
             ) : (
               <Header
                 title={headerTitle}
-                breadcrumb={headerBreadcrumb}
                 showSearch={showSearch}
                 searchValue={searchValue}
                 onSearchChange={onSearchChange}
@@ -172,6 +172,7 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
                 notificationCount={notificationCount}
                 onNotificationClick={onNotificationClick}
                 user={user}
+                userMenuItems={userMenuItems}
                 onUserClick={onUserClick}
                 showMenuToggle={!hideSidebar}
                 onMenuToggle={() => setMobileMenuOpen(!mobileMenuOpen)}

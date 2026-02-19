@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Sidebar, Avatar } from '@omnitok/ui';
+import { Sidebar, Avatar, cn } from '@omnitok/ui';
 import {
   Home,
   Users,
@@ -119,7 +119,9 @@ export const WithCustomLogo: Story = {
 };
 
 export const WithFooter: Story = {
-  render: () => (
+  render: () => {
+    const [collapsed, setCollapsed] = useState(false);
+    return (
     <div className="h-screen">
       <Sidebar
         items={sidebarItems}
@@ -127,19 +129,22 @@ export const WithFooter: Story = {
         logoCollapsed={LogoCollapsed}
         systemName="Dashboard"
         activeId="dashboard"
+        collapsed={collapsed}
+        onCollapsedChange={setCollapsed}
+        collapsible
         footer={
           <div className="flex flex-col gap-2">
             <button className="flex items-center gap-3 px-4 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
               <HelpCircle size={20} />
-              <span>Help & Support</span>
+              <span className={cn(collapsed && 'hidden')}>Help & Support</span>
             </button>
             <button className="flex items-center gap-3 px-4 py-2 text-sm text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
               <LogOut size={20} />
-              <span>Logout</span>
+              <span className={cn(collapsed && 'hidden')}>Logout</span>
             </button>
             <div className="flex items-center gap-3 px-4 py-2 border-t border-white/10 mt-2 pt-4">
               <Avatar initials="PJ" size="sm" />
-              <div>
+              <div className={cn(collapsed && 'hidden')}>
                 <div className="text-sm font-medium text-white">Pablo Junyent</div>
                 <div className="text-xs text-white/50">Admin</div>
               </div>
@@ -148,7 +153,7 @@ export const WithFooter: Story = {
         }
       />
     </div>
-  ),
+  )},
 };
 
 export const WithNestedItems: Story = {

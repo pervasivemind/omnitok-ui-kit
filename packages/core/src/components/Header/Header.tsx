@@ -2,12 +2,11 @@ import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import { Search, Bell, Menu } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { Avatar } from '../Avatar';
+import { ListMenu, ListMenuItem } from '../ListMenu';
 
 export interface HeaderProps extends HTMLAttributes<HTMLElement> {
   /** Title displayed in header */
   title?: string;
-  /** Breadcrumb element */
-  breadcrumb?: ReactNode;
   /** Search placeholder text */
   searchPlaceholder?: string;
   /** Show search input */
@@ -28,6 +27,8 @@ export interface HeaderProps extends HTMLAttributes<HTMLElement> {
     avatar?: string;
     role?: string;
   };
+  /** User menu items */
+  userMenuItems?: ListMenuItem[];
   /** User click handler */
   onUserClick?: () => void;
   /** Mobile menu toggle handler */
@@ -42,7 +43,6 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
   (
     {
       title,
-      breadcrumb,
       searchPlaceholder = 'Search...',
       showSearch = true,
       searchValue,
@@ -51,6 +51,7 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
       notificationCount,
       onNotificationClick,
       user,
+      userMenuItems,
       onUserClick,
       onMenuToggle,
       showMenuToggle = false,
@@ -82,10 +83,7 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
             </button>
           )}
           <div className="flex flex-col">
-            {breadcrumb}
-            {title && (
-              <h1 className="text-lg font-semibold text-neutral-900">{title}</h1>
-            )}
+            {title && <h1 className="text-lg font-semibold text-neutral-900">{title}</h1>}
           </div>
         </div>
 
@@ -132,24 +130,26 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
 
           {/* User */}
           {user && (
-            <button
-              type="button"
-              onClick={onUserClick}
-              className="flex items-center gap-3 p-1 rounded-lg hover:bg-neutral-100 transition-colors"
-            >
-              <Avatar
-                src={user.avatar}
-                alt={user.name}
-                initials={user.name}
-                size="sm"
-              />
-              <div className="hidden lg:flex flex-col items-start">
-                <span className="text-sm font-medium text-neutral-900">{user.name}</span>
-                {user.role && (
-                  <span className="text-xs text-neutral-500">{user.role}</span>
-                )}
-              </div>
-            </button>
+            <ListMenu
+              className="-mr-4"
+              offset={12}
+              card={
+                <div className="px-4 py-2 flex items-center gap-4">
+                  <Avatar src={user.avatar} alt={user.name} size="xl" />
+                  <div className="flex flex-col gap-1">
+                    <span className="text-md font-medium text-neutral-900">{user.name}</span>
+                    {user.role && <span className="text-sm text-neutral-500">{user.role}</span>}
+                  </div>
+                </div>
+              }
+              items={userMenuItems || []}
+              trigger={
+                <div className="pr-4">
+                  <Avatar src={user.avatar} alt={user.name} size="sm" />
+                </div>
+              }
+              placement="bottom-end"
+            />
           )}
         </div>
       </header>

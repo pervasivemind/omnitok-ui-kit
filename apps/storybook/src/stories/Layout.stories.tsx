@@ -25,18 +25,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const LogoExpanded = (
-  <img
-    src="/omnitok-logo.svg"
-    alt="Omnitok"
-    className="h-6 w-auto max-w-[140px] object-contain"
-  />
+  <img src="/omnitok-logo.svg" alt="Omnitok" className="h-6 w-auto max-w-[140px] object-contain" />
 );
 const LogoCollapsed = (
-  <img
-    src="/omnitok-icon.svg"
-    alt="Omnitok"
-    className="h-8 w-8 object-contain"
-  />
+  <img src="/omnitok-icon.svg" alt="Omnitok" className="h-8 w-8 object-contain" />
 );
 
 const sidebarItems = [
@@ -87,25 +79,25 @@ export const WithBreadcrumb: Story = {
     logoCollapsed: LogoCollapsed,
     systemName: 'Admin Panel',
     activeSidebarId: 'products',
-    headerBreadcrumb: (
-      <Breadcrumb
-        items={[
-          { label: 'Home', href: '#' },
-          { label: 'Products', href: '#' },
-          { label: 'Edit Product' },
-        ]}
-        showHomeIcon
-      />
-    ),
     user: {
       name: 'Pablo Junyent',
       role: 'Administrator',
     },
     children: (
-      <Card variant="bordered">
-        <h2 className="text-xl font-semibold mb-4">Edit Product</h2>
-        <p className="text-neutral-600">Product form content goes here...</p>
-      </Card>
+      <div className="flex flex-col gap-4">
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '#' },
+            { label: 'Products', href: '#' },
+            { label: 'Edit Product' },
+          ]}
+          showHomeIcon
+        />
+        <Card variant="bordered">
+          <h2 className="text-xl font-semibold mb-4">Edit Product</h2>
+          <p className="text-neutral-600">Product form content goes here...</p>
+        </Card>
+      </div>
     ),
   },
 };
@@ -140,8 +132,7 @@ export const WithRightPanel: Story = {
             </div>
             <div className="bg-neutral-100 rounded-lg p-3">
               <p className="text-sm">
-                Based on the data, sales are up 15% compared to last month.
-                The main drivers are...
+                Based on the data, sales are up 15% compared to last month. The main drivers are...
               </p>
             </div>
           </div>

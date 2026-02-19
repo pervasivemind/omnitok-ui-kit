@@ -49,6 +49,8 @@ export interface ListMenuItem {
 }
 
 export interface ListMenuProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'> {
+  /** Card content */
+  card?: ReactNode;
   /** Menu items */
   items: ListMenuItem[];
   /** Callback when any item is selected (fires in addition to item-level onClick) */
@@ -69,16 +71,16 @@ export interface ListMenuProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onS
 
 const placementStyles: Record<ListMenuPlacement, string> = {
   'bottom-start': 'top-full left-0',
-  'bottom': 'top-full left-1/2 -translate-x-1/2',
+  bottom: 'top-full left-1/2 -translate-x-1/2',
   'bottom-end': 'top-full right-0',
   'top-start': 'bottom-full left-0',
-  'top': 'bottom-full left-1/2 -translate-x-1/2',
+  top: 'bottom-full left-1/2 -translate-x-1/2',
   'top-end': 'bottom-full right-0',
   'left-start': 'right-full top-0',
-  'left': 'right-full top-1/2 -translate-y-1/2',
+  left: 'right-full top-1/2 -translate-y-1/2',
   'left-end': 'right-full bottom-0',
   'right-start': 'left-full top-0',
-  'right': 'left-full top-1/2 -translate-y-1/2',
+  right: 'left-full top-1/2 -translate-y-1/2',
   'right-end': 'left-full bottom-0',
 };
 
@@ -107,6 +109,7 @@ const iconSizeStyles: Record<ListMenuSize, string> = {
 export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
   (
     {
+      card,
       items,
       onSelect,
       trigger,
@@ -238,10 +241,7 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
 
     useEffect(() => {
       const handleClickOutside = (e: Event) => {
-        if (
-          containerRef.current &&
-          !containerRef.current.contains(e.target as Node)
-        ) {
+        if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
           close();
         }
       };
@@ -292,10 +292,7 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
           : cn(
               'cursor-pointer',
               item.danger
-                ? cn(
-                    'text-error',
-                    isHighlighted ? 'bg-error/10' : 'hover:bg-error/10'
-                  )
+                ? cn('text-error', isHighlighted ? 'bg-error/10' : 'hover:bg-error/10')
                 : cn(
                     'text-neutral-700',
                     isHighlighted ? 'bg-primary/10 text-primary' : 'hover:bg-neutral-50'
@@ -360,11 +357,7 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
     const componentId = `listmenu-${useRef(Math.random().toString(36).slice(2, 9)).current}`;
 
     return (
-      <div
-        ref={containerRef}
-        className={cn('relative inline-block', className)}
-        {...props}
-      >
+      <div ref={containerRef} className={cn('relative inline-block', className)} {...props}>
         {/* Trigger */}
         <div
           ref={triggerRef}
@@ -406,6 +399,12 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
               placementStyles[placement]
             )}
           >
+            {card && (
+              <div>
+                {card}
+                <div className="my-1 border-t border-neutral-200" role="separator" />
+              </div>
+            )}
             {items.map((item, index) => renderItem(item, index))}
           </div>
         )}
