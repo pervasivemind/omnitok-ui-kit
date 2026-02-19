@@ -245,6 +245,8 @@ export declare interface HeaderProps extends HTMLAttributes<HTMLElement> {
     onSearchChange?: (value: string) => void;
     /** Show notifications button */
     showNotifications?: boolean;
+    /** Notification items */
+    notificationItems?: ListMenuItem[];
     /** Notification count */
     notificationCount?: number;
     /** Notification click handler */
@@ -254,6 +256,7 @@ export declare interface HeaderProps extends HTMLAttributes<HTMLElement> {
         name: string;
         avatar?: string;
         role?: string;
+        status?: 'online' | 'offline' | 'busy' | 'away';
     };
     /** User menu items */
     userMenuItems?: ListMenuItem[];
@@ -343,11 +346,16 @@ export declare interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
         name: string;
         avatar?: string;
         role?: string;
+        status?: 'online' | 'offline' | 'busy' | 'away';
     };
     /** User menu items */
     userMenuItems?: ListMenuItem[];
     /** User click handler */
     onUserClick?: () => void;
+    /** Show notifications button */
+    showNotifications?: boolean;
+    /** Notification items */
+    notificationItems?: ListMenuItem[];
     /** Notification count */
     notificationCount?: number;
     /** Notification click handler */
