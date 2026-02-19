@@ -4,32 +4,18 @@ import {
   useEffect,
   useRef,
   useState,
-  type CSSProperties,
   type HTMLAttributes,
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
 import { cn } from '../../utils/cn';
+import { Dropdown, type DropdownPlacement } from '.';
 
 // ---------- Types ----------
 
-export type ListMenuPlacement =
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'bottom'
-  | 'top-start'
-  | 'top-end'
-  | 'top'
-  | 'left-start'
-  | 'left-end'
-  | 'left'
-  | 'right-start'
-  | 'right-end'
-  | 'right';
+export type DropdownMenuSize = 'sm' | 'md' | 'lg';
 
-export type ListMenuSize = 'sm' | 'md' | 'lg';
-
-export interface ListMenuItem {
+export interface DropdownMenuItem {
   /** Display label */
   label: string;
   /** Unique value identifier */
@@ -46,59 +32,38 @@ export interface ListMenuItem {
   danger?: boolean;
   /** Render a divider line above this item */
   dividerBefore?: boolean;
+  /** Badge content */
+  badge?: ReactNode;
 }
 
-export interface ListMenuProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'> {
+export interface DropdownMenuProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'> {
   /** Card content */
   card?: ReactNode;
   /** Menu items */
-  items: ListMenuItem[];
+  items: DropdownMenuItem[];
   /** Callback when any item is selected (fires in addition to item-level onClick) */
   onSelect?: (value: string) => void;
   /** Trigger element that opens the menu */
   trigger: ReactNode;
   /** Menu placement relative to trigger */
-  placement?: ListMenuPlacement;
+  placement?: DropdownPlacement;
   /** Distance in pixels between the trigger and the menu panel */
   offset?: number;
   /** Menu item size */
-  size?: ListMenuSize;
+  size?: DropdownMenuSize;
   /** Disabled state (prevents opening) */
   disabled?: boolean;
 }
 
 // ---------- Style maps ----------
 
-const placementStyles: Record<ListMenuPlacement, string> = {
-  'bottom-start': 'top-full left-0',
-  bottom: 'top-full left-1/2 -translate-x-1/2',
-  'bottom-end': 'top-full right-0',
-  'top-start': 'bottom-full left-0',
-  top: 'bottom-full left-1/2 -translate-x-1/2',
-  'top-end': 'bottom-full right-0',
-  'left-start': 'right-full top-0',
-  left: 'right-full top-1/2 -translate-y-1/2',
-  'left-end': 'right-full bottom-0',
-  'right-start': 'left-full top-0',
-  right: 'left-full top-1/2 -translate-y-1/2',
-  'right-end': 'left-full bottom-0',
-};
-
-function getOffsetStyle(placement: ListMenuPlacement, offset: number): CSSProperties {
-  if (placement.startsWith('bottom')) return { marginTop: offset };
-  if (placement.startsWith('top')) return { marginBottom: offset };
-  if (placement.startsWith('left')) return { marginRight: offset };
-  if (placement.startsWith('right')) return { marginLeft: offset };
-  return {};
-}
-
-const sizeStyles: Record<ListMenuSize, string> = {
+const sizeStyles: Record<DropdownMenuSize, string> = {
   sm: 'px-3 py-1.5 text-xs',
   md: 'px-4 py-2 text-sm',
   lg: 'px-4 py-2.5 text-base',
 };
 
-const iconSizeStyles: Record<ListMenuSize, string> = {
+const iconSizeStyles: Record<DropdownMenuSize, string> = {
   sm: 'w-3.5 h-3.5',
   md: 'w-4 h-4',
   lg: 'w-5 h-5',
@@ -106,7 +71,7 @@ const iconSizeStyles: Record<ListMenuSize, string> = {
 
 // ---------- Component ----------
 
-export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
+export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
   (
     {
       card,
@@ -125,9 +90,7 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
     const [isOpen, setIsOpen] = useState(false);
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
-    const containerRef = useRef<HTMLDivElement>(null);
-    const menuRef = useRef<HTMLDivElement | null>(null);
-    const triggerRef = useRef<HTMLDivElement>(null);
+    const menuRef = useRef<HTMLDivElement>(null);
 
     // ---- Helpers ----
 
@@ -151,35 +114,47 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
       return items.findIndex((item) => !item.disabled);
     }, [items]);
 
+    const findLastEnabledIndex = useCallback((): number => {
+      for (let i = items.length - 1; i >= 0; i--) {
+        if (!items[i].disabled) return i;
+      }
+      return -1;
+    }, [items]);
+
     // ---- Actions ----
 
     const open = useCallback(() => {
       if (disabled || enabledItems.length === 0) return;
       setIsOpen(true);
-      setHighlightedIndex(findFirstEnabledIndex());
-    }, [disabled, enabledItems.length, findFirstEnabledIndex]);
+      setHighlightedIndex(-1);
+    }, [disabled, enabledItems.length]);
 
     const close = useCallback(() => {
       setIsOpen(false);
       setHighlightedIndex(-1);
     }, []);
 
-    const toggle = useCallback(() => {
-      if (isOpen) {
-        close();
-      } else {
-        open();
-      }
-    }, [isOpen, close, open]);
-
     const selectItem = useCallback(
-      (item: ListMenuItem) => {
+      (item: DropdownMenuItem) => {
         if (item.disabled) return;
         item.onClick?.();
         onSelect?.(item.value);
         close();
       },
       [onSelect, close]
+    );
+
+    // ---- Open-state sync from Dropdown ----
+
+    const handleOpenChange = useCallback(
+      (nextOpen: boolean) => {
+        if (nextOpen) {
+          open();
+        } else {
+          close();
+        }
+      },
+      [open, close]
     );
 
     // ---- Keyboard ----
@@ -194,7 +169,9 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
             if (!isOpen) {
               open();
             } else {
-              setHighlightedIndex((prev) => findNextEnabledIndex(prev, 1));
+              setHighlightedIndex((prev) =>
+                prev === -1 ? findFirstEnabledIndex() : findNextEnabledIndex(prev, 1)
+              );
             }
             break;
           }
@@ -203,7 +180,9 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
             if (!isOpen) {
               open();
             } else {
-              setHighlightedIndex((prev) => findNextEnabledIndex(prev, -1));
+              setHighlightedIndex((prev) =>
+                prev === -1 ? findLastEnabledIndex() : findNextEnabledIndex(prev, -1)
+              );
             }
             break;
           }
@@ -213,7 +192,6 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
             if (isOpen && highlightedIndex >= 0 && highlightedIndex < items.length) {
               const item = items[highlightedIndex];
               if (item.href && !item.disabled) {
-                // Navigate for link items
                 window.location.href = item.href;
               }
               selectItem(item);
@@ -222,33 +200,20 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
             }
             break;
           }
-          case 'Escape': {
-            e.preventDefault();
-            close();
-            triggerRef.current?.focus();
-            break;
-          }
-          case 'Tab': {
-            close();
-            break;
-          }
         }
       },
-      [disabled, isOpen, highlightedIndex, items, open, close, selectItem, findNextEnabledIndex]
+      [
+        disabled,
+        isOpen,
+        highlightedIndex,
+        items,
+        open,
+        selectItem,
+        findNextEnabledIndex,
+        findFirstEnabledIndex,
+        findLastEnabledIndex,
+      ]
     );
-
-    // ---- Outside click ----
-
-    useEffect(() => {
-      const handleClickOutside = (e: Event) => {
-        if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-          close();
-        }
-      };
-
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [close]);
 
     // ---- Scroll highlighted into view ----
 
@@ -261,7 +226,7 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
 
     // ---- Render item ----
 
-    const renderItem = (item: ListMenuItem, index: number) => {
+    const renderItem = (item: DropdownMenuItem, index: number) => {
       const isHighlighted = index === highlightedIndex;
 
       const content = (
@@ -279,6 +244,7 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
             </span>
           )}
           <span className="flex-1 truncate">{item.label}</span>
+          {item.badge && <span className="text-xs text-neutral-500">{item.badge}</span>}
         </>
       );
 
@@ -286,7 +252,6 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
         'flex items-center gap-2 w-full rounded-md',
         'transition-colors duration-100',
         sizeStyles[size],
-        // Disabled
         item.disabled
           ? 'text-neutral-300 cursor-not-allowed opacity-50'
           : cn(
@@ -322,7 +287,6 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
                 item.onClick?.();
                 onSelect?.(item.value);
                 close();
-                // Allow default navigation for href
                 if (item.onClick) {
                   e.preventDefault();
                 }
@@ -354,63 +318,32 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
 
     // ---- Render ----
 
-    const componentId = `listmenu-${useRef(Math.random().toString(36).slice(2, 9)).current}`;
-
     return (
-      <div ref={containerRef} className={cn('relative inline-flex items-center', className)} {...props}>
-        {/* Trigger */}
-        <div
-          ref={triggerRef}
-          role="button"
-          tabIndex={disabled ? -1 : 0}
-          aria-haspopup="menu"
-          aria-expanded={isOpen}
-          aria-controls={isOpen ? `${componentId}-menu` : undefined}
-          aria-disabled={disabled}
-          onClick={toggle}
-          onKeyDown={handleKeyDown}
-          className={cn(
-            'inline-flex',
-            disabled && 'opacity-50 cursor-not-allowed pointer-events-none'
+      <Dropdown
+        ref={ref}
+        trigger={trigger}
+        placement={placement}
+        offset={offset}
+        disabled={disabled}
+        open={isOpen}
+        onOpenChange={handleOpenChange}
+        onKeyDown={handleKeyDown}
+        contentClassName="min-w-[180px] py-1 px-1 max-h-80 overflow-auto"
+        className={className}
+        {...props}
+      >
+        <div ref={menuRef} role="menu" aria-orientation="vertical">
+          {card && (
+            <div>
+              {card}
+              <div className="my-1 border-t border-neutral-200" role="separator" />
+            </div>
           )}
-        >
-          {trigger}
+          {items.map((item, index) => renderItem(item, index))}
         </div>
-
-        {/* Menu */}
-        {isOpen && (
-          <div
-            ref={(node) => {
-              menuRef.current = node;
-              if (typeof ref === 'function') ref(node);
-              else if (ref) ref.current = node;
-            }}
-            id={`${componentId}-menu`}
-            role="menu"
-            aria-orientation="vertical"
-            onKeyDown={handleKeyDown}
-            style={getOffsetStyle(placement, offset)}
-            className={cn(
-              'absolute z-50 min-w-[180px] w-max',
-              'rounded-md border border-neutral-200 bg-white shadow-lg',
-              'py-1 px-1',
-              'animate-fade-in',
-              'max-h-80 overflow-auto',
-              placementStyles[placement]
-            )}
-          >
-            {card && (
-              <div>
-                {card}
-                <div className="my-1 border-t border-neutral-200" role="separator" />
-              </div>
-            )}
-            {items.map((item, index) => renderItem(item, index))}
-          </div>
-        )}
-      </div>
+      </Dropdown>
     );
   }
 );
 
-ListMenu.displayName = 'ListMenu';
+DropdownMenu.displayName = 'DropdownMenu';

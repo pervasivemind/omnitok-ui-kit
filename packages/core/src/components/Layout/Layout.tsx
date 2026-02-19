@@ -2,8 +2,8 @@ import { forwardRef, type HTMLAttributes, type ReactNode, useState } from 'react
 import { Menu } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { Sidebar, type SidebarItem } from '../Sidebar';
-import { Header } from '../Header';
-import { ListMenuItem } from '../ListMenu';
+import { Header, type NotificationMenuProps } from '../Header';
+import { DropdownMenuItem } from '../Dropdown';
 
 export interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
   /** Main content */
@@ -31,22 +31,19 @@ export interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
   /** User info for header */
   user?: {
     name: string;
+    email?: string;
     avatar?: string;
     role?: string;
     status?: 'online' | 'offline' | 'busy' | 'away';
   };
   /** User menu items */
-  userMenuItems?: ListMenuItem[];
+  userMenuItems?: DropdownMenuItem[];
   /** User click handler */
   onUserClick?: () => void;
   /** Show notifications button */
   showNotifications?: boolean;
-  /** Notification items */
-  notificationItems?: ListMenuItem[];
-  /** Notification count */
-  notificationCount?: number;
-  /** Notification click handler */
-  onNotificationClick?: () => void;
+  /** Notification menu */
+  notificationMenu?: NotificationMenuProps;
   /** Show header search */
   showSearch?: boolean;
   /** Search value */
@@ -85,9 +82,7 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
       userMenuItems,
       onUserClick,
       showNotifications = true,
-      notificationItems,
-      notificationCount,
-      onNotificationClick,
+      notificationMenu,
       showSearch = true,
       searchValue,
       onSearchChange,
@@ -176,9 +171,7 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
                 searchValue={searchValue}
                 onSearchChange={onSearchChange}
                 showNotifications={showNotifications}
-                notificationItems={notificationItems}
-                notificationCount={notificationCount}
-                onNotificationClick={onNotificationClick}
+                notificationMenu={notificationMenu}
                 user={user}
                 userMenuItems={userMenuItems}
                 onUserClick={onUserClick}

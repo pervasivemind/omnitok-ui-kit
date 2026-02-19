@@ -1,4 +1,4 @@
-import { forwardRef, type InputHTMLAttributes } from 'react';
+import { forwardRef, type ChangeEvent, type InputHTMLAttributes } from 'react';
 import { Check, Minus } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
@@ -47,6 +47,8 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
   variant?: CheckboxVariant;
   /** Render as a toggle switch */
   toggle?: boolean;
+  /** Callback when checked state changes, provides the new boolean value */
+  onCheckedChange?: (checked: boolean) => void;
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
@@ -58,15 +60,22 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       indeterminate,
       variant = 'primary',
       toggle = false,
+      onCheckedChange,
       disabled,
       className,
       id,
+      onChange,
       ...props
     },
     ref
   ) => {
     const checkboxId = id || `checkbox-${Math.random().toString(36).slice(2, 9)}`;
     const hasError = !!error;
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      onChange?.(e);
+      onCheckedChange?.(e.target.checked);
+    };
 
     const renderCheckbox = () => {
       const styles = variantStyles[variant];
@@ -133,6 +142,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
               disabled={disabled}
               className="peer sr-only"
               aria-invalid={hasError}
+              onChange={handleChange}
               {...props}
             />
             {toggle ? renderToggle() : renderCheckbox()}

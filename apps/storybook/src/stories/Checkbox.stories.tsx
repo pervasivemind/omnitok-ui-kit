@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React from 'react';
+import React, { useState } from 'react';
 import { Checkbox } from '@omnitok/ui';
 
 const meta: Meta<typeof Checkbox> = {
@@ -37,6 +37,30 @@ export const WithLabel: Story = {
       <Checkbox label="Marketing emails" description="Receive promotional content and offers" />
     </div>
   ),
+};
+
+export const Controlled: Story = {
+  render: () => {
+    const [checked, setChecked] = useState(false);
+    const [toggle, setToggle] = useState(false);
+    return (
+      <div className="flex flex-col gap-4 w-48">
+        <Checkbox
+          label="Controlled checkbox"
+          description={`Current state: ${checked ? 'checked' : 'unchecked'}`}
+          checked={checked}
+          onCheckedChange={setChecked}
+        />
+        <Checkbox
+          toggle
+          label="Controlled toggle"
+          description={`Current state: ${toggle ? 'on' : 'off'}`}
+          checked={toggle}
+          onCheckedChange={setToggle}
+        />
+      </div>
+    );
+  },
 };
 
 export const Variants: Story = {

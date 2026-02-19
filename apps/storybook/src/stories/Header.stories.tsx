@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Header } from '@omnitok/ui';
+import { Header, Badge } from '@omnitok/ui';
 import { Settings, LogOut, CreditCard, HelpCircle, Moon, Bell } from 'lucide-react';
 
 const meta: Meta<typeof Header> = {
@@ -17,18 +17,21 @@ type Story = StoryObj<typeof meta>;
 
 const defaultUser = {
   name: 'Jose Soto',
+  email: 'jose@example.com',
   role: 'Admin',
 };
 
 const userWithAvatar = {
   name: 'Jose Soto',
   avatar: 'https://i.pravatar.cc/150?u=jose',
+  email: 'jose@example.com',
   role: 'Admin',
 };
 
 const userWithStatus = {
   name: 'Jose Soto',
   avatar: 'https://i.pravatar.cc/150?u=jose',
+  email: 'jose@example.com',
   role: 'Admin',
   status: 'online' as const,
 };
@@ -46,22 +49,40 @@ const userMenuItems = [
   },
 ];
 
-const notificationItems = [
-  { label: 'Billing Reminder', value: 'billing-reminder', icon: <CreditCard size={16} /> },
-  { label: 'Notification 1', value: 'notification-1', icon: <Bell size={16} />, dividerBefore: true },
-  { label: 'Notification 2', value: 'notification-2', icon: <Bell size={16} /> },
-  { label: 'Notification 3', value: 'notification-3', icon: <Bell size={16} /> },
+const unreadNotifications = [
+  {
+    label: 'Notification 1',
+    value: 'notification-1',
+    icon: <Bell size={16} />,
+    badge: <Badge variant="info" dot />,
+  },
+  {
+    label: 'Notification 2',
+    value: 'notification-2',
+    icon: <Bell size={16} />,
+    badge: <Badge variant="info" dot />,
+  },
+  {
+    label: 'Notification 3',
+    value: 'notification-3',
+    icon: <Bell size={16} />,
+    badge: <Badge variant="info" dot />,
+  },
 ];
+
+const readNotifications = [
+  { label: 'Notification 4', value: 'notification-4', icon: <Bell size={16} /> },
+  { label: 'Notification 5', value: 'notification-5', icon: <Bell size={16} /> },
+];
+
+const notificationItems = [...unreadNotifications, ...readNotifications];
+
+
+// --- Stories ---
 
 export const Default: Story = {
   render: () => (
-    <Header
-      title="Dashboard"
-      user={defaultUser}
-      notificationCount={3}
-      onNotificationClick={() => console.log('Notifications clicked')}
-      onUserClick={() => console.log('User clicked')}
-    />
+    <Header title="Dashboard" user={defaultUser} onUserClick={() => console.log('User clicked')} />
   ),
 };
 
@@ -81,24 +102,71 @@ export const WithSearch: Story = {
   },
 };
 
-export const NoSearch: Story = {
-  render: () => <Header title="Settings" showSearch={false} user={userWithAvatar} />,
+export const WithNotifications: Story = {
+  render: () => {
+    const [notificationSearch, setNotificationSearch] = useState('');
+    const [unreadOnly, setUnreadOnly] = useState(false);
+    const unreadNotificationCount = unreadNotifications.length;
+    const filteredNotifications = unreadOnly ? unreadNotifications : notificationItems;
+    const searchedNotifications = filteredNotifications.filter((item) =>
+      item.label.toLowerCase().includes(notificationSearch.toLowerCase())
+    );
+    const shownNotifications = searchedNotifications.length > 0 ? searchedNotifications : [{
+      label: 'No notifications found.',
+      value: 'no-notifications',
+      disabled: true,
+    }];
+
+    return (
+      <Header
+        title="Dashboard"
+        user={userWithAvatar}
+        showNotifications
+        notificationMenu={{
+          items: shownNotifications,
+          count: unreadNotificationCount,
+          searchValue: notificationSearch,
+          onSearchChange: setNotificationSearch,
+          onFilterChange: setUnreadOnly,
+        }}
+      />
+    );
+  },
 };
 
-export const WithNotificationCount: Story = {
-  render: () => (
-    <Header
-      title="Dashboard"
-      user={userWithAvatar}
-      notificationItems={notificationItems}
-      notificationCount={3}
-      onNotificationClick={() => console.log('Notifications clicked')}
-    />
-  ),
-};
 
-export const NoNotifications: Story = {
-  render: () => <Header title="Profile" showNotifications={false} user={userWithAvatar} />,
+export const WithCustomNotificationsText: Story = {
+  render: () => {
+    const [notificationSearch, setNotificationSearch] = useState('');
+    const [unreadOnly, setUnreadOnly] = useState(false);
+    const unreadNotificationCount = unreadNotifications.length;
+    const filteredNotifications = unreadOnly ? unreadNotifications : notificationItems;
+    const searchedNotifications = filteredNotifications.filter((item) =>
+      item.label.toLowerCase().includes(notificationSearch.toLowerCase())
+    );
+    const shownNotifications = searchedNotifications.length > 0 ? searchedNotifications : [{
+      label: 'No notifications found.',
+      value: 'no-notifications',
+      disabled: true,
+    }];
+
+    return (
+      <Header
+        title="Dashboard"
+        user={userWithAvatar}
+        showNotifications
+        notificationMenu={{
+          items: shownNotifications,
+          count: unreadNotificationCount,
+          searchValue: notificationSearch,
+          onSearchChange: setNotificationSearch,
+          onFilterChange: setUnreadOnly,
+          filterLabel: 'Solo no leídos',
+          searchPlaceholder: 'Buscar notificaciones...',
+        }}
+      />
+    );
+  },
 };
 
 export const WithMenuToggle: Story = {
@@ -108,7 +176,6 @@ export const WithMenuToggle: Story = {
       showMenuToggle
       onMenuToggle={() => console.log('Menu toggled')}
       user={userWithAvatar}
-      notificationCount={3}
     />
   ),
 };
@@ -120,7 +187,6 @@ export const WithUserMenu: Story = {
       user={userWithAvatar}
       userMenuItems={userMenuItems}
       onUserClick={() => console.log('Profile clicked')}
-      notificationCount={5}
     />
   ),
 };
@@ -150,6 +216,19 @@ export const Minimal: Story = {
 export const FullFeatured: Story = {
   render: () => {
     const [search, setSearch] = useState('');
+    const [notificationSearch, setNotificationSearch] = useState('');
+    const [unreadOnly, setUnreadOnly] = useState(false);
+    const unreadNotificationCount = unreadNotifications.length;
+    const filteredNotifications = unreadOnly ? unreadNotifications : notificationItems;
+    const searchedNotifications = filteredNotifications.filter((item) =>
+      item.label.toLowerCase().includes(notificationSearch.toLowerCase())
+    );
+    const shownNotifications = searchedNotifications.length > 0 ? searchedNotifications : [{
+      label: 'No notifications found.',
+      value: 'no-notifications',
+      disabled: true,
+    }];
+
     return (
       <Header
         title="Order Management"
@@ -158,9 +237,13 @@ export const FullFeatured: Story = {
         searchValue={search}
         onSearchChange={setSearch}
         showNotifications
-        notificationItems={notificationItems}
-        notificationCount={12}
-        onNotificationClick={() => console.log('Notifications clicked')}
+        notificationMenu={{
+          items: shownNotifications,
+          count: unreadNotificationCount,
+          searchValue: notificationSearch,
+          onSearchChange: setNotificationSearch,
+          onFilterChange: setUnreadOnly,
+        }}
         showMenuToggle
         onMenuToggle={() => console.log('Menu toggled')}
         user={userWithStatus}

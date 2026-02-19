@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Layout, Card, Button, Breadcrumb } from '@omnitok/ui';
+import { Layout, Card, Button, Breadcrumb, Badge } from '@omnitok/ui';
 import {
   Home,
   Users,
@@ -10,6 +10,10 @@ import {
   Settings,
   MessageSquare,
   Send,
+  HelpCircle,
+  CreditCard,
+  Bell,
+  LogOut,
 } from 'lucide-react';
 
 const meta: Meta<typeof Layout> = {
@@ -31,6 +35,51 @@ const LogoCollapsed = (
   <img src="/omnitok-icon.svg" alt="Omnitok" className="h-8 w-8 object-contain" />
 );
 
+
+const defaultUser = {
+  name: 'Jose Soto',
+  role: 'Admin',
+};
+
+const userMenuItems = [
+  { label: 'Settings', value: 'settings', icon: <Settings size={16} /> },
+  { label: 'Billing', value: 'billing', icon: <CreditCard size={16} /> },
+  { label: 'Help', value: 'help', icon: <HelpCircle size={16} /> },
+  {
+    label: 'Logout',
+    value: 'logout',
+    icon: <LogOut size={16} />,
+    danger: true,
+    dividerBefore: true,
+  },
+];
+
+const unreadNotifications = [
+  {
+    label: 'Notification 1',
+    value: 'notification-1',
+    icon: <Bell size={16} />,
+    badge: <Badge variant="info" dot />,
+  },
+  {
+    label: 'Notification 2',
+    value: 'notification-2',
+    icon: <Bell size={16} />,
+    badge: <Badge variant="info" dot />,
+  },
+  {
+    label: 'Notification 3',
+    value: 'notification-3',
+    icon: <Bell size={16} />,
+    badge: <Badge variant="info" dot />,
+  },
+];
+
+const readNotifications = [
+  { label: 'Notification 4', value: 'notification-4', icon: <Bell size={16} /> },
+  { label: 'Notification 5', value: 'notification-5', icon: <Bell size={16} /> },
+];
+
 const sidebarItems = [
   { id: 'dashboard', label: 'Dashboard', icon: <Home size={20} /> },
   { id: 'users', label: 'Users', icon: <Users size={20} />, badge: 5 },
@@ -48,11 +97,7 @@ export const Default: Story = {
     systemName: 'Admin Panel',
     activeSidebarId: 'dashboard',
     headerTitle: 'Dashboard',
-    user: {
-      name: 'Jose Soto',
-      role: 'Administrator',
-    },
-    notificationCount: 3,
+    user: defaultUser,
     children: (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card variant="bordered">
@@ -79,10 +124,7 @@ export const WithBreadcrumb: Story = {
     logoCollapsed: LogoCollapsed,
     systemName: 'Admin Panel',
     activeSidebarId: 'products',
-    user: {
-      name: 'Pablo Junyent',
-      role: 'Administrator',
-    },
+    user: defaultUser,
     children: (
       <div className="flex flex-col gap-4">
         <Breadcrumb
@@ -110,10 +152,7 @@ export const WithRightPanel: Story = {
     systemName: 'Content Analytics',
     activeSidebarId: 'analytics',
     headerTitle: 'Analytics Dashboard',
-    user: {
-      name: 'Pablo Junyent',
-      role: 'Administrator',
-    },
+    user: defaultUser,
     rightPanel: (
       <div className="flex flex-col h-full">
         <div className="p-4 border-b border-neutral-200">
@@ -184,6 +223,54 @@ export const WithRightPanel: Story = {
         </Card>
       </div>
     ),
+  },
+};
+
+export const WithFullFeaturedHeader: Story = {
+  render: () => {
+    const [search, setSearch] = useState('');
+    const [notificationSearch, setNotificationSearch] = useState('');
+    const [unreadOnly, setUnreadOnly] = useState(false);
+    const unreadNotificationCount = unreadNotifications.length;
+    const filteredNotifications = unreadOnly ? unreadNotifications : [...unreadNotifications, ...readNotifications];
+    const searchedNotifications = filteredNotifications.filter((item) =>
+      item.label.toLowerCase().includes(notificationSearch.toLowerCase())
+    );
+    const shownNotifications = searchedNotifications.length > 0 ? searchedNotifications : [{
+      label: 'No notifications found.',
+      value: 'no-notifications',
+      disabled: true,
+    }];
+
+    return (
+      <Layout
+        sidebarItems={sidebarItems}
+        logo={LogoExpanded}
+        logoCollapsed={LogoCollapsed}
+        user={defaultUser}
+        userMenuItems={userMenuItems}
+        onUserClick={() => console.log('User clicked')}
+        showNotifications
+        notificationMenu={{
+          items: shownNotifications,
+          count: unreadNotificationCount,
+          searchValue: notificationSearch,
+          onSearchChange: setNotificationSearch,
+          onFilterChange: setUnreadOnly,
+        }}
+        showSearch
+        searchValue={search}
+        onSearchChange={setSearch}
+        headerTitle="Dashboard"
+        children={<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card variant="bordered">
+              <h3 className="font-semibold mb-2">Searched</h3>
+              <p className="text-l">{search}</p>
+            </Card>
+          </div>
+        }
+      />
+    );
   },
 };
 

@@ -1,8 +1,9 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
-import { Search, Bell, Menu } from 'lucide-react';
+import { Search, Menu } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { Avatar } from '../Avatar';
-import { ListMenu, ListMenuItem } from '../ListMenu';
+import { DropdownMenu, DropdownMenuItem } from '../Dropdown';
+import { NotificationMenu, type NotificationMenuProps } from './NotificationMenu';
 
 export interface HeaderProps extends HTMLAttributes<HTMLElement> {
   /** Title displayed in header */
@@ -17,21 +18,18 @@ export interface HeaderProps extends HTMLAttributes<HTMLElement> {
   onSearchChange?: (value: string) => void;
   /** Show notifications button */
   showNotifications?: boolean;
-  /** Notification items */
-  notificationItems?: ListMenuItem[];
-  /** Notification count */
-  notificationCount?: number;
-  /** Notification click handler */
-  onNotificationClick?: () => void;
+  /** Notification menu */
+  notificationMenu?: NotificationMenuProps;
   /** User info for avatar */
   user?: {
     name: string;
+    email?: string;
     avatar?: string;
     role?: string;
     status?: 'online' | 'offline' | 'busy' | 'away';
   };
   /** User menu items */
-  userMenuItems?: ListMenuItem[];
+  userMenuItems?: DropdownMenuItem[];
   /** User click handler */
   onUserClick?: () => void;
   /** Mobile menu toggle handler */
@@ -47,13 +45,18 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
     {
       title,
       searchPlaceholder = 'Search...',
-      showSearch = true,
+      showSearch = false,
       searchValue,
       onSearchChange,
-      showNotifications = true,
-      notificationItems,
-      notificationCount,
-      onNotificationClick,
+      showNotifications = false,
+      notificationMenu = {
+        items: [],
+        count: 0,
+        searchValue: '',
+        onSearchChange: () => {},
+        onFilterChange: () => {},
+        onItemClick: () => {},
+      },
       user,
       userMenuItems,
       onUserClick,
@@ -116,32 +119,11 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
           {actions}
 
           {/* Notifications */}
-          {showNotifications && (
-            <ListMenu
-              offset={14}
-              items={notificationItems ?? []}
-              placement="bottom-end"
-              trigger={
-                <button
-                  type="button"
-                  onClick={onNotificationClick}
-                  className="relative p-2 rounded-lg hover:bg-neutral-100 transition-colors"
-                  aria-label="Notifications"
-                >
-                  <Bell className="w-5 h-5 text-neutral-600" />
-                  {notificationCount !== undefined && notificationCount > 0 && (
-                    <span className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 w-4 h-4 text-xs font-medium text-white bg-accent rounded-full flex items-center justify-center">
-                      {notificationCount > 9 ? '9+' : notificationCount}
-                    </span>
-                  )}
-                </button>
-              }
-            />
-          )}
+          {showNotifications && <NotificationMenu {...notificationMenu} />}
 
           {/* User */}
           {user && (
-            <ListMenu
+            <DropdownMenu
               className="-mr-2"
               offset={16}
               card={
@@ -149,7 +131,8 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
                   <Avatar src={user.avatar} alt={user.name} size="xl" />
                   <div className="flex flex-col gap-1">
                     <span className="text-md font-medium text-neutral-900">{user.name}</span>
-                    {user.role && <span className="text-sm text-neutral-500">{user.role}</span>}
+                    {user.email && <span className="text-xs text-neutral-500">{user.email}</span>}
+                    {user.role && <span className="text-xs text-neutral-500">{user.role}</span>}
                   </div>
                 </div>
               }
