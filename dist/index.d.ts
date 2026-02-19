@@ -235,8 +235,6 @@ export declare const Header: ForwardRefExoticComponent<HeaderProps & RefAttribut
 export declare interface HeaderProps extends HTMLAttributes<HTMLElement> {
     /** Title displayed in header */
     title?: string;
-    /** Breadcrumb element */
-    breadcrumb?: ReactNode;
     /** Search placeholder text */
     searchPlaceholder?: string;
     /** Show search input */
@@ -257,6 +255,8 @@ export declare interface HeaderProps extends HTMLAttributes<HTMLElement> {
         avatar?: string;
         role?: string;
     };
+    /** User menu items */
+    userMenuItems?: ListMenuItem[];
     /** User click handler */
     onUserClick?: () => void;
     /** Mobile menu toggle handler */
@@ -338,14 +338,14 @@ export declare interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
     onSidebarItemClick?: (item: SidebarItem) => void;
     /** Header title */
     headerTitle?: string;
-    /** Header breadcrumb */
-    headerBreadcrumb?: ReactNode;
     /** User info for header */
     user?: {
         name: string;
         avatar?: string;
         role?: string;
     };
+    /** User menu items */
+    userMenuItems?: ListMenuItem[];
     /** User click handler */
     onUserClick?: () => void;
     /** Notification count */
@@ -396,6 +396,8 @@ export declare interface ListMenuItem {
 export declare type ListMenuPlacement = 'bottom-start' | 'bottom-end' | 'bottom' | 'top-start' | 'top-end' | 'top' | 'left-start' | 'left-end' | 'left' | 'right-start' | 'right-end' | 'right';
 
 export declare interface ListMenuProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'> {
+    /** Card content */
+    card?: ReactNode;
     /** Menu items */
     items: ListMenuItem[];
     /** Callback when any item is selected (fires in addition to item-level onClick) */
