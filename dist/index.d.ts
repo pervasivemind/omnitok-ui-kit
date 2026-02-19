@@ -168,6 +168,8 @@ export declare interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInpu
     variant?: CheckboxVariant;
     /** Render as a toggle switch */
     toggle?: boolean;
+    /** Callback when checked state changes, provides the new boolean value */
+    onCheckedChange?: (checked: boolean) => void;
 }
 
 export declare type CheckboxVariant = 'primary' | 'accent' | 'neutral' | 'success' | 'info' | 'violet' | 'rose' | 'teal';
@@ -215,6 +217,75 @@ export declare interface DraggableCardProps {
     direction?: 'vertical' | 'horizontal';
 }
 
+export declare const Dropdown: ForwardRefExoticComponent<DropdownProps & RefAttributes<HTMLDivElement>>;
+
+export declare const DropdownMenu: ForwardRefExoticComponent<DropdownMenuProps & RefAttributes<HTMLDivElement>>;
+
+export declare interface DropdownMenuItem {
+    /** Display label */
+    label: string;
+    /** Unique value identifier */
+    value: string;
+    /** Icon component */
+    icon?: ReactNode;
+    /** Navigation href — renders item as an anchor tag */
+    href?: string;
+    /** Click handler for this specific item */
+    onClick?: () => void;
+    /** Disabled state */
+    disabled?: boolean;
+    /** Danger / destructive style */
+    danger?: boolean;
+    /** Render a divider line above this item */
+    dividerBefore?: boolean;
+    /** Badge content */
+    badge?: ReactNode;
+}
+
+export declare interface DropdownMenuProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'> {
+    /** Card content */
+    card?: ReactNode;
+    /** Menu items */
+    items: DropdownMenuItem[];
+    /** Callback when any item is selected (fires in addition to item-level onClick) */
+    onSelect?: (value: string) => void;
+    /** Trigger element that opens the menu */
+    trigger: ReactNode;
+    /** Menu placement relative to trigger */
+    placement?: DropdownPlacement;
+    /** Distance in pixels between the trigger and the menu panel */
+    offset?: number;
+    /** Menu item size */
+    size?: DropdownMenuSize;
+    /** Disabled state (prevents opening) */
+    disabled?: boolean;
+}
+
+export declare type DropdownMenuSize = 'sm' | 'md' | 'lg';
+
+export declare type DropdownPlacement = 'bottom-start' | 'bottom-end' | 'bottom' | 'top-start' | 'top-end' | 'top' | 'left-start' | 'left-end' | 'left' | 'right-start' | 'right-end' | 'right';
+
+export declare interface DropdownProps extends HTMLAttributes<HTMLDivElement> {
+    /** Trigger element that opens the dropdown */
+    trigger: ReactNode;
+    /** Content rendered inside the dropdown panel */
+    children: ReactNode;
+    /** Dropdown placement relative to trigger */
+    placement?: DropdownPlacement;
+    /** Distance in pixels between the trigger and the dropdown panel */
+    offset?: number;
+    /** Disabled state (prevents opening) */
+    disabled?: boolean;
+    /** Controlled open state */
+    open?: boolean;
+    /** Callback when open state changes */
+    onOpenChange?: (open: boolean) => void;
+    /** Additional classes for the trigger wrapper*/
+    triggerClassName?: string;
+    /** Additional classes for the dropdown panel */
+    contentClassName?: string;
+}
+
 export declare function FileDropzone({ onFilesAccepted, onFilesRejected, accept, maxFiles, maxSize, // 5MB
     multiple, disabled, className, showPreview, }: FileDropzoneProps): JSX_2.Element;
 
@@ -245,21 +316,18 @@ export declare interface HeaderProps extends HTMLAttributes<HTMLElement> {
     onSearchChange?: (value: string) => void;
     /** Show notifications button */
     showNotifications?: boolean;
-    /** Notification items */
-    notificationItems?: ListMenuItem[];
-    /** Notification count */
-    notificationCount?: number;
-    /** Notification click handler */
-    onNotificationClick?: () => void;
+    /** Notification menu */
+    notificationMenu?: NotificationMenuProps;
     /** User info for avatar */
     user?: {
         name: string;
+        email?: string;
         avatar?: string;
         role?: string;
         status?: 'online' | 'offline' | 'busy' | 'away';
     };
     /** User menu items */
-    userMenuItems?: ListMenuItem[];
+    userMenuItems?: DropdownMenuItem[];
     /** User click handler */
     onUserClick?: () => void;
     /** Mobile menu toggle handler */
@@ -344,22 +412,19 @@ export declare interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
     /** User info for header */
     user?: {
         name: string;
+        email?: string;
         avatar?: string;
         role?: string;
         status?: 'online' | 'offline' | 'busy' | 'away';
     };
     /** User menu items */
-    userMenuItems?: ListMenuItem[];
+    userMenuItems?: DropdownMenuItem[];
     /** User click handler */
     onUserClick?: () => void;
     /** Show notifications button */
     showNotifications?: boolean;
-    /** Notification items */
-    notificationItems?: ListMenuItem[];
-    /** Notification count */
-    notificationCount?: number;
-    /** Notification click handler */
-    onNotificationClick?: () => void;
+    /** Notification menu */
+    notificationMenu?: NotificationMenuProps;
     /** Show header search */
     showSearch?: boolean;
     /** Search value */
@@ -379,50 +444,6 @@ export declare interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
     /** Right panel width */
     rightPanelWidth?: string;
 }
-
-export declare const ListMenu: ForwardRefExoticComponent<ListMenuProps & RefAttributes<HTMLDivElement>>;
-
-export declare interface ListMenuItem {
-    /** Display label */
-    label: string;
-    /** Unique value identifier */
-    value: string;
-    /** Icon component */
-    icon?: ReactNode;
-    /** Navigation href — renders item as an anchor tag */
-    href?: string;
-    /** Click handler for this specific item */
-    onClick?: () => void;
-    /** Disabled state */
-    disabled?: boolean;
-    /** Danger / destructive style */
-    danger?: boolean;
-    /** Render a divider line above this item */
-    dividerBefore?: boolean;
-}
-
-export declare type ListMenuPlacement = 'bottom-start' | 'bottom-end' | 'bottom' | 'top-start' | 'top-end' | 'top' | 'left-start' | 'left-end' | 'left' | 'right-start' | 'right-end' | 'right';
-
-export declare interface ListMenuProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'> {
-    /** Card content */
-    card?: ReactNode;
-    /** Menu items */
-    items: ListMenuItem[];
-    /** Callback when any item is selected (fires in addition to item-level onClick) */
-    onSelect?: (value: string) => void;
-    /** Trigger element that opens the menu */
-    trigger: ReactNode;
-    /** Menu placement relative to trigger */
-    placement?: ListMenuPlacement;
-    /** Distance in pixels between the trigger and the menu panel */
-    offset?: number;
-    /** Menu item size */
-    size?: ListMenuSize;
-    /** Disabled state (prevents opening) */
-    disabled?: boolean;
-}
-
-export declare type ListMenuSize = 'sm' | 'md' | 'lg';
 
 export declare const LoginPage: ForwardRefExoticComponent<LoginPageProps & RefAttributes<HTMLDivElement>>;
 
@@ -532,6 +553,18 @@ export declare interface MultiSelectProps {
 export declare type MultiSelectSize = 'sm' | 'md' | 'lg';
 
 export declare type MultiSelectTagColor = 'primary' | 'accent' | 'neutral' | 'success' | 'warning' | 'error' | 'info' | 'violet' | 'rose' | 'teal';
+
+export declare const NotificationMenu: ForwardRefExoticComponent<NotificationMenuProps & RefAttributes<HTMLDivElement>>;
+
+export declare interface NotificationMenuProps {
+    items: DropdownMenuItem[];
+    count?: number;
+    searchValue?: string;
+    searchPlaceholder?: string;
+    filterLabel?: string;
+    onSearchChange?: (value: string) => void;
+    onFilterChange?: (filter: boolean) => void;
+}
 
 export declare const Pagination: ForwardRefExoticComponent<PaginationProps & RefAttributes<HTMLElement>>;
 
