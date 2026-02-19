@@ -357,7 +357,7 @@ export const ListMenu = forwardRef<HTMLDivElement, ListMenuProps>(
     const componentId = `listmenu-${useRef(Math.random().toString(36).slice(2, 9)).current}`;
 
     return (
-      <div ref={containerRef} className={cn('relative inline-block', className)} {...props}>
+      <div ref={containerRef} className={cn('relative inline-flex items-center', className)} {...props}>
         {/* Trigger */}
         <div
           ref={triggerRef}

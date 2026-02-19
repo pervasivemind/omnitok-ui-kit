@@ -49,7 +49,7 @@ export const Default: Story = {
     activeSidebarId: 'dashboard',
     headerTitle: 'Dashboard',
     user: {
-      name: 'Pablo Junyent',
+      name: 'Jose Soto',
       role: 'Administrator',
     },
     notificationCount: 3,

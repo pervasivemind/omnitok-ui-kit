@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
 import { Header } from '@omnitok/ui';
-import { Settings, LogOut, CreditCard, HelpCircle, Moon } from 'lucide-react';
+import { Settings, LogOut, CreditCard, HelpCircle, Moon, Bell } from 'lucide-react';
 
 const meta: Meta<typeof Header> = {
   title: 'Layout/Header',
@@ -16,14 +16,21 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const defaultUser = {
-  name: 'Pablo Junyent',
+  name: 'Jose Soto',
   role: 'Admin',
 };
 
 const userWithAvatar = {
-  name: 'Pablo Junyent',
-  avatar: 'https://i.pravatar.cc/150?u=pablo',
+  name: 'Jose Soto',
+  avatar: 'https://i.pravatar.cc/150?u=jose',
   role: 'Admin',
+};
+
+const userWithStatus = {
+  name: 'Jose Soto',
+  avatar: 'https://i.pravatar.cc/150?u=jose',
+  role: 'Admin',
+  status: 'online' as const,
 };
 
 const userMenuItems = [
@@ -37,6 +44,13 @@ const userMenuItems = [
     danger: true,
     dividerBefore: true,
   },
+];
+
+const notificationItems = [
+  { label: 'Billing Reminder', value: 'billing-reminder', icon: <CreditCard size={16} /> },
+  { label: 'Notification 1', value: 'notification-1', icon: <Bell size={16} />, dividerBefore: true },
+  { label: 'Notification 2', value: 'notification-2', icon: <Bell size={16} /> },
+  { label: 'Notification 3', value: 'notification-3', icon: <Bell size={16} /> },
 ];
 
 export const Default: Story = {
@@ -62,7 +76,6 @@ export const WithSearch: Story = {
         searchValue={search}
         onSearchChange={setSearch}
         user={userWithAvatar}
-        notificationCount={2}
       />
     );
   },
@@ -77,7 +90,8 @@ export const WithNotificationCount: Story = {
     <Header
       title="Dashboard"
       user={userWithAvatar}
-      notificationCount={15}
+      notificationItems={notificationItems}
+      notificationCount={3}
       onNotificationClick={() => console.log('Notifications clicked')}
     />
   ),
@@ -144,11 +158,12 @@ export const FullFeatured: Story = {
         searchValue={search}
         onSearchChange={setSearch}
         showNotifications
+        notificationItems={notificationItems}
         notificationCount={12}
         onNotificationClick={() => console.log('Notifications clicked')}
         showMenuToggle
         onMenuToggle={() => console.log('Menu toggled')}
-        user={userWithAvatar}
+        user={userWithStatus}
         userMenuItems={userMenuItems}
         onUserClick={() => console.log('Profile clicked')}
         actions={

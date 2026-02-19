@@ -17,6 +17,8 @@ export interface HeaderProps extends HTMLAttributes<HTMLElement> {
   onSearchChange?: (value: string) => void;
   /** Show notifications button */
   showNotifications?: boolean;
+  /** Notification items */
+  notificationItems?: ListMenuItem[];
   /** Notification count */
   notificationCount?: number;
   /** Notification click handler */
@@ -26,6 +28,7 @@ export interface HeaderProps extends HTMLAttributes<HTMLElement> {
     name: string;
     avatar?: string;
     role?: string;
+    status?: 'online' | 'offline' | 'busy' | 'away';
   };
   /** User menu items */
   userMenuItems?: ListMenuItem[];
@@ -48,6 +51,7 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
       searchValue,
       onSearchChange,
       showNotifications = true,
+      notificationItems,
       notificationCount,
       onNotificationClick,
       user,
@@ -113,26 +117,33 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
 
           {/* Notifications */}
           {showNotifications && (
-            <button
-              type="button"
-              onClick={onNotificationClick}
-              className="relative p-2 rounded-lg hover:bg-neutral-100 transition-colors"
-              aria-label="Notifications"
-            >
-              <Bell className="w-5 h-5 text-neutral-600" />
-              {notificationCount !== undefined && notificationCount > 0 && (
-                <span className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 w-4 h-4 text-xs font-medium text-white bg-accent rounded-full flex items-center justify-center">
-                  {notificationCount > 9 ? '9+' : notificationCount}
-                </span>
-              )}
-            </button>
+            <ListMenu
+              offset={14}
+              items={notificationItems ?? []}
+              placement="bottom-end"
+              trigger={
+                <button
+                  type="button"
+                  onClick={onNotificationClick}
+                  className="relative p-2 rounded-lg hover:bg-neutral-100 transition-colors"
+                  aria-label="Notifications"
+                >
+                  <Bell className="w-5 h-5 text-neutral-600" />
+                  {notificationCount !== undefined && notificationCount > 0 && (
+                    <span className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 w-4 h-4 text-xs font-medium text-white bg-accent rounded-full flex items-center justify-center">
+                      {notificationCount > 9 ? '9+' : notificationCount}
+                    </span>
+                  )}
+                </button>
+              }
+            />
           )}
 
           {/* User */}
           {user && (
             <ListMenu
-              className="-mr-4"
-              offset={12}
+              className="-mr-2"
+              offset={16}
               card={
                 <div className="px-4 py-2 flex items-center gap-4">
                   <Avatar src={user.avatar} alt={user.name} size="xl" />
@@ -142,10 +153,16 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
                   </div>
                 </div>
               }
-              items={userMenuItems || []}
+              items={userMenuItems ?? []}
               trigger={
-                <div className="pr-4">
-                  <Avatar src={user.avatar} alt={user.name} size="sm" />
+                <div className="pr-2 flex items-center">
+                  <Avatar
+                    className="rounded-full hover:ring-2 hover:ring-offset-2 hover:ring-neutral-200"
+                    src={user.avatar}
+                    alt={user.name}
+                    size="sm"
+                    status={user.status}
+                  />
                 </div>
               }
               placement="bottom-end"

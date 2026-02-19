@@ -33,11 +33,16 @@ export interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
     name: string;
     avatar?: string;
     role?: string;
+    status?: 'online' | 'offline' | 'busy' | 'away';
   };
   /** User menu items */
   userMenuItems?: ListMenuItem[];
   /** User click handler */
   onUserClick?: () => void;
+  /** Show notifications button */
+  showNotifications?: boolean;
+  /** Notification items */
+  notificationItems?: ListMenuItem[];
   /** Notification count */
   notificationCount?: number;
   /** Notification click handler */
@@ -79,6 +84,8 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
       user,
       userMenuItems,
       onUserClick,
+      showNotifications = true,
+      notificationItems,
       notificationCount,
       onNotificationClick,
       showSearch = true,
@@ -168,7 +175,8 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
                 showSearch={showSearch}
                 searchValue={searchValue}
                 onSearchChange={onSearchChange}
-                showNotifications
+                showNotifications={showNotifications}
+                notificationItems={notificationItems}
                 notificationCount={notificationCount}
                 onNotificationClick={onNotificationClick}
                 user={user}
