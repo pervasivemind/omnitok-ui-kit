@@ -1,11 +1,7 @@
 import { forwardRef, type HTMLAttributes } from 'react';
-import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
-} from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { cn } from '../../utils/cn';
+import { createTranslator, SupportedLanguage, useI18n } from '../../i18n';
 
 export type PaginationVariant =
   | 'primary'
@@ -19,10 +15,7 @@ export type PaginationVariant =
   | 'rose'
   | 'teal';
 
-export interface PaginationProps extends Omit<
-  HTMLAttributes<HTMLElement>,
-  'onChange'
-> {
+export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
   /** Current page (1-indexed) */
   currentPage: number;
   /** Total number of pages */
@@ -45,6 +38,8 @@ export interface PaginationProps extends Omit<
   size?: 'sm' | 'md' | 'lg';
   /** Color variant */
   variant?: PaginationVariant;
+  /** Language */
+  language?: SupportedLanguage;
 }
 
 const sizeStyles = {
@@ -94,6 +89,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       siblingCount = 1,
       showFirstLast = true,
       showInfo = false,
+      language,
       totalItems,
       itemsPerPage,
       disabled = false,
@@ -104,6 +100,14 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     },
     ref
   ) => {
+    const i18n = useI18n();
+    const { t } = language
+      ? createTranslator({
+          language,
+          messagesByLanguage: i18n.messagesByLanguage,
+        })
+      : i18n;
+
     const generatePageNumbers = (): (number | 'ellipsis')[] => {
       const pages: (number | 'ellipsis')[] = [];
       const totalNumbers = siblingCount * 2 + 3; // siblings + current + first + last
@@ -114,10 +118,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       }
 
       const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
-      const rightSiblingIndex = Math.min(
-        currentPage + siblingCount,
-        totalPages
-      );
+      const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPages);
 
       const showLeftEllipsis = leftSiblingIndex > 2;
       const showRightEllipsis = rightSiblingIndex < totalPages - 1;
@@ -135,8 +136,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       } else {
         pages.push(1);
         pages.push('ellipsis');
-        for (let i = leftSiblingIndex; i <= rightSiblingIndex; i++)
-          pages.push(i);
+        for (let i = leftSiblingIndex; i <= rightSiblingIndex; i++) pages.push(i);
         pages.push('ellipsis');
         pages.push(totalPages);
       }
@@ -155,13 +155,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       disabled && 'opacity-50 cursor-not-allowed'
     );
 
-    const PageButton = ({
-      page,
-      isActive,
-    }: {
-      page: number;
-      isActive: boolean;
-    }) => (
+    const PageButton = ({ page, isActive }: { page: number; isActive: boolean }) => (
       <button
         type="button"
         onClick={() => !disabled && onChange(page)}
@@ -170,22 +164,14 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
         className={cn(
           buttonClasses,
           'px-3',
-          isActive
-            ? activeVariantStyles[variant]
-            : 'text-neutral-600 hover:bg-neutral-100'
+          isActive ? activeVariantStyles[variant] : 'text-neutral-600 hover:bg-neutral-100'
         )}
       >
         {page}
       </button>
     );
 
-    const NavButton = ({
-      direction,
-      double,
-    }: {
-      direction: 'prev' | 'next';
-      double?: boolean;
-    }) => {
+    const NavButton = ({ direction, double }: { direction: 'prev' | 'next'; double?: boolean }) => {
       const isPrev = direction === 'prev';
       const targetPage = double
         ? isPrev
@@ -194,8 +180,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
         : isPrev
           ? currentPage - 1
           : currentPage + 1;
-      const isDisabled =
-        disabled || (isPrev ? currentPage === 1 : currentPage === totalPages);
+      const isDisabled = disabled || (isPrev ? currentPage === 1 : currentPage === totalPages);
 
       const Icon = double
         ? isPrev
@@ -213,11 +198,11 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
           aria-label={
             double
               ? isPrev
-                ? 'First page'
-                : 'Last page'
+                ? t('pagination.firstPage')
+                : t('pagination.lastPage')
               : isPrev
-                ? 'Previous page'
-                : 'Next page'
+                ? t('pagination.previousPage')
+                : t('pagination.nextPage')
           }
           className={cn(
             buttonClasses,
@@ -232,26 +217,25 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     };
 
     // Calculate info text
-    const startItem =
-      totalItems && itemsPerPage
-        ? (currentPage - 1) * itemsPerPage + 1
-        : undefined;
+    const startItem = totalItems && itemsPerPage ? (currentPage - 1) * itemsPerPage + 1 : undefined;
     const endItem =
-      totalItems && itemsPerPage
-        ? Math.min(currentPage * itemsPerPage, totalItems)
-        : undefined;
+      totalItems && itemsPerPage ? Math.min(currentPage * itemsPerPage, totalItems) : undefined;
 
     return (
       <nav
         ref={ref}
         role="navigation"
-        aria-label="Pagination"
+        aria-label={t('pagination.ariaLabel')}
         className={cn('flex items-center gap-2', className)}
         {...props}
       >
         {showInfo && totalItems !== undefined && (
           <span className="text-sm text-neutral-500 mr-4">
-            {startItem}-{endItem} of {totalItems}
+            {t('pagination.info', {
+              start: startItem ?? '',
+              end: endItem ?? '',
+              total: totalItems,
+            })}
           </span>
         )}
 
@@ -268,11 +252,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
                 ...
               </span>
             ) : (
-              <PageButton
-                key={page}
-                page={page}
-                isActive={page === currentPage}
-              />
+              <PageButton key={page} page={page} isActive={page === currentPage} />
             )
           )}
         </div>
