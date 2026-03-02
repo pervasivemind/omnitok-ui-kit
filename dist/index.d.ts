@@ -200,6 +200,22 @@ export declare interface ConfirmModalProps extends Omit<ModalProps, 'children' |
     loading?: boolean;
 }
 
+export declare function createTranslator({ language, messagesByLanguage, fallbackLanguage, }: CreateTranslatorOptions): {
+    language: string;
+    messagesByLanguage: MessagesByLanguage;
+    t: (key: string, vars?: Record<string, string | number>) => string;
+};
+
+declare interface CreateTranslatorOptions {
+    language: string;
+    /** Per-language message dictionaries (merged on top of defaults) */
+    messagesByLanguage?: MessagesByLanguage;
+    /** Fallback language if key is missing for current language */
+    fallbackLanguage?: SupportedLanguage;
+}
+
+export declare const defaultMessages: Record<SupportedLanguage, Record<string, string>>;
+
 export declare function DraggableCard({ items, onReorder, className, cardClassName, droppableId, direction, }: DraggableCardProps): JSX_2.Element;
 
 export declare interface DraggableCardItem {
@@ -338,6 +354,24 @@ export declare interface HeaderProps extends HTMLAttributes<HTMLElement> {
     actions?: ReactNode;
 }
 
+export declare interface I18nContextValue {
+    language: string;
+    messagesByLanguage: MessagesByLanguage;
+    t: (key: string, vars?: Record<string, string | number>) => string;
+}
+
+export declare function I18nProvider({ children, language, messages, fallbackLanguage, }: I18nProviderProps): JSX_2.Element;
+
+export declare interface I18nProviderProps {
+    children: ReactNode;
+    /** Current language code (controlled by the host app) */
+    language: string;
+    /** Optional per-language dictionaries to extend/override built-in messages */
+    messages?: MessagesByLanguage;
+    /** Fallback language for missing keys (defaults to 'en') */
+    fallbackLanguage?: SupportedLanguage;
+}
+
 export declare const Input: ForwardRefExoticComponent<InputProps & RefAttributes<HTMLInputElement>>;
 
 export declare interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
@@ -448,16 +482,14 @@ export declare interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
 export declare const LoginPage: ForwardRefExoticComponent<LoginPageProps & RefAttributes<HTMLDivElement>>;
 
 export declare interface LoginPageProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSubmit'> {
+    /** Language for built-in strings. Overrides I18nProvider language if set. */
+    language?: SupportedLanguage;
     /** Logo element (square logo recommended) */
     logo?: ReactNode;
     /** Logo for wide/horizontal display */
     logoWide?: ReactNode;
     /** Logo for the split hero panel */
     splitLogo?: ReactNode;
-    /** Application/System title */
-    title?: string;
-    /** Subtitle or description */
-    subtitle?: string;
     /** Submit handler */
     onLoginSubmit?: (email: string, password: string) => void;
     /** Loading state */
@@ -473,6 +505,8 @@ export declare interface LoginPageProps extends Omit<HTMLAttributes<HTMLDivEleme
     /** Background variant */
     variant?: 'gradient' | 'split' | 'centered';
 }
+
+export declare type MessagesByLanguage = Record<string, Record<string, string>>;
 
 export declare const Modal: ForwardRefExoticComponent<ModalProps & RefAttributes<HTMLDivElement>>;
 
@@ -591,6 +625,8 @@ export declare interface PaginationProps extends Omit<HTMLAttributes<HTMLElement
     size?: 'sm' | 'md' | 'lg';
     /** Color variant */
     variant?: PaginationVariant;
+    /** Language */
+    language?: SupportedLanguage;
 }
 
 export declare type PaginationVariant = 'primary' | 'accent' | 'neutral' | 'success' | 'warning' | 'error' | 'info' | 'violet' | 'rose' | 'teal';
@@ -723,6 +759,8 @@ export declare interface SortableListProps {
 }
 
 export declare type SortDirection = 'asc' | 'desc' | null;
+
+export declare type SupportedLanguage = 'es' | 'en';
 
 export declare interface TabItem {
     /** Unique identifier */
@@ -880,6 +918,8 @@ export declare interface ToastProviderProps {
 }
 
 export declare type ToastVariant = 'info' | 'success' | 'warning' | 'error';
+
+export declare function useI18n(): I18nContextValue;
 
 export declare const useToast: () => ToastContextValue;
 
