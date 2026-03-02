@@ -1,20 +1,19 @@
 import { forwardRef, type HTMLAttributes, type ReactNode, useState } from 'react';
 import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
 import { cn } from '../../utils/cn';
+import { createTranslator, useI18n, type SupportedLanguage } from '../../i18n';
 import { Button } from '../Button';
 import { Input } from '../Input';
 
 export interface LoginPageProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSubmit'> {
+  /** Language for built-in strings. Overrides I18nProvider language if set. */
+  language?: SupportedLanguage;
   /** Logo element (square logo recommended) */
   logo?: ReactNode;
   /** Logo for wide/horizontal display */
   logoWide?: ReactNode;
   /** Logo for the split hero panel */
   splitLogo?: ReactNode;
-  /** Application/System title */
-  title?: string;
-  /** Subtitle or description */
-  subtitle?: string;
   /** Submit handler */
   onLoginSubmit?: (email: string, password: string) => void;
   /** Loading state */
@@ -34,11 +33,10 @@ export interface LoginPageProps extends Omit<HTMLAttributes<HTMLDivElement>, 'on
 export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
   (
     {
+      language,
       logo,
       logoWide,
       splitLogo,
-      title = 'Iniciar Sesión',
-      subtitle = 'Ingresa tus credenciales para continuar',
       onLoginSubmit,
       loading = false,
       error,
@@ -51,6 +49,14 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
     },
     ref
   ) => {
+    const i18n = useI18n();
+    const { t } = language
+      ? createTranslator({
+          language,
+          messagesByLanguage: i18n.messagesByLanguage,
+        })
+      : i18n;
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -71,8 +77,8 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
               <div className="hidden md:block">{logoWide || logo}</div>
             </div>
           )}
-          <h1 className="text-2xl font-bold text-neutral-900">{title}</h1>
-          <p className="mt-2 text-neutral-500">{subtitle}</p>
+          <h1 className="text-2xl font-bold text-neutral-900">{t('login.title')}</h1>
+          <p className="mt-2 text-neutral-500">{t('login.subtitle')}</p>
         </div>
 
         {/* Error message */}
@@ -85,14 +91,14 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
         {/* Email field */}
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-1">
-            Correo electrónico
+            {t('login.emailLabel')}
           </label>
           <Input
             id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="tu@email.com"
+            placeholder={t('login.emailPlaceholder')}
             leftIcon={<Mail className="w-5 h-5" />}
             required
             disabled={loading}
@@ -102,14 +108,14 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
         {/* Password field */}
         <div>
           <label htmlFor="password" className="block text-sm font-medium text-neutral-700 mb-1">
-            Contraseña
+            {t('login.passwordLabel')}
           </label>
           <Input
             id="password"
             type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="••••••••"
+            placeholder={t('login.passwordPlaceholder')}
             leftIcon={<Lock className="w-5 h-5" />}
             rightIcon={
               <button
@@ -135,7 +141,7 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
                 onChange={(e) => setRememberMe(e.target.checked)}
                 className="w-4 h-4 rounded border-neutral-300 text-primary focus:ring-primary"
               />
-              <span className="text-sm text-neutral-600">Recordarme</span>
+              <span className="text-sm text-neutral-600">{t('login.rememberMe')}</span>
             </label>
           )}
           {onForgotPassword && (
@@ -144,20 +150,14 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
               onClick={onForgotPassword}
               className="text-sm text-primary hover:text-primary-dark font-medium"
             >
-              ¿Olvidaste tu contraseña?
+              {t('login.forgotPassword')}
             </button>
           )}
         </div>
 
         {/* Submit button */}
-        <Button
-          type="submit"
-          variant="accent"
-          fullWidth
-          loading={loading}
-          className="py-3"
-        >
-          Iniciar Sesión
+        <Button type="submit" variant="accent" fullWidth loading={loading} className="py-3">
+          {t('login.submit')}
         </Button>
 
         {/* Footer */}
@@ -167,11 +167,7 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
 
     if (variant === 'split') {
       return (
-        <div
-          ref={ref}
-          className={cn('min-h-screen flex', className)}
-          {...props}
-        >
+        <div ref={ref} className={cn('min-h-screen flex', className)} {...props}>
           {/* Left side - Branding */}
           <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-sidebar via-primary to-accent p-12 flex-col justify-between">
             <div>
@@ -180,23 +176,17 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
               )}
             </div>
             <div className="text-white">
-              <h2 className="text-4xl font-bold mb-4">
-                Bienvenido de vuelta
-              </h2>
-              <p className="text-white/80 text-lg">
-                Accede a tu panel de administración y gestiona tu plataforma de manera eficiente.
-              </p>
+              <h2 className="text-4xl font-bold mb-4">{t('login.split.heroTitle')}</h2>
+              <p className="text-white/80 text-lg">{t('login.split.heroDescription')}</p>
             </div>
             <div className="text-white/50 text-sm">
-              © 2024 Omnitok. Todos los derechos reservados.
+              {t('login.split.copyright', { year: new Date().getFullYear() })}
             </div>
           </div>
 
           {/* Right side - Form */}
           <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
-            <div className="w-full max-w-md">
-              {formContent}
-            </div>
+            <div className="w-full max-w-md">{formContent}</div>
           </div>
         </div>
       );
@@ -212,9 +202,7 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
           )}
           {...props}
         >
-          <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
-            {formContent}
-          </div>
+          <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">{formContent}</div>
         </div>
       );
     }
@@ -230,9 +218,7 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
         )}
         {...props}
       >
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
-          {formContent}
-        </div>
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">{formContent}</div>
       </div>
     );
   }
