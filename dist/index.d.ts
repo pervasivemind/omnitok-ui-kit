@@ -500,6 +500,8 @@ export declare interface LoginPageProps extends Omit<HTMLAttributes<HTMLDivEleme
     onForgotPassword?: () => void;
     /** Remember me option */
     showRememberMe?: boolean;
+    /** Show forgot password option */
+    showForgotPassword?: boolean;
     /** Footer content */
     footer?: ReactNode;
     /** Background variant */
