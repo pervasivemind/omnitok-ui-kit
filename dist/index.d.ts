@@ -715,7 +715,12 @@ export declare interface SidebarProps extends HTMLAttributes<HTMLElement> {
     collapsible?: boolean;
     /** Custom active item ID */
     activeId?: string;
-    /** Callback when item is clicked */
+    /**
+     * Callback when item is clicked.
+     * For href items, only called on normal left-clicks — modified clicks
+     * (Ctrl/Cmd/Shift/middle) are left entirely to the browser so new-tab
+     * behaviour works without interference.
+     */
     onItemClick?: (item: SidebarItem) => void;
 }
 
