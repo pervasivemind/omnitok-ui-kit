@@ -1869,6 +1869,7 @@ const vi = ({
       "a",
       {
         href: e.href,
+        id: e.elementId,
         className: f,
         onClick: p,
         title: t ? e.label : void 0,
@@ -1878,6 +1879,7 @@ const vi = ({
       "button",
       {
         type: "button",
+        id: e.elementId,
         className: O(f, "w-full text-left"),
         onClick: l,
         title: t ? e.label : void 0,

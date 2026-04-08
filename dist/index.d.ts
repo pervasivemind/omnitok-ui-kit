@@ -678,6 +678,8 @@ export declare const Sidebar: ForwardRefExoticComponent<SidebarProps & RefAttrib
 export declare interface SidebarItem {
     /** Unique identifier */
     id: string;
+    /** Optional value for the HTML id attribute */
+    elementId?: string;
     /** Display label */
     label: string;
     /** Icon component */
