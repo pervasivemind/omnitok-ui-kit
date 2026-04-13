@@ -356,6 +356,86 @@ export const WithSeparators: Story = {
   },
 };
 
+export const AutoExpandOnActiveChild: Story = {
+  render: () => {
+    const [activeId, setActiveId] = useState('dashboard');
+
+    const items = [
+      { id: 'dashboard', label: 'Dashboard', icon: <Home size={20} />, href: '/dashboard' },
+      {
+        id: 'products',
+        label: 'Products',
+        icon: <Package size={20} />,
+        children: [
+          { id: 'all-products', label: 'All Products', href: '/products/all' },
+          { id: 'add-product', label: 'Add Product', href: '/products/add' },
+          { id: 'categories', label: 'Categories', href: '/products/categories' },
+        ],
+      },
+      {
+        id: 'orders',
+        label: 'Orders',
+        icon: <ShoppingCart size={20} />,
+        children: [
+          { id: 'all-orders', label: 'All Orders', href: '/orders/all' },
+          { id: 'pending', label: 'Pending', badge: 8, href: '/orders/pending' },
+          { id: 'completed', label: 'Completed', href: '/orders/completed' },
+        ],
+      },
+      { id: 'analytics', label: 'Analytics', icon: <BarChart3 size={20} />, href: '/analytics' },
+      { id: 'settings', label: 'Settings', icon: <Settings size={20} />, href: '/settings' },
+    ];
+
+    return (
+      <div className="h-screen flex">
+        <Sidebar
+          items={items}
+          logo={LogoExpanded}
+          logoCollapsed={LogoCollapsed}
+          systemName="Auto-Expand Demo"
+          activeId={activeId}
+          onItemClick={(item) => setActiveId(item.id)}
+        />
+
+        <main className="flex-1 p-6 bg-background text-foreground overflow-y-auto">
+          <h2 className="text-2xl font-semibold mb-2">Auto-expand on active child</h2>
+          <p className="text-sm text-muted-foreground mb-6">
+            Click the buttons below to simulate navigating to a nested child. The parent group
+            automatically expands when one of its children becomes active.
+          </p>
+
+          <div className="space-y-3 mb-6">
+            <p className="text-sm font-medium">Simulate navigation:</p>
+            <div className="flex flex-wrap gap-2">
+              {['dashboard', 'all-products', 'categories', 'pending', 'completed', 'analytics'].map(
+                (id) => (
+                  <button
+                    key={id}
+                    onClick={() => setActiveId(id)}
+                    className={cn(
+                      'px-3 py-1.5 text-sm rounded-lg border transition-colors',
+                      activeId === id
+                        ? 'bg-primary text-white border-primary'
+                        : 'bg-background text-foreground border-border hover:bg-muted'
+                    )}
+                  >
+                    {id}
+                  </button>
+                )
+              )}
+            </div>
+          </div>
+
+          <div className="rounded-lg border border-border p-4">
+            <p className="text-sm text-muted-foreground">Current activeId</p>
+            <p className="text-lg font-medium">{activeId}</p>
+          </div>
+        </main>
+      </div>
+    );
+  },
+};
+
 export const CollapsedWithNestedItems: Story = {
   render: () => {
     const [collapsed, setCollapsed] = useState(true);

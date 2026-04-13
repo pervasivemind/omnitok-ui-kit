@@ -1,4 +1,4 @@
-import { forwardRef, type HTMLAttributes, type ReactNode, useState, type MouseEvent } from 'react';
+import { forwardRef, type HTMLAttributes, type ReactNode, useState, useEffect, type MouseEvent } from 'react';
 import { ChevronDown, ChevronRight, PanelLeftClose } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
@@ -70,9 +70,19 @@ const SidebarItemComponent = ({
   onItemClick,
   onCollapsedChange,
 }: SidebarItemProps) => {
-  const [expanded, setExpanded] = useState(false);
   const hasChildren = item.children && item.children.length > 0;
   const isActive = item.active || item.id === activeId;
+
+  // Auto-expand if any child matches the activeId
+  const hasActiveChild = hasChildren && item.children!.some((child) => child.id === activeId);
+  const [expanded, setExpanded] = useState(hasActiveChild);
+
+  // React to activeId changes — expand when a child becomes active
+  useEffect(() => {
+    if (hasActiveChild) {
+      setExpanded(true);
+    }
+  }, [hasActiveChild]);
 
   // Used for <a href> elements only.
   // Modified clicks (Ctrl/Cmd/Shift/middle) are ignored so the browser can
