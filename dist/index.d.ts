@@ -667,6 +667,8 @@ export declare interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelec
     placeholder?: string;
     /** Full width select */
     fullWidth?: boolean;
+    /** Enable search/filter functionality (renders a searchable single-select combobox) */
+    searchable?: boolean;
     /** Icon to show on the left */
     leftIcon?: ReactNode;
 }
