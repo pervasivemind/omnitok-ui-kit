@@ -180,6 +180,43 @@ export declare type CheckboxVariant = 'primary' | 'accent' | 'neutral' | 'succes
  */
 export declare function cn(...inputs: ClassValue[]): string;
 
+export declare const CodeEditor: ForwardRefExoticComponent<CodeEditorProps & RefAttributes<HTMLDivElement>>;
+
+export declare interface CodeEditorProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+    /** Label text */
+    label?: string;
+    /** Helper text shown below the editor */
+    helperText?: string;
+    /** Error message */
+    error?: string;
+    /** Full width editor */
+    fullWidth?: boolean;
+    /** Current code value (controlled) */
+    value: string;
+    /** Called with the new code on edit */
+    onValueChange?: (code: string) => void;
+    /** Prism language id (e.g. 'javascript', 'json', 'tsx'). Non-core grammars are lazy-loaded. */
+    language?: string;
+    /** Placeholder shown when empty */
+    placeholder?: string;
+    /** Number of spaces per indent level */
+    tabSize?: number;
+    /** Insert spaces instead of a tab character */
+    insertSpaces?: boolean;
+    /** Minimum height of the editing area */
+    minHeight?: number | string;
+    /** Render highlighted, read-only content with no textarea */
+    displayOnly?: boolean;
+    /** Show a line-number gutter */
+    showLineNumbers?: boolean;
+    /** Show a line/character count footer */
+    showCount?: boolean;
+    /** Show a copy-to-clipboard button */
+    showCopyButton?: boolean;
+    /** Disable editing */
+    disabled?: boolean;
+}
+
 export declare const ConfirmModal: {
     ({ message, confirmText, cancelText, confirmVariant, onConfirm, onClose, loading, ...props }: ConfirmModalProps): JSX_2.Element;
     displayName: string;
