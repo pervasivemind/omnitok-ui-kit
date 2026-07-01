@@ -2,6 +2,7 @@ import { forwardRef, type HTMLAttributes } from 'react';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { createTranslator, SupportedLanguage, useI18n } from '../../i18n';
+import { Select } from '../Select';
 
 export type PaginationVariant =
   | 'primary'
@@ -32,6 +33,12 @@ export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onCh
   totalItems?: number;
   /** Items per page */
   itemsPerPage?: number;
+  /** Options for the items-per-page selector. When provided (non-empty), a page-size dropdown is shown; when omitted, it is hidden. */
+  itemsPerPageOptions?: number[];
+  /** Fired when the user selects a new page size from the selector */
+  onItemsPerPageChange?: (itemsPerPage: number) => void;
+  /** Placement of the info text + selector cluster. 'end' pushes it to the far side with space-between. */
+  infoPosition?: 'start' | 'end';
   /** Disabled state */
   disabled?: boolean;
   /** Size variant */
@@ -92,6 +99,9 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       language,
       totalItems,
       itemsPerPage,
+      itemsPerPageOptions,
+      onItemsPerPageChange,
+      infoPosition = 'start',
       disabled = false,
       size = 'md',
       variant = 'primary',
@@ -221,24 +231,36 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     const endItem =
       totalItems && itemsPerPage ? Math.min(currentPage * itemsPerPage, totalItems) : undefined;
 
-    return (
-      <nav
-        ref={ref}
-        role="navigation"
-        aria-label={t('pagination.ariaLabel')}
-        className={cn('flex items-center gap-2', className)}
-        {...props}
-      >
-        {showInfo && totalItems !== undefined && (
-          <span className="text-sm text-neutral-500 mr-4">
-            {t('pagination.info', {
-              start: startItem ?? '',
-              end: endItem ?? '',
-              total: totalItems,
-            })}
-          </span>
-        )}
+    const hasInfo = showInfo && totalItems !== undefined;
+    const showSelector = Array.isArray(itemsPerPageOptions) && itemsPerPageOptions.length > 0;
 
+    const infoCluster =
+      hasInfo || showSelector ? (
+        <div className="flex items-center gap-2">
+          {hasInfo && (
+            <span className="text-sm text-neutral-500">
+              {t('pagination.info', {
+                start: startItem ?? '',
+                end: endItem ?? '',
+                total: totalItems,
+              })}
+            </span>
+          )}
+          {showSelector && (
+            <Select
+              size={size}
+              disabled={disabled}
+              aria-label={t('pagination.itemsPerPage')}
+              value={itemsPerPage !== undefined ? String(itemsPerPage) : undefined}
+              options={itemsPerPageOptions.map((n) => ({ value: String(n), label: String(n) }))}
+              onChange={(e) => onItemsPerPageChange?.(Number(e.target.value))}
+            />
+          )}
+        </div>
+      ) : null;
+
+    const controls = (
+      <div className="flex items-center gap-2">
         {showFirstLast && <NavButton direction="prev" double />}
         <NavButton direction="prev" />
 
@@ -259,6 +281,32 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
 
         <NavButton direction="next" />
         {showFirstLast && <NavButton direction="next" double />}
+      </div>
+    );
+
+    return (
+      <nav
+        ref={ref}
+        role="navigation"
+        aria-label={t('pagination.ariaLabel')}
+        className={cn(
+          'flex items-center gap-2',
+          infoPosition === 'end' && 'justify-between w-full',
+          className
+        )}
+        {...props}
+      >
+        {infoPosition === 'end' ? (
+          <>
+            {controls}
+            {infoCluster}
+          </>
+        ) : (
+          <>
+            {infoCluster}
+            {controls}
+          </>
+        )}
       </nav>
     );
   }

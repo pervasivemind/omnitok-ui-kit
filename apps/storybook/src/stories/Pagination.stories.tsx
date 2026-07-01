@@ -67,6 +67,57 @@ export const WithInfo: Story = {
   },
 };
 
+export const WithItemsPerPage: Story = {
+  render: () => {
+    const [page, setPage] = useState(1);
+    const [perPage, setPerPage] = useState(20);
+    const totalItems = 235;
+    return (
+      <Pagination
+        currentPage={page}
+        totalPages={Math.ceil(totalItems / perPage)}
+        onChange={setPage}
+        showInfo
+        language="en"
+        totalItems={totalItems}
+        itemsPerPage={perPage}
+        itemsPerPageOptions={[10, 20, 50, 100]}
+        onItemsPerPageChange={(value) => {
+          setPerPage(value);
+          setPage(1);
+        }}
+      />
+    );
+  },
+};
+
+export const InfoAtEnd: Story = {
+  render: () => {
+    const [page, setPage] = useState(1);
+    const [perPage, setPerPage] = useState(20);
+    const totalItems = 235;
+    return (
+      <div style={{ width: 640 }}>
+        <Pagination
+          currentPage={page}
+          totalPages={Math.ceil(totalItems / perPage)}
+          onChange={setPage}
+          showInfo
+          language="en"
+          totalItems={totalItems}
+          itemsPerPage={perPage}
+          itemsPerPageOptions={[10, 20, 50, 100]}
+          onItemsPerPageChange={(value) => {
+            setPerPage(value);
+            setPage(1);
+          }}
+          infoPosition="end"
+        />
+      </div>
+    );
+  },
+};
+
 export const ManyPages: Story = {
   render: () => {
     const [page, setPage] = useState(25);

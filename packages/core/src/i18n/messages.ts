@@ -27,6 +27,7 @@ export const defaultMessages: Record<SupportedLanguage, Record<string, string>> 
     'pagination.previousPage': 'Página anterior',
     'pagination.nextPage': 'Página siguiente',
     'pagination.info': '{start}-{end} de {total}',
+    'pagination.itemsPerPage': 'Elementos por página',
   },
   en: {
     // LoginPage
@@ -52,5 +53,6 @@ export const defaultMessages: Record<SupportedLanguage, Record<string, string>> 
     'pagination.previousPage': 'Previous page',
     'pagination.nextPage': 'Next page',
     'pagination.info': '{start}-{end} of {total}',
+    'pagination.itemsPerPage': 'Items per page',
   },
 };
