@@ -658,6 +658,12 @@ export declare interface PaginationProps extends Omit<HTMLAttributes<HTMLElement
     totalItems?: number;
     /** Items per page */
     itemsPerPage?: number;
+    /** Options for the items-per-page selector. When provided (non-empty), a page-size dropdown is shown; when omitted, it is hidden. */
+    itemsPerPageOptions?: number[];
+    /** Fired when the user selects a new page size from the selector */
+    onItemsPerPageChange?: (itemsPerPage: number) => void;
+    /** Placement of the info text + selector cluster. 'end' pushes it to the far side with space-between. */
+    infoPosition?: 'start' | 'end';
     /** Disabled state */
     disabled?: boolean;
     /** Size variant */
