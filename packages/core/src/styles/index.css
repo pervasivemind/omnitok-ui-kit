@@ -1,5 +1,10 @@
-/* Import Google Fonts — must precede all other statements (CSS @import rule) */
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+/* TEMA OSCURO — consola Gating. Ver tailwind.preset.js para el porqué de cada valor.
+ *
+ * El @import de Google Fonts se quitó a propósito: la consola se sirve desde FastAPI
+ * detrás de Cloudflare Access, y un @import a fonts.googleapis.com hace que cada carga
+ * de página dependa de un tercero (y filtra la navegación del analista). La consola ya
+ * declara su propia familia en su index.css; el kit hereda la del host.
+ */
 
 @tailwind base;
 @tailwind components;
@@ -8,36 +13,37 @@
 @layer base {
   :root {
     /* Brand Colors */
-    --color-sidebar: #211f4b;
-    --color-primary: #4D4A9D;
-    --color-primary-dark: #3d3a8c;
-    --color-primary-light: #6b68b3;
-    --color-accent: #FF177B;
-    --color-accent-dark: #e0156d;
-    --color-accent-light: #ff4a96;
+    --color-sidebar: #1c1a3e;
+    --color-primary: #6d3df5;
+    --color-primary-dark: #5a2fd6;
+    --color-primary-light: #a78bfa;
+    --color-accent: #d41c81;
+    --color-accent-dark: #b3166c;
+    --color-accent-light: #f472b6;
 
     /* Auxiliary Colors */
     --color-violet: #8B5CF6;
-    --color-violet-light: #A78BFA;
-    --color-violet-dark: #7C3AED;
+    --color-violet-light: #c4b5fd;
+    --color-violet-dark: #6d28d9;
     --color-rose: #EC4899;
-    --color-rose-light: #F472B6;
-    --color-rose-dark: #DB2777;
+    --color-rose-light: #f9a8d4;
+    --color-rose-dark: #be185d;
     --color-teal: #14B8A6;
-    --color-teal-light: #2DD4BF;
-    --color-teal-dark: #0D9488;
+    --color-teal-light: #5eead4;
+    --color-teal-dark: #0f766e;
 
-    /* Neutral Colors */
-    --color-neutral-50: #fafafa;
-    --color-neutral-100: #f5f5f5;
-    --color-neutral-200: #e5e5e5;
-    --color-neutral-300: #d4d4d4;
-    --color-neutral-400: #a3a3a3;
-    --color-neutral-500: #737373;
-    --color-neutral-600: #525252;
-    --color-neutral-700: #404040;
-    --color-neutral-800: #262626;
-    --color-neutral-900: #171717;
+    /* Neutral Colors — escala INVERTIDA: 50 es el fondo, 900 el texto más claro.
+       El corte texto/borde sale del censo de uso; ver tailwind.preset.js. */
+    --color-neutral-50: #131227;
+    --color-neutral-100: #1a1838;
+    --color-neutral-200: #2e2b55;
+    --color-neutral-300: #3a3768;
+    --color-neutral-400: #8489ae;
+    --color-neutral-500: #94a3b8;
+    --color-neutral-600: #9b9cc4;
+    --color-neutral-700: #cfd0e8;
+    --color-neutral-800: #e2e8f0;
+    --color-neutral-900: #ffffff;
 
     /* Semantic Colors */
     --color-success: #22c55e;
@@ -69,13 +75,10 @@
     --transition-slow: 300ms;
   }
 
-  html {
-    font-family: 'Nunito Sans', system-ui, sans-serif;
-  }
-
-  body {
-    @apply bg-neutral-50 text-neutral-900;
-  }
+  /* Ni html ni body llevan estilos acá. Una librería de componentes no debe pintar el
+     documento del host: la consola ya define su familia tipográfica y su fondo, y la
+     regla original (`body { @apply bg-neutral-50 text-neutral-900 }`) competía con ella
+     según qué hoja cargara última. Los valores del kit viven en sus componentes. */
 }
 
 @layer components {
@@ -84,9 +87,10 @@
     @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
   }
 
-  /* Gradient active state for sidebar */
+  /* Gradient active state for sidebar — colores de marca de la consola
+     (--accent-from / --accent-to). Lleva texto blanco encima. */
   .gradient-active {
-    background: linear-gradient(90deg, #FF177B 0%, #4D4A9D 100%);
+    background: linear-gradient(90deg, #e0218a 0%, #6d3df5 100%);
   }
 }
 
@@ -147,7 +151,7 @@
   .omnitok-code-editor .token.prolog,
   .omnitok-code-editor .token.doctype,
   .omnitok-code-editor .token.cdata {
-    color: var(--color-neutral-400);
+    color: var(--color-neutral-500);
     font-style: italic;
   }
 
@@ -162,7 +166,7 @@
   .omnitok-code-editor .token.constant,
   .omnitok-code-editor .token.symbol,
   .omnitok-code-editor .token.deleted {
-    color: var(--color-accent);
+    color: var(--color-accent-light);
   }
 
   .omnitok-code-editor .token.selector,
@@ -171,7 +175,7 @@
   .omnitok-code-editor .token.char,
   .omnitok-code-editor .token.builtin,
   .omnitok-code-editor .token.inserted {
-    color: var(--color-teal-dark);
+    color: var(--color-teal-light);
   }
 
   .omnitok-code-editor .token.operator,
@@ -183,19 +187,19 @@
   .omnitok-code-editor .token.atrule,
   .omnitok-code-editor .token.attr-value,
   .omnitok-code-editor .token.keyword {
-    color: var(--color-primary);
+    color: var(--color-primary-light);
     font-weight: 600;
   }
 
   .omnitok-code-editor .token.function,
   .omnitok-code-editor .token.class-name {
-    color: var(--color-violet-dark);
+    color: var(--color-violet-light);
   }
 
   .omnitok-code-editor .token.regex,
   .omnitok-code-editor .token.important,
   .omnitok-code-editor .token.variable {
-    color: var(--color-rose-dark);
+    color: var(--color-rose-light);
   }
 
   .omnitok-code-editor .token.important,
@@ -206,4 +210,93 @@
   .omnitok-code-editor .token.italic {
     font-style: italic;
   }
+}
+
+/* ---------------------------------------------------------------------------
+ * CAPA DE TEMA — lo que el preset no puede resolver
+ *
+ * Va FUERA de @layer a propósito: así queda al final del archivo, gana por orden de
+ * origen con la misma especificidad, y no depende de cómo Tailwind ordene la capa de
+ * utilidades. Son pocas reglas y todas están en uso, así que no engordan el bundle.
+ *
+ * El problema que resuelven: el kit usa varias clases en DOS roles opuestos — como
+ * texto (necesita ser claro sobre #131227) y como fondo sólido con texto blanco encima
+ * (necesita ser oscuro). Sobre este fondo eso es aritméticamente imposible de conciliar
+ * con un solo valor: hace falta luminancia >= 0.2073 para lo primero y <= 0.1833 para
+ * lo segundo. El token queda en el valor de FONDO y acá se pisa el uso como TEXTO.
+ * ------------------------------------------------------------------------- */
+
+/* bg-white (27 usos) son superficies: tarjetas, dropdowns, popovers. En oscuro pasan a
+   la superficie de la consola. No se toca `text-white` (46 usos): ese es el texto sobre
+   los botones de color y tiene que seguir siendo blanco. `bg-white/10` y demás compilan
+   a otra clase, así que quedan intactas. */
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: #1a1838;
+}
+
+/* primary/accent como TEXTO (23 y 3 usos). El token queda en el valor de fondo. */
+.text-primary {
+  --tw-text-opacity: 1;
+  color: #a78bfa; /* 6.75:1 sobre #131227 */
+}
+
+.text-accent {
+  --tw-text-opacity: 1;
+  color: #f472b6; /* 6.93:1 sobre #131227 */
+}
+
+/* Los semánticos `-dark` se usan como texto sobre su propio tinte (`bg-error/10
+   text-error-dark`). En oscuro ese tinte es oscuro, así que el texto tiene que ser
+   claro — al revés de lo que significa el sufijo. El token `X.dark` sigue sirviendo
+   como fondo sólido en `bg-X-dark`. */
+.text-success-dark {
+  --tw-text-opacity: 1;
+  color: #86efac;
+}
+
+.text-warning-dark {
+  --tw-text-opacity: 1;
+  color: #fcd34d;
+}
+
+.text-error-dark {
+  --tw-text-opacity: 1;
+  color: #fca5a5;
+}
+
+.text-info-dark {
+  --tw-text-opacity: 1;
+  color: #93c5fd;
+}
+
+.text-violet-dark {
+  --tw-text-opacity: 1;
+  color: #c4b5fd;
+}
+
+.text-rose-dark {
+  --tw-text-opacity: 1;
+  color: #f9a8d4;
+}
+
+.text-teal-dark {
+  --tw-text-opacity: 1;
+  color: #5eead4;
+}
+
+/* text-violet como texto (2 usos) da 4.34:1 con el violeta de marca. Mismo caso que
+   primary/accent: el token queda para `bg-violet` y acá se aclara el uso como texto. */
+.text-violet {
+  --tw-text-opacity: 1;
+  color: #c4b5fd; /* 9.95:1 sobre #131227 */
+}
+
+/* El paso 300 es un borde (#3a3768), pero el kit lo usa ademas como texto en 8 lugares:
+   items deshabilitados de Dropdown/Select/MultiSelect/Pagination y los grips de arrastre
+   de DraggableCard, KanbanBoard y SortableList. Como borde daria 1.68:1 y no se veria
+   ninguno. WCAG exime a los controles inactivos, pero los grips no estan inactivos. */
+.text-neutral-300 {
+  --tw-text-opacity: 1;
+  color: #5c5890;
 }

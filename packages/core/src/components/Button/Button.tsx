@@ -38,7 +38,7 @@ const variantStyles: Record<ButtonVariant, string> = {
   primary: 'bg-primary text-white hover:bg-primary-dark active:bg-primary-dark focus:ring-primary',
   accent: 'bg-accent text-white hover:bg-accent-dark active:bg-accent-dark focus:ring-accent',
   neutral:
-    'bg-neutral-200 text-neutral-800 hover:bg-neutral-300 active:bg-neutral-400 focus:ring-neutral-400',
+    'bg-neutral-200 text-neutral-800 hover:bg-neutral-300 active:bg-neutral-200 focus:ring-neutral-400',
   accept: 'bg-success text-white hover:bg-success-dark active:bg-success-dark focus:ring-success',
   danger: 'bg-error text-white hover:bg-error-dark active:bg-error-dark focus:ring-error',
   info: 'bg-info text-white hover:bg-info-dark active:bg-info-dark focus:ring-info',

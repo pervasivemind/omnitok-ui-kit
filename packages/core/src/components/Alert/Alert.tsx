@@ -73,7 +73,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
           <button
             type="button"
             onClick={onDismiss}
-            className="flex-shrink-0 p-1 rounded hover:bg-black/5 transition-colors"
+            className="flex-shrink-0 p-1 rounded hover:bg-white/10 transition-colors"
             aria-label="Dismiss"
           >
             <X className="w-4 h-4" />

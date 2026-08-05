@@ -104,7 +104,7 @@ export function FileDropzone({
           'bg-gradient-to-b from-neutral-50 to-white',
           'border-primary/60 hover:border-primary',
           isDragActive && !isDragReject && 'border-primary bg-gradient-to-b from-primary/5 to-accent/5 scale-[1.01]',
-          isDragReject && 'border-red-400 bg-red-50',
+          isDragReject && 'border-error bg-error/10',
           disabled && 'opacity-50 cursor-not-allowed'
         )}
       >
@@ -203,7 +203,7 @@ export function FileDropzone({
                     }}
                     className={cn(
                       'p-1.5 rounded-lg opacity-0 group-hover:opacity-100',
-                      'text-neutral-400 hover:text-red-500 hover:bg-red-50',
+                      'text-neutral-500 hover:text-error-light hover:bg-error/10',
                       'transition-all duration-200'
                     )}
                   >

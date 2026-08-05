@@ -40,9 +40,9 @@ export interface KanbanBoardProps {
 const tagVariants = {
   default: 'bg-neutral-100 text-neutral-700',
   primary: 'bg-primary/10 text-primary',
-  success: 'bg-green-100 text-green-700',
-  warning: 'bg-amber-100 text-amber-700',
-  danger: 'bg-red-100 text-red-700',
+  success: 'bg-success/15 text-success-dark',
+  warning: 'bg-warning/15 text-warning-dark',
+  danger: 'bg-error/15 text-error-dark',
 };
 
 export function KanbanBoard({ columns, onCardMove, className }: KanbanBoardProps) {
