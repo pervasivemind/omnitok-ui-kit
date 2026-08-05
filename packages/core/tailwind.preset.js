@@ -44,10 +44,13 @@ export default {
           light: '#f472b6', // 6.93:1 sobre #131227
         },
 
-        // Auxiliares. `dark` = fondo sólido; `light` = el legible como texto en oscuro.
-        violet: { DEFAULT: '#8B5CF6', light: '#c4b5fd', dark: '#6d28d9' },
-        rose: { DEFAULT: '#EC4899', light: '#f9a8d4', dark: '#be185d' },
-        teal: { DEFAULT: '#14B8A6', light: '#5eead4', dark: '#0f766e' },
+        // Auxiliares. Mismo criterio que primary/accent: el DEFAULT es el FONDO sólido
+        // (`bg-violet text-white`), y el uso como texto se pisa en index.css.
+        // Los valores originales del kit (#8B5CF6, #EC4899, #14B8A6) daban 4.23:1, 3.53:1
+        // y 2.49:1 con texto blanco — un defecto que el kit ya tenía en tema claro.
+        violet: { DEFAULT: '#8452f5', light: '#c4b5fd', dark: '#6d28d9' },
+        rose: { DEFAULT: '#de177a', light: '#f9a8d4', dark: '#be185d' },
+        teal: { DEFAULT: '#0e8376', light: '#5eead4', dark: '#0f766e' },
 
         // Escala neutral INVERTIDA. El corte entre "superficie", "borde" y "texto" NO
         // se eligió a ojo: sale de contar cómo usa el kit cada paso en sus 27
@@ -82,12 +85,15 @@ export default {
           900: '#ffffff', // máximo
         },
 
-        // Semánticos. Igual que arriba: `dark` es el FONDO sólido; el uso como texto
-        // (`text-error-dark` y compañía) se pisa en index.css con el tono claro.
-        success: { DEFAULT: '#22c55e', light: '#86efac', dark: '#15803d' },
-        warning: { DEFAULT: '#f59e0b', light: '#fcd34d', dark: '#b45309' },
-        error: { DEFAULT: '#ef4444', light: '#fca5a5', dark: '#b91c1c' },
-        info: { DEFAULT: '#3b82f6', light: '#93c5fd', dark: '#1d4ed8' },
+        // Semánticos. El DEFAULT es el FONDO sólido de `bg-X text-white` (los botones
+        // accept/danger/info de Button y los Badge sólidos): oscurecido hasta que el
+        // blanco pasa AA. Los originales daban 2.28:1 (success), 2.15:1 (warning),
+        // 3.76:1 (error) y 3.68:1 (info) — defecto preexistente del kit, no del tema.
+        // El uso como TEXTO (`text-success`, `text-error-dark`) se pisa en index.css.
+        success: { DEFAULT: '#178640', light: '#86efac', dark: '#15803d' },
+        warning: { DEFAULT: '#a16807', light: '#fcd34d', dark: '#b45309' },
+        error: { DEFAULT: '#e81414', light: '#fca5a5', dark: '#b91c1c' },
+        info: { DEFAULT: '#1a6df4', light: '#93c5fd', dark: '#1d4ed8' },
 
         // Series de gráficos: repensadas para fondo oscuro (las originales #4D4A9D y
         // #0088FE quedan en 2.43:1 y 3.09:1 — casi indistinguibles del fondo).

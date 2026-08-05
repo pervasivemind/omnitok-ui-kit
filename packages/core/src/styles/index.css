@@ -235,6 +235,14 @@
   background-color: #1a1838;
 }
 
+/* Tabs inactivo usa `text-primary/70`, que es OTRA clase que `text-primary`: el
+   override de abajo no la alcanza y seguia resolviendo el token #6d3df5 al 70% sobre el
+   fondo = rgb(82,48,183), 2.16:1. Era el mismo sintoma que la auditoria original habia
+   medido en las pills de Tabs. */
+.text-primary\/70 {
+  color: #8b83c9; /* 5.41:1 sobre #131227, y mas tenue que la pestana activa (6.75:1) */
+}
+
 /* primary/accent como TEXTO (23 y 3 usos). El token queda en el valor de fondo. */
 .text-primary {
   --tw-text-opacity: 1;
@@ -300,3 +308,12 @@
   --tw-text-opacity: 1;
   color: #5c5890;
 }
+
+/* Los semanticos y auxiliares tambien tienen el DEFAULT en su valor de FONDO (para que
+   `bg-X text-white` pase AA). Su uso como TEXTO se aclara aca. */
+.text-success { color: #22c55e; }  /*  8.06:1 sobre #131227 */
+.text-warning { color: #f59e0b; }  /*  8.55:1 */
+.text-error   { color: #f87171; }  /*  6.29:1 */
+.text-info    { color: #60a5fa; }  /*  7.06:1 */
+.text-rose    { color: #f472b6; }  /*  6.93:1 */
+.text-teal    { color: #2dd4bf; }  /*  9.51:1 */
