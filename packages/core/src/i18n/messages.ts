@@ -1,4 +1,4 @@
-export type SupportedLanguage = 'es' | 'en';
+export type SupportedLanguage = 'es' | 'en' | 'pt';
 
 export type MessagesByLanguage = Record<string, Record<string, string>>;
 
@@ -28,6 +28,18 @@ export const defaultMessages: Record<SupportedLanguage, Record<string, string>> 
     'pagination.nextPage': 'Página siguiente',
     'pagination.info': '{start}-{end} de {total}',
     'pagination.itemsPerPage': 'Elementos por página',
+
+    // Shell v3 (Sidebar, BrandHeader, Layout)
+    'sidebar.expand': 'Expandir menú',
+    'sidebar.collapse': 'Colapsar menú',
+    'sidebar.project': 'Proyecto',
+    'sidebar.chooseProject': 'Elegir proyecto',
+    'sidebar.changeProject': 'Cambiar de proyecto',
+    'sidebar.searchProject': 'Buscar proyecto…',
+    'sidebar.noProjects': 'Ningún proyecto coincide',
+    'header.toggleMenu': 'Mostrar u ocultar el menú',
+    'header.poweredBy': 'Powered by',
+    'layout.closeMenu': 'Cerrar menú',
   },
   en: {
     // LoginPage
@@ -54,5 +66,55 @@ export const defaultMessages: Record<SupportedLanguage, Record<string, string>> 
     'pagination.nextPage': 'Next page',
     'pagination.info': '{start}-{end} of {total}',
     'pagination.itemsPerPage': 'Items per page',
+
+    // Shell v3 (Sidebar, BrandHeader, Layout)
+    'sidebar.expand': 'Expand menu',
+    'sidebar.collapse': 'Collapse menu',
+    'sidebar.project': 'Project',
+    'sidebar.chooseProject': 'Choose a project',
+    'sidebar.changeProject': 'Change project',
+    'sidebar.searchProject': 'Search project…',
+    'sidebar.noProjects': 'No project matches',
+    'header.toggleMenu': 'Show or hide the menu',
+    'header.poweredBy': 'Powered by',
+    'layout.closeMenu': 'Close menu',
+  },
+  pt: {
+    // LoginPage
+    'login.title': 'Entrar',
+    'login.subtitle': 'Informe suas credenciais para continuar',
+    'login.emailLabel': 'E-mail',
+    'login.emailPlaceholder': 'voce@email.com',
+    'login.passwordLabel': 'Senha',
+    'login.passwordPlaceholder': '••••••••',
+    'login.rememberMe': 'Lembrar de mim',
+    'login.forgotPassword': 'Esqueceu sua senha?',
+    'login.submit': 'Entrar',
+
+    'login.split.heroTitle': 'Bem-vindo de volta',
+    'login.split.heroDescription':
+      'Acesse seu painel de administração e gerencie sua plataforma com eficiência.',
+    'login.split.copyright': '© {year} Omnitok. Todos os direitos reservados.',
+
+    // Pagination
+    'pagination.ariaLabel': 'Paginação',
+    'pagination.firstPage': 'Primeira página',
+    'pagination.lastPage': 'Última página',
+    'pagination.previousPage': 'Página anterior',
+    'pagination.nextPage': 'Próxima página',
+    'pagination.info': '{start}-{end} de {total}',
+    'pagination.itemsPerPage': 'Itens por página',
+
+    // Shell v3 (Sidebar, BrandHeader, Layout)
+    'sidebar.expand': 'Expandir menu',
+    'sidebar.collapse': 'Recolher menu',
+    'sidebar.project': 'Projeto',
+    'sidebar.chooseProject': 'Escolher projeto',
+    'sidebar.changeProject': 'Trocar de projeto',
+    'sidebar.searchProject': 'Buscar projeto…',
+    'sidebar.noProjects': 'Nenhum projeto corresponde',
+    'header.toggleMenu': 'Mostrar ou ocultar o menu',
+    'header.poweredBy': 'Powered by',
+    'layout.closeMenu': 'Fechar menu',
   },
 };

@@ -1,5 +1,5 @@
 /* Import Google Fonts — must precede all other statements (CSS @import rule) */
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,8 +7,37 @@
 
 @layer base {
   :root {
+    /* ── Omnitok UI v3 tokens (the single place these values live) ──
+       Consumers read them as CSS variables; bi-components and
+       dashboard-render do not repeat the hex values. */
+    --omni-navy: #1A1240;          /* chrome: header + sidebar */
+    --omni-navy-line: #302453;     /* sidebar frame border */
+    --omni-navy-border: #362B59;   /* header bottom border */
+    --omni-pink: #FF177B;          /* identity + selection */
+    --omni-violet: #4D4A9D;        /* shared actions */
+    --omni-canvas: #F5F6F9;        /* page background */
+    --omni-surface: #FFFFFF;       /* cards, panels, menus */
+    --omni-ink: #252139;           /* headings, KPI values */
+    --omni-text: #465066;          /* body text */
+    --omni-muted: #7D8799;         /* captions, hints */
+    --omni-line: #E4E5ED;          /* hairlines, card borders */
+    --omni-active: #EAE7F5;        /* selected row on light surfaces */
+    --omni-accent: #6251A3;        /* selected text on light surfaces */
+    --omni-sb-text: #D8D2E8;       /* sidebar item text */
+    --omni-sb-muted: #B8B0D1;      /* sidebar icons + captions */
+    --omni-shadow-card: 0 2px 4px #21183F04, 0 6px 18px #21183F09;
+    --omni-shadow-menu: 0 10px 30px #1A124022;
+    --omni-radius-control: 8px;
+    --omni-radius-card: 12px;
+    --omni-radius-panel: 14px;
+    --omni-font-ui: 'Inter', system-ui, sans-serif;
+    --omni-font-display: 'Nunito Sans', 'Inter', system-ui, sans-serif;
+    --omni-header-height: 42px;
+    --omni-sidebar-width: 250px;
+    --omni-sidebar-width-collapsed: 64px;
+
     /* Brand Colors */
-    --color-sidebar: #211f4b;
+    --color-sidebar: #1A1240;
     --color-primary: #4D4A9D;
     --color-primary-dark: #3d3a8c;
     --color-primary-light: #6b68b3;
@@ -70,11 +99,12 @@
   }
 
   html {
-    font-family: 'Nunito Sans', system-ui, sans-serif;
+    font-family: var(--omni-font-ui);
   }
 
   body {
-    @apply bg-neutral-50 text-neutral-900;
+    background-color: var(--omni-canvas);
+    color: var(--omni-text);
   }
 }
 

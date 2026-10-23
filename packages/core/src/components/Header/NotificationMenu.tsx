@@ -16,9 +16,10 @@ export interface NotificationMenuProps {
 }
 
 export const NotificationMenu = forwardRef<HTMLDivElement, NotificationMenuProps>(
-  ({ items, count, searchValue, searchPlaceholder, filterLabel, onSearchChange, onFilterChange }) => {
+  ({ items, count, searchValue, searchPlaceholder, filterLabel, onSearchChange, onFilterChange }, ref) => {
     return (
       <DropdownMenu
+        ref={ref}
         offset={14}
         card={
           <div className="flex flex-col gap-4 p-4">

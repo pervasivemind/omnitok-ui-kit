@@ -3,8 +3,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Brand Colors
-        sidebar: '#211f4b',
+        // Brand Colors (v3: navy chrome; the tokens live in styles/index.css)
+        sidebar: '#1A1240',
+        navy: '#1A1240',
+        canvas: '#F5F6F9',
+        surface: '#FFFFFF',
+        ink: '#252139',
+        body: '#465066',
+        muted: '#7D8799',
+        line: '#E4E5ED',
         primary: {
           DEFAULT: '#4D4A9D',
           dark: '#3d3a8c',
@@ -83,7 +90,9 @@ export default {
       },
 
       fontFamily: {
-        sans: ['Nunito Sans', 'system-ui', 'sans-serif'],
+        // v3: Inter for the UI, Nunito Sans for headings and KPI values.
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Nunito Sans', 'Inter', 'system-ui', 'sans-serif'],
         mono: ['Open Sans', 'monospace'],
       },
 
