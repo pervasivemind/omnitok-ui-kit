@@ -1,11 +1,11 @@
-name = "omnitok-ui-mcp"
+name = "omnitok-ui-mcp-v3"
 main = "src/index.ts"
 compatibility_date = "2024-12-01"
 compatibility_flags = ["nodejs_compat"]
 
 [vars]
-STORYBOOK_URL = "https://ui-kit.omnitok.cloud"
+STORYBOOK_URL = "https://ui-kit-v3.omnitok.cloud"
 
 [[routes]]
-pattern = "ui-kit.omnitok.cloud/mcp"
+pattern = "ui-kit-v3.omnitok.cloud/mcp"
 zone_name = "omnitok.cloud"

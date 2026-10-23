@@ -1,8 +1,8 @@
-name: Build Package, Deploy Documentation and MCP Worker
+name: v3 - Build Package, Deploy Documentation and MCP Worker
 
 on:
   push:
-    branches: [main]
+    branches: [v3]
     paths:
       - 'apps/storybook/**'
       - 'packages/core/**'
@@ -15,7 +15,7 @@ permissions:
   deployments: write
 
 concurrency:
-  group: 'pages'
+  group: 'pages-v3'
   cancel-in-progress: true
 
 jobs:
@@ -56,7 +56,7 @@ jobs:
         run: pnpm build:storybook
 
       - name: Deploy to Cloudflare Pages
-        run: pnpm dlx wrangler pages deploy storybook-static --project-name=omnitok-ui-kit
+        run: pnpm dlx wrangler pages deploy storybook-static --project-name=omnitok-ui-kit-v3
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.OMNITOK_CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.OMNITOK_CLOUDFLARE_ACCOUNT_ID }}
@@ -84,11 +84,11 @@ jobs:
           VERSION=$(cat packages/core/package.json | jq -r .version)
 
           # Switch to pkg branch (create orphan if doesn't exist)
-          git fetch origin pkg:pkg 2>/dev/null || true
-          if git show-ref --verify --quiet refs/heads/pkg; then
-            git checkout pkg
+          git fetch origin pkg-v3:pkg-v3 2>/dev/null || true
+          if git show-ref --verify --quiet refs/heads/pkg-v3; then
+            git checkout pkg-v3
           else
-            git checkout --orphan pkg
+            git checkout --orphan pkg-v3
             git rm -rf . 2>/dev/null || true
           fi
 
@@ -99,4 +99,6 @@ jobs:
           # Commit and push
           git add .
           git commit -m "Release v${VERSION}" --allow-empty
-          git push origin pkg --force
+          git tag -f "v${VERSION}"
+          git push origin pkg-v3 --force
+          git push origin "v${VERSION}" --force
