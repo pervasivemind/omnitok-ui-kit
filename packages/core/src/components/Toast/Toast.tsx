@@ -20,6 +20,8 @@ export interface ToastProps extends HTMLAttributes<HTMLDivElement> {
   onClose: (id: string) => void;
 }
 
+// v3: the state's fill with white text (every fill >= 4.7:1); the icon
+// carries the shape, so the state never depends on colour alone.
 const variantStyles: Record<ToastVariant, string> = {
   info: 'bg-info text-white',
   success: 'bg-success text-white',
@@ -63,28 +65,28 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
         ref={ref}
         role="alert"
         className={cn(
-          'flex items-start gap-3 p-4 rounded-lg shadow-lg min-w-[320px] max-w-md',
-          'transition-all duration-200',
+          'flex items-start gap-2.5 px-4 py-3 rounded-xl shadow-menu min-w-[320px] max-w-md',
+          'transition-[opacity,transform] duration-200 motion-reduce:transition-none',
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2',
           variantStyles[toast.variant],
           className
         )}
         {...props}
       >
-        <Icon className="flex-shrink-0 w-5 h-5 mt-0.5" />
+        <Icon aria-hidden="true" className="flex-shrink-0 w-[18px] h-[18px] mt-px" />
         <div className="flex-1 min-w-0">
           {toast.title && (
-            <h5 className="font-semibold mb-0.5">{toast.title}</h5>
+            <p className="text-xs font-semibold leading-4 mb-0.5">{toast.title}</p>
           )}
-          <p className="text-sm opacity-90">{toast.message}</p>
+          <p className="text-[13px] leading-5">{toast.message}</p>
         </div>
         <button
           type="button"
           onClick={handleClose}
-          className="flex-shrink-0 p-1 rounded hover:bg-white/20 transition-colors"
+          className="flex-shrink-0 p-1 -mr-1 rounded-md hover:bg-white/15 transition-colors"
           aria-label="Dismiss"
         >
-          <X className="w-4 h-4" />
+          <X aria-hidden="true" className="w-4 h-4" />
         </button>
       </div>
     );

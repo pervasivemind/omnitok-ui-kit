@@ -145,7 +145,7 @@ export default {
         card: '0 2px 4px #21183F04, 0 6px 18px #21183F09',
         'card-hover': '0 4px 10px #21183F0A, 0 10px 26px #21183F12',
         menu: '0 10px 30px #1A124022',
-        modal: '0 25px 50px -12px rgb(0 0 0 / 0.25)',
+        modal: '0 25px 80px #1A124030',
         sidebar: '2px 0 8px rgba(0, 0, 0, 0.1)',
       },
 

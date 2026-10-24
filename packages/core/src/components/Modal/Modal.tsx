@@ -87,7 +87,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       >
         {/* Overlay */}
         <div
-          className="fixed inset-0 bg-black/50 animate-fade-in"
+          className="fixed inset-0 bg-neutral-900/45 animate-fade-in"
           onClick={closeOnOverlay ? onClose : undefined}
         />
 
@@ -102,7 +102,8 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           <div
             ref={ref}
             className={cn(
-              'relative w-full bg-white rounded-lg shadow-modal',
+              // v3: radius 18, line border, deep soft shadow; the header is white.
+              'relative w-full bg-white rounded-[18px] border border-neutral-200 shadow-modal',
               'animate-fade-in',
               sizeStyles[size],
               className
@@ -112,34 +113,34 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           >
             {/* Header */}
             {(title || showCloseButton) && (
-              <div className="flex items-start justify-between p-4 bg-gradient-to-r from-primary to-primary-dark rounded-t-lg">
-                <div>
+              <div className="flex items-start justify-between gap-3 px-5 py-4 bg-white border-b border-neutral-200 rounded-t-[18px]">
+                <div className="min-w-0">
                   {title && (
-                    <h2 className="text-lg font-semibold text-white">{title}</h2>
+                    <h2 className="font-display text-[17px] font-extrabold leading-6 text-neutral-800">{title}</h2>
                   )}
                   {description && (
-                    <p className="mt-1 text-sm text-white/80">{description}</p>
+                    <p className="mt-0.5 text-[13px] leading-5 text-neutral-600">{description}</p>
                   )}
                 </div>
                 {showCloseButton && (
                   <button
                     type="button"
                     onClick={onClose}
-                    className="p-1 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+                    className="p-1.5 -mr-1.5 rounded-lg text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100 transition-colors"
                     aria-label="Close"
                   >
-                    <X className="w-5 h-5" />
+                    <X aria-hidden="true" className="w-[18px] h-[18px]" />
                   </button>
                 )}
               </div>
             )}
 
             {/* Body */}
-            <div className="p-4">{children}</div>
+            <div className="px-5 py-4 text-[13px] leading-5 text-neutral-700">{children}</div>
 
             {/* Footer */}
             {footer && (
-              <div className="flex items-center justify-end gap-3 p-4 border-t border-neutral-200">
+              <div className="flex items-center justify-end gap-2 px-5 py-3 border-t border-neutral-200 bg-[#FAFAFC] rounded-b-[18px]">
                 {footer}
               </div>
             )}
@@ -185,7 +186,7 @@ export const ConfirmModal = ({
       size="sm"
       footer={
         <>
-          <Button variant="neutral" ghost onClick={onClose} disabled={loading}>
+          <Button variant="secondary" onClick={onClose} disabled={loading}>
             {cancelText}
           </Button>
           <Button variant={confirmVariant} onClick={onConfirm} loading={loading}>
@@ -194,7 +195,7 @@ export const ConfirmModal = ({
         </>
       }
     >
-      <p className="text-neutral-700">{message}</p>
+      <p className="text-[13px] leading-5 text-neutral-700">{message}</p>
     </Modal>
   );
 };
