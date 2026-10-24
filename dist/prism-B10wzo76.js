@@ -1,4 +1,4 @@
-import { g as V, c as W } from "./index-Ctz6q9V0.js";
+import { g as V, c as W } from "./index-DdtjIVeq.js";
 function ee(S, P) {
   for (var i = 0; i < P.length; i++) {
     const g = P[i];
@@ -1180,4 +1180,4 @@ const te = /* @__PURE__ */ V(Y), ne = /* @__PURE__ */ ee({
 export {
   ne as p
 };
-//# sourceMappingURL=prism-mXDeoVAf.js.map
+//# sourceMappingURL=prism-B10wzo76.js.map

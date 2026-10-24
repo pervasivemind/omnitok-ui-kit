@@ -144,7 +144,7 @@ export declare interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElem
 
 export declare type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
-export declare type ButtonVariant = 'primary' | 'accent' | 'neutral' | 'accept' | 'danger' | 'info' | 'violet' | 'rose' | 'teal' | 'outline';
+export declare type ButtonVariant = 'primary' | 'accent' | 'neutral' | 'accept' | 'danger' | 'info' | 'violet' | 'rose' | 'teal' | 'outline' | 'secondary';
 
 export declare const Card: ForwardRefExoticComponent<CardProps & RefAttributes<HTMLDivElement>>;
 
@@ -577,6 +577,17 @@ export declare interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
 
 export declare const LoginPage: ForwardRefExoticComponent<LoginPageProps & RefAttributes<HTMLDivElement>>;
 
+/**
+ * Omnitok UI v3 — sign-in page.
+ *
+ * `split` (the v3 default for products, D26): the customer's brand on the
+ * left over the sidebar colour (so a tenant tint reaches it), the form on
+ * the right on white. Below `lg` the hero folds away and the brand sits
+ * above the form. `centered` and `gradient` keep the form in a card.
+ *
+ * The brand is the customer's: a logo node or, without one, its name as a
+ * wordmark (`brandText`). The platform keeps the "powered by" mark.
+ */
 export declare interface LoginPageProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSubmit'> {
     /** Language for built-in strings. Overrides I18nProvider language if set. */
     language?: SupportedLanguage;
@@ -584,8 +595,16 @@ export declare interface LoginPageProps extends Omit<HTMLAttributes<HTMLDivEleme
     logo?: ReactNode;
     /** Logo for wide/horizontal display */
     logoWide?: ReactNode;
-    /** Logo for the split hero panel */
+    /** Logo for the split hero panel (drawn on the dark side) */
     splitLogo?: ReactNode;
+    /** Customer name as a wordmark when there is no logo. */
+    brandText?: string;
+    /** Split hero title. Defaults to the kit's welcome string. */
+    heroTitle?: ReactNode;
+    /** Split hero description. */
+    heroDescription?: ReactNode;
+    /** Show "powered by omnitok" in the split hero. Default true. */
+    poweredBy?: boolean;
     /** Submit handler */
     onLoginSubmit?: (email: string, password: string) => void;
     /** Loading state */
@@ -602,6 +621,12 @@ export declare interface LoginPageProps extends Omit<HTMLAttributes<HTMLDivEleme
     footer?: ReactNode;
     /** Background variant */
     variant?: 'gradient' | 'split' | 'centered';
+    /**
+     * Prefix for the field ids. Default: none, so the fields keep the stable
+     * ids `email` and `password` that hosts and tests rely on. Set it when two
+     * login forms share a page.
+     */
+    idPrefix?: string;
 }
 
 export declare type MessagesByLanguage = Record<string, Record<string, string>>;
@@ -778,6 +803,53 @@ export declare interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelec
 export declare type SelectSize = 'sm' | 'md' | 'lg';
 
 export declare const Sidebar: ForwardRefExoticComponent<SidebarProps & RefAttributes<HTMLElement>>;
+
+export declare const SidebarAccount: ForwardRefExoticComponent<SidebarAccountProps & RefAttributes<HTMLDivElement>>;
+
+/**
+ * Omnitok UI v3 — the account block at the foot of the sidebar.
+ *
+ * One block for the three apps (portal, builder, console), in the order
+ * decided on 2026-10-23 (D2): version, any extra rows the host adds (a task
+ * bell, say), the language switch as visible buttons, sign out, and the
+ * person. Collapsed (the 64 px rail) it is the avatar alone.
+ *
+ * It only draws: the host owns the language state, the sign-out and what
+ * the version string says.
+ */
+export declare interface SidebarAccountLanguage {
+    /** Value passed to `onLanguageChange`, e.g. `es`. */
+    code: string;
+    /** Text on the button. Defaults to the code in capitals. */
+    label?: string;
+}
+
+export declare interface SidebarAccountProps extends HTMLAttributes<HTMLDivElement> {
+    /** Person's name. */
+    name: string;
+    /** Second line: email or role. */
+    detail?: string;
+    /** Avatar letters. Defaults to the first letters of the first two words of `name`. */
+    initials?: string;
+    /** Avatar image. */
+    avatarSrc?: string;
+    /** Build version, shown as a boxed `v{version}`. Hidden when absent. */
+    version?: string;
+    /** Languages offered. The switch is hidden with fewer than two. */
+    languages?: SidebarAccountLanguage[];
+    /** Code of the active language. */
+    language?: string;
+    onLanguageChange?: (code: string) => void;
+    /** Accessible name of the language group. */
+    languageLabel?: string;
+    /** Sign-out handler. The row is hidden when absent. */
+    onSignOut?: () => void;
+    signOutLabel?: string;
+    /** Rail mode: avatar only. */
+    collapsed?: boolean;
+    /** Extra rows placed between the version and the language switch. */
+    children?: ReactNode;
+}
 
 /**
  * Omnitok UI v3 — Sidebar.
