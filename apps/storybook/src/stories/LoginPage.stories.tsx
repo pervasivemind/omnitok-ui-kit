@@ -87,6 +87,32 @@ export const Split: Story = {
   },
 };
 
+/** D26: marca del tenant a la izquierda (nombre como texto, sin logo), formulario a la derecha. */
+export const SplitTenantWordmark: Story = {
+  args: {
+    brandText: 'Brother Perú',
+    language: 'es',
+    variant: 'split',
+    showRememberMe: false,
+    heroTitle: 'Disponibilidad, precios y búsqueda en un solo lugar',
+    heroDescription: 'Ingresa para ver los reportes de tu marca en cada retailer.',
+    onLoginSubmit: (email, password) => {
+      console.log('Login:', { email, password });
+    },
+  },
+};
+
+/** Split con error de credenciales. */
+export const SplitWithError: Story = {
+  args: {
+    brandText: 'Brother Perú',
+    language: 'es',
+    variant: 'split',
+    showRememberMe: false,
+    error: 'El correo o la contraseña no coinciden.',
+  },
+};
+
 export const Centered: Story = {
   args: {
     logo: <LogoWideColor />,

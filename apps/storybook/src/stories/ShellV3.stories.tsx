@@ -1,17 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Layout, type SidebarItem, type SidebarProjectOption } from '@omnitok/ui';
+import { Layout, SidebarAccount, type SidebarItem, type SidebarProjectOption } from '@omnitok/ui';
 import {
   BarChart3,
   CalendarClock,
   Database,
   FolderTree,
-  Globe,
   LayoutDashboard,
   LayoutGrid,
   ListChecks,
   ListOrdered,
-  LogOut,
   PieChart,
   Settings,
   ShieldCheck,
@@ -77,58 +75,28 @@ function portalItems(opts: {
   return items;
 }
 
+const LANGUAGES = [{ code: 'es' }, { code: 'en' }, { code: 'pt' }];
+
 function Footer({ name, email, lang, initials }: { name: string; email: string; lang: 'es' | 'en' | 'pt'; initials: string }) {
-  const [current, setCurrent] = useState(lang);
+  const [current, setCurrent] = useState<string>(lang);
   return (
-    <div className="flex flex-col gap-0.5 px-1">
-      <div className="px-2 pb-1.5">
-        <span className="inline-flex items-center rounded-md border border-white/25 bg-white/10 px-2 py-0.5 text-[11px] font-bold tracking-wide text-white/90">
-          v3.0.0
-        </span>
-      </div>
-      <div className="flex items-center gap-2.5 px-2 py-1">
-        <Globe size={16} className="text-[var(--omni-sb-muted)]" aria-hidden="true" />
-        <div role="group" aria-label="Idioma" className="inline-flex overflow-hidden rounded-lg border border-white/30 bg-white/[.04]">
-          {(['es', 'en', 'pt'] as const).map((code) => (
-            <button
-              key={code}
-              type="button"
-              aria-pressed={current === code}
-              onClick={() => setCurrent(code)}
-              className={
-                'border-r border-white/20 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide last:border-r-0 ' +
-                (current === code ? 'bg-white text-[var(--omni-navy)]' : 'text-[var(--omni-sb-text)] hover:bg-white/10')
-              }
-            >
-              {code}
-            </button>
-          ))}
-        </div>
-      </div>
-      <button
-        type="button"
-        className="flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-left text-[12px] text-[var(--omni-sb-text)] hover:bg-white/[.05] hover:text-white"
-      >
-        <LogOut size={16} className="text-[var(--omni-sb-muted)]" aria-hidden="true" />
-        {lang === 'en' ? 'Sign out' : 'Salir'}
-      </button>
-      <div className="mt-1 flex items-center gap-2.5 border-t border-white/[.11] px-2 pt-2.5">
-        <span className="grid h-8 w-8 place-items-center rounded-full bg-white/10 text-[11px] font-bold text-[#E3DAFA]">{initials}</span>
-        <div className="min-w-0">
-          <div className="truncate text-[12px] font-semibold text-white">{name}</div>
-          <div className="truncate text-[11px] text-[var(--omni-sb-muted)]">{email}</div>
-        </div>
-      </div>
-    </div>
+    <SidebarAccount
+      name={name}
+      detail={email}
+      initials={initials}
+      version="3.1.0"
+      languages={LANGUAGES}
+      language={current}
+      onLanguageChange={setCurrent}
+      onSignOut={() => undefined}
+      signOutLabel={lang === 'en' ? 'Sign out' : 'Salir'}
+      languageLabel={lang === 'en' ? 'Language' : 'Idioma'}
+    />
   );
 }
 
 function FooterCollapsed({ initials }: { initials: string }) {
-  return (
-    <div className="flex justify-center py-1">
-      <span className="grid h-8 w-8 place-items-center rounded-full bg-white/10 text-[11px] font-bold text-[#E3DAFA]">{initials}</span>
-    </div>
-  );
+  return <SidebarAccount collapsed name={initials} initials={initials} />;
 }
 
 function Content({ crumbs, title, subtitle }: { crumbs: string[]; title: string; subtitle: string }) {
@@ -280,6 +248,46 @@ export const Collapsed: Story = {
           subtitle="Qué está disponible, qué se cayó y dónde falta surtido · Brother Perú"
         />
       </Layout>
+    );
+  },
+};
+
+/**
+ * D14: el tenant tiñe el sidebar, la selección y el header. El host escribe
+ * estas variables (desde el tema del tenant, que ya pasó el gate de contraste
+ * de tenancy.theming); el kit no conoce al tenant.
+ */
+export const TenantTint: Story = {
+  render: () => {
+    const [active, setActive] = useState('/projects/availability/dashboard');
+    const reports: SidebarItem[] = [
+      { id: '/projects/availability/dashboard', label: 'Disponibilidad y cobertura', icon: <LayoutGrid size={16} /> },
+      { id: '/projects/pricing_brand/dashboard', label: 'Pricing-Brand', icon: <BarChart3 size={16} /> },
+    ];
+    const tint = {
+      '--omni-sb-bg': 'linear-gradient(180deg, #12306B 0%, #0B2150 100%)',
+      '--omni-sb-accent': '#4FA3FF',
+      '--omni-sb-accent-ink': '#9CCBFF',
+      '--omni-header-bg': '#0B2150',
+    } as React.CSSProperties;
+    return (
+      <div style={tint}>
+        <Layout
+          brandHeader={{ brand: <BrotherLogo />, label: 'Disponibilidad · Disponibilidad y cobertura' }}
+          projectSelector={{ active: { id: 'disponibilidad', label: 'Disponibilidad' }, options: [{ id: 'disponibilidad', label: 'Disponibilidad' }] }}
+          sidebarItems={portalItems({ reports, projectSlug: 'disponibilidad', admin: false, tasks: 2 })}
+          activeSidebarId={active}
+          onSidebarItemClick={(item) => !item.children && setActive(item.id)}
+          sidebarFooter={<Footer name="María Rojas" email="maria.rojas@brother.com.pe" lang="es" initials="MR" />}
+          sidebarFooterCollapsed={<FooterCollapsed initials="MR" />}
+        >
+          <Content
+            crumbs={['Reportes', 'Disponibilidad', 'Disponibilidad y cobertura']}
+            title="Disponibilidad y cobertura"
+            subtitle="Sidebar, selección y header con el tema del tenant"
+          />
+        </Layout>
+      </div>
     );
   },
 };

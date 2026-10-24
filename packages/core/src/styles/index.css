@@ -37,6 +37,14 @@
     --omni-accent: #6251A3;        /* selected text on light surfaces */
     --omni-sb-text: #D8D2E8;       /* sidebar item text */
     --omni-sb-muted: #B8B0D1;      /* sidebar icons + captions */
+    /* Shell tint (D14). A tenant may override these; the defaults are
+       Omnitok's. --omni-sb-bg may be a gradient (it is used as `background`).
+       Every value must keep white text >= 4.5:1 (tenancy.theming gate). */
+    --omni-sb-bg: var(--omni-navy);      /* sidebar and login hero */
+    --omni-sb-accent: #FF177B;           /* selection bar, active dot */
+    --omni-sb-accent-ink: #FF6AAA;       /* selected icon on the sidebar */
+    --omni-sb-badge: var(--omni-accent-fill); /* count badge: white text 4.67:1 */
+    --omni-header-bg: var(--omni-navy);  /* brand header */
     --omni-shadow-card: 0 2px 4px #21183F04, 0 6px 18px #21183F09;
     --omni-shadow-menu: 0 10px 30px #1A124022;
     --omni-radius-control: 8px;

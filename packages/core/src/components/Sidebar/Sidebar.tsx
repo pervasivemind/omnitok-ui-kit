@@ -142,9 +142,11 @@ const ROW =
   'flex w-full items-center gap-2.5 rounded-lg px-3 text-left text-[12px] leading-tight ' +
   'text-[var(--omni-sb-text)] transition-colors duration-150 ' +
   'hover:bg-white/[.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40';
-const ROW_ACTIVE = 'bg-[#FF177B20] text-white font-semibold shadow-[inset_3px_0_0_#FF177B]';
+// Selection follows the tenant tint (D14): 12.5 % fill + 3 px bar of --omni-sb-accent.
+const ROW_ACTIVE =
+  'bg-[color-mix(in_srgb,var(--omni-sb-accent)_12.5%,transparent)] text-white font-semibold shadow-[inset_3px_0_0_var(--omni-sb-accent)]';
 const ICON = 'relative flex h-4 w-4 flex-shrink-0 items-center justify-center text-[var(--omni-sb-muted)] [&>svg]:h-4 [&>svg]:w-4';
-const ICON_ACTIVE = 'text-[#FF6AAA]';
+const ICON_ACTIVE = 'text-[var(--omni-sb-accent-ink)]';
 
 function ItemRow({
   item,
@@ -178,17 +180,17 @@ function ItemRow({
         <>
           <span className="min-w-0 flex-1 truncate">{item.label}</span>
           {item.badge != null && item.badge !== '' && (
-            <span className="rounded-full bg-[var(--omni-pink)] px-1.5 py-px text-[10px] font-bold leading-4 text-white">
+            <span className="rounded-full bg-[var(--omni-sb-badge)] px-1.5 py-px text-2xs font-bold leading-4 tabular-nums text-white">
               {item.badge}
             </span>
           )}
           {item.tag && (
-            <span className="rounded border border-white/20 px-1 text-[9px] font-semibold uppercase tracking-[.08em] text-[var(--omni-sb-muted)]">
+            <span className="rounded border border-white/20 px-1 text-2xs font-semibold uppercase tracking-[.06em] text-[var(--omni-sb-muted)]">
               {item.tag}
             </span>
           )}
           {active && !hasChildren && (
-            <span aria-hidden="true" className="h-1 w-1 flex-shrink-0 rounded-full bg-[var(--omni-pink)]" />
+            <span aria-hidden="true" className="h-1 w-1 flex-shrink-0 rounded-full bg-[var(--omni-sb-accent)]" />
           )}
           {hasChildren && (
             <ChevronDown
@@ -469,7 +471,7 @@ function ProjectSelectorCard({ selector, collapsed }: { selector: SidebarProject
             style={{ position: 'fixed', left: pos.left, top: pos.top, width: pos.width }}
             className="z-[1000] max-h-[60vh] overflow-y-auto rounded-xl border border-[var(--omni-line)] bg-white p-1.5 font-sans text-[12px] text-[var(--omni-text)] shadow-[var(--omni-shadow-menu)]"
           >
-            <div className="px-2.5 pb-1 pt-1.5 text-[10px] font-semibold uppercase tracking-[.1em] text-[var(--omni-muted)]">
+            <div className="px-2.5 pb-1 pt-1.5 text-2xs font-semibold uppercase tracking-[.1em] text-[var(--omni-muted)]">
               {selector.menuTitle ?? t('sidebar.changeProject')}
             </div>
             {showSearch && (
@@ -613,11 +615,11 @@ export const Sidebar = forwardRef<HTMLElement, SidebarProps>(
         data-omni-sidebar=""
         data-collapsed={collapsed ? '' : undefined}
         className={cn(
-          'flex flex-shrink-0 flex-col overflow-hidden bg-[var(--omni-navy)] font-sans text-[var(--omni-sb-text)]',
+          'flex flex-shrink-0 flex-col overflow-hidden [background:var(--omni-sb-bg)] font-sans text-[var(--omni-sb-text)]',
           'transition-[width] duration-200',
           framed
-            ? 'm-3 h-[calc(100%-24px)] rounded-[14px] border border-[#302453] shadow-[0_2px_8px_#1A124008]'
-            : 'h-full border-r border-[#302453]',
+            ? 'm-3 h-[calc(100%-24px)] rounded-[14px] border border-[var(--omni-navy-line)] shadow-[0_2px_8px_#1A124008]'
+            : 'h-full border-r border-[var(--omni-navy-line)]',
           collapsed ? 'w-16' : 'w-[250px]',
           className
         )}

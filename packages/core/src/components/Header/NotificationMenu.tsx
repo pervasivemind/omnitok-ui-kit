@@ -41,9 +41,9 @@ export const NotificationMenu = forwardRef<HTMLDivElement, NotificationMenuProps
             className="relative p-2 rounded-lg hover:bg-neutral-100 transition-colors"
             aria-label="Notifications"
           >
-            <Bell className="w-5 h-5 text-neutral-600" />
+            <Bell aria-hidden="true" className="w-[18px] h-[18px] text-neutral-600" />
             {count !== undefined && count > 0 && (
-              <span className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 w-4 h-4 text-xs font-medium text-white bg-accent rounded-full flex items-center justify-center">
+              <span className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 min-w-4 h-4 px-1 text-2xs font-bold tabular-nums text-white bg-accent rounded-full flex items-center justify-center">
                 {count > 9 ? '9+' : count}
               </span>
             )}

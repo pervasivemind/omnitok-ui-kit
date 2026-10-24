@@ -1,6 +1,7 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import { Search, Menu } from 'lucide-react';
 import { cn } from '../../utils/cn';
+import { useI18n } from '../../i18n';
 import { Avatar } from '../Avatar';
 import { DropdownMenu, DropdownMenuItem } from '../Dropdown';
 import { NotificationMenu, type NotificationMenuProps } from './NotificationMenu';
@@ -68,11 +69,12 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
     },
     ref
   ) => {
+    const { t } = useI18n();
     return (
       <header
         ref={ref}
         className={cn(
-          'flex items-center justify-between h-16 px-6 bg-white border-b border-neutral-200',
+          'flex items-center justify-between gap-4 h-14 px-6 bg-white border-b border-neutral-200 font-sans',
           className
         )}
         {...props}
@@ -84,13 +86,13 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
               type="button"
               onClick={onMenuToggle}
               className="p-2 rounded-lg hover:bg-neutral-100 lg:hidden"
-              aria-label="Toggle menu"
+              aria-label={t('header.toggleMenu')}
             >
-              <Menu className="w-5 h-5 text-neutral-600" />
+              <Menu aria-hidden="true" className="w-[18px] h-[18px] text-neutral-600" />
             </button>
           )}
           <div className="flex flex-col">
-            {title && <h1 className="text-lg font-semibold text-neutral-900">{title}</h1>}
+            {title && <h1 className="font-display text-[17px] font-extrabold leading-6 tracking-[-.01em] text-neutral-800 truncate">{title}</h1>}
           </div>
         </div>
 
@@ -99,17 +101,17 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
           {/* Search */}
           {showSearch && (
             <div className="relative hidden md:block">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+              <Search aria-hidden="true" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
               <input
                 type="search"
                 placeholder={searchPlaceholder}
                 value={searchValue}
                 onChange={(e) => onSearchChange?.(e.target.value)}
                 className={cn(
-                  'w-64 pl-10 pr-4 py-2 text-sm rounded-lg',
-                  'bg-neutral-100 border-none',
-                  'placeholder:text-neutral-400',
-                  'focus:outline-none focus:ring-2 focus:ring-primary'
+                  'w-64 pl-9 pr-3.5 py-2 text-[13px] leading-5 rounded-[10px]',
+                  'bg-neutral-50 border border-control',
+                  'placeholder:text-neutral-500',
+                  'focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20'
                 )}
               />
             </div>
@@ -130,7 +132,7 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
                 <div className="px-4 py-2 flex items-center gap-4">
                   <Avatar src={user.avatar} alt={user.name} size="xl" />
                   <div className="flex flex-col gap-1">
-                    <span className="text-md font-medium text-neutral-900">{user.name}</span>
+                    <span className="text-[13px] font-semibold text-neutral-800">{user.name}</span>
                     {user.email && <span className="text-xs text-neutral-500">{user.email}</span>}
                     {user.role && <span className="text-xs text-neutral-500">{user.role}</span>}
                   </div>

@@ -2,6 +2,7 @@ import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import { Menu } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useI18n } from '../../i18n';
+import { PoweredByMark } from './PoweredByMark';
 
 /**
  * Omnitok UI v3 — the compact brand header (42 px).
@@ -44,7 +45,7 @@ export const BrandHeader = forwardRef<HTMLElement, BrandHeaderProps>(
         ref={ref}
         data-omni-brand-header=""
         className={cn(
-          'flex h-[42px] flex-shrink-0 items-center gap-3.5 border-b border-[#362B59] bg-[var(--omni-navy)] px-4 font-sans text-[#E4DFF3]',
+          'flex h-[42px] flex-shrink-0 items-center gap-3.5 border-b border-[var(--omni-navy-border)] [background:var(--omni-header-bg)] px-4 font-sans text-[#E4DFF3]',
           className
         )}
         {...props}
@@ -79,16 +80,7 @@ export const BrandHeader = forwardRef<HTMLElement, BrandHeaderProps>(
         )}
         <div className="ml-auto flex flex-shrink-0 items-center gap-3">
           {actions}
-          {poweredBy && (
-            <div data-omni-powered-by="" className="flex items-center gap-2 whitespace-nowrap">
-              <span className="hidden text-[9px] font-medium uppercase tracking-[.12em] text-[#C9C4E6] sm:inline">
-                {poweredByCaption ?? t('header.poweredBy')}
-              </span>
-              <span className="rounded-[5px] bg-white px-2 py-px font-display text-[14px] font-extrabold leading-5 tracking-[-.02em] text-[var(--omni-navy)]">
-                omnitok
-              </span>
-            </div>
-          )}
+          {poweredBy && <PoweredByMark caption={poweredByCaption ?? t('header.poweredBy')} />}
         </div>
       </header>
     );

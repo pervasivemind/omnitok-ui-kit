@@ -210,7 +210,14 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
         </main>
         {rightPanel && (
           <aside
-            className="w-full flex-shrink-0 overflow-y-auto border-l border-neutral-200 bg-white md:w-[var(--panel-width)]"
+            data-omni-right-panel=""
+            className={cn(
+              'w-full flex-shrink-0 overflow-y-auto bg-white md:w-[var(--panel-width)]',
+              // v3: docked panel with the left corners rounded (.omni-panel spec).
+              v3
+                ? 'md:my-3 md:rounded-l-[18px] md:border md:border-r-0 md:border-neutral-200 md:shadow-card'
+                : 'border-l border-neutral-200'
+            )}
             style={{ '--panel-width': rightPanelWidth } as React.CSSProperties}
           >
             {rightPanel}
@@ -235,7 +242,7 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
                   <button
                     type="button"
                     aria-label={t('layout.closeMenu')}
-                    className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+                    className="fixed inset-0 z-40 bg-neutral-900/45 lg:hidden"
                     onClick={() => setMobileMenuOpen(false)}
                   />
                 )}
@@ -259,11 +266,11 @@ export const Layout = forwardRef<HTMLDivElement, LayoutProps>(
 
     // ── Legacy shell (v0.2 shape) ─────────────────────────────────────
     return (
-      <div ref={ref} className={cn('flex h-screen bg-neutral-50', className)} {...props}>
+      <div ref={ref} className={cn('flex h-screen bg-[var(--omni-canvas)]', className)} {...props}>
         {!hideSidebar && (
           <>
             {!hasCustomSidebar && mobileMenuOpen && (
-              <div className="fixed inset-0 z-40 bg-black/50 lg:hidden" onClick={() => setMobileMenuOpen(false)} />
+              <div className="fixed inset-0 z-40 bg-neutral-900/45 lg:hidden" onClick={() => setMobileMenuOpen(false)} />
             )}
             <div
               className={cn(

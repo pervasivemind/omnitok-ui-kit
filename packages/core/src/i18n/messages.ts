@@ -5,7 +5,7 @@ export type MessagesByLanguage = Record<string, Record<string, string>>;
 export const defaultMessages: Record<SupportedLanguage, Record<string, string>> = {
   es: {
     // LoginPage
-    'login.title': 'Iniciar Sesión',
+    'login.title': 'Iniciar sesión',
     'login.subtitle': 'Ingresa tus credenciales para continuar',
     'login.emailLabel': 'Correo electrónico',
     'login.emailPlaceholder': 'tu@email.com',
@@ -13,11 +13,12 @@ export const defaultMessages: Record<SupportedLanguage, Record<string, string>> 
     'login.passwordPlaceholder': '••••••••',
     'login.rememberMe': 'Recordarme',
     'login.forgotPassword': '¿Olvidaste tu contraseña?',
-    'login.submit': 'Iniciar Sesión',
+    'login.submit': 'Iniciar sesión',
 
-    'login.split.heroTitle': 'Bienvenido de vuelta',
-    'login.split.heroDescription':
-      'Accede a tu panel de administración y gestiona tu plataforma de manera eficiente.',
+    'login.split.heroTitle': 'Te damos la bienvenida',
+    'login.split.heroDescription': 'Ingresa para seguir donde lo dejaste.',
+    'login.showPassword': 'Mostrar contraseña',
+    'login.hidePassword': 'Ocultar contraseña',
     'login.split.copyright': '© {year} Omnitok. Todos los derechos reservados.',
 
     // Pagination
@@ -37,6 +38,8 @@ export const defaultMessages: Record<SupportedLanguage, Record<string, string>> 
     'sidebar.changeProject': 'Cambiar de proyecto',
     'sidebar.searchProject': 'Buscar proyecto…',
     'sidebar.noProjects': 'Ningún proyecto coincide',
+    'sidebar.language': 'Idioma',
+    'sidebar.signOut': 'Salir',
     'header.toggleMenu': 'Mostrar u ocultar el menú',
     'header.poweredBy': 'Powered by',
     'layout.closeMenu': 'Cerrar menú',
@@ -54,8 +57,10 @@ export const defaultMessages: Record<SupportedLanguage, Record<string, string>> 
     'login.submit': 'Sign in',
 
     'login.split.heroTitle': 'Welcome back',
+    'login.showPassword': 'Show password',
+    'login.hidePassword': 'Hide password',
     'login.split.heroDescription':
-      'Access your admin dashboard and manage your platform efficiently.',
+      'Sign in to pick up where you left off.',
     'login.split.copyright': '© {year} Omnitok. All rights reserved.',
 
     // Pagination
@@ -75,6 +80,8 @@ export const defaultMessages: Record<SupportedLanguage, Record<string, string>> 
     'sidebar.changeProject': 'Change project',
     'sidebar.searchProject': 'Search project…',
     'sidebar.noProjects': 'No project matches',
+    'sidebar.language': 'Language',
+    'sidebar.signOut': 'Sign out',
     'header.toggleMenu': 'Show or hide the menu',
     'header.poweredBy': 'Powered by',
     'layout.closeMenu': 'Close menu',
@@ -91,9 +98,10 @@ export const defaultMessages: Record<SupportedLanguage, Record<string, string>> 
     'login.forgotPassword': 'Esqueceu sua senha?',
     'login.submit': 'Entrar',
 
-    'login.split.heroTitle': 'Bem-vindo de volta',
-    'login.split.heroDescription':
-      'Acesse seu painel de administração e gerencie sua plataforma com eficiência.',
+    'login.split.heroTitle': 'Que bom ter você de volta',
+    'login.split.heroDescription': 'Entre para continuar de onde parou.',
+    'login.showPassword': 'Mostrar senha',
+    'login.hidePassword': 'Ocultar senha',
     'login.split.copyright': '© {year} Omnitok. Todos os direitos reservados.',
 
     // Pagination
@@ -113,6 +121,8 @@ export const defaultMessages: Record<SupportedLanguage, Record<string, string>> 
     'sidebar.changeProject': 'Trocar de projeto',
     'sidebar.searchProject': 'Buscar projeto…',
     'sidebar.noProjects': 'Nenhum projeto corresponde',
+    'sidebar.language': 'Idioma',
+    'sidebar.signOut': 'Sair',
     'header.toggleMenu': 'Mostrar ou ocultar o menu',
     'header.poweredBy': 'Powered by',
     'layout.closeMenu': 'Fechar menu',
