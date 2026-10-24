@@ -4,6 +4,17 @@ The v3 line is published on the `pkg-v3` branch with a `v3.x.y` tag per
 release. The `pkg` branch (0.2.x) is unchanged and is what the other
 consumer repos still follow.
 
+## 3.1.2 (2026-10-24): tabs wrap instead of truncating
+
+- `Tabs` (not `fullWidth`): when the tabs do not fit, they wrap onto
+  another line. Before, they shrank until each label was cut to a letter
+  or two ("R.", "Au..."). Wrapping instead of a horizontal scroller on
+  purpose: a scroller also clips vertically, which cuts the active pill's
+  shadow, the focus ring and the underline mark. `fullWidth` is unchanged
+  (the tabs share one row). No prop changes; story `Narrow (wraps, never
+  truncates)`. (There is no 3.1.1 release: the repo's pre-commit hook
+  bumps the patch on every commit that touches `packages/core/src`.)
+
 ## 3.1.0 (2026-10-24): the approved v3 look, inside the components
 
 The look approved on 2026-10-24 now lives in the components themselves.

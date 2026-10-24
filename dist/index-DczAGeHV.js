@@ -1701,9 +1701,9 @@ rl.displayName = "Textarea";
 let hn = null;
 function ol() {
   return hn || (hn = Promise.all([
-    import("./index-02LHRyW1.js").then((e) => e.i),
+    import("./index-3camMQQh.js").then((e) => e.i),
     // prismjs core ships markup/css/clike/javascript — no grammars eagerly imported
-    import("./prism-B10wzo76.js").then((e) => e.p)
+    import("./prism-Ciz7AabW.js").then((e) => e.p)
   ]).then(([e, t]) => ({
     Editor: e.default ?? e,
     Prism: t.default ?? t
@@ -3552,7 +3552,7 @@ const Kh = oe(zl), Ti = dr(null), Gl = {
           className: O(
             "flex",
             g.list,
-            i && "w-full"
+            i ? "w-full" : "flex-wrap"
           ),
           children: e.map((E) => /* @__PURE__ */ k(
             "button",
@@ -13802,4 +13802,4 @@ export {
   rl as y,
   ji as z
 };
-//# sourceMappingURL=index-DdtjIVeq.js.map
+//# sourceMappingURL=index-DczAGeHV.js.map
