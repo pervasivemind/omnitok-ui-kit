@@ -31,10 +31,12 @@ export interface CardFooterProps extends HTMLAttributes<HTMLDivElement> {
   align?: 'left' | 'center' | 'right' | 'between';
 }
 
+// v3: white surface, 1px line border, 14px radius and the shared soft shadow.
+// Never a coloured side bar: colour belongs to the data inside.
 const variantStyles = {
-  default: 'bg-white border border-neutral-200 rounded-lg',
-  bordered: 'bg-white border-2 border-neutral-300 rounded-lg',
-  elevated: 'bg-white border border-neutral-200 shadow-card rounded-lg',
+  default: 'bg-white border border-neutral-200 rounded-[14px] shadow-card',
+  bordered: 'bg-white border border-neutral-300 rounded-[14px]',
+  elevated: 'bg-white border border-neutral-200 rounded-[14px] shadow-card-hover',
 };
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
@@ -45,7 +47,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         className={cn(
           variantStyles[variant],
           !noPadding && 'p-4',
-          hoverable && 'transition-shadow transition-colors duration-200 hover:shadow-card-hover hover:border-primary/30 cursor-pointer',
+          hoverable && 'transition-[box-shadow,border-color] duration-150 hover:shadow-card-hover hover:border-primary/30 cursor-pointer',
           className
         )}
         {...props}
@@ -64,13 +66,14 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
       <div
         ref={ref}
         className={cn(
-          'flex items-center justify-between px-4 py-3',
-          'bg-gradient-to-r from-primary to-primary-dark text-white border-b border-white/15',
+          // v3: the header is part of the white card, not a coloured band.
+          'flex items-center justify-between gap-3 px-4 py-3 first:rounded-t-[14px]',
+          'bg-white text-neutral-800 border-b border-neutral-200',
           className
         )}
         {...props}
       >
-        <div className="font-semibold text-lg">{children}</div>
+        <div className="font-display text-[15px] font-extrabold leading-6">{children}</div>
         {action && <div>{action}</div>}
       </div>
     );
@@ -104,7 +107,7 @@ export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
       <div
         ref={ref}
         className={cn(
-          'flex items-center gap-3 px-4 py-3 bg-neutral-50 border-t border-neutral-200',
+          'flex items-center gap-3 px-4 py-3 bg-[#FAFAFC] border-t border-neutral-200 text-xs text-neutral-600 last:rounded-b-[14px]',
           footerAlignStyles[align],
           className
         )}

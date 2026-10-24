@@ -20,10 +20,12 @@ export interface AlertProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const variantStyles: Record<AlertVariant, string> = {
-  info: 'bg-info/10 border-info/30 text-info-dark',
-  success: 'bg-success/10 border-success/30 text-success-dark',
-  warning: 'bg-warning/10 border-warning/30 text-warning-dark',
-  error: 'bg-error/10 border-error/30 text-error-dark',
+  // v3: the state's tint, a 1px border of its colour and the dark tone for
+  // text; the icon carries the shape (never colour alone).
+  info: 'bg-info-soft border-info/30 text-info-dark',
+  success: 'bg-success-soft border-success/30 text-success-dark',
+  warning: 'bg-warning-soft border-warning/30 text-warning-dark',
+  error: 'bg-error-soft border-error/30 text-error-dark',
 };
 
 const iconMap: Record<AlertVariant, typeof Info> = {
@@ -54,20 +56,21 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
         ref={ref}
         role="alert"
         className={cn(
-          'flex gap-3 p-4 rounded-lg border',
+          'flex gap-3 px-4 py-3.5 rounded-xl border',
           variantStyles[variant],
           className
         )}
         {...props}
       >
         {!hideIcon && (
-          <Icon className="flex-shrink-0 w-5 h-5 mt-0.5" />
+          <Icon aria-hidden="true" className="flex-shrink-0 w-[18px] h-[18px] mt-0.5" />
         )}
         <div className="flex-1 min-w-0">
           {title && (
-            <h5 className="font-semibold mb-1">{title}</h5>
+            // Not a heading: an alert sits inside any outline level.
+            <p className="text-xs font-semibold mb-0.5">{title}</p>
           )}
-          <div className="text-sm">{children}</div>
+          <div className="text-[13px] leading-5">{children}</div>
         </div>
         {dismissible && (
           <button

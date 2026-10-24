@@ -28,22 +28,23 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  primary: 'bg-primary/10 text-primary',
-  accent: 'bg-accent/10 text-accent',
+  // v3: tint behind, the dark tone in front (>= 5:1 on every tint).
+  primary: 'bg-primary-soft text-primary-ink',
+  accent: 'bg-accent/10 text-accent-dark',
   neutral: 'bg-neutral-100 text-neutral-700',
-  success: 'bg-success/10 text-success-dark',
-  warning: 'bg-warning/10 text-warning-dark',
-  error: 'bg-error/10 text-error-dark',
-  info: 'bg-info/10 text-info-dark',
+  success: 'bg-success-soft text-success-dark',
+  warning: 'bg-warning-soft text-warning-dark',
+  error: 'bg-error-soft text-error-dark',
+  info: 'bg-info-soft text-info-dark',
   violet: 'bg-violet/10 text-violet-dark',
   rose: 'bg-rose/10 text-rose-dark',
   teal: 'bg-teal/10 text-teal-dark',
 };
 
 const sizeStyles: Record<BadgeSize, string> = {
-  sm: 'px-2 py-0.5 text-xs',
-  md: 'px-2.5 py-1 text-sm',
-  lg: 'px-3 py-1.5 text-base',
+  sm: 'px-2 py-0.5 text-2xs',
+  md: 'px-2.5 py-0.5 text-xs',
+  lg: 'px-3 py-1 text-[13px]',
 };
 
 const dotVariantStyles: Record<BadgeVariant, string> = {
@@ -93,8 +94,8 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
       <span
         ref={ref}
         className={cn(
-          'inline-flex items-center font-medium',
-          pill ? 'rounded-full' : 'rounded-md',
+          'inline-flex items-center font-semibold tabular-nums',
+          pill ? 'rounded-full' : 'rounded-[7px]',
           variantStyles[variant],
           sizeStyles[size],
           className

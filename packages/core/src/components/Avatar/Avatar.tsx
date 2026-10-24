@@ -17,10 +17,10 @@ export interface AvatarProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, '
 }
 
 const sizeStyles: Record<AvatarSize, string> = {
-  xs: 'w-6 h-6 text-xs',
-  sm: 'w-8 h-8 text-sm',
-  md: 'w-10 h-10 text-base',
-  lg: 'w-12 h-12 text-lg',
+  xs: 'w-6 h-6 text-2xs',
+  sm: 'w-8 h-8 text-xs',
+  md: 'w-10 h-10 text-sm',
+  lg: 'w-12 h-12 text-base',
   xl: 'w-16 h-16 text-xl',
 };
 
@@ -66,8 +66,9 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
         ) : (
           <div
             className={cn(
-              'rounded-full flex items-center justify-center font-medium',
-              'bg-primary text-white',
+              'rounded-full flex items-center justify-center font-semibold',
+              // v3: the action gradient (white initials >= 4.6:1 on both ends).
+              'bg-[image:var(--omni-gradient-action)] text-white',
               sizeStyles[size]
             )}
           >
