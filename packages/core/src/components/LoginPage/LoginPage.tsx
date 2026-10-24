@@ -1,4 +1,4 @@
-import { forwardRef, type HTMLAttributes, type ReactNode, useId, useState } from 'react';
+import { forwardRef, type HTMLAttributes, type ReactNode, useState } from 'react';
 import { AlertCircle, Eye, EyeOff, Lock, Mail } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { createTranslator, useI18n, type SupportedLanguage } from '../../i18n';
@@ -51,6 +51,12 @@ export interface LoginPageProps extends Omit<HTMLAttributes<HTMLDivElement>, 'on
   footer?: ReactNode;
   /** Background variant */
   variant?: 'gradient' | 'split' | 'centered';
+  /**
+   * Prefix for the field ids. Default: none, so the fields keep the stable
+   * ids `email` and `password` that hosts and tests rely on. Set it when two
+   * login forms share a page.
+   */
+  idPrefix?: string;
 }
 
 export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
@@ -72,6 +78,7 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
       showForgotPassword = true,
       footer,
       variant = 'gradient',
+      idPrefix,
       className,
       ...props
     },
@@ -89,7 +96,7 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
-    const uid = useId();
+    const fieldId = (name: string) => (idPrefix ? `${idPrefix}-${name}` : name);
     const isSplit = variant === 'split';
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -139,7 +146,7 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
         )}
 
         <Input
-          id={`${uid}-email`}
+          id={fieldId('email')}
           label={t('login.emailLabel')}
           type="email"
           autoComplete="email"
@@ -153,7 +160,7 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
         />
 
         <Input
-          id={`${uid}-password`}
+          id={fieldId('password')}
           label={t('login.passwordLabel')}
           type={showPassword ? 'text' : 'password'}
           autoComplete="current-password"
