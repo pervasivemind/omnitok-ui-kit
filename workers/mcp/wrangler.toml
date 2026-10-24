@@ -5,6 +5,8 @@ compatibility_flags = ["nodejs_compat"]
 
 [vars]
 STORYBOOK_URL = "https://ui-kit-v3.omnitok.cloud"
+# The BI components (tools/storybook-bi in the BI monorepo); the MCP merges both.
+STORYBOOK_BI_URL = "https://ui-bi.omnitok.cloud"
 
 [[routes]]
 pattern = "ui-kit-v3.omnitok.cloud/mcp"

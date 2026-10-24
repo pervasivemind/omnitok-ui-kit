@@ -35,3 +35,6 @@ pnpm-debug.log*
 
 # Testing
 coverage
+
+# wrangler dev local state (workers/mcp)
+.wrangler/
