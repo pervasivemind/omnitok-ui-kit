@@ -4,7 +4,7 @@ import { Meta, ColorPalette, ColorItem } from '@storybook/addon-docs/blocks';
 
 # Omnitok UI Kit
 
-Biblioteca completa de componentes React para sistemas administrativos y productos internos.
+Biblioteca de componentes React para sistemas administrativos y productos internos. Esta es la **línea v3** (`@omnitok/ui` 3.x), el look de la plataforma BI de Omnitok; su criterio de diseño está en `DESIGN.md`, en la raíz del repo.
 
 ## 🎨 Características
 
@@ -28,48 +28,66 @@ Si tu proyecto usa Tailwind CSS, consulta la sección [🎯 Tailwind Preset](#-t
 ### Paquete principal
 
 ```bash
-# SSH
-npm install git+ssh://git@github.com:pervasivemind/omnitok-ui-kit.git#pkg
-
-# HTTPS
-npm install git+https://github.com/pervasivemind/omnitok-ui-kit.git#pkg
+# Línea v3 (canal pkg-v3, una etiqueta v3.x.y por versión)
+npm install github:pervasivemind/omnitok-ui-kit#pkg-v3
 
 # package.json
-"@omnitok/ui": "git+ssh://git@github.com:pervasivemind/omnitok-ui-kit.git#pkg"
+"@omnitok/ui": "github:pervasivemind/omnitok-ui-kit#pkg-v3"
 ```
+
+La rama `pkg` sigue en 0.2.x para los productos que no migraron. Las notas de cada versión, con las de migración, están en `packages/core/CHANGELOG.md`.
 
 ## 🚀 Uso Básico
 
+El shell v3: cabecera de marca navy, sidebar enmarcado y el bloque de cuenta al pie.
+
 ```tsx
-import { Button, Card, Layout, Sidebar } from '@omnitok/ui';
+import { Button, Card, Layout, SidebarAccount } from '@omnitok/ui';
 import '@omnitok/ui/styles.css';
-import { Home, Users, Settings } from 'lucide-react';
+import { BarChart3, FolderOpen, Settings } from 'lucide-react';
 
 function App() {
   const sidebarItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: <Home size={20} /> },
-    { id: 'users', label: 'Usuarios', icon: <Users size={20} /> },
-    { id: 'settings', label: 'Configuración', icon: <Settings size={20} /> },
+    { id: '/', label: 'Inicio', icon: <FolderOpen size={16} /> },
+    {
+      id: '__section_reports__',
+      kind: 'section',
+      label: 'Reportes',
+      children: [{ id: '/reports/availability', label: 'Disponibilidad', icon: <BarChart3 size={16} /> }],
+    },
+    { id: '/settings', label: 'Configuración', icon: <Settings size={16} /> },
   ];
 
   return (
     <Layout
+      brandHeader={{ brandText: 'Mi Sistema', label: 'Inicio' }}
       sidebarItems={sidebarItems}
-      logo={<img src="omnitok-logo.svg" alt="Logo" />}
-      logoCollapsed={<img src="omnitok-icon.svg" alt="Logo" />}
-      systemName="Mi Sistema"
-      activeSidebarId="dashboard"
-      headerTitle="Dashboard"
-      user={{ name: 'Usuario', role: 'Admin' }}
+      activeSidebarId="/"
+      onSidebarItemClick={(item) => {
+        if (!item.id.startsWith('__')) navigate(item.id); // las secciones no son rutas
+      }}
+      sidebarFooter={
+        <SidebarAccount
+          name="Ana Pérez"
+          detail="ana@cliente.com"
+          version="1.4.0"
+          languages={[{ code: 'es' }, { code: 'en' }, { code: 'pt' }]}
+          language="es"
+          onLanguageChange={setLanguage}
+          onSignOut={signOut}
+        />
+      }
+      sidebarFooterCollapsed={<SidebarAccount collapsed name="Ana Pérez" />}
     >
       <Card>
-        <h2>Bienvenido</h2>
         <Button variant="primary">Comenzar</Button>
       </Card>
     </Layout>
   );
 }
 ```
+
+Sin `brandHeader`, `Layout` conserva la forma v0.2 (logo en el sidebar y cabecera blanca) para los productos que todavía no migran.
 
 ## 🎯 Tailwind Preset
 
@@ -116,10 +134,10 @@ export default config;
 | Token | Ejemplo de clase | Descripción |
 |---|---|---|
 | **Colores** | `bg-primary`, `text-accent`, `border-success` | Colores de marca, semánticos, chart |
-| **Tipografía** | `font-sans` (Nunito Sans), `font-mono` (Open Sans) | Familias y tamaños |
+| **Tipografía** | `font-sans` (Inter), `font-display` (Nunito Sans), `font-mono` (Open Sans) | Familias y tamaños; `text-2xs` es el piso de 11 px |
 | **Spacing** | `w-sidebar`, `w-sidebar-collapsed` | Espaciados personalizados |
 | **Sombras** | `shadow-card`, `shadow-modal` | Box shadows |
-| **Gradientes** | `bg-gradient-brand`, `bg-gradient-active` | Gradientes de marca |
+| **Gradientes** | `bg-[image:var(--omni-gradient-action)]` | El degradé de la acción primaria (variable que el cliente puede cambiar) |
 | **Animaciones** | `animate-fade-in`, `animate-slide-in` | Transiciones |
 
 ### Importar estilos de componentes
@@ -169,43 +187,20 @@ import '@omnitok/ui/styles.css';
 
 ## 🎨 Design System
 
-### Colores de Marca
-
 <ColorPalette>
-  <ColorItem
-    title="Sidebar"
-    subtitle="Obligatorio para sidebar"
-    colors={{ Sidebar: '#211f4b' }}
-  />
-  <ColorItem
-    title="Primary"
-    subtitle="Púrpura principal"
-    colors={{ Primary: '#4D4A9D' }}
-  />
-  <ColorItem
-    title="Accent"
-    subtitle="Magenta"
-    colors={{ Accent: '#FF177B' }}
-  />
-  <ColorItem
-    title="Sidebar Activo"
-    subtitle="Gradiente"
-    colors={{
-      'Sidebar Activo': 'linear-gradient(90deg, #FF177B 0%, #4D4A9D 100%)',
-    }}
-  />
-  <ColorItem
-    title="Headers (Tables, Cards, Modals)"
-    subtitle="Gradiente"
-    colors={{
-      'Headers': 'linear-gradient(90deg, #4D4A9D 0%, #3B3880 100%)',
-    }}
-  />
+  <ColorItem title="Marco" subtitle="Cabecera de marca y sidebar" colors={{ Navy: '#1A1240' }} />
+  <ColorItem title="Canvas y superficie" subtitle="Fondo de página y papel" colors={{ Canvas: '#F5F6F9', Superficie: '#FFFFFF', Hairline: '#E4E5ED' }} />
+  <ColorItem title="Acción primaria" subtitle="Degradé del botón primario, texto blanco" colors={{ 'Rosa acción': '#E0156D', 'Violeta del degradé': '#6D2DD6' }} />
+  <ColorItem title="Violeta compartido" subtitle="Acciones secundarias y opciones seleccionadas" colors={{ Violeta: '#4D4A9D', 'Violeta suave': '#F0EFF8' }} />
+  <ColorItem title="Texto" subtitle="Tinta, cuerpo y secundario (el más claro permitido)" colors={{ Tinta: '#252139', Cuerpo: '#465066', Secundario: '#667085' }} />
 </ColorPalette>
 
+Detalle en **Design System / Colors** y **Typography**, y las reglas para generar UI en **Design System / Reglas para agentes**.
+
 ### Tipografía
-- **UI**: Nunito Sans
-- **Contenido**: Open Sans
+- **Interfaz**: Inter (`font-sans`)
+- **Títulos y cifras**: Nunito Sans 800 (`font-display`)
+- **Editor de código**: Open Sans (`font-mono`)
 
 ### Logos
 - **Sidebar expandido**: `omnitok-logo.svg` (horizontal blanco)
@@ -294,18 +289,18 @@ Descarga los logos del repositorio (`assets/`) y colócalos en tu carpeta `publi
 
 ## 📝 Convenciones
 
-1. **Sidebar siempre a la izquierda** - Patrón obligatorio
-2. **Logo centrado** en header del sidebar
-3. **Colores vibrantes** en headers (tables, cards, modals)
-4. **Botón de colapsar** siempre visible
-5. **Íconos de Lucide** exclusivamente
-6. **Responsive** - Mobile-first approach
+1. **El look vive en el componente**: no se restylea un componente del kit desde afuera.
+2. **Una acción primaria por zona**; el resto secundaria, outline o ghost.
+3. **Cabeceras blancas** en tarjetas, tablas y modales; el navy es solo del marco.
+4. **Nunca solo color**: cada estado lleva palabra o ícono.
+5. **Íconos de Lucide** exclusivamente.
+6. **Responsive**: encabezados, acciones y pestañas envuelven en vez de desbordar.
 
 ## 🤖 MCP Server (AI IDE Integration)
 
-Omnitok UI Kit cuenta con un servidor **MCP (Model Context Protocol)** que permite a editores con IA consultar la documentación y especificaciones de los componentes directamente desde el IDE.
+Omnitok UI Kit cuenta con un servidor **MCP (Model Context Protocol)** que permite a editores con IA consultar la documentación y especificaciones de los componentes directamente desde el IDE. El MCP v3 sirve dos catálogos juntos: el del kit y el de los componentes BI de la plataforma (bi-components y dashboard-render, que este Storybook muestra en la sección BI).
 
-**Endpoint**: `https://ui-kit.omnitok.cloud/mcp`
+**Endpoint**: `https://ui-kit-v3.omnitok.cloud/mcp`
 
 ### Configurar en Cursor
 
@@ -315,7 +310,7 @@ Agrega la siguiente entrada en `.cursor/mcp.json` (a nivel de proyecto o global)
 {
   "mcpServers": {
     "omnitok-ui-kit": {
-      "url": "https://ui-kit.omnitok.cloud/mcp"
+      "url": "https://ui-kit-v3.omnitok.cloud/mcp"
     }
   }
 }
@@ -330,7 +325,7 @@ Agrega la entrada en `.vscode/mcp.json`:
   "servers": {
     "omnitok-ui-kit": {
       "type": "sse",
-      "url": "https://ui-kit.omnitok.cloud/mcp"
+      "url": "https://ui-kit-v3.omnitok.cloud/mcp"
     }
   }
 }
@@ -344,7 +339,7 @@ Agrega la entrada en `~/.codeium/windsurf/mcp_config.json`:
 {
   "mcpServers": {
     "omnitok-ui-kit": {
-      "serverUrl": "https://ui-kit.omnitok.cloud/mcp"
+      "serverUrl": "https://ui-kit-v3.omnitok.cloud/mcp"
     }
   }
 }
@@ -366,4 +361,4 @@ Una vez conectado, tu asistente de IA puede:
 - [Lucide Icons](https://lucide.dev)
 - [Tailwind CSS](https://tailwindcss.com)
 - [React Documentation](https://react.dev)
-- [MCP Server](https://ui-kit.omnitok.cloud/mcp)
+- [MCP Server v3](https://ui-kit-v3.omnitok.cloud/mcp)

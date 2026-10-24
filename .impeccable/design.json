@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-24T20:09:16+00:00",
+  "title": "Design System: Omnitok UI v3",
+  "extensions": {
+    "colorMeta": {
+      "chrome-navy": {
+        "role": "neutral",
+        "displayName": "Chrome Navy",
+        "canonical": "#1A1240"
+      },
+      "action-pink": {
+        "role": "primary",
+        "displayName": "Action Pink",
+        "canonical": "#E0156D"
+      },
+      "identity-pink": {
+        "role": "primary",
+        "displayName": "Identity Pink",
+        "canonical": "#FF177B"
+      },
+      "shared-violet": {
+        "role": "secondary",
+        "displayName": "Shared Violet",
+        "canonical": "#4D4A9D"
+      },
+      "module-green": {
+        "role": "tertiary",
+        "displayName": "Module Green",
+        "canonical": "#0B7A5F"
+      },
+      "body-text": {
+        "role": "neutral",
+        "displayName": "Cool Grey (neutral scale)",
+        "canonical": "#465066",
+        "tonalRamp": [
+          "#1A1240",
+          "#252139",
+          "#343A4D",
+          "#465066",
+          "#667085",
+          "#98A1B3",
+          "#D0D4DE",
+          "#E4E5ED",
+          "#F2F3F7",
+          "#F8F9FB"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page titles of operator pages and reports."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "KPI values; shrink with the card, never truncated."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card, panel and modal titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text and control text."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels, table headers, small button text."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Hints and metadata; 11 px is the floor."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card",
+        "value": "0 2px 4px #21183F04, 0 6px 18px #21183F09",
+        "purpose": "Every card and section at rest."
+      },
+      {
+        "name": "card-hover",
+        "value": "0 4px 10px #21183F0A, 0 10px 26px #21183F12",
+        "purpose": "Hoverable card under the pointer; elevated cards."
+      },
+      {
+        "name": "menu",
+        "value": "0 10px 30px #1A124022",
+        "purpose": "Dropdowns, popovers, selects."
+      },
+      {
+        "name": "modal",
+        "value": "0 25px 80px #1A124030",
+        "purpose": "Modals and confirm dialogs."
+      },
+      {
+        "name": "action",
+        "value": "0 5px 15px #FF177B20",
+        "purpose": "Only under the primary button."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state",
+        "value": "150ms",
+        "purpose": "Colour, shadow and the 1 px hover lift of buttons and cards."
+      },
+      {
+        "name": "default",
+        "value": "200ms",
+        "purpose": "Default transition and fade-in."
+      },
+      {
+        "name": "panel",
+        "value": "300ms ease-out",
+        "purpose": "Side panels and the mobile drawer sliding in."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "md",
+        "value": "768px",
+        "note": "Below it the right panel replaces the content."
+      },
+      {
+        "name": "lg",
+        "value": "1024px",
+        "note": "Below it the sidebar is a drawer."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one primary action of an area: pink-to-violet gradient, white text, action glow.",
+      "html": "<button class=\"ds-btn-primary\">Nuevo reporte</button>",
+      "css": ".ds-btn-primary{background:var(--omni-gradient-action,linear-gradient(105deg,#E0156D,#6D2DD6));color:#fff;border:0;border-radius:12px;padding:8px 16px;font:600 13px/20px Inter,system-ui,sans-serif;box-shadow:0 5px 15px #FF177B20;transition:transform 150ms,box-shadow 150ms,filter 150ms}.ds-btn-primary:hover{filter:brightness(.95);transform:translateY(-1px);box-shadow:0 3px 10px #1A124018}.ds-btn-primary:focus-visible{outline:2px solid #6251A3;outline-offset:2px}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Shared and secondary actions: violet soft fill, violet ink text.",
+      "html": "<button class=\"ds-btn-secondary\">Probar</button>",
+      "css": ".ds-btn-secondary{background:#F0EFF8;color:#3B3880;border:1px solid #E0DEF2;border-radius:12px;padding:8px 16px;font:600 13px/20px Inter,system-ui,sans-serif;transition:background-color 150ms,transform 150ms}.ds-btn-secondary:hover{background:#E7E5F4;transform:translateY(-1px)}.ds-btn-secondary:focus-visible{outline:2px solid #6251A3;outline-offset:2px}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "White field, control-line border, violet focus ring.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Correo</span><input class=\"ds-input\" placeholder=\"tu@email.com\"></label>",
+      "css": ".ds-field{display:flex;flex-direction:column;gap:6px;font-family:Inter,system-ui,sans-serif}.ds-field-label{font:600 12px/16px Inter,system-ui,sans-serif;color:#252139}.ds-input{background:#fff;border:1px solid #D0D4DE;border-radius:10px;padding:8px 14px;font:400 13px/20px Inter,system-ui,sans-serif;color:#252139}.ds-input::placeholder{color:#667085}.ds-input:focus{outline:none;border-color:#4D4A9D;box-shadow:0 0 0 2px #4D4A9D}"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "White surface on the canvas: 14 px corners, hairline, card shadow, white header.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-head\">Programación por proyecto</div><div class=\"ds-card-body\">Contenido de la tarjeta.</div></div>",
+      "css": ".ds-card{background:#fff;border:1px solid #E4E5ED;border-radius:14px;box-shadow:0 2px 4px #21183F04,0 6px 18px #21183F09;font-family:Inter,system-ui,sans-serif;max-width:360px}.ds-card-head{padding:12px 16px;border-bottom:1px solid #E4E5ED;font:800 15px/24px 'Nunito Sans',Inter,sans-serif;color:#252139}.ds-card-body{padding:16px;font:400 13px/20px Inter,system-ui,sans-serif;color:#465066}"
+    },
+    {
+      "name": "Status Badge",
+      "kind": "chip",
+      "refersTo": "badge-primary",
+      "description": "Soft tint with its dark shade as text; always carries a word.",
+      "html": "<span class=\"ds-badge ds-badge-success\">✓ Publicado</span> <span class=\"ds-badge ds-badge-error\">✕ Falló</span>",
+      "css": ".ds-badge{display:inline-flex;align-items:center;gap:4px;border-radius:9999px;padding:2px 8px;font:600 11px/16px Inter,system-ui,sans-serif}.ds-badge-success{background:#E3F4EA;color:#14532D}.ds-badge-error{background:#FDEEF2;color:#94304C}"
+    },
+    {
+      "name": "Selected Tab (module)",
+      "kind": "nav",
+      "refersTo": "",
+      "description": "Default tabs: every option reads as a button; the selected one is module green with a check.",
+      "html": "<div class=\"ds-tabs\" role=\"tablist\"><button class=\"ds-tab ds-tab-on\" role=\"tab\" aria-selected=\"true\">✓ Resumen</button><button class=\"ds-tab\" role=\"tab\">Retailers</button></div>",
+      "css": ".ds-tabs{display:inline-flex;flex-wrap:wrap;gap:6px;padding:6px;border:1px solid #E4E5ED;border-radius:13px;background:#F4F3F9}.ds-tab{min-height:38px;padding:8px 15px;border-radius:9px;border:1px solid #DCD8EA;background:#fff;color:#4A4568;font:600 12px/16px Inter,system-ui,sans-serif;cursor:pointer}.ds-tab:hover{background:#ECEAF7;border-color:#9C93C6}.ds-tab-on{background:var(--omni-selected,#0B7A5F);border-color:var(--omni-selected,#0B7A5F);color:#fff;font-weight:700}.ds-tab:focus-visible{outline:2px solid #6251A3;outline-offset:2px}"
+    },
+    {
+      "name": "Sidebar Item",
+      "kind": "nav",
+      "refersTo": "shell-sidebar",
+      "description": "Navy sidebar; the active item has the pink bar, a lighter fill and a pink dot.",
+      "html": "<nav class=\"ds-sb\"><a class=\"ds-sb-item ds-sb-on\">Proyectos<span class=\"ds-sb-dot\"></span></a><a class=\"ds-sb-item\">Componentes</a></nav>",
+      "css": ".ds-sb{background:#1A1240;padding:12px;border-radius:14px;width:220px;font:400 13px/20px Inter,system-ui,sans-serif}.ds-sb-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-radius:9px;color:#D8D2E8;text-decoration:none;border-left:3px solid transparent}.ds-sb-item:hover{background:rgba(255,255,255,.05);color:#fff}.ds-sb-on{background:rgba(255,23,123,.12);color:#fff;font-weight:600;border-left-color:#FF177B}.ds-sb-dot{width:6px;height:6px;border-radius:9999px;background:#FF177B}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Calm Control Room",
+    "overview": "Omnitok UI is the instrument panel of a BI platform: people come to it to read numbers, decide and move on. The chrome is a single deep navy frame (header and sidebar) that holds still while the canvas, a cool off-white, carries the work. Everything on the canvas is white paper with hairline borders and a barely visible shadow, so the data is the brightest and most saturated thing on the screen.\n\nColour is spent sparingly and with meaning. Pink is the platform's identity and the colour of the one primary action; violet is the quiet colour of shared, secondary actions and selected options; green marks the selected tab or page of the current module. Status colours are muted and always arrive with a word or an icon, never as colour alone. The type pairing is functional: Inter for everything the user reads or operates, Nunito Sans for titles and the numbers that matter.\n\nThe density is that of an operator tool, not a marketing page: 13 px body, 11 px as the floor, compact controls, generous but not airy spacing. The system exists once, inside the components; products consume it and do not restyle it.",
+    "keyCharacteristics": [
+      "Navy frame, cool canvas, white surfaces with hairlines.",
+      "One pink action per area; violet for everything shared or selected.",
+      "Inter for the interface, Nunito Sans 800 for titles and KPI values.",
+      "11 px is the smallest text; muted grey never lighter than 4.5:1.",
+      "Every state is legible without colour (text, icon, check, shape).",
+      "The look lives inside the components (no external stylesheets)."
+    ],
+    "rules": [
+      {
+        "name": "The One Pink Action Rule",
+        "body": "An area has at most one primary (pink) action; everything else is secondary violet, outline or ghost.",
+        "section": "colors"
+      },
+      {
+        "name": "The Never By Colour Alone Rule",
+        "body": "Every status, delta and selection is also told by a word, an icon, a check or a shape (the owner of the product is red-green colour-blind).",
+        "section": "colors"
+      },
+      {
+        "name": "The Muted Floor Rule",
+        "body": "No text lighter than `muted-text` on white or `muted-on-tint` on a tint; `icon-grey` is never text.",
+        "section": "colors"
+      },
+      {
+        "name": "The 11 px Floor Rule",
+        "body": "Nothing functional is smaller than 11 px.",
+        "section": "typography"
+      },
+      {
+        "name": "The Whole Number Rule",
+        "body": "A KPI value is never truncated with an ellipsis; it scales down with its card and breaks only between words, never inside a number.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Until It Floats Rule",
+        "body": "A surface on the page gets the card shadow at most; stronger shadows are reserved for menus and modals.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** read colours, radii and shadows from the kit (preset classes or `--omni-*` variables); tenants retint through `--omni-sb-*`, `--omni-gradient-action` and `--omni-selected` only.",
+      "**Do** keep one primary (pink) action per header or dialog, at most one secondary next to it.",
+      "**Do** pair every status colour with a word or an icon, and every selection with a check, a bar or a weight change.",
+      "**Do** use Nunito Sans 800 for titles and KPI values and Inter for everything else.",
+      "**Do** let headers, action rows and tab lists wrap on narrow screens.",
+      "**Do** keep the focus outline visible (2 px focus violet, offset 2 px) on every interactive element."
+    ],
+    "donts": [
+      "**Don't** restyle a kit component from an external stylesheet; change the component (D12).",
+      "**Don't** set text in `icon-grey` or anything lighter than `muted-text`; don't go under 11 px.",
+      "**Don't** put white or pink text on `identity-pink`; it is a mark colour.",
+      "**Don't** truncate a number with an ellipsis, in a KPI, a chip or a caption.",
+      "**Don't** add shadows stronger than the card shadow to things that sit on the page.",
+      "**Don't** use a dark gradient band as a page or panel header; headers are white with a hairline (the navy belongs to the chrome)."
+    ]
+  }
+}

@@ -1,289 +1,55 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Design System/Cursor Rules" />
+<Meta title="Design System/Reglas para agentes" />
 
-# Cursor Rules - UI/UX
+# Reglas para agentes (v3)
 
-Reglas de UI/UX para sistemas administrativos internos basadas en identidad Omnitok.
+Reglas para quien genere UI con Omnitok UI v3, sea una persona o un asistente conectado al MCP. Salen de `DESIGN.md` (raíz del repo) y del código de los componentes; si algo no está acá, manda el componente.
 
-## Layout Obligatorio
+## Antes de escribir una línea
 
-- **Sidebar izquierdo siempre presente** con fondo `#211f4b`
-- Ancho sidebar: 256px expandido (`w-64`), 64px colapsado (`w-16`)
-- Header sticky de 64px de altura
-- Contenido con padding de 24px
-- Logo **centrado** en header del sidebar
-- Botón de colapsar **siempre visible** en estado expandido
+1. **Usa el componente del kit.** Si existe (Button, Card, Input, Select, Tabs, Modal, SidePanel, Table, Badge, Alert, Layout, Sidebar, BrandHeader, SidebarAccount, LoginPage, ...), úsalo con sus props. Consulta sus props con `get-documentation` del MCP.
+2. **No lo restyles desde afuera.** Nada de hojas de estilo ni clases que pisen el look de un componente del kit. Si el componente no alcanza, se cambia el componente (decisión D12).
+3. **Lee los valores del kit.** Colores, radios y sombras salen del preset de Tailwind (`bg-primary-soft`, `text-neutral-500`, `shadow-card`, `rounded-[14px]`) o de las variables `--omni-*`. No inventes hex.
 
-## Paleta de Colores
+## Shell
 
-```css
-/* Colores de marca */
-Sidebar:     #211f4b  /* Azul muy oscuro - obligatorio */
-Primary:     #4D4A9D  /* Púrpura corporativo */
-Accent:      #FF177B  /* Magenta para CTAs destacados */
+- `Layout` con `brandHeader`: cabecera navy de 42 px (menú, marca, rótulo en mayúsculas de 11 px, "powered by" solo para marcas de cliente) y el sidebar navy enmarcado de 250 px, que colapsa a un riel de 64 px.
+- Grupos del menú como secciones rotuladas (`kind: 'section'`); los ids de sección no son rutas.
+- Al pie, `SidebarAccount`: versión, filas extra, idiomas como botones visibles (ES, EN, PT), salir y la persona.
+- Bajo 1024 px el sidebar es un cajón; bajo 768 px el panel derecho reemplaza al contenido.
+- El cliente solo tiñe el shell con `--omni-sb-*`, `--omni-header-bg`, `--omni-gradient-action` y `--omni-selected` (D14).
 
-/* Semánticos */
-Success:     #10B981  /* Verde */
-Error:       #EF4444  /* Rojo */
-Warning:     #F59E0B  /* Naranja */
-Info:        #3B82F6  /* Azul */
+## Color
 
-/* Adicionales para gráficos */
-Purple:      #8B5CF6
-Pink:        #EC4899
-Teal:        #14B8A6
-
-/* Neutrales */
-Gray 50-900: #F9FAFB → #111827
-
-/* Texto */
-Principal:   #374151  /* Gray 700 */
-Secundario:  #6B7280  /* Gray 500 */
-
-/* Fondos */
-Principal:   #FFFFFF
-Alternativo: #F9FAFB  /* Gray 50 */
-Bordes:      #E5E7EB  /* Gray 200 */
-```
-
-## Gradientes
-
-### Sidebar - Elemento Activo
-```css
-background: linear-gradient(90deg, #FF177B 0%, #4D4A9D 100%);
-border-radius: 8px;
-margin: 2px 8px;
-color: #ffffff;
-font-weight: 500;
-```
-
-### Headers (Tables, Cards, Modals)
-```css
-background: linear-gradient(90deg, #4D4A9D 0%, #3B3880 100%);
-color: #FFFFFF;
-```
-
-### Tabs Pills (Activo)
-```css
-background: linear-gradient(90deg, #FF177B 0%, #4D4A9D 100%);
-color: #FFFFFF;
-```
+- **Una acción rosa por zona**: un `Button variant="primary"` por encabezado o diálogo; el resto `secondary`, `outline` o `ghost`.
+- **Rosa de identidad `#FF177B` solo para marcas** (barra y punto de selección); nunca bajo texto ni como texto. El rosa de relleno es `#E0156D`; como texto, `#C8105F`.
+- **Nunca solo color**: cada estado lleva palabra o ícono; cada selección, check, barra o peso.
+- **Texto**: tinta `#252139`, cuerpo `#465066`, secundario `#667085` (el más claro permitido), `#5B6478` sobre tintes. `neutral-400` nunca es texto.
+- **Cabeceras blancas**: tarjetas, tablas, modales y paneles tienen cabecera blanca con una línea debajo. El navy es del marco, no de las cabeceras; nada de bandas con degradé.
 
 ## Tipografía
 
-- **Fuente principal**: Nunito Sans (UI, botones, navegación)
-- **Fuente secundaria**: Open Sans (tablas, datos, contenido)
-- **Tamaños**: 12px (xs), 14px (sm), 16px (base), 18-30px (headings)
-- **Pesos**: 400 (normal), 500 (medium), 600 (semibold), 700 (bold)
+- Inter (`font-sans`) para todo lo que se lee u opera; Nunito Sans 800 (`font-display font-extrabold`) para títulos de página (25 px), de tarjeta y modal (15 a 17 px) y valores de KPI (30 px).
+- Piso de 11 px (`text-2xs`); el menú usa 12 px.
+- Las cifras usan `tabular-nums`. Un número nunca se trunca con puntos suspensivos.
 
-## Componentes Clave
+## Forma y profundidad
 
-### Botones
-- **Primary**: fondo `#4D4A9D`, texto blanco
-- **Secondary**: fondo blanco, borde gris
-- **Danger**: fondo `#EF4444`, texto blanco
-- **Accent**: fondo `#FF177B`, texto blanco
-- **Altura**: 32px (sm), 40px (md), 48px (lg)
-- **Border-radius**: 8px
+- Radios por rol: badge 7 px, campo 10 px, botón 12 px, tarjeta 14 px, modal 18 px, pastilla redonda.
+- Plano por defecto: lo que está en la página lleva como mucho `shadow-card`; `shadow-menu` y `shadow-modal` son para lo que flota.
+- Líneas de 1 px (`border-neutral-200`); las únicas de 2 px son el foco, el subrayado de pestañas y el botón outline.
 
-### Sidebar
-- **Logo centrado** en header con nombre del sistema debajo
-- **Logos**:
-  - Expandido: `omnitok-logo.svg` (horizontal blanco, 24px altura, max-width 140px)
-  - Colapsado: `omnitok-icon.svg` (cuadrado 32x32px)
-- **System name**: 11px, uppercase, `rgba(255,255,255,0.5)`, centrado, debajo del logo
-- **Botón colapsar**: Siempre visible en estado expandido (esquina superior derecha)
-- **Estado colapsado**: Solo logo cuadrado como botón de expandir
-- **Items**:
-  - Hover: `rgba(255,255,255,0.1)`
-  - Activo: Gradiente magenta → púrpura
-  - Íconos: Siempre reservar espacio 20x20px para alineación
-- **Texto**: `rgba(255,255,255,0.8)`, hover: `#FFFFFF`
+## Páginas de operador
 
-### Cards
-- Fondo blanco, border-radius 12px, overflow hidden
-- Shadow: `0 1px 2px rgba(0,0,0,0.05)`
-- **Header**: Gradiente primary → primary-dark, texto blanco
-- Body: padding 16px
-- Footer: fondo `#F9FAFB`, padding 12px 16px
+- Una columna centrada de 1152 px (`max-w-6xl`) con márgenes de 32 px (16 px en móvil).
+- Cabecera de página: título display, una frase de subtítulo, como mucho una acción primaria y una secundaria; el resto va a un menú.
+- Encabezados, filas de acciones y listas de pestañas envuelven en pantallas angostas; no desbordan ni truncan a una letra.
+- Estados vacíos, de carga y de error siempre presentes; las acciones destructivas piden confirmación (`ConfirmModal`).
 
-### Tablas
-- **Header**: fondo `#4D4A9D` (primary), texto blanco, font-weight 600
-- Filas: hover con fondo `#F9FAFB`
-- Bordes: 1px solid `#E5E7EB`
-- Texto: 14px, color `#374151`
+## Accesibilidad
 
-### Modales
-- Backdrop: `rgba(0,0,0,0.5)`
-- Border-radius: 16px
-- **Header**: Gradiente primary → primary-dark, texto blanco
-- Tamaños: 400px (sm), 500px (md), 700px (lg), 900px (xl)
-
-### Tabs
-- **Variantes**: default, pills, underline
-- **Pills (recomendada)**: Activo con gradiente magenta → púrpura
-- **Default**: Fondo `rgba(77, 74, 157, 0.1)`, activo blanco con shadow
-- **Underline**: Border-bottom en activo con color accent `#FF177B`
-
-## Patrones de Pantalla
-
-### Listados (CRUD Read)
-1. Page header con título + botón "Nuevo"
-2. Barra de filtros + búsqueda
-3. Tabla con acciones por fila
-4. Paginación al pie
-
-### Formularios (CRUD Create/Update)
-1. Breadcrumb + título
-2. Cards agrupando campos relacionados
-3. Acciones en header y footer (Cancelar, Guardar)
-
-### Estados
-- **Vacío**: ícono + título + descripción + CTA
-- **Carga**: skeletons o spinner centrado
-- **Error**: alert rojo con mensaje
-
-## Iconos
-
-Usar **Lucide Icons** exclusivamente:
-- Tamaño en sidebar/nav: 20px
-- Tamaño en botones: 16-18px
-- Tamaño en estados vacíos: 32-48px
-- **IMPORTANTE**: Siempre reservar espacio 20x20px para íconos (incluso si no están presentes) para mantener alineación
-
-## Espaciado
-
-```css
-4px  (xs)  - gaps mínimos
-8px  (sm)  - padding badges, gaps pequeños
-16px (md)  - padding botones, gaps formularios
-24px (lg)  - padding cards, separación secciones
-32px (xl)  - separación grupos
-48px (2xl) - separación secciones principales
-```
-
-## Herramientas BI (PowerBI / Metabase)
-
-### Layout con BI + AI Insights
-
-```
-┌──────────┬────────────────────┬──────────┐
-│  Sidebar │   Contenido BI     │ AI Panel │
-│  #211f4b │   (embed)          │  360px   │
-│  256px   │   Gráficos         │ Insights │
-└──────────┴────────────────────┴──────────┘
-```
-
-### Colores para Gráficos BI
-
-```css
---chart-1: #4D4A9D;  /* Primary - Púrpura */
---chart-2: #FF177B;  /* Accent - Magenta */
---chart-3: #10B981;  /* Success - Verde */
---chart-4: #F59E0B;  /* Warning - Naranja */
---chart-5: #3B82F6;  /* Info - Azul */
---chart-6: #8B5CF6;  /* Purple - Violeta */
---chart-7: #EC4899;  /* Pink - Rosa */
---chart-8: #14B8A6;  /* Teal - Verde azulado */
-```
-
-### Tipos de Gráficos Recomendados
-
-- **Tendencias**: Líneas, áreas
-- **Comparación**: Barras horizontales/verticales
-- **Partes de todo**: Donut (max 5-6 categorías)
-- **KPIs**: Cards compactos con indicador y variación
-- **Objetivo vs Real**: Gauge, barras con línea de meta
-
-### Diferencias PowerBI vs Metabase
-
-| Aspecto | PowerBI | Metabase |
-|---------|----------|----------|
-| Embedding | Opcional | Siempre embebido |
-| Sidebar app | Puede no estar | Siempre visible |
-| Tema | JSON theme file | SDK theme object |
-
-### Panel AI Insights
-
-- Ancho: 360px (rightPanelWidth)
-- Fondo blanco con borde izquierdo
-- Header con gradiente primary
-- Insights automáticos con íconos de color
-- Oculto en móvil/tablet (< 1280px)
-
-## Componentes Adicionales
-
-### LoginPage
-- **Variantes**: gradient, split, centered
-- **Logos**:
-  - Formulario: `omnitok-logo-primary.svg`
-  - Split panel izquierdo: `omnitok-logo.svg`
-- **Campos**: Email, Password, Remember me, Forgot password
-- **Estados**: Normal, Loading, Error
-
-### Layout Component
-
-Props principales:
-```tsx
-<Layout
-  sidebarItems={items}
-  logo={<img src="omnitok-logo.svg" />}
-  logoCollapsed={<img src="omnitok-icon.svg" />}
-  systemName="Mi Sistema"
-  activeSidebarId="dashboard"
-  headerTitle="Dashboard"
-  headerSubtitle="Resumen general"
-  user={{ name: 'Usuario', role: 'Admin' }}
-  rightPanel={<AIPanel />}  // Opcional
-  rightPanelWidth="360px"
->
-  {/* Contenido */}
-</Layout>
-```
-
-## Instalación en Otros Proyectos
-
-```bash
-npm install @omnitok/ui lucide-react
-# o
-pnpm add @omnitok/ui lucide-react
-```
-
-## Uso Básico
-
-```tsx
-import { Layout, Button, Card, Table } from '@omnitok/ui';
-import '@omnitok/ui/styles.css';
-import { Home, Users } from 'lucide-react';
-
-function App() {
-  const sidebarItems = [
-    { id: 'home', label: 'Inicio', icon: <Home size={20} /> },
-    { id: 'users', label: 'Usuarios', icon: <Users size={20} />, badge: 5 },
-  ];
-
-  return (
-    <Layout
-      sidebarItems={sidebarItems}
-      logo={<img src="/omnitok-logo.svg" alt="Logo" />}
-      logoCollapsed={<img src="/omnitok-icon.svg" alt="Logo" />}
-      systemName="Mi Sistema"
-      activeSidebarId="home"
-      headerTitle="Dashboard"
-      user={{ name: 'Usuario', role: 'Admin' }}
-    >
-      <Card>
-        <h2>Bienvenido</h2>
-        <Button variant="primary">Comenzar</Button>
-      </Card>
-    </Layout>
-  );
-}
-```
-
-## Recursos
-
-- **Storybook**: Documentación interactiva completa
-- **GitHub**: https://github.com/pervasivemind/omnitok-ui-kit
-- **Lucide Icons**: https://lucide.dev
+- Foco visible en todo elemento interactivo: contorno de 2 px `#6251A3` separado 2 px.
+- Contraste de texto de 4,5:1 o más contra su fondo real (blanco, canvas o tinte).
+- Respeta `prefers-reduced-motion`: sin el salto de 1 px de los botones ni deslizamientos.
+- Íconos de Lucide, decorativos con `aria-hidden`, y los botones de solo ícono con `aria-label`.

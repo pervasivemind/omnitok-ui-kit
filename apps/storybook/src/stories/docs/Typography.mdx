@@ -2,392 +2,68 @@ import { Meta, Typeset } from '@storybook/addon-docs/blocks';
 
 <Meta title="Design System/Typography" />
 
-export const typography = {
-  type: {
-    primary: "'Nunito Sans', system-ui, sans-serif",
-    secondary: "'Open Sans', system-ui, sans-serif",
-  },
-  weight: {
-    regular: 400,
-    medium: 500,
-    semibold: 600,
-    bold: 700,
-  },
-  size: {
-    xs: 12,
-    sm: 14,
-    base: 16,
-    lg: 18,
-    xl: 20,
-    '2xl': 24,
-    '3xl': 30,
-    '4xl': 36,
-  },
+export const fonts = {
+  ui: "Inter, system-ui, sans-serif",
+  display: "'Nunito Sans', Inter, system-ui, sans-serif",
 };
 
-export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+export const SampleText = 'Cobertura del catálogo en retailers del período';
 
-# Tipografía
+# Tipografía (v3)
 
-Sistema tipográfico para interfaces administrativas.
+Dos familias con trabajos distintos. **Inter** hace todo lo que se lee u opera: controles, tablas, texto, a tamaños chicos donde sus formas abiertas siguen legibles. **Nunito Sans 800** da a los títulos y a las cifras que importan un peso redondo y seguro. El criterio completo está en `DESIGN.md`, en la raíz del repo.
 
-## Familias Tipográficas
+## Familias
 
-### Primary (UI)
-**Nunito Sans** - Para interfaz de usuario, botones, navegación
+### Interfaz: Inter
 
-```css
-font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-```
+Clase Tailwind `font-sans`; variable `--omni-font-ui`.
 
-**Clase Tailwind**: `font-sans`
+<Typeset fontSizes={[11, 12, 13, 14]} fontWeight={400} sampleText={SampleText} fontFamily={fonts.ui} />
 
-<Typeset
-  fontSizes={[Number(typography.size.base), Number(typography.size.xl), Number(typography.size['2xl'])]}
-  fontWeight={typography.weight.regular}
-  sampleText={SampleText}
-  fontFamily={typography.type.primary}
-/>
+### Títulos y cifras: Nunito Sans
 
-**Características**:
-- Humanista sans-serif
-- Alta legibilidad en pantalla
-- Soporta múltiples pesos
-- Excelente para UI elements
+Clase Tailwind `font-display`; variable `--omni-font-display`. Siempre en 800 (`font-extrabold`).
 
-### Secondary (Contenido)
-**Open Sans** - Para contenido, tablas, texto largo
+<Typeset fontSizes={[15, 17, 25, 30]} fontWeight={800} sampleText="30,7 % de cobertura" fontFamily={fonts.display} />
 
-```css
-font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-```
+Open Sans queda solo para el editor de código (`font-mono`).
 
-**Clase Tailwind**: `font-mono`
+## Jerarquía
 
-<Typeset
-  fontSizes={[Number(typography.size.base), Number(typography.size.xl), Number(typography.size['2xl'])]}
-  fontWeight={typography.weight.regular}
-  sampleText={SampleText}
-  fontFamily={typography.type.secondary}
-/>
+| Rol | Fuente | Tamaño / línea | Uso |
+|---|---|---|---|
+| Display | Nunito Sans 800, -0,5 px | 25 px / 1,25 | Título de página de operador y de reporte (`PageHeader`, `ReportHeader`) |
+| Headline | Nunito Sans 800, -0,8 px, cifras tabulares | 30 px / 1,2 | Valor de KPI; se achica con la tarjeta, nunca se corta |
+| Title | Nunito Sans 800 | 15 a 17 px / 24 px | Títulos de tarjeta, panel y modal |
+| Body | Inter 400 | 13 px / 20 px | Texto corrido y texto de controles |
+| Label | Inter 600 | 12 px / 16 px | Etiquetas de campo, encabezados de tabla, botones chicos |
+| Caption | Inter 400 | 11 px / 16 px | Ayudas, notas, metadatos |
 
-**Características**:
-- Neutral y profesional
-- Optimizada para lectura
-- Excelente en tablas y datos
+<Typeset fontSizes={[25]} fontWeight={800} sampleText="Disponibilidad" fontFamily={fonts.display} />
+<Typeset fontSizes={[15]} fontWeight={800} sampleText="Programación por proyecto" fontFamily={fonts.display} />
+<Typeset fontSizes={[13]} fontWeight={400} sampleText="Cada reporte declara sus propias vistas sobre el OBT." fontFamily={fonts.ui} />
+<Typeset fontSizes={[12]} fontWeight={600} sampleText="Correo electrónico" fontFamily={fonts.ui} />
+<Typeset fontSizes={[11]} fontWeight={400} sampleText="Vacío significa sin cuota." fontFamily={fonts.ui} />
 
-## Escala Tipográfica
+## Escala del preset
 
-| Nombre | Tamaño | Line Height | Uso |
-|--------|--------|-------------|-----|
-| xs | 12px | 16px | Labels pequeños, badges |
-| sm | 14px | 20px | Texto secundario, inputs |
-| base | 16px | 24px | Texto principal |
-| lg | 18px | 28px | Subtítulos |
-| xl | 20px | 28px | Títulos de sección |
-| 2xl | 24px | 32px | Títulos de página |
-| 3xl | 30px | 36px | Títulos destacados |
-| 4xl | 36px | 40px | Hero titles |
+| Clase | Tamaño | Línea |
+|---|---|---|
+| `text-2xs` | 11 px | 16 px |
+| `text-xs` | 12 px | 16 px |
+| `text-sm` | 14 px | 20 px |
+| `text-base` | 16 px | 24 px |
+| `text-lg` | 18 px | 28 px |
+| `text-xl` | 20 px | 28 px |
+| `text-2xl` | 24 px | 32 px |
 
-<Typeset
-  fontSizes={Object.values(typography.size).map(Number)}
-  fontWeight={typography.weight.regular}
-  sampleText={SampleText}
-  fontFamily={typography.type.primary}
-/>
+Los botones y campos usan 11 / 12 / 13 / 14 px según su tamaño (xs, sm, md, lg).
 
-## Pesos de Fuente
+## Reglas
 
-| Peso | Valor | Uso |
-|------|-------|-----|
-| Regular | 400 | Texto normal |
-| Medium | 500 | Énfasis ligero, labels |
-| Semibold | 600 | Botones, títulos de sección |
-| Bold | 700 | Títulos principales |
-
-<Typeset fontSizes={[20]} fontWeight={typography.weight.regular} sampleText="Regular (400) — Texto normal de contenido" fontFamily={typography.type.primary} />
-<Typeset fontSizes={[20]} fontWeight={typography.weight.medium} sampleText="Medium (500) — Labels y énfasis ligero" fontFamily={typography.type.primary} />
-<Typeset fontSizes={[20]} fontWeight={typography.weight.semibold} sampleText="Semibold (600) — Botones y títulos de sección" fontFamily={typography.type.primary} />
-<Typeset fontSizes={[20]} fontWeight={typography.weight.bold} sampleText="Bold (700) — Títulos principales" fontFamily={typography.type.primary} />
-
-## Colores de Texto
-
-Los colores de texto del design system se aplican mediante clases de Tailwind CSS o variables CSS. A continuación se muestran los colores disponibles organizados por categoría.
-
-### Colores de Marca
-
-<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px' }}>
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-primary)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-primary</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-primary)' }}>Texto con color primary — enlaces, elementos interactivos</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-primary-dark)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-primary-dark</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-primary-dark)' }}>Texto con color primary dark — hover de enlaces</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-primary-light)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-primary-light</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-primary-light)' }}>Texto con color primary light — estados deshabilitados</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-accent)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-accent</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-accent)' }}>Texto con color accent — CTAs y énfasis importante</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-accent-dark)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-accent-dark</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-accent-dark)' }}>Texto con color accent dark — hover de CTAs</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-accent-light)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-accent-light</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-accent-light)' }}>Texto con color accent light</span>
-    </div>
-  </div>
-</div>
-
-### Colores Auxiliares
-
-<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px' }}>
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-violet)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-violet</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-violet)' }}>Texto violet — categorías, tags, agrupación</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-violet-light)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-violet-light</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-violet-light)' }}>Texto violet light — estados hover</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-violet-dark)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-violet-dark</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-violet-dark)' }}>Texto violet dark — estados activos</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-rose)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-rose</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-rose)' }}>Texto rose — highlights, badges secundarios</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-rose-light)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-rose-light</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-rose-light)' }}>Texto rose light — estados hover</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-rose-dark)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-rose-dark</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-rose-dark)' }}>Texto rose dark — estados activos</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-teal)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-teal</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-teal)' }}>Texto teal — estados alternativos, indicadores</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-teal-light)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-teal-light</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-teal-light)' }}>Texto teal light — estados hover</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-teal-dark)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-teal-dark</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-teal-dark)' }}>Texto teal dark — estados activos</span>
-    </div>
-  </div>
-</div>
-
-### Colores Neutros
-
-<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px' }}>
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-neutral-900)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-neutral-900</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-neutral-900)' }}>Títulos principales y texto de máximo contraste</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-neutral-800)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-neutral-800</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-neutral-800)' }}>Títulos secundarios y texto enfatizado</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-neutral-700)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-neutral-700</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-neutral-700)' }}>Texto principal de contenido y labels</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-neutral-600)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-neutral-600</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-neutral-600)' }}>Texto secundario enfatizado</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-neutral-500)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-400)', minWidth: '160px' }}>text-neutral-500</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-neutral-500)' }}>Texto secundario y descripciones</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-neutral-400)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-400)', minWidth: '160px' }}>text-neutral-400</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-neutral-400)' }}>Placeholders y texto deshabilitado</span>
-    </div>
-  </div>
-</div>
-
-### Colores Semánticos
-
-<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px' }}>
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-success)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-success</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-success)' }}>Operación exitosa — registro guardado correctamente</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-warning)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-warning</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-warning)' }}>Advertencia — esta acción no se puede deshacer</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-error)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-error</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-error)' }}>Error — el campo es obligatorio</span>
-    </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--color-info)', flexShrink: 0 }} />
-      <code style={{ fontSize: '12px', color: 'var(--color-neutral-500)', minWidth: '160px' }}>text-info</code>
-      <span style={{ fontSize: '16px', color: 'var(--color-info)' }}>Información — se encontraron 24 resultados</span>
-    </div>
-  </div>
-</div>
-
-### Uso Recomendado
-
-| Contexto | Clase Tailwind | Variable CSS |
-|----------|---------------|--------------|
-| Títulos principales | `text-neutral-900` | `var(--color-neutral-900)` |
-| Texto de contenido | `text-neutral-700` | `var(--color-neutral-700)` |
-| Texto secundario | `text-neutral-500` | `var(--color-neutral-500)` |
-| Placeholders / deshabilitado | `text-neutral-400` | `var(--color-neutral-400)` |
-| Enlaces e interactivos | `text-primary` | `var(--color-primary)` |
-| CTAs y énfasis | `text-accent` | `var(--color-accent)` |
-| Categorías y tags | `text-violet` | `var(--color-violet)` |
-| Highlights y badges | `text-rose` | `var(--color-rose)` |
-| Indicadores complementarios | `text-teal` | `var(--color-teal)` |
-| Mensajes de éxito | `text-success` | `var(--color-success)` |
-| Mensajes de error | `text-error` | `var(--color-error)` |
-| Advertencias | `text-warning` | `var(--color-warning)` |
-| Información | `text-info` | `var(--color-info)` |
-
-## Ejemplos de Uso
-
-### Títulos de Página
-
-```css
-.page-title {
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 32px;
-  color: var(--color-neutral-900);
-}
-```
-
-**Clases Tailwind**: `font-sans text-2xl font-bold text-neutral-900`
-
-<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px', backgroundColor: 'var(--color-neutral-50)' }}>
-  <p style={{ fontFamily: "'Nunito Sans', sans-serif", fontSize: '24px', fontWeight: 700, lineHeight: '32px', color: 'var(--color-neutral-900)', margin: 0 }}>Dashboard de Administración</p>
-</div>
-
-### Texto de Contenido
-
-```css
-.content-text {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  color: var(--color-neutral-700);
-}
-```
-
-**Clases Tailwind**: `font-mono text-base font-normal text-neutral-700`
-
-<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px', backgroundColor: 'var(--color-neutral-50)' }}>
-  <p style={{ fontFamily: "'Open Sans', sans-serif", fontSize: '16px', fontWeight: 400, lineHeight: '24px', color: 'var(--color-neutral-700)', margin: 0 }}>
-    Este es un ejemplo de texto de contenido. La tipografía Open Sans proporciona una lectura cómoda en párrafos extensos, tablas de datos y descripciones dentro de la aplicación.
-  </p>
-</div>
-
-### Labels de Formulario
-
-```css
-.form-label {
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  color: var(--color-neutral-700);
-}
-```
-
-**Clases Tailwind**: `font-sans text-sm font-medium text-neutral-700`
-
-<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px', backgroundColor: 'var(--color-neutral-50)' }}>
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-    <label style={{ fontFamily: "'Nunito Sans', sans-serif", fontSize: '14px', fontWeight: 500, lineHeight: '20px', color: 'var(--color-neutral-700)' }}>Nombre completo</label>
-    <div style={{ padding: '8px 12px', border: '1px solid var(--color-neutral-300)', borderRadius: '6px', backgroundColor: 'white', color: 'var(--color-neutral-400)', fontFamily: "'Open Sans', sans-serif", fontSize: '14px' }}>Ingrese su nombre...</div>
-  </div>
-</div>
-
-### Texto en Tablas
-
-```css
-.table-text {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  color: var(--color-neutral-700);
-}
-```
-
-**Clases Tailwind**: `font-mono text-sm font-normal text-neutral-700`
-
-<div style={{ padding: '16px', border: '1px solid var(--color-neutral-200)', borderRadius: '8px', marginBottom: '16px', backgroundColor: 'var(--color-neutral-50)' }}>
-  <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: "'Open Sans', sans-serif", fontSize: '14px', lineHeight: '20px' }}>
-    <thead>
-      <tr style={{ borderBottom: '2px solid var(--color-neutral-200)' }}>
-        <th style={{ textAlign: 'left', padding: '8px', fontWeight: 600, color: 'var(--color-neutral-900)' }}>Nombre</th>
-        <th style={{ textAlign: 'left', padding: '8px', fontWeight: 600, color: 'var(--color-neutral-900)' }}>Rol</th>
-        <th style={{ textAlign: 'left', padding: '8px', fontWeight: 600, color: 'var(--color-neutral-900)' }}>Estado</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr style={{ borderBottom: '1px solid var(--color-neutral-200)' }}>
-        <td style={{ padding: '8px', color: 'var(--color-neutral-700)' }}>Ana García</td>
-        <td style={{ padding: '8px', color: 'var(--color-neutral-700)' }}>Administrador</td>
-        <td style={{ padding: '8px', color: 'var(--color-success)' }}>Activo</td>
-      </tr>
-      <tr style={{ borderBottom: '1px solid var(--color-neutral-200)' }}>
-        <td style={{ padding: '8px', color: 'var(--color-neutral-700)' }}>Carlos López</td>
-        <td style={{ padding: '8px', color: 'var(--color-neutral-700)' }}>Editor</td>
-        <td style={{ padding: '8px', color: 'var(--color-neutral-400)' }}>Inactivo</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-## Buenas Prácticas
-
-1. **Jerarquía clara**: Usar tamaños y pesos para establecer jerarquía visual
-2. **Consistencia**: Mantener la misma familia para elementos similares
-3. **Legibilidad**: Line-height mínimo de 1.5 para texto de contenido
-4. **Contraste**: Asegurar contraste suficiente con el fondo (mínimo 4.5:1)
-5. **Responsive**: Reducir tamaños en móvil si es necesario
+- **Piso de 11 px.** Nada funcional es más chico que 11 px; el menú usa 12 px (decisión D9).
+- **Cifra entera.** Un valor de KPI nunca se trunca con puntos suspensivos: se achica con su tarjeta y solo parte entre palabras, nunca dentro de un número.
+- **Cifras tabulares.** Tablas, KPIs y chips numéricos usan `tabular-nums` para que los números se alineen.
+- **Títulos en Nunito, todo lo demás en Inter.** No usar Nunito Sans para texto corrido ni Inter para títulos de página.
+- **Color de texto.** Tinta `#252139` para títulos y cifras, cuerpo `#465066`, secundario `#667085`; nada más claro (ver Colors).

@@ -66,19 +66,20 @@ Cuando no hay datos para mostrar:
   justify-content: center;
   padding: 48px 24px;
   text-align: center;
-  color: #6B7280;
+  color: #667085; /* muted: el gris de texto más claro permitido */
 }
 
 .empty-state h3 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #374151;
+  font-family: 'Nunito Sans', Inter, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: #252139; /* ink */
   margin-top: 16px;
 }
 
 .empty-state p {
-  font-size: 14px;
-  color: #6B7280;
+  font-size: 13px;
+  color: #667085;
   margin-top: 8px;
   margin-bottom: 24px;
 }
@@ -94,9 +95,9 @@ Para tablas y listas:
 .skeleton {
   background: linear-gradient(
     90deg,
-    #F3F4F6 0%,
-    #E5E7EB 50%,
-    #F3F4F6 100%
+    #F2F3F7 0%,
+    #E4E5ED 50%,
+    #F2F3F7 100%
   );
   background-size: 200% 100%;
   animation: skeleton-loading 1.5s ease-in-out infinite;
@@ -245,9 +246,9 @@ Para filtros avanzados:
 Ver componente `LoginPage` para implementación completa.
 
 **Variantes**:
-- `gradient`: Fondo con gradiente de marca
-- `split`: Panel izquierdo de branding + formulario derecho
-- `centered`: Formulario centrado con fondo neutro
+- `split` (recomendada, decisión D26): marca del cliente a la izquierda sobre el navy del sidebar, formulario a la derecha sobre blanco; bajo 1024 px solo el formulario
+- `centered`: tarjeta centrada sobre el canvas
+- `gradient`: fondo con el degradé de marca (forma v0.2)
 
 **Logos**:
 - Formulario: `omnitok-logo-primary.svg`
