@@ -1,3 +1,4 @@
+import { Check } from 'lucide-react';
 import { forwardRef, type HTMLAttributes, type ReactNode, useState, createContext, useContext } from 'react';
 import { cn } from '../../utils/cn';
 
@@ -46,30 +47,35 @@ interface TabsContextValue {
 const TabsContext = createContext<TabsContextValue | null>(null);
 
 const variantStyles = {
+  // v3: every option reads as a button before it is selected; the selected
+  // one is filled with the module colour AND carries a check (shape + colour).
+  // Border width never changes on selection, so neighbours never jump.
   default: {
-    list: 'bg-primary/10 p-1 rounded-lg',
-    tab: 'rounded-md',
-    active: 'bg-white shadow-sm text-primary font-semibold',
-    inactive: 'text-primary/70 hover:text-primary hover:bg-white/50',
+    list: 'gap-1.5 p-1.5 rounded-[13px] border border-neutral-200 bg-[#F4F3F9]',
+    tab: 'rounded-[9px] border min-h-[38px] shadow-[0_1px_2px_#1A124008]',
+    active:
+      'bg-[var(--omni-selected)] border-[var(--omni-selected)] text-white font-bold shadow-[0_2px_6px_#10A37F22]',
+    inactive:
+      'bg-white border-[#DCD8EA] text-[#4A4568] hover:bg-[#ECEAF7] hover:border-[#9C93C6] hover:shadow-[0_2px_6px_#1A124015]',
   },
   pills: {
     list: 'gap-2',
     tab: 'rounded-full',
-    active: 'bg-gradient-to-r from-accent to-primary text-white shadow-md',
-    inactive: 'text-neutral-600 hover:bg-primary/10 hover:text-primary',
+    active: 'bg-[image:var(--omni-gradient-action)] text-white shadow-[var(--omni-shadow-action)]',
+    inactive: 'text-neutral-600 hover:bg-primary-soft hover:text-primary-ink',
   },
   underline: {
     list: 'border-b border-primary/20',
     tab: 'border-b-2 -mb-px rounded-none',
-    active: 'border-accent text-primary font-semibold',
-    inactive: 'border-transparent text-neutral-500 hover:text-primary hover:border-primary/30',
+    active: 'border-accent text-primary-ink font-semibold',
+    inactive: 'border-transparent text-neutral-500 hover:text-primary-ink hover:border-primary/30',
   },
 };
 
 const sizeStyles = {
-  sm: 'px-3 py-1.5 text-sm',
-  md: 'px-4 py-2 text-base',
-  lg: 'px-6 py-3 text-lg',
+  sm: 'px-3 py-1.5 text-2xs',
+  md: 'px-[15px] py-2 text-xs',
+  lg: 'px-5 py-2.5 text-[13px]',
 };
 
 export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
@@ -124,7 +130,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
                 disabled={item.disabled}
                 onClick={() => handleTabClick(item.id)}
                 className={cn(
-                  'flex items-center justify-center gap-2 font-medium transition-all min-w-0',
+                  'flex items-center justify-center gap-[7px] font-semibold transition-[background-color,border-color,box-shadow,color] duration-150 min-w-0',
                   styles.tab,
                   sizeStyles[size],
                   activeId === item.id ? styles.active : styles.inactive,
@@ -132,15 +138,18 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
                   item.disabled && 'opacity-50 cursor-not-allowed'
                 )}
               >
+                {variant === 'default' && activeId === item.id && (
+                  <Check aria-hidden="true" className="w-3.5 h-3.5 shrink-0" strokeWidth={3} />
+                )}
                 {item.icon}
                 <span className="truncate">{item.label}</span>
                 {item.badge !== undefined && (
                   <span
                     className={cn(
-                      'px-1.5 py-0.5 text-xs font-medium rounded-full shrink-0',
+                      'px-1.5 py-0.5 text-2xs font-semibold rounded-full shrink-0 tabular-nums',
                       activeId === item.id
                         ? 'bg-white/20'
-                        : 'bg-neutral-200 text-neutral-600'
+                        : 'bg-neutral-100 text-neutral-600'
                     )}
                   >
                     {item.badge}

@@ -82,7 +82,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       return (
         <div
           className={cn(
-            'w-5 h-5 rounded border-2 transition-colors',
+            'w-[18px] h-[18px] rounded-[5px] border-2 transition-colors',
             'flex items-center justify-center',
             'peer-focus:ring-2 peer-focus:ring-offset-2',
             '[&>svg]:opacity-0 peer-checked:[&>svg]:opacity-100',
@@ -90,7 +90,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             styles.checked,
             hasError
               ? 'border-error'
-              : 'border-neutral-300 peer-hover:border-neutral-400'
+              : 'border-neutral-400 peer-hover:border-primary'
           )}
         >
           {indeterminate ? (
@@ -112,7 +112,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             'peer-checked:[&>div]:translate-x-5',
             styles.ring,
             styles.checked,
-            hasError ? 'bg-error/30' : 'bg-neutral-300'
+            hasError ? 'bg-error/30' : 'bg-neutral-400'
           )}
         >
           <div
@@ -150,16 +150,16 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           {(label || description) && (
             <div className="flex flex-col">
               {label && (
-                <span className="text-sm font-medium text-neutral-700">{label}</span>
+                <span className="text-[13px] font-medium text-neutral-800">{label}</span>
               )}
               {description && (
-                <span className="text-sm text-neutral-500">{description}</span>
+                <span className="text-xs text-neutral-500">{description}</span>
               )}
             </div>
           )}
         </label>
         {hasError && (
-          <p className={cn('text-sm text-error', toggle ? 'ml-14' : 'ml-8')}>{error}</p>
+          <p className={cn('text-xs text-error', toggle ? 'ml-14' : 'ml-8')}>{error}</p>
         )}
       </div>
     );

@@ -186,7 +186,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
             style={getOffsetStyle(placement, offset)}
             className={cn(
               'absolute z-50 w-max',
-              'rounded-md border border-neutral-200 bg-white shadow-lg',
+              'rounded-xl border border-neutral-200 bg-white p-1 shadow-menu',
               'animate-fade-in',
               placementStyles[placement],
               contentClassName

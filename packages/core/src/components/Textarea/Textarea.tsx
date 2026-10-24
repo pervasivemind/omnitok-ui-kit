@@ -42,7 +42,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         {label && (
           <label
             htmlFor={textareaId}
-            className="text-sm font-medium text-neutral-700"
+            className="text-xs font-semibold text-neutral-600"
           >
             {label}
           </label>
@@ -55,17 +55,17 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           value={value}
           className={cn(
             // Base styles
-            'w-full rounded-md border bg-white px-4 py-3',
+            'w-full rounded-[10px] border bg-white px-3.5 py-2.5 text-[13px] leading-5',
             'transition-colors duration-200',
-            'placeholder:text-neutral-400',
+            'placeholder:text-neutral-500',
             'focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary',
             'resize-y min-h-[100px]',
             // Border color
             hasError
               ? 'border-error focus:ring-error focus:border-error'
-              : 'border-neutral-300',
+              : 'border-control',
             // Disabled state
-            disabled && 'bg-neutral-100 cursor-not-allowed opacity-60',
+            disabled && '!bg-neutral-100 text-neutral-500 cursor-not-allowed',
             className
           )}
           aria-invalid={hasError}
@@ -77,18 +77,18 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         <div className="flex justify-between">
           <div>
             {hasError && (
-              <p id={`${textareaId}-error`} className="text-sm text-error">
+              <p id={`${textareaId}-error`} className="text-xs text-error">
                 {error}
               </p>
             )}
             {!hasError && helperText && (
-              <p id={`${textareaId}-helper`} className="text-sm text-neutral-500">
+              <p id={`${textareaId}-helper`} className="text-xs text-neutral-500">
                 {helperText}
               </p>
             )}
           </div>
           {showCount && maxLength && (
-            <span className="text-sm text-neutral-500">
+            <span className="text-xs text-neutral-500 tabular-nums">
               {currentLength}/{maxLength}
             </span>
           )}

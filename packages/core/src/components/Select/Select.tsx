@@ -44,9 +44,9 @@ export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement
 }
 
 const sizeStyles: Record<SelectSize, string> = {
-  sm: 'px-3 py-1.5 text-sm pr-8',
-  md: 'px-4 py-2 text-base pr-10',
-  lg: 'px-4 py-3 text-lg pr-12',
+  sm: 'px-3 py-1.5 text-xs pr-8',
+  md: 'px-3.5 py-2 text-[13px] leading-5 pr-10',
+  lg: 'px-4 py-2.5 text-sm pr-12',
 };
 
 const iconSizeStyles: Record<SelectSize, string> = {
@@ -58,9 +58,9 @@ const iconSizeStyles: Record<SelectSize, string> = {
 // Sizing for the searchable combobox control, mirroring MultiSelect so the
 // search field looks identical (minus the tags).
 const searchableSizeStyles: Record<SelectSize, string> = {
-  sm: 'min-h-[34px] px-3 py-1 text-sm',
-  md: 'min-h-[42px] px-4 py-1.5 text-base',
-  lg: 'min-h-[50px] px-4 py-2 text-lg',
+  sm: 'min-h-[32px] px-3 py-1 text-xs',
+  md: 'min-h-[38px] px-3.5 py-1.5 text-[13px]',
+  lg: 'min-h-[44px] px-4 py-2 text-sm',
 };
 
 const searchableIconSizeStyles: Record<SelectSize, string> = {
@@ -281,14 +281,14 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           {label && (
             <label
               htmlFor={`${selectId}-input`}
-              className="text-sm font-medium text-neutral-700"
+              className="text-xs font-semibold text-neutral-600"
             >
               {label}
             </label>
           )}
           <div ref={containerRef} className="relative">
             {leftIcon && (
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none z-10">
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 pointer-events-none z-10">
                 {leftIcon}
               </div>
             )}
@@ -296,7 +296,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
               onClick={handleContainerClick}
               className={cn(
                 // Base styles
-                'flex items-center gap-1.5 w-full rounded-md border bg-white cursor-text',
+                'flex items-center gap-1.5 w-full rounded-[10px] border bg-white cursor-text',
                 'transition-colors duration-200',
                 // Size styles
                 searchableSizeStyles[size],
@@ -308,9 +308,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
                 isOpen && !hasError && 'ring-2 ring-primary border-primary',
                 isOpen && hasError && 'ring-2 ring-error border-error',
                 // Border color
-                hasError ? 'border-error' : 'border-neutral-300',
+                hasError ? 'border-error' : 'border-control',
                 // Disabled state
-                disabled && 'bg-neutral-100 cursor-not-allowed opacity-60',
+                disabled && '!bg-neutral-100 text-neutral-500 cursor-not-allowed',
                 className
               )}
               aria-invalid={hasError}
@@ -336,7 +336,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
                 disabled={disabled}
                 className={cn(
                   'flex-1 min-w-[60px] outline-none bg-transparent',
-                  'placeholder:text-neutral-400',
+                  'placeholder:text-neutral-500',
                   disabled && 'cursor-not-allowed'
                 )}
                 role="combobox"
@@ -351,7 +351,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             </div>
             <ChevronDown
               className={cn(
-                'absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none transition-transform duration-200',
+                'absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 pointer-events-none transition-transform duration-200',
                 isOpen && 'rotate-180'
               )}
               size={chevronSize[size]}
@@ -362,13 +362,13 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
                 id={`${selectId}-listbox`}
                 role="listbox"
                 className={cn(
-                  'absolute z-50 mt-1 w-full rounded-md border border-neutral-200 bg-white shadow-lg',
+                  'absolute z-50 mt-1 w-full rounded-xl border border-neutral-200 bg-white p-1 shadow-menu',
                   'max-h-60 overflow-auto',
                   'py-1'
                 )}
               >
                 {filteredOptions.length === 0 ? (
-                  <li className="px-4 py-2 text-sm text-neutral-400">
+                  <li className="px-3 py-2 text-xs text-neutral-500">
                     {searchQuery ? 'No matching options' : 'No options available'}
                   </li>
                 ) : (
@@ -385,15 +385,15 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
                         }
                       }}
                       className={cn(
-                        'px-4 py-2 text-sm transition-colors duration-100',
+                        'rounded-[7px] px-3 py-2 text-[13px] leading-5 transition-colors duration-100',
                         // Disabled state (takes precedence over other visual states)
                         option.disabled
-                          ? 'text-neutral-300 cursor-not-allowed opacity-50 select-none'
+                          ? 'text-neutral-400 cursor-not-allowed select-none'
                           : cn(
                               'cursor-pointer',
                               index === highlightedIndex
-                                ? 'bg-primary/10 text-primary'
-                                : 'text-neutral-700 hover:bg-neutral-50'
+                                ? 'bg-primary-soft text-primary-ink font-semibold'
+                                : 'text-neutral-700 hover:bg-primary-soft'
                             )
                       )}
                     >
@@ -429,12 +429,12 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             </select>
           </div>
           {hasError && (
-            <p id={`${selectId}-error`} className="text-sm text-error">
+            <p id={`${selectId}-error`} className="text-xs text-error">
               {error}
             </p>
           )}
           {!hasError && helperText && (
-            <p id={`${selectId}-helper`} className="text-sm text-neutral-500">
+            <p id={`${selectId}-helper`} className="text-xs text-neutral-500">
               {helperText}
             </p>
           )}
@@ -447,14 +447,14 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         {label && (
           <label
             htmlFor={selectId}
-            className="text-sm font-medium text-neutral-700"
+            className="text-xs font-semibold text-neutral-600"
           >
             {label}
           </label>
         )}
         <div className="relative">
           {leftIcon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 pointer-events-none">
               {leftIcon}
             </div>
           )}
@@ -468,7 +468,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             onChange={onChange}
             className={cn(
               // Base styles
-              'w-full rounded-md border bg-white appearance-none cursor-pointer',
+              'w-full rounded-[10px] border bg-white appearance-none cursor-pointer text-neutral-800',
               'transition-colors duration-200',
               'focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary',
               // Size styles
@@ -478,9 +478,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
               // Border color
               hasError
                 ? 'border-error focus:ring-error focus:border-error'
-                : 'border-neutral-300',
+                : 'border-control',
               // Disabled state
-              disabled && 'bg-neutral-100 cursor-not-allowed opacity-60',
+              disabled && '!bg-neutral-100 text-neutral-500 cursor-not-allowed',
               className
             )}
             aria-invalid={hasError}
@@ -501,17 +501,17 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ))}
           </select>
           <ChevronDown
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 pointer-events-none"
             size={size === 'sm' ? 14 : size === 'lg' ? 20 : 16}
           />
         </div>
         {hasError && (
-          <p id={`${selectId}-error`} className="text-sm text-error">
+          <p id={`${selectId}-error`} className="text-xs text-error">
             {error}
           </p>
         )}
         {!hasError && helperText && (
-          <p id={`${selectId}-helper`} className="text-sm text-neutral-500">
+          <p id={`${selectId}-helper`} className="text-xs text-neutral-500">
             {helperText}
           </p>
         )}

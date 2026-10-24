@@ -72,15 +72,15 @@ export interface MultiSelectProps {
 }
 
 const sizeStyles: Record<MultiSelectSize, string> = {
-  sm: 'min-h-[34px] px-3 py-1 text-sm',
-  md: 'min-h-[42px] px-4 py-1.5 text-base',
-  lg: 'min-h-[50px] px-4 py-2 text-lg',
+  sm: 'min-h-[32px] px-3 py-1 text-xs',
+  md: 'min-h-[38px] px-3.5 py-1.5 text-[13px]',
+  lg: 'min-h-[44px] px-4 py-2 text-sm',
 };
 
 const tagSizeStyles: Record<MultiSelectSize, string> = {
-  sm: 'px-1.5 py-0.5 text-xs gap-0.5',
-  md: 'px-2 py-0.5 text-sm gap-1',
-  lg: 'px-2.5 py-1 text-sm gap-1',
+  sm: 'px-1.5 py-0.5 text-2xs gap-0.5',
+  md: 'px-2 py-0.5 text-xs gap-1',
+  lg: 'px-2.5 py-1 text-xs gap-1',
 };
 
 const iconSizeStyles: Record<MultiSelectSize, string> = {
@@ -102,8 +102,8 @@ const chevronSize: Record<MultiSelectSize, number> = {
 };
 
 const tagColorStyles: Record<MultiSelectTagColor, { base: string; hover: string }> = {
-  primary: { base: 'bg-primary/10 text-primary', hover: 'hover:bg-primary/20' },
-  accent: { base: 'bg-accent/10 text-accent', hover: 'hover:bg-accent/20' },
+  primary: { base: 'bg-primary-soft text-primary-ink', hover: 'hover:bg-primary-line' },
+  accent: { base: 'bg-accent/10 text-accent-dark', hover: 'hover:bg-accent/20' },
   neutral: { base: 'bg-neutral-100 text-neutral-700', hover: 'hover:bg-neutral-200' },
   success: { base: 'bg-success/10 text-success', hover: 'hover:bg-success/20' },
   warning: { base: 'bg-warning/10 text-warning', hover: 'hover:bg-warning/20' },
@@ -320,13 +320,13 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
     return (
       <div ref={ref} className={cn('flex flex-col gap-1.5', fullWidth && 'w-full')}>
         {label && (
-          <label htmlFor={`${componentId}-input`} className="text-sm font-medium text-neutral-700">
+          <label htmlFor={`${componentId}-input`} className="text-xs font-semibold text-neutral-600">
             {label}
           </label>
         )}
         <div ref={containerRef} className="relative">
           {leftIcon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none z-10">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 pointer-events-none z-10">
               {leftIcon}
             </div>
           )}
@@ -334,7 +334,7 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
             onClick={handleContainerClick}
             className={cn(
               // Base styles
-              'flex flex-wrap items-center gap-1.5 w-full rounded-md border bg-white cursor-text',
+              'flex flex-wrap items-center gap-1.5 w-full rounded-[10px] border bg-white cursor-text',
               'transition-colors duration-200',
               // Size styles
               sizeStyles[size],
@@ -346,9 +346,9 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
               isOpen && !hasError && 'ring-2 ring-primary border-primary',
               isOpen && hasError && 'ring-2 ring-error border-error',
               // Border color
-              hasError ? 'border-error' : 'border-neutral-300',
+              hasError ? 'border-error' : 'border-control',
               // Disabled state
-              disabled && 'bg-neutral-100 cursor-not-allowed opacity-60',
+              disabled && '!bg-neutral-100 text-neutral-500 cursor-not-allowed',
               className
             )}
             aria-invalid={hasError}
@@ -362,7 +362,7 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
                 <span
                   key={val}
                   className={cn(
-                    'inline-flex items-center rounded-md font-medium',
+                    'inline-flex items-center rounded-full font-semibold',
                     'transition-colors duration-150',
                     colorStyle.base,
                     !disabled && colorStyle.hover,
@@ -406,7 +406,7 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
                 disabled={disabled}
                 className={cn(
                   'flex-1 min-w-[60px] outline-none bg-transparent',
-                  'placeholder:text-neutral-400',
+                  'placeholder:text-neutral-500',
                   disabled && 'cursor-not-allowed'
                 )}
                 role="combobox"
@@ -421,7 +421,7 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
             ) : (
               <>
                 {selectedValues.length === 0 && (
-                  <span className="text-neutral-400">{placeholder}</span>
+                  <span className="text-neutral-500">{placeholder}</span>
                 )}
                 {/* Hidden input for focus/keyboard support in non-searchable mode */}
                 <input
@@ -447,7 +447,7 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
           </div>
           <ChevronDown
             className={cn(
-              'absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none transition-transform duration-200',
+              'absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 pointer-events-none transition-transform duration-200',
               isOpen && 'rotate-180'
             )}
             size={chevronSize[size]}
@@ -459,13 +459,13 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
               role="listbox"
               aria-multiselectable="true"
               className={cn(
-                'absolute z-50 mt-1 w-full rounded-md border border-neutral-200 bg-white shadow-lg',
+                'absolute z-50 mt-1 w-full rounded-xl border border-neutral-200 bg-white p-1 shadow-menu',
                 'max-h-60 overflow-auto',
                 'py-1'
               )}
             >
               {filteredOptions.length === 0 ? (
-                <li className="px-4 py-2 text-sm text-neutral-400">
+                <li className="px-3 py-2 text-xs text-neutral-500">
                   {searchQuery ? 'No matching options' : 'No options available'}
                 </li>
               ) : (
@@ -482,15 +482,15 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
                       }
                     }}
                     className={cn(
-                      'px-4 py-2 text-sm transition-colors duration-100',
+                      'rounded-[7px] px-3 py-2 text-[13px] leading-5 transition-colors duration-100',
                       // Disabled state (takes precedence over other visual states)
                       option.disabled || !canAddMore
-                        ? 'text-neutral-300 cursor-not-allowed opacity-50 select-none'
+                        ? 'text-neutral-400 cursor-not-allowed select-none'
                         : cn(
                             'cursor-pointer',
                             index === highlightedIndex
-                              ? 'bg-primary/10 text-primary'
-                              : 'text-neutral-700 hover:bg-neutral-50'
+                              ? 'bg-primary-soft text-primary-ink font-semibold'
+                              : 'text-neutral-700 hover:bg-primary-soft'
                           )
                     )}
                   >
@@ -502,12 +502,12 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
           )}
         </div>
         {hasError && (
-          <p id={`${componentId}-error`} className="text-sm text-error">
+          <p id={`${componentId}-error`} className="text-xs text-error">
             {error}
           </p>
         )}
         {!hasError && helperText && (
-          <p id={`${componentId}-helper`} className="text-sm text-neutral-500">
+          <p id={`${componentId}-helper`} className="text-xs text-neutral-500">
             {helperText}
           </p>
         )}

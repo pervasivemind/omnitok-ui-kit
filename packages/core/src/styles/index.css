@@ -19,7 +19,19 @@
     --omni-surface: #FFFFFF;       /* cards, panels, menus */
     --omni-ink: #252139;           /* headings, KPI values */
     --omni-text: #465066;          /* body text */
-    --omni-muted: #7D8799;         /* captions, hints */
+    --omni-muted: #667085;         /* captions, hints: 4.97:1 on white (v3, 2026-10-24) */
+    --omni-muted-on-tint: #5B6478; /* captions on tinted surfaces */
+    --omni-accent-fill: #E0156D;   /* accent fill under white text (4.67:1) */
+    --omni-accent-ink: #C8105F;    /* accent as text on white (5.68:1) */
+    --omni-focus: #6251A3;         /* focus ring */
+    --omni-violet-soft: #F0EFF8;   /* secondary action, selected option */
+    --omni-violet-ink: #3B3880;    /* text on violet-soft */
+    /* Selected tab / page: the module colour (Disponibilidad green by default,
+       5.30:1 under white text). A module or tenant can override it. */
+    --omni-selected: #0B7A5F;
+    /* Primary action: pink to violet. Tenants may override it (D14). */
+    --omni-gradient-action: linear-gradient(105deg, #E0156D, #6D2DD6);
+    --omni-shadow-action: 0 5px 15px #FF177B20;
     --omni-line: #E4E5ED;          /* hairlines, card borders */
     --omni-active: #EAE7F5;        /* selected row on light surfaces */
     --omni-accent: #6251A3;        /* selected text on light surfaces */
@@ -41,38 +53,38 @@
     --color-primary: #4D4A9D;
     --color-primary-dark: #3d3a8c;
     --color-primary-light: #6b68b3;
-    --color-accent: #FF177B;
-    --color-accent-dark: #e0156d;
-    --color-accent-light: #ff4a96;
+    --color-accent: #E0156D;
+    --color-accent-dark: #C8105F;
+    --color-accent-light: #FF177B;
 
     /* Auxiliary Colors */
-    --color-violet: #8B5CF6;
+    --color-violet: #8E44AD;
     --color-violet-light: #A78BFA;
-    --color-violet-dark: #7C3AED;
-    --color-rose: #EC4899;
+    --color-violet-dark: #763894;
+    --color-rose: #C4476A;
     --color-rose-light: #F472B6;
-    --color-rose-dark: #DB2777;
-    --color-teal: #14B8A6;
-    --color-teal-light: #2DD4BF;
-    --color-teal-dark: #0D9488;
+    --color-rose-dark: #94304C;
+    --color-teal: #0B7A5F;
+    --color-teal-light: #5EEAD4;
+    --color-teal-dark: #086049;
 
     /* Neutral Colors */
-    --color-neutral-50: #fafafa;
-    --color-neutral-100: #f5f5f5;
-    --color-neutral-200: #e5e5e5;
-    --color-neutral-300: #d4d4d4;
-    --color-neutral-400: #a3a3a3;
-    --color-neutral-500: #737373;
-    --color-neutral-600: #525252;
-    --color-neutral-700: #404040;
-    --color-neutral-800: #262626;
-    --color-neutral-900: #171717;
+    --color-neutral-50: #F8F9FB;
+    --color-neutral-100: #F2F3F7;
+    --color-neutral-200: #E4E5ED;
+    --color-neutral-300: #D0D4DE;
+    --color-neutral-400: #98A1B3;
+    --color-neutral-500: #667085;
+    --color-neutral-600: #465066;
+    --color-neutral-700: #343A4D;
+    --color-neutral-800: #252139;
+    --color-neutral-900: #1A1240;
 
     /* Semantic Colors */
-    --color-success: #22c55e;
-    --color-warning: #f59e0b;
-    --color-error: #ef4444;
-    --color-info: #3b82f6;
+    --color-success: #166534;
+    --color-warning: #8A5A16;
+    --color-error: #C4476A;
+    --color-info: #4D4A9D;
 
     /* Spacing */
     --spacing-xs: 0.25rem;
@@ -106,6 +118,27 @@
     background-color: var(--omni-canvas);
     color: var(--omni-text);
   }
+
+  /* Browser surfaces (v3, 2026-10-24): themed from the palette. */
+  :root {
+    accent-color: var(--omni-violet);
+    scrollbar-color: #C9C3E2 transparent;
+  }
+  * {
+    scrollbar-width: thin;
+  }
+  ::selection {
+    background: #FF177B2E;
+  }
+  :focus-visible {
+    outline: 2px solid var(--omni-focus);
+    outline-offset: 2px;
+  }
+  /* Numbers line up in KPIs, tables and numeric chips. */
+  table,
+  [data-kpi] {
+    font-variant-numeric: tabular-nums;
+  }
 }
 
 @layer components {
@@ -116,7 +149,7 @@
 
   /* Gradient active state for sidebar */
   .gradient-active {
-    background: linear-gradient(90deg, #FF177B 0%, #4D4A9D 100%);
+    background: linear-gradient(90deg, #E0156D 0%, #4D4A9D 100%);
   }
 }
 

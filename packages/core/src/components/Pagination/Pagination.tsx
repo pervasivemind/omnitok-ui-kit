@@ -50,9 +50,9 @@ export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onCh
 }
 
 const sizeStyles = {
-  sm: 'h-8 w-8 text-sm',
-  md: 'h-10 w-10 text-base',
-  lg: 'h-12 w-12 text-lg',
+  sm: 'h-8 min-w-8 text-xs',
+  md: 'h-9 min-w-9 text-[13px]',
+  lg: 'h-10 min-w-10 text-sm',
 };
 
 const iconSizes = {
@@ -62,7 +62,8 @@ const iconSizes = {
 };
 
 const activeVariantStyles: Record<PaginationVariant, string> = {
-  primary: 'bg-primary text-white',
+  // v3: the current page uses the selected colour, like the selected tab.
+  primary: 'bg-[var(--omni-selected)] text-white font-bold',
   accent: 'bg-accent text-white',
   neutral: 'bg-neutral-700 text-white',
   success: 'bg-success text-white',
@@ -158,7 +159,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     const iconSize = iconSizes[size];
 
     const buttonClasses = cn(
-      'flex items-center justify-center rounded-full transition-colors',
+      'flex items-center justify-center rounded-[9px] transition-colors tabular-nums',
       'focus:outline-none focus:ring-2 focus:ring-offset-2',
       focusVariantStyles[variant],
       sizeStyles[size],
@@ -174,7 +175,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
         className={cn(
           buttonClasses,
           'px-3',
-          isActive ? activeVariantStyles[variant] : 'text-neutral-600 hover:bg-neutral-100'
+          isActive ? activeVariantStyles[variant] : 'text-neutral-600 hover:bg-primary-soft hover:text-primary-ink'
         )}
       >
         {page}
@@ -217,8 +218,8 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
           className={cn(
             buttonClasses,
             isDisabled
-              ? 'text-neutral-300 cursor-not-allowed'
-              : 'text-neutral-600 hover:bg-neutral-100'
+              ? 'text-neutral-400 cursor-not-allowed'
+              : 'text-neutral-600 hover:bg-primary-soft hover:text-primary-ink'
           )}
         >
           <Icon size={iconSize} />
@@ -238,7 +239,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       hasInfo || showSelector ? (
         <div className="flex items-center gap-2">
           {hasInfo && (
-            <span className="text-sm text-neutral-500">
+            <span className="text-xs text-neutral-500 tabular-nums whitespace-nowrap">
               {t('pagination.info', {
                 start: startItem ?? '',
                 end: endItem ?? '',
@@ -269,7 +270,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
             page === 'ellipsis' ? (
               <span
                 key={`ellipsis-${index}`}
-                className={cn('px-2 text-neutral-400', sizeStyles[size])}
+                className={cn('px-2 text-neutral-500', sizeStyles[size])}
               >
                 ...
               </span>

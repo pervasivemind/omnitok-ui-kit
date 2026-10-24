@@ -24,6 +24,7 @@ const meta: Meta<typeof Button> = {
         'rose',
         'teal',
         'outline',
+        'secondary',
       ],
     },
     size: {
@@ -49,6 +50,8 @@ export const Principales: Story = {
   render: () => (
     <div className="flex flex-wrap gap-4">
       <Button variant="primary">Primary</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="outline">Outline</Button>
       <Button variant="accent">Accent</Button>
       <Button variant="neutral">Neutral</Button>
     </div>

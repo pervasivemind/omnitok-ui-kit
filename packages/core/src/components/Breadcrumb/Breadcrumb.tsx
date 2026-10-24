@@ -35,13 +35,13 @@ export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(
     ref
   ) => {
     const renderSeparator = () =>
-      separator || <ChevronRight className="w-4 h-4 text-neutral-400 mx-2" />;
+      separator || <ChevronRight className="w-3.5 h-3.5 text-neutral-400 mx-1.5" aria-hidden="true" />;
 
     const renderItem = (item: BreadcrumbItem, index: number, isLast: boolean) => {
       const content = (
         <>
           {index === 0 && showHomeIcon && (
-            <Home className="w-4 h-4 mr-1" />
+            <Home className="w-3.5 h-3.5 mr-1" aria-hidden="true" />
           )}
           {item.icon && <span className="mr-1">{item.icon}</span>}
           {item.label}
@@ -49,10 +49,10 @@ export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(
       );
 
       const itemClasses = cn(
-        'inline-flex items-center text-sm',
+        'inline-flex items-center text-xs',
         isLast
-          ? 'font-medium text-neutral-900'
-          : 'text-neutral-500 hover:text-neutral-700 transition-colors'
+          ? 'font-semibold text-neutral-800'
+          : 'text-neutral-500 hover:text-neutral-800 hover:underline transition-colors'
       );
 
       if (item.href && !isLast) {

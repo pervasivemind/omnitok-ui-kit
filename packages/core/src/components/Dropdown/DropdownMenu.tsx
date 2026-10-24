@@ -249,7 +249,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
       );
 
       const itemClasses = cn(
-        'flex items-center gap-2 w-full rounded-md',
+        'flex items-center gap-2 w-full rounded-[7px] text-[13px]',
         'transition-colors duration-100',
         sizeStyles[size],
         item.disabled
@@ -260,7 +260,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
                 ? cn('text-error', isHighlighted ? 'bg-error/10' : 'hover:bg-error/10')
                 : cn(
                     'text-neutral-700',
-                    isHighlighted ? 'bg-primary/10 text-primary' : 'hover:bg-neutral-50'
+                    isHighlighted ? 'bg-primary-soft text-primary-ink' : 'hover:bg-primary-soft'
                   )
             )
       );

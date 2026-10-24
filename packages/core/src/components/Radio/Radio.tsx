@@ -36,31 +36,31 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
             />
             <div
               className={cn(
-                'w-5 h-5 rounded-full border-2 transition-colors',
+                'w-[18px] h-[18px] rounded-full border-2 transition-colors',
                 'flex items-center justify-center',
                 'peer-focus:ring-2 peer-focus:ring-primary peer-focus:ring-offset-2',
                 'peer-checked:border-primary',
                 hasError
                   ? 'border-error'
-                  : 'border-neutral-300 peer-hover:border-neutral-400'
+                  : 'border-neutral-400 peer-hover:border-primary'
               )}
             >
-              <div className="w-2.5 h-2.5 rounded-full bg-primary scale-0 peer-checked:scale-100 transition-transform" />
+              <div className="w-2 h-2 rounded-full bg-primary scale-0 peer-checked:scale-100 transition-transform" />
             </div>
           </div>
           {(label || description) && (
             <div className="flex flex-col">
               {label && (
-                <span className="text-sm font-medium text-neutral-700">{label}</span>
+                <span className="text-[13px] font-medium text-neutral-800">{label}</span>
               )}
               {description && (
-                <span className="text-sm text-neutral-500">{description}</span>
+                <span className="text-xs text-neutral-500">{description}</span>
               )}
             </div>
           )}
         </label>
         {hasError && (
-          <p className="text-sm text-error ml-8">{error}</p>
+          <p className="text-xs text-error ml-8">{error}</p>
         )}
       </div>
     );

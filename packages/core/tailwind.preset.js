@@ -10,70 +10,90 @@ export default {
         surface: '#FFFFFF',
         ink: '#252139',
         body: '#465066',
-        muted: '#7D8799',
+        muted: '#667085', // v3 (2026-10-24): 4.97:1 on white, 4.60:1 on canvas
+        'muted-on-tint': '#5B6478',
         line: '#E4E5ED',
         primary: {
           DEFAULT: '#4D4A9D',
           dark: '#3d3a8c',
           light: '#6b68b3',
+          // v3: the quiet violet of secondary actions and selected options.
+          soft: '#F0EFF8',
+          ink: '#3B3880',
+          line: '#E0DEF2',
         },
+        control: '#D0D4DE', // border of inputs, selects and textareas
+        // v3: DEFAULT is the fill that carries white text (4.67:1); the bright
+        // identity pink #FF177B is `light` (selection marks, never under text).
         accent: {
-          DEFAULT: '#FF177B',
-          dark: '#e0156d',
-          light: '#ff4a96',
+          DEFAULT: '#E0156D',
+          dark: '#C8105F',
+          light: '#FF177B',
         },
 
         // Auxiliary Colors
+        // v3: the quieter hues of the approved reference; every DEFAULT carries
+        // white text at >= 4.5:1 and works as text on white. On a `soft` tint use `dark`.
         violet: {
-          DEFAULT: '#8B5CF6',
+          DEFAULT: '#8E44AD',
           light: '#A78BFA',
-          dark: '#7C3AED',
+          dark: '#763894',
         },
         rose: {
-          DEFAULT: '#EC4899',
+          DEFAULT: '#C4476A',
           light: '#F472B6',
-          dark: '#DB2777',
+          dark: '#94304C',
         },
         teal: {
-          DEFAULT: '#14B8A6',
-          light: '#2DD4BF',
-          dark: '#0D9488',
+          DEFAULT: '#0B7A5F',
+          light: '#5EEAD4',
+          dark: '#086049',
         },
 
         // Neutral Colors
+        // v3: cool greys of the approved reference. 500 is the secondary text
+        // (#667085), 600 the body text, 800 the ink; 400 is for icons and
+        // borders only (2.6:1), never for text. bi-components and
+        // dashboard-render resolve `neutral-*` through this preset too.
         neutral: {
-          50: '#fafafa',
-          100: '#f5f5f5',
-          200: '#e5e5e5',
-          300: '#d4d4d4',
-          400: '#a3a3a3',
-          500: '#737373',
-          600: '#525252',
-          700: '#404040',
-          800: '#262626',
-          900: '#171717',
+          50: '#F8F9FB',
+          100: '#F2F3F7',
+          200: '#E4E5ED',
+          300: '#D0D4DE',
+          400: '#98A1B3',
+          500: '#667085',
+          600: '#465066',
+          700: '#343A4D',
+          800: '#252139',
+          900: '#1A1240',
         },
 
         // Semantic Colors
+        // v3 (reference palette): DEFAULT is a fill under white text and text on
+        // white (>= 4.7:1); on its `soft` tint the text is `dark`.
         success: {
-          DEFAULT: '#22c55e',
+          DEFAULT: '#166534',
           light: '#86efac',
-          dark: '#16a34a',
+          dark: '#14532D',
+          soft: '#E3F4EA',
         },
         warning: {
-          DEFAULT: '#f59e0b',
+          DEFAULT: '#8A5A16',
           light: '#fcd34d',
-          dark: '#d97706',
+          dark: '#6E4710',
+          soft: '#FBF1DF',
         },
         error: {
-          DEFAULT: '#ef4444',
+          DEFAULT: '#C4476A',
           light: '#fca5a5',
-          dark: '#dc2626',
+          dark: '#94304C',
+          soft: '#FDEEF2',
         },
         info: {
-          DEFAULT: '#3b82f6',
-          light: '#93c5fd',
-          dark: '#2563eb',
+          DEFAULT: '#4D4A9D',
+          light: '#B6B8DF',
+          dark: '#3B3880',
+          soft: '#F0EFF8',
         },
 
         // BI Chart Colors
@@ -97,6 +117,8 @@ export default {
       },
 
       fontSize: {
+        // v3 floor (D9): 11px is the smallest functional text.
+        '2xs': ['0.6875rem', { lineHeight: '1rem' }],
         xs: ['0.75rem', { lineHeight: '1rem' }],
         sm: ['0.875rem', { lineHeight: '1.25rem' }],
         base: ['1rem', { lineHeight: '1.5rem' }],
@@ -120,15 +142,16 @@ export default {
       },
 
       boxShadow: {
-        card: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
-        'card-hover': '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+        card: '0 2px 4px #21183F04, 0 6px 18px #21183F09',
+        'card-hover': '0 4px 10px #21183F0A, 0 10px 26px #21183F12',
+        menu: '0 10px 30px #1A124022',
         modal: '0 25px 50px -12px rgb(0 0 0 / 0.25)',
         sidebar: '2px 0 8px rgba(0, 0, 0, 0.1)',
       },
 
       backgroundImage: {
-        'gradient-active': 'linear-gradient(90deg, #FF177B 0%, #4D4A9D 100%)',
-        'gradient-brand': 'linear-gradient(135deg, #4D4A9D 0%, #FF177B 100%)',
+        'gradient-active': 'linear-gradient(90deg, #E0156D 0%, #4D4A9D 100%)',
+        'gradient-brand': 'linear-gradient(135deg, #4D4A9D 0%, #E0156D 100%)',
       },
 
       animation: {

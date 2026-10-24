@@ -12,7 +12,8 @@ export type ButtonVariant =
   | 'violet'
   | 'rose'
   | 'teal'
-  | 'outline';
+  | 'outline'
+  | 'secondary';
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -35,7 +36,12 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-primary text-white hover:bg-primary-dark active:bg-primary-dark focus:ring-primary',
+  // v3: the action colour. Pink-to-violet gradient (tenant-overridable token),
+  // white text >= 4.6:1 on both ends, soft pink glow.
+  primary:
+    'bg-[image:var(--omni-gradient-action)] text-white shadow-[var(--omni-shadow-action)] enabled:hover:brightness-95 focus:ring-accent',
+  secondary:
+    'bg-primary-soft text-primary-ink border border-primary-line enabled:hover:bg-[#E7E5F4] focus:ring-primary',
   accent: 'bg-accent text-white hover:bg-accent-dark active:bg-accent-dark focus:ring-accent',
   neutral:
     'bg-neutral-200 text-neutral-800 hover:bg-neutral-300 active:bg-neutral-400 focus:ring-neutral-400',
@@ -46,7 +52,7 @@ const variantStyles: Record<ButtonVariant, string> = {
   rose: 'bg-rose text-white hover:bg-rose-dark active:bg-rose-dark focus:ring-rose',
   teal: 'bg-teal text-white hover:bg-teal-dark active:bg-teal-dark focus:ring-teal',
   outline:
-    'bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary',
+    'bg-white border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary',
 };
 
 const ghostStyles: Partial<Record<ButtonVariant, string>> = {
@@ -62,11 +68,12 @@ const ghostStyles: Partial<Record<ButtonVariant, string>> = {
   teal: 'bg-transparent text-teal hover:bg-teal/10 active:bg-teal/20 focus:ring-teal',
 };
 
+// v3 type scale for controls: 11 / 12 / 13 / 14 px.
 const sizeStyles: Record<ButtonSize, string> = {
-  xs: 'px-2 py-0.5 text-xs gap-1',
-  sm: 'px-3 py-1.5 text-sm gap-1.5',
-  md: 'px-4 py-2 text-base gap-2',
-  lg: 'px-6 py-3 text-lg gap-2.5',
+  xs: 'px-2.5 py-1 text-2xs gap-1',
+  sm: 'px-3 py-1.5 text-xs gap-1.5',
+  md: 'px-4 py-2 text-[13px] leading-5 gap-2',
+  lg: 'px-5 py-2.5 text-sm gap-2.5',
 };
 
 const loaderSize: Record<ButtonSize, number> = {
@@ -101,9 +108,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={isDisabled}
         className={cn(
           // Base styles
-          'inline-flex items-center justify-center font-medium rounded-md',
-          'transition-colors duration-200',
-          'focus:outline-none focus:ring-2 focus:ring-offset-2',
+          'inline-flex items-center justify-center font-semibold rounded-xl',
+          // State motion only: colour, shadow and a 1px lift on hover.
+          'transition-[background-color,box-shadow,transform,filter,color] duration-150',
+          'enabled:hover:-translate-y-px enabled:hover:shadow-[0_3px_10px_#1A124018] motion-reduce:transform-none',
+          'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
           // Variant styles
           ghost && ghostStyles[variant] ? ghostStyles[variant] : variantStyles[variant],
           // Size styles
