@@ -267,7 +267,7 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
         {label && (
           <label
             htmlFor={editorId}
-            className="text-sm font-medium text-neutral-700"
+            className="text-xs font-semibold text-neutral-600"
           >
             {label}
           </label>
@@ -279,8 +279,8 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
               onClick={handleCopy}
               aria-label={copied ? 'Copied' : 'Copy code'}
               className={cn(
-                'absolute right-2 top-2 z-10 rounded-md p-1.5',
-                'bg-white/80 text-neutral-500 backdrop-blur',
+                'absolute right-2 top-2 z-10 rounded-lg p-1.5',
+                'bg-white text-neutral-500 border border-neutral-200',
                 'transition-colors hover:bg-neutral-100 hover:text-neutral-700',
                 'focus:outline-none focus:ring-2 focus:ring-primary'
               )}
@@ -298,15 +298,15 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
             aria-describedby={describedBy}
             className={cn(
               'omnitok-code-editor',
-              'overflow-hidden rounded-md border bg-white',
+              'overflow-hidden rounded-[10px] border bg-white',
               'transition-colors duration-200',
               !displayOnly &&
                 !disabled &&
-                'focus-within:border-primary focus-within:ring-2 focus-within:ring-primary',
+                'focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20',
               hasError
-                ? 'border-error focus-within:border-error focus-within:ring-error'
-                : 'border-neutral-300',
-              disabled && 'cursor-not-allowed bg-neutral-100 opacity-60',
+                ? 'border-error focus-within:border-error focus-within:ring-error/20'
+                : 'border-control',
+              disabled && 'cursor-not-allowed bg-neutral-100 text-neutral-500',
               className
             )}
             {...props}
@@ -315,7 +315,7 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
               {showLineNumbers && (
                 <div
                   aria-hidden="true"
-                  className="select-none border-r border-neutral-200 bg-neutral-50 py-3 pl-4 pr-3 text-right text-neutral-400"
+                  className="select-none border-r border-neutral-200 bg-neutral-50 py-3 pl-4 pr-3 text-right text-neutral-500 tabular-nums"
                   style={MONO_STYLE}
                 >
                   {Array.from({ length: lineCount }, (_, i) => (
@@ -331,18 +331,18 @@ export const CodeEditor = forwardRef<HTMLDivElement, CodeEditorProps>(
           <div className="flex justify-between">
             <div>
               {hasError && (
-                <p id={`${editorId}-error`} className="text-sm text-error">
+                <p id={`${editorId}-error`} className="text-xs text-error">
                   {error}
                 </p>
               )}
               {!hasError && helperText && (
-                <p id={`${editorId}-helper`} className="text-sm text-neutral-500">
+                <p id={`${editorId}-helper`} className="text-xs text-neutral-500">
                   {helperText}
                 </p>
               )}
             </div>
             {showCount && !displayOnly && (
-              <span className="text-sm text-neutral-500">
+              <span className="text-xs text-neutral-500 tabular-nums">
                 {lineCount} {lineCount === 1 ? 'line' : 'lines'} · {value.length} chars
               </span>
             )}

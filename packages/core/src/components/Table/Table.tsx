@@ -100,8 +100,8 @@ function TableComponent<T>(
 
     const isActive = sortColumn === column.key;
     const iconClass = cn(
-      'w-4 h-4 ml-1',
-      isActive ? 'text-white' : 'text-white/60'
+      'w-3.5 h-3.5 ml-1 flex-shrink-0',
+      isActive ? 'text-primary-ink' : 'text-neutral-400'
     );
 
     if (isActive && sortDirection === 'asc') {
@@ -126,16 +126,16 @@ function TableComponent<T>(
         className={cn('w-full border-collapse', className)}
         {...props}
       >
-        <thead className="bg-primary text-white">
+        <thead className="bg-white border-b border-neutral-200">
           <tr>
             {columns.map((column) => (
               <th
                 key={column.key}
                 className={cn(
-                  'font-semibold text-white text-sm',
+                  'text-2xs font-semibold uppercase tracking-[.06em] text-neutral-500 whitespace-nowrap',
                   compact ? 'px-3 py-2' : 'px-4 py-3',
                   alignClasses[column.align || 'left'],
-                  column.sortable && 'cursor-pointer select-none hover:bg-primary-dark'
+                  column.sortable && 'cursor-pointer select-none hover:text-neutral-800'
                 )}
                 style={{ width: column.width }}
                 onClick={() => handleSort(column)}
@@ -160,7 +160,7 @@ function TableComponent<T>(
                 className="px-4 py-8 text-center text-neutral-500"
               >
                 <div className="flex items-center justify-center gap-2">
-                  <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                  <div aria-hidden="true" className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                   Loading...
                 </div>
               </td>
@@ -190,7 +190,7 @@ function TableComponent<T>(
                   <td
                     key={column.key}
                     className={cn(
-                      'text-neutral-700 text-sm',
+                      'text-neutral-700 text-[13px] leading-5',
                       compact ? 'px-3 py-2' : 'px-4 py-3',
                       alignClasses[column.align || 'left']
                     )}

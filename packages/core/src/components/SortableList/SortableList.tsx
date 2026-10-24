@@ -57,36 +57,28 @@ export function SortableList({
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     className={cn(
-                      'group relative flex items-center gap-3 p-4 bg-white border border-neutral-200 rounded-xl',
-                      'transition-all duration-200 ease-out',
-                      'hover:shadow-md hover:border-primary/40',
-                      snapshot.isDragging && 'shadow-xl ring-2 ring-primary/30 rotate-1 scale-[1.02]',
+                      'group relative flex items-center gap-3 px-3.5 py-3 bg-white border border-neutral-200 rounded-xl shadow-card text-[13px] text-neutral-700',
+                      'transition-[box-shadow,border-color] duration-150 ease-out',
+                      'hover:shadow-card-hover hover:border-primary-line',
+                      snapshot.isDragging && 'shadow-menu ring-2 ring-primary/25 border-primary-line',
                       itemClassName
                     )}
                     style={{
                       ...provided.draggableProps.style,
                     }}
                   >
-                    {/* Barra de gradiente superior cuando se arrastra */}
-                    <div
-                      className={cn(
-                        'absolute top-0 left-0 right-0 h-1 rounded-t-xl transition-opacity duration-200',
-                        'bg-gradient-to-r from-accent via-primary to-primary',
-                        snapshot.isDragging ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'
-                      )}
-                    />
 
                     {/* Handle para arrastrar */}
                     <div
                       {...provided.dragHandleProps}
                       className={cn(
                         'flex-shrink-0 p-1 rounded-lg cursor-grab active:cursor-grabbing',
-                        'text-neutral-300 hover:text-neutral-500 hover:bg-neutral-100',
+                        'text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100',
                         'transition-colors duration-150',
                         snapshot.isDragging && 'text-primary'
                       )}
                     >
-                      <GripVertical className="w-5 h-5" />
+                      <GripVertical aria-hidden="true" className="w-4 h-4" />
                     </div>
 
                     {/* Contenido */}
@@ -95,10 +87,10 @@ export function SortableList({
                     {/* Indicador de posición */}
                     <span
                       className={cn(
-                        'flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full text-xs font-medium',
-                        'bg-neutral-100 text-neutral-500',
+                        'flex-shrink-0 min-w-6 h-6 px-1.5 flex items-center justify-center rounded-full text-2xs font-semibold tabular-nums',
+                        'bg-neutral-100 text-neutral-600',
                         'transition-colors duration-200',
-                        snapshot.isDragging && 'bg-primary text-white'
+                        snapshot.isDragging && 'bg-primary-soft text-primary-ink'
                       )}
                     >
                       {index + 1}

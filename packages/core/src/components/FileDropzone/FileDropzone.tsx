@@ -99,12 +99,12 @@ export function FileDropzone({
       <div
         {...getRootProps()}
         className={cn(
-          'flex flex-col items-center justify-center p-8 border-2 border-dashed rounded-2xl cursor-pointer',
-          'transition-all duration-200 ease-out',
-          'bg-gradient-to-b from-neutral-50 to-white',
-          'border-primary/60 hover:border-primary',
-          isDragActive && !isDragReject && 'border-primary bg-gradient-to-b from-primary/5 to-accent/5 scale-[1.01]',
-          isDragReject && 'border-red-400 bg-red-50',
+          'flex flex-col items-center justify-center px-6 py-8 border border-dashed rounded-[14px] cursor-pointer text-center',
+          'transition-colors duration-150 ease-out',
+          'bg-[#FAF9FD]',
+          'border-[#B9B3D6] hover:border-primary hover:bg-primary-soft',
+          isDragActive && !isDragReject && 'border-primary bg-primary-soft',
+          isDragReject && 'border-error bg-error-soft',
           disabled && 'opacity-50 cursor-not-allowed'
         )}
       >
@@ -112,21 +112,21 @@ export function FileDropzone({
 
         <div
           className={cn(
-            'w-16 h-16 mb-4 rounded-2xl flex items-center justify-center',
-            'bg-gradient-to-br from-primary/10 to-accent/10',
-            'transition-transform duration-200',
-            isDragActive && 'scale-110'
+            'w-12 h-12 mb-3 rounded-xl flex items-center justify-center',
+            'bg-primary-soft',
+            'transition-colors duration-150',
+            isDragActive && 'bg-white'
           )}
         >
           <Upload
             className={cn(
-              'w-8 h-8 text-primary',
-              isDragActive && 'animate-bounce'
+              'w-6 h-6 text-primary-ink',
+              isDragActive && 'motion-safe:animate-bounce'
             )}
           />
         </div>
 
-        <p className="text-lg font-medium text-neutral-700 mb-1">
+        <p className="font-display text-[15px] font-extrabold text-neutral-800 mb-0.5">
           {isDragActive
             ? isDragReject
               ? 'Archivo no permitido'
@@ -134,11 +134,11 @@ export function FileDropzone({
             : 'Arrastra archivos aquí'}
         </p>
 
-        <p className="text-sm text-neutral-500 mb-3">
+        <p className="text-[13px] text-neutral-600 mb-2">
           o haz clic para seleccionar
         </p>
 
-        <p className="text-xs text-neutral-400">
+        <p className="text-2xs text-neutral-500">
           PNG, JPG hasta {formatFileSize(maxSize)}
         </p>
       </div>
@@ -146,7 +146,7 @@ export function FileDropzone({
       {/* Lista de archivos */}
       {files.length > 0 && (
         <div className="space-y-2">
-          <p className="text-sm font-medium text-neutral-700">
+          <p className="text-xs font-semibold text-neutral-600">
             Archivos seleccionados ({files.length})
           </p>
 
@@ -159,9 +159,9 @@ export function FileDropzone({
                 <div
                   key={`${file.name}-${index}`}
                   className={cn(
-                    'group flex items-center gap-3 p-3 bg-white border border-neutral-200 rounded-xl',
+                    'group flex items-center gap-3 p-3 bg-white border border-neutral-200 rounded-xl shadow-card',
                     'transition-all duration-200',
-                    'hover:shadow-md hover:border-primary/30'
+                    'hover:shadow-card-hover hover:border-primary-line'
                   )}
                 >
                   {/* Preview o icono */}
@@ -177,16 +177,16 @@ export function FileDropzone({
                     <div
                       className={cn(
                         'w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0',
-                        'bg-gradient-to-br from-primary/10 to-accent/10'
+                        'bg-primary-soft'
                       )}
                     >
-                      <FileIcon className="w-6 h-6 text-primary" />
+                      <FileIcon aria-hidden="true" className="w-5 h-5 text-primary-ink" />
                     </div>
                   )}
 
                   {/* Info */}
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-neutral-800 truncate">
+                    <p className="text-[13px] font-semibold text-neutral-800 truncate">
                       {file.name}
                     </p>
                     <p className="text-xs text-neutral-500">
@@ -202,12 +202,12 @@ export function FileDropzone({
                       removeFile(file);
                     }}
                     className={cn(
-                      'p-1.5 rounded-lg opacity-0 group-hover:opacity-100',
-                      'text-neutral-400 hover:text-red-500 hover:bg-red-50',
+                      'p-1.5 rounded-lg opacity-0 group-hover:opacity-100 focus-visible:opacity-100',
+                      'text-neutral-500 hover:text-error-dark hover:bg-error-soft',
                       'transition-all duration-200'
                     )}
                   >
-                    <X className="w-4 h-4" />
+                    <X aria-hidden="true" className="w-4 h-4" />
                   </button>
                 </div>
               );

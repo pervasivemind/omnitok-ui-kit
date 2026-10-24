@@ -218,7 +218,8 @@
   .omnitok-code-editor .token.prolog,
   .omnitok-code-editor .token.doctype,
   .omnitok-code-editor .token.cdata {
-    color: var(--color-neutral-400);
+    /* v3: comments are text; neutral-500 keeps 4.97:1 on white. */
+    color: var(--color-neutral-500);
     font-style: italic;
   }
 

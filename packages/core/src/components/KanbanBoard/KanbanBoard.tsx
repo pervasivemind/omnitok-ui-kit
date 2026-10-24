@@ -39,10 +39,10 @@ export interface KanbanBoardProps {
 
 const tagVariants = {
   default: 'bg-neutral-100 text-neutral-700',
-  primary: 'bg-primary/10 text-primary',
-  success: 'bg-green-100 text-green-700',
-  warning: 'bg-amber-100 text-amber-700',
-  danger: 'bg-red-100 text-red-700',
+  primary: 'bg-primary-soft text-primary-ink',
+  success: 'bg-success-soft text-success-dark',
+  warning: 'bg-warning-soft text-warning-dark',
+  danger: 'bg-error-soft text-error-dark',
 };
 
 export function KanbanBoard({ columns, onCardMove, className }: KanbanBoardProps) {
@@ -73,21 +73,21 @@ export function KanbanBoard({ columns, onCardMove, className }: KanbanBoardProps
         {columns.map((column) => (
           <div
             key={column.id}
-            className="flex-shrink-0 w-72 bg-neutral-50 rounded-xl border border-neutral-200"
+            className="flex-shrink-0 w-72 bg-[#F4F3F9] rounded-[14px] border border-neutral-200"
           >
             {/* Header de columna */}
             <div
               className={cn(
-                'px-4 py-3 border-b border-neutral-200 rounded-t-xl',
-                'bg-gradient-to-r from-neutral-100 to-neutral-50'
+                'px-4 py-3 border-b border-neutral-200 rounded-t-[14px]',
+                'bg-transparent'
               )}
             >
               <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-neutral-800">{column.title}</h3>
+                <h3 className="font-display text-[14px] font-extrabold text-neutral-800">{column.title}</h3>
                 <span
                   className={cn(
-                    'px-2 py-0.5 text-xs font-medium rounded-full',
-                    'bg-primary/10 text-primary'
+                    'px-2 py-0.5 text-2xs font-semibold tabular-nums rounded-full',
+                    'bg-white border border-neutral-200 text-neutral-600'
                   )}
                 >
                   {column.cards.length}
@@ -102,8 +102,8 @@ export function KanbanBoard({ columns, onCardMove, className }: KanbanBoardProps
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                   className={cn(
-                    'p-3 min-h-[200px] space-y-3 transition-colors duration-200',
-                    snapshot.isDraggingOver && 'bg-primary/5'
+                    'p-3 min-h-[200px] space-y-3 rounded-b-[14px] transition-colors duration-150',
+                    snapshot.isDraggingOver && 'bg-primary-soft'
                   )}
                 >
                   {column.cards.map((card, index) => (
@@ -113,10 +113,10 @@ export function KanbanBoard({ columns, onCardMove, className }: KanbanBoardProps
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           className={cn(
-                            'group bg-white rounded-lg border border-neutral-200 overflow-hidden',
-                            'transition-all duration-200',
-                            'hover:shadow-md hover:border-primary/30',
-                            snapshot.isDragging && 'shadow-xl ring-2 ring-primary/30 rotate-2'
+                            'group bg-white rounded-xl border border-neutral-200 shadow-card overflow-hidden',
+                            'transition-[box-shadow,border-color] duration-150',
+                            'hover:shadow-card-hover hover:border-primary-line',
+                            snapshot.isDragging && 'shadow-menu ring-2 ring-primary/25 border-primary-line'
                           )}
                           style={{
                             ...provided.draggableProps.style,
@@ -128,17 +128,18 @@ export function KanbanBoard({ columns, onCardMove, className }: KanbanBoardProps
                             className={cn(
                               'flex items-center gap-2 px-3 py-2 border-b border-neutral-100',
                               'cursor-grab active:cursor-grabbing',
-                              'bg-gradient-to-r from-neutral-50 to-white'
+                              'bg-white'
                             )}
                           >
                             <GripVertical
+                              aria-hidden="true"
                               className={cn(
-                                'w-4 h-4 text-neutral-300',
-                                'group-hover:text-neutral-400',
+                                'w-4 h-4 flex-shrink-0 text-neutral-400',
+                                'group-hover:text-neutral-600',
                                 snapshot.isDragging && 'text-primary'
                               )}
                             />
-                            <span className="font-medium text-sm text-neutral-800 truncate">
+                            <span className="font-semibold text-[13px] text-neutral-800 truncate">
                               {card.title}
                             </span>
                           </div>
@@ -146,7 +147,7 @@ export function KanbanBoard({ columns, onCardMove, className }: KanbanBoardProps
                           {/* Contenido */}
                           <div className="p-3">
                             {card.description && (
-                              <p className="text-sm text-neutral-600 mb-2 line-clamp-2">
+                              <p className="text-xs leading-5 text-neutral-600 mb-2 line-clamp-2">
                                 {card.description}
                               </p>
                             )}
@@ -158,7 +159,7 @@ export function KanbanBoard({ columns, onCardMove, className }: KanbanBoardProps
                                   <span
                                     key={tagIndex}
                                     className={cn(
-                                      'px-2 py-0.5 text-xs font-medium rounded-full',
+                                      'px-2 py-0.5 text-2xs font-semibold tabular-nums rounded-full',
                                       tagVariants[tag.variant || 'default']
                                     )}
                                   >
@@ -168,15 +169,6 @@ export function KanbanBoard({ columns, onCardMove, className }: KanbanBoardProps
                               </div>
                             )}
                           </div>
-
-                          {/* Barra de gradiente superior */}
-                          <div
-                            className={cn(
-                              'absolute top-0 left-0 right-0 h-0.5 transition-opacity duration-200',
-                              'bg-gradient-to-r from-accent via-primary to-primary',
-                              snapshot.isDragging ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'
-                            )}
-                          />
                         </div>
                       )}
                     </Draggable>
@@ -185,7 +177,7 @@ export function KanbanBoard({ columns, onCardMove, className }: KanbanBoardProps
 
                   {/* Estado vacío */}
                   {column.cards.length === 0 && !snapshot.isDraggingOver && (
-                    <div className="flex items-center justify-center h-24 text-neutral-400 text-sm">
+                    <div className="flex items-center justify-center h-24 rounded-xl border border-dashed border-neutral-300 text-neutral-500 text-xs">
                       Sin tarjetas
                     </div>
                   )}

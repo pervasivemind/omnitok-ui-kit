@@ -63,28 +63,28 @@ export function DraggableCard({
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     className={cn(
-                      'group relative bg-white border border-neutral-200 rounded-xl overflow-hidden',
-                      'transition-all duration-200 ease-out',
-                      'hover:shadow-lg hover:border-primary/40 hover:-translate-y-0.5',
-                      snapshot.isDragging && 'shadow-2xl ring-2 ring-primary/30 scale-[1.02] rotate-1',
+                      'group relative bg-white border border-neutral-200 rounded-[14px] shadow-card overflow-hidden',
+                      'transition-[box-shadow,border-color] duration-150 ease-out',
+                      'hover:shadow-card-hover hover:border-primary-line',
+                      snapshot.isDragging && 'shadow-menu ring-2 ring-primary/25 border-primary-line',
                       cardClassName
                     )}
                     style={{
                       ...provided.draggableProps.style,
                     }}
                   >
-                    {/* Header con título y gradiente */}
+                    {/* v3: white header with a line under it, like Card. */}
                     {item.title ? (
                       <div
                         {...provided.dragHandleProps}
                         className={cn(
-                          'flex items-center justify-between px-4 py-3',
-                          'bg-gradient-to-r from-primary to-primary-dark text-white',
+                          'flex items-center justify-between gap-3 px-4 py-3',
+                          'bg-white border-b border-neutral-200 text-neutral-800',
                           'cursor-grab active:cursor-grabbing'
                         )}
                       >
-                        <h3 className="font-semibold">{item.title}</h3>
-                        <GripVertical className="w-5 h-5 opacity-70" />
+                        <h3 className="font-display text-[15px] font-extrabold leading-6">{item.title}</h3>
+                        <GripVertical aria-hidden="true" className="w-4 h-4 flex-shrink-0 text-neutral-400 transition-colors group-hover:text-neutral-600" />
                       </div>
                     ) : (
                       /* Handle sin título */
@@ -96,31 +96,21 @@ export function DraggableCard({
                         )}
                       >
                         <GripVertical
+                          aria-hidden="true"
                           className={cn(
-                            'w-5 h-5 flex-shrink-0 text-neutral-300',
-                            'group-hover:text-neutral-400 transition-colors',
+                            'w-4 h-4 flex-shrink-0 text-neutral-400',
+                            'group-hover:text-neutral-600 transition-colors',
                             snapshot.isDragging && 'text-primary'
                           )}
                         />
-                        <div className="flex-1 h-px bg-gradient-to-r from-neutral-200 via-neutral-300 to-transparent" />
+                        <div className="flex-1 h-px bg-neutral-200" />
                       </div>
                     )}
 
                     {/* Contenido */}
-                    <div className={cn(item.title ? 'p-4' : 'px-4 pb-4')}>
+                    <div className={cn('text-[13px] leading-5 text-neutral-700', item.title ? 'p-4' : 'px-4 pb-4')}>
                       {item.children}
                     </div>
-
-                    {/* Barra superior de gradiente cuando no hay título */}
-                    {!item.title && (
-                      <div
-                        className={cn(
-                          'absolute top-0 left-0 right-0 h-1 transition-opacity duration-200',
-                          'bg-gradient-to-r from-accent via-primary to-primary',
-                          snapshot.isDragging ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'
-                        )}
-                      />
-                    )}
                   </div>
                 )}
               </Draggable>
@@ -153,25 +143,25 @@ export function SingleDraggableCard({
   return (
     <div
       className={cn(
-        'group relative bg-white border border-neutral-200 rounded-xl overflow-hidden',
-        'transition-all duration-200 ease-out',
-        'hover:shadow-lg hover:border-primary/40 hover:-translate-y-0.5',
-        isDragging && 'shadow-2xl ring-2 ring-primary/30 scale-[1.02] rotate-1',
+        'group relative bg-white border border-neutral-200 rounded-[14px] shadow-card overflow-hidden',
+        'transition-[box-shadow,border-color] duration-150 ease-out',
+        'hover:shadow-card-hover hover:border-primary-line',
+        isDragging && 'shadow-menu ring-2 ring-primary/25 border-primary-line',
         className
       )}
     >
-      {/* Header con título y gradiente */}
+      {/* v3: white header with a line under it, like Card. */}
       {title ? (
         <div
           {...dragHandleProps}
           className={cn(
-            'flex items-center justify-between px-4 py-3',
-            'bg-gradient-to-r from-primary to-primary-dark text-white',
+            'flex items-center justify-between gap-3 px-4 py-3',
+            'bg-white border-b border-neutral-200 text-neutral-800',
             'cursor-grab active:cursor-grabbing'
           )}
         >
-          <h3 className="font-semibold">{title}</h3>
-          <GripVertical className="w-5 h-5 opacity-70" />
+          <h3 className="font-display text-[15px] font-extrabold leading-6">{title}</h3>
+          <GripVertical aria-hidden="true" className="w-4 h-4 flex-shrink-0 text-neutral-400 transition-colors group-hover:text-neutral-600" />
         </div>
       ) : (
         /* Handle sin título */
@@ -183,29 +173,19 @@ export function SingleDraggableCard({
           )}
         >
           <GripVertical
+            aria-hidden="true"
             className={cn(
-              'w-5 h-5 flex-shrink-0 text-neutral-300',
-              'group-hover:text-neutral-400 transition-colors',
+              'w-4 h-4 flex-shrink-0 text-neutral-400',
+              'group-hover:text-neutral-600 transition-colors',
               isDragging && 'text-primary'
             )}
           />
-          <div className="flex-1 h-px bg-gradient-to-r from-neutral-200 via-neutral-300 to-transparent" />
+          <div className="flex-1 h-px bg-neutral-200" />
         </div>
       )}
 
       {/* Contenido */}
-      <div className={cn(title ? 'p-4' : 'px-4 pb-4')}>{children}</div>
-
-      {/* Barra superior de gradiente cuando no hay título */}
-      {!title && (
-        <div
-          className={cn(
-            'absolute top-0 left-0 right-0 h-1 transition-opacity duration-200',
-            'bg-gradient-to-r from-accent via-primary to-primary',
-            isDragging ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'
-          )}
-        />
-      )}
+      <div className={cn('text-[13px] leading-5 text-neutral-700', title ? 'p-4' : 'px-4 pb-4')}>{children}</div>
     </div>
   );
 }
