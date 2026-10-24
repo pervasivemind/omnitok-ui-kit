@@ -111,13 +111,17 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
     return (
       <TabsContext.Provider value={{ activeId }}>
         <div ref={ref} className={className} {...props}>
-          {/* Tab list */}
+          {/* Tab list. More tabs than fit wrap onto another line; a tab
+              never shrinks to a single letter (3.1.1). Wrapping, not a
+              horizontal scroller: a scroller clips vertically too, which
+              would cut the active pill's shadow, the focus ring and the
+              underline. With fullWidth the tabs share one row. */}
           <div
             role="tablist"
             className={cn(
               'flex',
               styles.list,
-              fullWidth && 'w-full'
+              fullWidth ? 'w-full' : 'flex-wrap'
             )}
           >
             {items.map((item) => (

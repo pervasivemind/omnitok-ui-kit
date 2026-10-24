@@ -155,6 +155,38 @@ export const WithBadges: Story = {
   ),
 };
 
+export const NarrowWraps: Story = {
+  name: 'Narrow (wraps, never truncates)',
+  args: {
+    variant: 'underline',
+    size: 'sm',
+    items: [
+      { id: 'reports', label: 'Reports' },
+      { id: 'ai', label: 'Project AI' },
+      { id: 'data', label: 'Data' },
+      { id: 'refresh', label: 'Auto-refresh' },
+      { id: 'deliveries', label: 'Deliveries' },
+      { id: 'embed', label: 'Embed' },
+      { id: 'access', label: 'Access' },
+      { id: 'settings', label: 'Settings' },
+    ],
+    defaultActiveId: 'reports',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'More tabs than fit wrap onto another line. A tab is never cut to a single letter, and nothing clips the focus ring or the active mark (3.1.1).',
+      },
+    },
+  },
+  render: (args) => (
+    <div style={{ width: 320 }}>
+      <Tabs {...args} />
+    </div>
+  ),
+};
+
 export const FullWidth: Story = {
   args: {
     items: tabItems,
