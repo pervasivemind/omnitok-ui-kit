@@ -15,7 +15,6 @@ const meta: Meta<typeof LoginPage> = {
   },
   tags: ['autodocs'],
   args: {
-    variant: 'split',
     onLoginSubmit: (email: string, password: string) => {
       console.log('Login:', { email, password });
     },
@@ -28,7 +27,6 @@ const meta: Meta<typeof LoginPage> = {
       control: 'select',
       options: ['es', 'en'],
     },
-    variant: { table: { disable: true } },
   },
 };
 

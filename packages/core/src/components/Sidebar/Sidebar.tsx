@@ -11,7 +11,7 @@ import {
   type MouseEvent,
 } from 'react';
 import { createPortal } from 'react-dom';
-import { Check, ChevronDown, ChevronRight, PanelLeftClose, Search } from 'lucide-react';
+import { Check, ChevronDown, ChevronRight, Search } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useI18n } from '../../i18n';
 
@@ -98,12 +98,6 @@ export interface SidebarProjectSelector {
 export interface SidebarProps extends HTMLAttributes<HTMLElement> {
   /** Navigation items */
   items: SidebarItem[];
-  /** Logo element (legacy: v3 shells put the brand in the header instead) */
-  logo?: ReactNode;
-  /** Logo element for collapsed state */
-  logoCollapsed?: ReactNode;
-  /** System name displayed below logo */
-  systemName?: string;
   /** Footer content (expanded) */
   footer?: ReactNode;
   /** Footer content while collapsed. Without it the footer is hidden when collapsed. */
@@ -112,8 +106,6 @@ export interface SidebarProps extends HTMLAttributes<HTMLElement> {
   collapsed?: boolean;
   /** Callback when collapse state changes */
   onCollapsedChange?: (collapsed: boolean) => void;
-  /** Show the collapse toggle button inside the rail */
-  collapsible?: boolean;
   /** Custom active item ID */
   activeId?: string;
   /**
@@ -129,11 +121,6 @@ export interface SidebarProps extends HTMLAttributes<HTMLElement> {
   expandedIds?: string[];
   /** Called when a group header is clicked (controlled mode). */
   onExpandedChange?: (id: string, expanded: boolean) => void;
-  /**
-   * `framed` (default): rounded rail with a margin, as in the v3 shell.
-   * `flush`: edge to edge, full height (legacy layouts).
-   */
-  frame?: 'framed' | 'flush';
 }
 
 /* ────────────────────────────────────────────────────────────────── */
@@ -542,26 +529,20 @@ export const Sidebar = forwardRef<HTMLElement, SidebarProps>(
   (
     {
       items,
-      logo,
-      logoCollapsed,
-      systemName,
       footer,
       footerCollapsed,
       collapsed = false,
       onCollapsedChange,
-      collapsible = false,
       activeId,
       onItemClick,
       projectSelector,
       expandedIds,
       onExpandedChange,
-      frame = 'framed',
       className,
       ...props
     },
     ref
   ) => {
-    const { t } = useI18n();
     const controlled = expandedIds !== undefined;
 
     // Uncontrolled: groups open when a child is active and stay open until
@@ -605,10 +586,6 @@ export const Sidebar = forwardRef<HTMLElement, SidebarProps>(
       [controlled, isExpanded, onExpandedChange]
     );
 
-    const expandedLogo = logo;
-    const collapsedLogo = logoCollapsed ?? logo;
-    const framed = frame === 'framed';
-
     return (
       <aside
         ref={ref}
@@ -617,51 +594,12 @@ export const Sidebar = forwardRef<HTMLElement, SidebarProps>(
         className={cn(
           'flex flex-shrink-0 flex-col overflow-hidden [background:var(--omni-sb-bg)] font-sans text-[var(--omni-sb-text)]',
           'transition-[width] duration-200',
-          framed
-            ? 'm-3 h-[calc(100%-24px)] rounded-[14px] border border-[var(--omni-navy-line)] shadow-[0_2px_8px_#1A124008]'
-            : 'h-full border-r border-[var(--omni-navy-line)]',
+          'm-3 h-[calc(100%-24px)] rounded-[14px] border border-[var(--omni-navy-line)] shadow-[0_2px_8px_#1A124008]',
           collapsed ? 'w-16' : 'w-[250px]',
           className
         )}
         {...props}
       >
-        {/* Legacy logo slot: v3 shells carry the brand in the header, so this stays optional. */}
-        {(expandedLogo || collapsible) && (
-          <div className={cn('flex items-center border-b border-white/[.11] px-3', collapsed ? 'h-14 justify-center px-2' : 'h-14')}>
-            {collapsed ? (
-              <button
-                type="button"
-                onClick={() => onCollapsedChange?.(false)}
-                className="flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:bg-white/10"
-                aria-label={t('sidebar.expand')}
-              >
-                {collapsedLogo ?? <ChevronRight className="h-4 w-4" aria-hidden="true" />}
-              </button>
-            ) : (
-              <>
-                <div className="flex min-w-0 flex-1 flex-col">
-                  <div className="flex items-center justify-center">{expandedLogo}</div>
-                  {systemName && (
-                    <span className="mt-0.5 text-center text-[10px] uppercase leading-tight tracking-wider text-white/50">
-                      {systemName}
-                    </span>
-                  )}
-                </div>
-                {collapsible && (
-                  <button
-                    type="button"
-                    onClick={() => onCollapsedChange?.(true)}
-                    className="ml-2 flex-shrink-0 rounded-lg p-1.5 transition-colors hover:bg-white/10"
-                    aria-label={t('sidebar.collapse')}
-                  >
-                    <PanelLeftClose className="h-4 w-4" aria-hidden="true" />
-                  </button>
-                )}
-              </>
-            )}
-          </div>
-        )}
-
         <nav className={cn('scrollbar-thin flex-1 overflow-y-auto overflow-x-hidden', collapsed ? 'px-2 py-2' : 'px-2.5 py-2.5')}>
           {projectSelector && !items.some((item) => item.kind === 'project-selector') && (
             <ProjectSelectorCard selector={projectSelector} collapsed={collapsed} />

@@ -144,7 +144,7 @@ A restrained palette: a navy frame, cool greys on paper, one identity pink and o
 - **Action Pink Ink** (`action-pink-ink`): the accent when it has to be text on white (5.68:1).
 
 ### Secondary
-- **Shared Violet** (`shared-violet`): links, ghost actions, keywords, info states, the first chart series.
+- **Shared Violet** (`shared-violet`): links, the hover of ghost actions, keywords, info states, the first chart series.
 - **Violet Soft / Violet Ink / Violet Line** (`violet-soft`, `violet-ink`, `violet-line`): the secondary button, selected options in menus, primary badges. Text on the soft tint is always the ink.
 - **Focus Violet** (`focus-violet`): the 2 px focus outline, offset 2 px, on every focusable element.
 
@@ -224,7 +224,7 @@ Confident, compact and few per area.
 - **Shape:** gently rounded (12 px).
 - **Primary:** the pink-to-violet action gradient with white text and the action glow; 8 px by 16 px at the default size (13 px semibold text).
 - **Hover / Focus:** a 1 px lift and a soft navy shadow on hover (no lift with reduced motion); 2 px focus ring offset 2 px.
-- **Secondary:** violet soft fill, violet ink text, violet line border. **Outline:** white with a 2 px violet border that fills on hover. **Ghost:** transparent with a tinted hover. Danger, success and info variants exist for confirmation dialogs only.
+- **Secondary:** violet soft fill, violet ink text, violet line border. **Outline:** white with a 2 px violet border that fills on hover. **Ghost:** ink text at rest and a violet tint on hover, the same for every quiet action (icons in a row, a close, a minor text action); the destructive ghost (a row's delete) also rests in ink and turns red only on hover. Danger, accept and info fill buttons exist for confirmation dialogs only.
 - **Sizes:** xs 11 px, sm 12 px, md 13 px, lg 14 px text.
 
 ### Chips and Badges
@@ -260,6 +260,7 @@ Split screen (D26): the brand hero on the sidebar's navy at 44 % width (logo or 
 ### Do:
 - **Do** read colours, radii and shadows from the kit (preset classes or `--omni-*` variables); tenants retint through `--omni-sb-*`, `--omni-gradient-action` and `--omni-selected` only.
 - **Do** keep one primary (pink) action per header or dialog, at most one secondary next to it.
+- **Do** keep row actions quiet: ghost icons in ink, colour only on hover.
 - **Do** pair every status colour with a word or an icon, and every selection with a check, a bar or a weight change.
 - **Do** use Nunito Sans 800 for titles and KPI values and Inter for everything else.
 - **Do** let headers, action rows and tab lists wrap on narrow screens.
@@ -271,4 +272,5 @@ Split screen (D26): the brand hero on the sidebar's navy at 44 % width (logo or 
 - **Don't** put white or pink text on `identity-pink`; it is a mark colour.
 - **Don't** truncate a number with an ellipsis, in a KPI, a chip or a caption.
 - **Don't** add shadows stronger than the card shadow to things that sit on the page.
+- **Don't** bring back the pre-v3 parts retired in 3.2.0 (grey filled buttons, the auxiliary violet/rose/teal hues, the old header and drag-and-drop widgets).
 - **Don't** use a dark gradient band as a page or panel header; headers are white with a hairline (the navy belongs to the chrome).

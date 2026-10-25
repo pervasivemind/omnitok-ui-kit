@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Button, Badge } from '@omnitok/ui';
+import { Card, CardHeader, CardBody, CardFooter, Button } from '@omnitok/ui';
 import { MoreVertical } from 'lucide-react';
 
 const meta: Meta<typeof Card> = {

@@ -10,10 +10,6 @@ const meta: Meta<typeof Pagination> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    variant: {
-      control: 'select',
-      options: ['default', 'primary'],
-    },
     size: {
       control: 'select',
       options: ['sm', 'md', 'lg'],

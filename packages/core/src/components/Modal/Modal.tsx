@@ -162,7 +162,7 @@ export interface ConfirmModalProps extends Omit<ModalProps, 'children' | 'footer
   /** Cancel button text */
   cancelText?: string;
   /** Confirm button variant */
-  confirmVariant?: 'primary' | 'danger' | 'accent';
+  confirmVariant?: 'primary' | 'danger';
   /** Confirm handler */
   onConfirm: () => void;
   /** Loading state */

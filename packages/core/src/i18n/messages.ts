@@ -31,8 +31,6 @@ export const defaultMessages: Record<SupportedLanguage, Record<string, string>> 
     'pagination.itemsPerPage': 'Elementos por página',
 
     // Shell v3 (Sidebar, BrandHeader, Layout)
-    'sidebar.expand': 'Expandir menú',
-    'sidebar.collapse': 'Colapsar menú',
     'sidebar.project': 'Proyecto',
     'sidebar.chooseProject': 'Elegir proyecto',
     'sidebar.changeProject': 'Cambiar de proyecto',
@@ -73,8 +71,6 @@ export const defaultMessages: Record<SupportedLanguage, Record<string, string>> 
     'pagination.itemsPerPage': 'Items per page',
 
     // Shell v3 (Sidebar, BrandHeader, Layout)
-    'sidebar.expand': 'Expand menu',
-    'sidebar.collapse': 'Collapse menu',
     'sidebar.project': 'Project',
     'sidebar.chooseProject': 'Choose a project',
     'sidebar.changeProject': 'Change project',
@@ -114,8 +110,6 @@ export const defaultMessages: Record<SupportedLanguage, Record<string, string>> 
     'pagination.itemsPerPage': 'Itens por página',
 
     // Shell v3 (Sidebar, BrandHeader, Layout)
-    'sidebar.expand': 'Expandir menu',
-    'sidebar.collapse': 'Recolher menu',
     'sidebar.project': 'Projeto',
     'sidebar.chooseProject': 'Escolher projeto',
     'sidebar.changeProject': 'Trocar de projeto',

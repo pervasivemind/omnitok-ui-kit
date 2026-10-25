@@ -121,7 +121,7 @@ import '@omnitok/ui/styles.css';
 
 ### Layout Components
 - `Sidebar` - Navigation sidebar
-- `Header` - Page header
+- `BrandHeader` - The navy brand header of the v3 shell
 - `Layout` - Page layout wrapper
 - `Breadcrumb` - Breadcrumb navigation
 
@@ -138,10 +138,7 @@ import '@omnitok/ui/styles.css';
 - `LoginPage` - Pre-built login page
 
 ### Drag and Drop Components
-- `SortableList` - Sortable list with drag-and-drop
 - `FileDropzone` - File upload dropzone
-- `KanbanBoard` - Kanban board layout
-- `DraggableCard` - Draggable card component
 
 ## Peer Dependencies
 

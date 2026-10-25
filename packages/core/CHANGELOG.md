@@ -4,6 +4,52 @@ The v3 line is published on the `pkg-v3` branch with a `v3.x.y` tag per
 release. The `pkg` branch (0.2.x) is unchanged and is what the other
 consumer repos still follow.
 
+## 3.2.0 (2026-10-25): only the v3 look is left
+
+Breaking within the 3.x line on purpose: the only consumer of `pkg-v3` is
+the BI monorepo, migrated in the same change. Decided by Pablo on
+2026-10-25 ("retira los antiguos"; D39 to D42 all A).
+
+Removed:
+
+- `Header` and `NotificationMenu` (the v3 shell uses `BrandHeader`).
+- `KanbanBoard`, `DraggableCard`, `SortableList` and their dependencies
+  (`@dnd-kit/*`, `@hello-pangea/dnd`).
+- `Layout`'s pre-v3 shape: `logo`, `logoCollapsed`, `systemName`,
+  `collapsibleSidebar`, `headerTitle`, `user`, `userMenuItems`,
+  `onUserClick`, `showNotifications`, `notificationMenu`, `showSearch`,
+  `searchValue`, `onSearchChange`, `headerActions`. `brandHeader` is now
+  required. `Sidebar` loses `logo`, `logoCollapsed`, `systemName`,
+  `collapsible` and `frame` (always the framed rail).
+- `LoginPage` `variant` (`gradient`, `centered`): the split screen is the
+  only layout.
+- `Button` variants `accent`, `neutral`, `violet`, `rose`, `teal`.
+- `Badge` variants `accent`, `violet`, `rose`, `teal`.
+- `Checkbox` `variant`, `Pagination` `variant`, `MultiSelect` `tagColor`
+  and the per-option `color`: each draws its single v3 colour.
+- `ConfirmModal` `confirmVariant="accent"`.
+- The auxiliary colours `violet`, `rose`, `teal` from the preset and the
+  CSS (`--color-violet*`, `--color-rose*`, `--color-teal*`). The code
+  editor keeps its syntax hues in `--omni-code-*`.
+
+Changed:
+
+- `Button ghost` is one quiet style for every variant (D40): ink text at
+  rest, violet tint on hover. `variant="danger" ghost` also rests in ink and
+  turns red on hover (D41).
+
+Migration:
+
+| Before | After |
+|---|---|
+| `variant="neutral"` (filled) | `variant="secondary"` (D39) |
+| `variant="neutral" ghost`, `variant="primary" ghost` | `ghost` |
+| `variant="accent"` | `variant="primary"` |
+| `<Badge variant="accent" / "violet">` | `variant="primary"` |
+| `<Badge variant="teal">` | the status it means (`success` for enabled) |
+| `text-teal`, `bg-rose-50`, ... | the v3 token for what it means (`success`, `error`, `primary`) |
+| `<LoginPage variant="split">` | `<LoginPage>` |
+
 ## 3.1.3 (2026-10-25): one secondary grey that passes everywhere
 
 - `neutral-500`, `muted` and `--omni-muted` move from `#667085` to `#5B6478`

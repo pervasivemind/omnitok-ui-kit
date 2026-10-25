@@ -31,24 +31,6 @@ export default {
           light: '#FF177B',
         },
 
-        // Auxiliary Colors
-        // v3: the quieter hues of the approved reference; every DEFAULT carries
-        // white text at >= 4.5:1 and works as text on white. On a `soft` tint use `dark`.
-        violet: {
-          DEFAULT: '#8E44AD',
-          light: '#A78BFA',
-          dark: '#763894',
-        },
-        rose: {
-          DEFAULT: '#C4476A',
-          light: '#F472B6',
-          dark: '#94304C',
-        },
-        teal: {
-          DEFAULT: '#0B7A5F',
-          light: '#5EEAD4',
-          dark: '#086049',
-        },
 
         // Neutral Colors
         // v3: cool greys of the approved reference. 500 is the secondary text

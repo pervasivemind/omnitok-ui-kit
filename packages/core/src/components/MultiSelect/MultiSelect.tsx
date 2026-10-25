@@ -14,24 +14,10 @@ import { cn } from '../../utils/cn';
 
 export type MultiSelectSize = 'sm' | 'md' | 'lg';
 
-export type MultiSelectTagColor =
-  | 'primary'
-  | 'accent'
-  | 'neutral'
-  | 'success'
-  | 'warning'
-  | 'error'
-  | 'info'
-  | 'violet'
-  | 'rose'
-  | 'teal';
-
 export interface MultiSelectOption {
   value: string;
   label: string;
   disabled?: boolean;
-  /** Badge color for this specific option (overrides the component-level tagColor) */
-  color?: MultiSelectTagColor;
 }
 
 export interface MultiSelectProps {
@@ -63,8 +49,6 @@ export interface MultiSelectProps {
   searchable?: boolean;
   /** Icon to show on the left */
   leftIcon?: ReactNode;
-  /** Badge color applied to all selected tags (can be overridden per option) */
-  tagColor?: MultiSelectTagColor;
   /** Additional class name */
   className?: string;
   /** Element id */
@@ -101,18 +85,8 @@ const chevronSize: Record<MultiSelectSize, number> = {
   lg: 20,
 };
 
-const tagColorStyles: Record<MultiSelectTagColor, { base: string; hover: string }> = {
-  primary: { base: 'bg-primary-soft text-primary-ink', hover: 'hover:bg-primary-line' },
-  accent: { base: 'bg-accent/10 text-accent-dark', hover: 'hover:bg-accent/20' },
-  neutral: { base: 'bg-neutral-100 text-neutral-700', hover: 'hover:bg-neutral-200' },
-  success: { base: 'bg-success/10 text-success', hover: 'hover:bg-success/20' },
-  warning: { base: 'bg-warning/10 text-warning', hover: 'hover:bg-warning/20' },
-  error: { base: 'bg-error/10 text-error', hover: 'hover:bg-error/20' },
-  info: { base: 'bg-info/10 text-info', hover: 'hover:bg-info/20' },
-  violet: { base: 'bg-violet/10 text-violet', hover: 'hover:bg-violet/20' },
-  rose: { base: 'bg-rose/10 text-rose', hover: 'hover:bg-rose/20' },
-  teal: { base: 'bg-teal/10 text-teal', hover: 'hover:bg-teal/20' },
-};
+// v3: selected tags are the violet of selected options.
+const tagStyle = { base: 'bg-primary-soft text-primary-ink', hover: 'hover:bg-primary-line' };
 
 export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
   (
@@ -131,7 +105,6 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
       maxItems,
       searchable = true,
       leftIcon,
-      tagColor = 'primary',
       className,
       id,
     },
@@ -313,10 +286,6 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
       return options.find((o) => o.value === value)?.label ?? value;
     };
 
-    const getTagColor = (value: string): MultiSelectTagColor => {
-      return options.find((o) => o.value === value)?.color ?? tagColor;
-    };
-
     return (
       <div ref={ref} className={cn('flex flex-col gap-1.5', fullWidth && 'w-full')}>
         {label && (
@@ -357,7 +326,7 @@ export const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
             }
           >
             {selectedValues.map((val) => {
-              const colorStyle = tagColorStyles[getTagColor(val)];
+              const colorStyle = tagStyle;
               return (
                 <span
                   key={val}

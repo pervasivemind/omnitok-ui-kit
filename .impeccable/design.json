@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-25T14:00:43+00:00",
+  "generatedAt": "2026-10-25T17:06:48+00:00",
   "title": "Design System: Omnitok UI v3",
   "extensions": {
     "colorMeta": {
@@ -234,6 +234,7 @@
     "dos": [
       "**Do** read colours, radii and shadows from the kit (preset classes or `--omni-*` variables); tenants retint through `--omni-sb-*`, `--omni-gradient-action` and `--omni-selected` only.",
       "**Do** keep one primary (pink) action per header or dialog, at most one secondary next to it.",
+      "**Do** keep row actions quiet: ghost icons in ink, colour only on hover.",
       "**Do** pair every status colour with a word or an icon, and every selection with a check, a bar or a weight change.",
       "**Do** use Nunito Sans 800 for titles and KPI values and Inter for everything else.",
       "**Do** let headers, action rows and tab lists wrap on narrow screens.",
@@ -245,6 +246,7 @@
       "**Don't** put white or pink text on `identity-pink`; it is a mark colour.",
       "**Don't** truncate a number with an ellipsis, in a KPI, a chip or a caption.",
       "**Don't** add shadows stronger than the card shadow to things that sit on the page.",
+      "**Don't** bring back the pre-v3 parts retired in 3.2.0 (grey filled buttons, the auxiliary violet/rose/teal hues, the old header and drag-and-drop widgets).",
       "**Don't** use a dark gradient band as a page or panel header; headers are white with a hairline (the navy belongs to the chrome)."
     ]
   }

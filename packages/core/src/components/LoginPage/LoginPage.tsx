@@ -10,10 +10,9 @@ import { PoweredByMark } from '../Header/PoweredByMark';
 /**
  * Omnitok UI v3 — sign-in page.
  *
- * `split` (the v3 default for products, D26): the customer's brand on the
- * left over the sidebar colour (so a tenant tint reaches it), the form on
- * the right on white. Below `lg` the hero folds away and the brand sits
- * above the form. `centered` and `gradient` keep the form in a card.
+ * Split screen (D26): the customer's brand on the left over the sidebar
+ * colour (so a tenant tint reaches it), the form on the right on white.
+ * Below `lg` the hero folds away and the brand sits above the form.
  *
  * The brand is the customer's: a logo node or, without one, its name as a
  * wordmark (`brandText`). The platform keeps the "powered by" mark.
@@ -49,8 +48,6 @@ export interface LoginPageProps extends Omit<HTMLAttributes<HTMLDivElement>, 'on
   showForgotPassword?: boolean;
   /** Footer content */
   footer?: ReactNode;
-  /** Background variant */
-  variant?: 'gradient' | 'split' | 'centered';
   /**
    * Prefix for the field ids. Default: none, so the fields keep the stable
    * ids `email` and `password` that hosts and tests rely on. Set it when two
@@ -77,7 +74,6 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
       showRememberMe = true,
       showForgotPassword = true,
       footer,
-      variant = 'gradient',
       idPrefix,
       className,
       ...props
@@ -97,15 +93,13 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const fieldId = (name: string) => (idPrefix ? `${idPrefix}-${name}` : name);
-    const isSplit = variant === 'split';
 
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
       onLoginSubmit?.(email, password);
     };
 
-    // Brand above the form: always outside `split`, and in `split` only while
-    // the hero is folded away (below lg).
+    // Brand above the form, only while the hero is folded away (below lg).
     const lightLogo = logoWide || logo;
     const lightBrand = lightLogo ? (
       <>
@@ -118,12 +112,12 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
 
     const formContent = (
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-        <div className={cn(isSplit ? 'text-left' : 'text-center')}>
+        <div className="text-left">
           {lightBrand && (
             <div
               className={cn(
                 'mb-7 flex [&_img]:max-h-10 [&_img]:w-auto',
-                isSplit ? 'justify-start lg:hidden' : 'justify-center'
+                'justify-start lg:hidden'
               )}
             >
               {lightBrand}
@@ -215,67 +209,34 @@ export const LoginPage = forwardRef<HTMLDivElement, LoginPageProps>(
       </form>
     );
 
-    if (isSplit) {
-      const darkBrand =
-        splitLogo ||
-        logoWide ||
-        logo ||
-        (brandText ? (
-          <span className="font-display text-[26px] font-extrabold tracking-[-.02em] text-white">{brandText}</span>
-        ) : null);
-      return (
-        <div ref={ref} data-omni-login="split" className={cn('flex min-h-screen bg-white font-sans', className)} {...props}>
-          <aside className="relative hidden w-[44%] max-w-[640px] flex-col justify-between overflow-hidden p-10 text-white [background:var(--omni-sb-bg)] lg:flex xl:p-14">
-            <div className="flex min-h-10 items-center [&_img]:max-h-14 [&_img]:w-auto">{darkBrand}</div>
-            <div className="max-w-[440px]">
-              <span aria-hidden="true" className="mb-6 block h-1 w-12 rounded-full bg-[var(--omni-sb-accent)]" />
-              <h2 className="font-display text-[34px] font-extrabold leading-[1.15] tracking-[-.02em] text-white">
-                {heroTitle ?? t('login.split.heroTitle')}
-              </h2>
-              <p className="mt-4 text-[15px] leading-6 text-[#C9C4E6]">{heroDescription ?? t('login.split.heroDescription')}</p>
-            </div>
-            <div className="flex items-center justify-between gap-4">
-              <span className="text-2xs text-[var(--omni-sb-muted)]">
-                {t('login.split.copyright', { year: new Date().getFullYear() })}
-              </span>
-              {poweredBy && <PoweredByMark caption={t('header.poweredBy')} />}
-            </div>
-          </aside>
-          <main className="flex flex-1 items-center justify-center px-6 py-12 sm:px-10">
-            <div className="w-full max-w-[380px]">{formContent}</div>
-          </main>
-        </div>
-      );
-    }
-
-    const card = (
-      <div className="w-full max-w-[420px] rounded-[18px] border border-neutral-200 bg-white p-8 shadow-card-hover sm:p-10">
-        {formContent}
-      </div>
-    );
-
-    if (variant === 'centered') {
-      return (
-        <div
-          ref={ref}
-          data-omni-login="centered"
-          className={cn('flex min-h-screen items-center justify-center bg-[var(--omni-canvas)] p-4 font-sans', className)}
-          {...props}
-        >
-          {card}
-        </div>
-      );
-    }
-
-    // Default: gradient (the sidebar colour behind a card).
+    const darkBrand =
+      splitLogo ||
+      logoWide ||
+      logo ||
+      (brandText ? (
+        <span className="font-display text-[26px] font-extrabold tracking-[-.02em] text-white">{brandText}</span>
+      ) : null);
     return (
-      <div
-        ref={ref}
-        data-omni-login="gradient"
-        className={cn('flex min-h-screen items-center justify-center p-4 font-sans [background:var(--omni-sb-bg)]', className)}
-        {...props}
-      >
-        {card}
+      <div ref={ref} data-omni-login="split" className={cn('flex min-h-screen bg-white font-sans', className)} {...props}>
+        <aside className="relative hidden w-[44%] max-w-[640px] flex-col justify-between overflow-hidden p-10 text-white [background:var(--omni-sb-bg)] lg:flex xl:p-14">
+          <div className="flex min-h-10 items-center [&_img]:max-h-14 [&_img]:w-auto">{darkBrand}</div>
+          <div className="max-w-[440px]">
+            <span aria-hidden="true" className="mb-6 block h-1 w-12 rounded-full bg-[var(--omni-sb-accent)]" />
+            <h2 className="font-display text-[34px] font-extrabold leading-[1.15] tracking-[-.02em] text-white">
+              {heroTitle ?? t('login.split.heroTitle')}
+            </h2>
+            <p className="mt-4 text-[15px] leading-6 text-[#C9C4E6]">{heroDescription ?? t('login.split.heroDescription')}</p>
+          </div>
+          <div className="flex items-center justify-between gap-4">
+            <span className="text-2xs text-[var(--omni-sb-muted)]">
+              {t('login.split.copyright', { year: new Date().getFullYear() })}
+            </span>
+            {poweredBy && <PoweredByMark caption={t('header.poweredBy')} />}
+          </div>
+        </aside>
+        <main className="flex flex-1 items-center justify-center px-6 py-12 sm:px-10">
+          <div className="w-full max-w-[380px]">{formContent}</div>
+        </main>
       </div>
     );
   }

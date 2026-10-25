@@ -2,37 +2,12 @@ import { forwardRef, type ChangeEvent, type InputHTMLAttributes } from 'react';
 import { Check, Minus } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
-export type CheckboxVariant =
-  | 'primary'
-  | 'accent'
-  | 'neutral'
-  | 'success'
-  | 'info'
-  | 'violet'
-  | 'rose'
-  | 'teal';
-
-const variantStyles: Record<CheckboxVariant, { checked: string; ring: string }> = {
-  primary: { checked: 'peer-checked:bg-primary peer-checked:border-primary', ring: 'peer-focus:ring-primary' },
-  accent:  { checked: 'peer-checked:bg-accent peer-checked:border-accent',   ring: 'peer-focus:ring-accent' },
-  neutral: { checked: 'peer-checked:bg-neutral-600 peer-checked:border-neutral-600', ring: 'peer-focus:ring-neutral-400' },
-  success: { checked: 'peer-checked:bg-success peer-checked:border-success', ring: 'peer-focus:ring-success' },
-  info:    { checked: 'peer-checked:bg-info peer-checked:border-info',       ring: 'peer-focus:ring-info' },
-  violet:  { checked: 'peer-checked:bg-violet peer-checked:border-violet',   ring: 'peer-focus:ring-violet' },
-  rose:    { checked: 'peer-checked:bg-rose peer-checked:border-rose',       ring: 'peer-focus:ring-rose' },
-  teal:    { checked: 'peer-checked:bg-teal peer-checked:border-teal',       ring: 'peer-focus:ring-teal' },
+// v3: checked boxes and toggles use the shared violet.
+const checkedStyles = {
+  checked: 'peer-checked:bg-primary peer-checked:border-primary',
+  ring: 'peer-focus:ring-primary',
 };
-
-const toggleVariantStyles: Record<CheckboxVariant, { checked: string; ring: string }> = {
-  primary: { checked: 'peer-checked:bg-primary',      ring: 'peer-focus:ring-primary' },
-  accent:  { checked: 'peer-checked:bg-accent',       ring: 'peer-focus:ring-accent' },
-  neutral: { checked: 'peer-checked:bg-neutral-600',  ring: 'peer-focus:ring-neutral-400' },
-  success: { checked: 'peer-checked:bg-success',      ring: 'peer-focus:ring-success' },
-  info:    { checked: 'peer-checked:bg-info',          ring: 'peer-focus:ring-info' },
-  violet:  { checked: 'peer-checked:bg-violet',        ring: 'peer-focus:ring-violet' },
-  rose:    { checked: 'peer-checked:bg-rose',          ring: 'peer-focus:ring-rose' },
-  teal:    { checked: 'peer-checked:bg-teal',          ring: 'peer-focus:ring-teal' },
-};
+const toggleCheckedStyles = { checked: 'peer-checked:bg-primary', ring: 'peer-focus:ring-primary' };
 
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   /** Label text */
@@ -43,8 +18,6 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
   error?: string;
   /** Indeterminate state */
   indeterminate?: boolean;
-  /** Color variant */
-  variant?: CheckboxVariant;
   /** Render as a toggle switch */
   toggle?: boolean;
   /** Callback when checked state changes, provides the new boolean value */
@@ -58,7 +31,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       description,
       error,
       indeterminate,
-      variant = 'primary',
       toggle = false,
       onCheckedChange,
       disabled,
@@ -78,7 +50,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     };
 
     const renderCheckbox = () => {
-      const styles = variantStyles[variant];
+      const styles = checkedStyles;
       return (
         <div
           className={cn(
@@ -103,7 +75,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     };
 
     const renderToggle = () => {
-      const styles = toggleVariantStyles[variant];
+      const styles = toggleCheckedStyles;
       return (
         <div
           className={cn(

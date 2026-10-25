@@ -1,17 +1,7 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '../../utils/cn';
 
-export type BadgeVariant =
-  | 'primary'
-  | 'accent'
-  | 'neutral'
-  | 'success'
-  | 'warning'
-  | 'error'
-  | 'info'
-  | 'violet'
-  | 'rose'
-  | 'teal';
+export type BadgeVariant = 'primary' | 'neutral' | 'success' | 'warning' | 'error' | 'info';
 export type BadgeSize = 'sm' | 'md' | 'lg';
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
@@ -30,15 +20,11 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 const variantStyles: Record<BadgeVariant, string> = {
   // v3: tint behind, the dark tone in front (>= 5:1 on every tint).
   primary: 'bg-primary-soft text-primary-ink',
-  accent: 'bg-accent/10 text-accent-dark',
   neutral: 'bg-neutral-100 text-neutral-700',
   success: 'bg-success-soft text-success-dark',
   warning: 'bg-warning-soft text-warning-dark',
   error: 'bg-error-soft text-error-dark',
   info: 'bg-info-soft text-info-dark',
-  violet: 'bg-violet/10 text-violet-dark',
-  rose: 'bg-rose/10 text-rose-dark',
-  teal: 'bg-teal/10 text-teal-dark',
 };
 
 const sizeStyles: Record<BadgeSize, string> = {
@@ -49,15 +35,11 @@ const sizeStyles: Record<BadgeSize, string> = {
 
 const dotVariantStyles: Record<BadgeVariant, string> = {
   primary: 'bg-primary',
-  accent: 'bg-accent',
   neutral: 'bg-neutral-400',
   success: 'bg-success',
   warning: 'bg-warning',
   error: 'bg-error',
   info: 'bg-info',
-  violet: 'bg-violet',
-  rose: 'bg-rose',
-  teal: 'bg-teal',
 };
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(

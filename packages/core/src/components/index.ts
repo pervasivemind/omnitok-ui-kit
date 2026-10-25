@@ -34,8 +34,5 @@ export * from './Toast';
 // Page Components
 export * from './LoginPage';
 
-// Drag and Drop Components
-export * from './SortableList';
+// Files
 export * from './FileDropzone';
-export * from './KanbanBoard';
-export * from './DraggableCard';

@@ -10,10 +10,6 @@ const meta: Meta<typeof Checkbox> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    variant: {
-      control: 'select',
-      options: ['primary', 'success', 'info'],
-    },
     toggle: {
       control: 'boolean',
     },

@@ -4,18 +4,6 @@ import { cn } from '../../utils/cn';
 import { createTranslator, SupportedLanguage, useI18n } from '../../i18n';
 import { Select } from '../Select';
 
-export type PaginationVariant =
-  | 'primary'
-  | 'accent'
-  | 'neutral'
-  | 'success'
-  | 'warning'
-  | 'error'
-  | 'info'
-  | 'violet'
-  | 'rose'
-  | 'teal';
-
 export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
   /** Current page (1-indexed) */
   currentPage: number;
@@ -43,8 +31,6 @@ export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onCh
   disabled?: boolean;
   /** Size variant */
   size?: 'sm' | 'md' | 'lg';
-  /** Color variant */
-  variant?: PaginationVariant;
   /** Language */
   language?: SupportedLanguage;
 }
@@ -59,33 +45,6 @@ const iconSizes = {
   sm: 14,
   md: 16,
   lg: 20,
-};
-
-const activeVariantStyles: Record<PaginationVariant, string> = {
-  // v3: the current page uses the selected colour, like the selected tab.
-  primary: 'bg-[var(--omni-selected)] text-white font-bold',
-  accent: 'bg-accent text-white',
-  neutral: 'bg-neutral-700 text-white',
-  success: 'bg-success text-white',
-  warning: 'bg-warning text-white',
-  error: 'bg-error text-white',
-  info: 'bg-info text-white',
-  violet: 'bg-violet text-white',
-  rose: 'bg-rose text-white',
-  teal: 'bg-teal text-white',
-};
-
-const focusVariantStyles: Record<PaginationVariant, string> = {
-  primary: 'focus:ring-primary',
-  accent: 'focus:ring-accent',
-  neutral: 'focus:ring-neutral-700',
-  success: 'focus:ring-success',
-  warning: 'focus:ring-warning',
-  error: 'focus:ring-error',
-  info: 'focus:ring-info',
-  violet: 'focus:ring-violet',
-  rose: 'focus:ring-rose',
-  teal: 'focus:ring-teal',
 };
 
 export const Pagination = forwardRef<HTMLElement, PaginationProps>(
@@ -105,7 +64,6 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       infoPosition = 'start',
       disabled = false,
       size = 'md',
-      variant = 'primary',
       className,
       ...props
     },
@@ -161,7 +119,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     const buttonClasses = cn(
       'flex items-center justify-center rounded-[9px] transition-colors tabular-nums',
       'focus:outline-none focus:ring-2 focus:ring-offset-2',
-      focusVariantStyles[variant],
+      'focus:ring-primary',
       sizeStyles[size],
       disabled && 'opacity-50 cursor-not-allowed'
     );
@@ -175,7 +133,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
         className={cn(
           buttonClasses,
           'px-3',
-          isActive ? activeVariantStyles[variant] : 'text-neutral-600 hover:bg-primary-soft hover:text-primary-ink'
+          isActive ? 'bg-[var(--omni-selected)] text-white font-bold' : 'text-neutral-600 hover:bg-primary-soft hover:text-primary-ink'
         )}
       >
         {page}

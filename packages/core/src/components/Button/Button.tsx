@@ -2,18 +2,12 @@ import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
 import { Loader2 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
-export type ButtonVariant =
-  | 'primary'
-  | 'accent'
-  | 'neutral'
-  | 'accept'
-  | 'danger'
-  | 'info'
-  | 'violet'
-  | 'rose'
-  | 'teal'
-  | 'outline'
-  | 'secondary';
+/**
+ * v3 (DESIGN.md, Buttons): `primary` for the one action of an area,
+ * `secondary` for shared actions, `outline` for the rest. `danger`,
+ * `accept` and `info` exist for confirmation dialogs only.
+ */
+export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'danger' | 'accept' | 'info';
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -27,7 +21,11 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   leftIcon?: ReactNode;
   /** Icon to show after text */
   rightIcon?: ReactNode;
-  /** Render as ghost (transparent bg, colored text) */
+  /**
+   * Quiet button for icons and minor actions: ink text at rest, a violet
+   * tint on hover (D40). With `variant="danger"` the hover turns red (D41).
+   * Other variants are ignored while ghost.
+   */
   ghost?: boolean;
   /** Full width button */
   fullWidth?: boolean;
@@ -42,31 +40,18 @@ const variantStyles: Record<ButtonVariant, string> = {
     'bg-[image:var(--omni-gradient-action)] text-white shadow-[var(--omni-shadow-action)] enabled:hover:brightness-95 focus:ring-accent',
   secondary:
     'bg-primary-soft text-primary-ink border border-primary-line enabled:hover:bg-[#E7E5F4] focus:ring-primary',
-  accent: 'bg-accent text-white hover:bg-accent-dark active:bg-accent-dark focus:ring-accent',
-  neutral:
-    'bg-neutral-200 text-neutral-800 hover:bg-neutral-300 active:bg-neutral-400 focus:ring-neutral-400',
   accept: 'bg-success text-white hover:bg-success-dark active:bg-success-dark focus:ring-success',
   danger: 'bg-error text-white hover:bg-error-dark active:bg-error-dark focus:ring-error',
   info: 'bg-info text-white hover:bg-info-dark active:bg-info-dark focus:ring-info',
-  violet: 'bg-violet text-white hover:bg-violet-dark active:bg-violet-dark focus:ring-violet',
-  rose: 'bg-rose text-white hover:bg-rose-dark active:bg-rose-dark focus:ring-rose',
-  teal: 'bg-teal text-white hover:bg-teal-dark active:bg-teal-dark focus:ring-teal',
   outline:
     'bg-white border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary',
 };
 
-const ghostStyles: Partial<Record<ButtonVariant, string>> = {
-  primary: 'bg-transparent text-primary hover:bg-primary/10 active:bg-primary/20 focus:ring-primary',
-  accent: 'bg-transparent text-accent hover:bg-accent/10 active:bg-accent/20 focus:ring-accent',
-  neutral:
-    'bg-transparent text-neutral-700 hover:bg-neutral-100 active:bg-neutral-200 focus:ring-neutral-300',
-  accept: 'bg-transparent text-success hover:bg-success/10 active:bg-success/20 focus:ring-success',
-  danger: 'bg-transparent text-error hover:bg-error/10 active:bg-error/20 focus:ring-error',
-  info: 'bg-transparent text-info hover:bg-info/10 active:bg-info/20 focus:ring-info',
-  violet: 'bg-transparent text-violet hover:bg-violet/10 active:bg-violet/20 focus:ring-violet',
-  rose: 'bg-transparent text-rose hover:bg-rose/10 active:bg-rose/20 focus:ring-rose',
-  teal: 'bg-transparent text-teal hover:bg-teal/10 active:bg-teal/20 focus:ring-teal',
-};
+// One ghost for every variant (D40); only destructive actions warn on hover (D41).
+const ghostStyle =
+  'bg-transparent text-neutral-700 hover:bg-primary-soft hover:text-primary-ink active:bg-primary-line focus:ring-primary';
+const ghostDangerStyle =
+  'bg-transparent text-neutral-700 hover:bg-error-soft hover:text-error-dark active:bg-error-soft focus:ring-error';
 
 // v3 type scale for controls: 11 / 12 / 13 / 14 px.
 const sizeStyles: Record<ButtonSize, string> = {
@@ -114,7 +99,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           'enabled:hover:-translate-y-px enabled:hover:shadow-[0_3px_10px_#1A124018] motion-reduce:transform-none',
           'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
           // Variant styles
-          ghost && ghostStyles[variant] ? ghostStyles[variant] : variantStyles[variant],
+          ghost ? (variant === 'danger' ? ghostDangerStyle : ghostStyle) : variantStyles[variant],
           // Size styles
           sizeStyles[size],
           // Full width

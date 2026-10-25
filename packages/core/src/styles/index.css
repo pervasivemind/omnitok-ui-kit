@@ -65,16 +65,10 @@
     --color-accent-dark: #C8105F;
     --color-accent-light: #FF177B;
 
-    /* Auxiliary Colors */
-    --color-violet: #8E44AD;
-    --color-violet-light: #A78BFA;
-    --color-violet-dark: #763894;
-    --color-rose: #C4476A;
-    --color-rose-light: #F472B6;
-    --color-rose-dark: #94304C;
-    --color-teal: #0B7A5F;
-    --color-teal-light: #5EEAD4;
-    --color-teal-dark: #086049;
+    /* Code editor syntax hues (only the editor uses them) */
+    --omni-code-string: #086049;
+    --omni-code-function: #763894;
+    --omni-code-regex: #94304C;
 
     /* Neutral Colors */
     --color-neutral-50: #F8F9FB;
@@ -243,7 +237,7 @@
   .omnitok-code-editor .token.char,
   .omnitok-code-editor .token.builtin,
   .omnitok-code-editor .token.inserted {
-    color: var(--color-teal-dark);
+    color: var(--omni-code-string);
   }
 
   .omnitok-code-editor .token.operator,
@@ -261,13 +255,13 @@
 
   .omnitok-code-editor .token.function,
   .omnitok-code-editor .token.class-name {
-    color: var(--color-violet-dark);
+    color: var(--omni-code-function);
   }
 
   .omnitok-code-editor .token.regex,
   .omnitok-code-editor .token.important,
   .omnitok-code-editor .token.variable {
-    color: var(--color-rose-dark);
+    color: var(--omni-code-regex);
   }
 
   .omnitok-code-editor .token.important,

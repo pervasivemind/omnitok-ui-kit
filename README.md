@@ -95,7 +95,7 @@ function App() {
 ## 📚 Componentes
 
 ### Básicos
-- **Button** - Botones con múltiples variantes (primary, secondary, ghost, danger, accent)
+- **Button** - primary, secondary, outline y ghost; danger, accept e info solo en diálogos de confirmación
 - **Input** - Campos de texto con validación y estados
 - **Select** - Dropdowns personalizados
 - **Textarea** - Áreas de texto
@@ -110,7 +110,7 @@ function App() {
 
 ### Layout
 - **Sidebar** - Navegación lateral con logo centrado y collapse
-- **Header** - Barra superior con búsqueda, notificaciones y usuario
+- **BrandHeader** - Cabecera navy del shell v3
 - **Layout** - Layout completo (sidebar + header + content + panel opcional)
 - **Breadcrumb** - Migas de pan para navegación
 
@@ -124,13 +124,10 @@ function App() {
 - **Toast** - Notificaciones temporales
 
 ### Pages
-- **LoginPage** - Página de login con 3 variantes (gradient, split, centered)
+- **LoginPage** - Login en pantalla dividida
 
 ### Drag and Drop
-- **SortableList** - Listas reordenables con animaciones
 - **FileDropzone** - Zona de arrastrar y soltar archivos con validación
-- **KanbanBoard** - Tablero tipo Trello/Kanban con columnas
-- **DraggableCard** - Tarjetas arrastrables personalizables
 
 ## 🎨 Design System
 
