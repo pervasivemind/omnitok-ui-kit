@@ -3,6 +3,11 @@ import React from 'react';
 import { Button } from '@omnitok/ui';
 import { Plus, Trash2, Send, Check, Info } from 'lucide-react';
 
+/**
+ * v3 buttons (DESIGN.md, Components / Buttons): primary for the one action
+ * of an area, secondary for shared actions, outline and ghost for the rest.
+ * Danger, accept and info exist for confirmation dialogs only.
+ */
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
   component: Button,
@@ -13,19 +18,7 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: [
-        'primary',
-        'accent',
-        'neutral',
-        'accept',
-        'danger',
-        'info',
-        'violet',
-        'rose',
-        'teal',
-        'outline',
-        'secondary',
-      ],
+      options: ['primary', 'secondary', 'outline', 'danger', 'accept', 'info'],
     },
     size: {
       control: 'select',
@@ -42,87 +35,48 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    children: 'Button',
+    children: 'Nuevo reporte',
   },
 };
 
-export const Principales: Story = {
+export const Variants: Story = {
   render: () => (
-    <div className="flex flex-wrap gap-4">
-      <Button variant="primary">Primary</Button>
-      <Button variant="secondary">Secondary</Button>
+    <div className="flex flex-wrap items-center gap-4">
+      <Button variant="primary">Primario</Button>
+      <Button variant="secondary">Secundario</Button>
       <Button variant="outline">Outline</Button>
-      <Button variant="accent">Accent</Button>
-      <Button variant="neutral">Neutral</Button>
-    </div>
-  ),
-};
-
-export const Especiales: Story = {
-  render: () => (
-    <div className="flex flex-wrap gap-4">
-      <Button variant="neutral" ghost>Ghost</Button>
-      <Button variant="outline">Outline</Button>
-    </div>
-  ),
-};
-
-export const Auxiliares: Story = {
-  render: () => (
-    <div className="flex flex-wrap gap-4">
-      <Button variant="violet">Violet</Button>
-      <Button variant="rose">Rose</Button>
-      <Button variant="teal">Teal</Button>
-    </div>
-  ),
-};
-
-export const Ghost: Story = {
-  render: () => (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap gap-4">
-        <Button variant="primary" ghost>Primary</Button>
-        <Button variant="accent" ghost>Accent</Button>
-        <Button variant="neutral" ghost>Neutral</Button>
-      </div>
-      <div className="flex flex-wrap gap-4">
-        <Button variant="accept" ghost>Accept</Button>
-        <Button variant="danger" ghost>Danger</Button>
-        <Button variant="info" ghost>Info</Button>
-      </div>
-      <div className="flex flex-wrap gap-4">
-        <Button variant="violet" ghost>Violet</Button>
-        <Button variant="rose" ghost>Rose</Button>
-        <Button variant="teal" ghost>Teal</Button>
-      </div>
+      <Button variant="primary" ghost>
+        Ghost
+      </Button>
     </div>
   ),
 };
 
 export const WithIcon: Story = {
   render: () => (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap items-center gap-4">
       <Button variant="primary" leftIcon={<Plus size={16} />}>
-        Create New
+        Nuevo reporte
       </Button>
-      <Button variant="primary" rightIcon={<Send size={16} />}>
-        Send Message
+      <Button variant="secondary" rightIcon={<Send size={16} />}>
+        Enviar
       </Button>
     </div>
   ),
 };
 
-export const Funcionales: Story = {
+/** Only inside a confirmation dialog: the button names what happens. */
+export const Confirmation: Story = {
   render: () => (
-    <div className="flex flex-wrap gap-4">
-      <Button variant="accept" leftIcon={<Check size={16} />}>
-        Aceptar
-      </Button>
+    <div className="flex flex-wrap items-center gap-4">
       <Button variant="danger" leftIcon={<Trash2 size={16} />}>
         Eliminar
       </Button>
+      <Button variant="accept" leftIcon={<Check size={16} />}>
+        Confirmar
+      </Button>
       <Button variant="info" leftIcon={<Info size={16} />}>
-        Info
+        Entendido
       </Button>
     </div>
   ),
@@ -130,88 +84,35 @@ export const Funcionales: Story = {
 
 export const Loading: Story = {
   render: () => (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap justify-center gap-4">
-        <Button variant="primary" loading>
-          Sending...
-        </Button>
-        <Button variant="accent" loading>
-          Loading...
-        </Button>
-        <Button variant="neutral" loading>
-          Saving...
-        </Button>
-        <Button variant="accept" loading>
-          Accepting...
-        </Button>
-        <Button variant="danger" loading>
-          Deleting...
-        </Button>
-        <Button variant="info" loading>
-          Updating...
-        </Button>
-      </div>
-      <div className="flex flex-wrap justify-center gap-4">
-        <Button variant="violet" loading>
-          Creating...
-        </Button>
-        <Button variant="rose" loading>
-          Verifying...
-        </Button>
-        <Button variant="teal" loading>
-          Confirming...
-        </Button>
-        <Button variant="neutral" ghost loading>
-          Ghosting...
-        </Button>
-        <Button variant="outline" loading>
-          Outlining...
-        </Button>
-      </div>
+    <div className="flex flex-wrap items-center gap-4">
+      <Button variant="primary" loading>
+        Guardando
+      </Button>
+      <Button variant="secondary" loading>
+        Probando
+      </Button>
+      <Button variant="outline" loading>
+        Cargando
+      </Button>
     </div>
   ),
 };
 
 export const Disabled: Story = {
   render: () => (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap justify-center gap-4">
-        <Button variant="primary" disabled>
-          Primary
-        </Button>
-        <Button variant="accent" disabled>
-          Accent
-        </Button>
-        <Button variant="neutral" disabled>
-          Neutral
-        </Button>
-        <Button variant="accept" disabled>
-          Accept
-        </Button>
-        <Button variant="danger" disabled>
-          Danger
-        </Button>
-        <Button variant="info" disabled>
-          Info
-        </Button>
-      </div>
-      <div className="flex flex-wrap justify-center gap-4">
-        <Button variant="violet" disabled>
-          Violet
-        </Button>
-        <Button variant="rose" disabled>
-          Rose
-        </Button>
-        <Button variant="teal" disabled>
-          Teal
-        </Button>
-        <Button variant="neutral" ghost disabled>
-          Ghost
-        </Button>
-        <Button variant="outline" disabled>
-          Outline
-        </Button>
-      </div>
+    <div className="flex flex-wrap items-center gap-4">
+      <Button variant="primary" disabled>
+        Primario
+      </Button>
+      <Button variant="secondary" disabled>
+        Secundario
+      </Button>
+      <Button variant="outline" disabled>
+        Outline
+      </Button>
+      <Button variant="primary" ghost disabled>
+        Ghost
+      </Button>
     </div>
   ),
 };
@@ -219,7 +120,7 @@ export const Disabled: Story = {
 export const FullWidth: Story = {
   args: {
     variant: 'primary',
-    children: 'Full Width Button',
+    children: 'Ingresar',
     fullWidth: true,
   },
   parameters: {
@@ -231,28 +132,22 @@ export const Sizes: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-4">
-        <Button size="xs">Extra Small</Button>
+        <Button size="xs">Extra small</Button>
         <Button size="sm">Small</Button>
         <Button size="md">Medium</Button>
         <Button size="lg">Large</Button>
       </div>
       <div className="flex items-center gap-4">
-        <Button size="xs" leftIcon={<Plus size={12} />}>Extra Small</Button>
-        <Button size="sm" rightIcon={<Plus size={14} />}>Small</Button>
-        <Button size="md" leftIcon={<Plus size={16} />}>Medium</Button>
-        <Button size="lg" rightIcon={<Plus size={20} />}>Large</Button>
-      </div>
-      <div className="flex items-center gap-4">
-        <Button size="xs" loading>
-          Extra Small
+        <Button size="xs" variant="secondary" leftIcon={<Plus size={12} />}>
+          Extra small
         </Button>
-        <Button size="sm" loading>
+        <Button size="sm" variant="secondary" leftIcon={<Plus size={14} />}>
           Small
         </Button>
-        <Button size="md" loading>
+        <Button size="md" variant="secondary" leftIcon={<Plus size={16} />}>
           Medium
         </Button>
-        <Button size="lg" loading>
+        <Button size="lg" variant="secondary" leftIcon={<Plus size={20} />}>
           Large
         </Button>
       </div>

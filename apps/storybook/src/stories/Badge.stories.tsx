@@ -12,7 +12,7 @@ const meta: Meta<typeof Badge> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'accent', 'neutral', 'success', 'warning', 'error', 'info'],
+      options: ['primary', 'neutral', 'success', 'warning', 'error', 'info'],
     },
     size: {
       control: 'select',
@@ -30,67 +30,56 @@ export const Default: Story = {
   },
 };
 
-export const Principales: Story = {
+export const Tones: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">
-      <Badge variant="primary">Primary</Badge>
-      <Badge variant="accent">Accent</Badge>
-      <Badge variant="neutral">Neutral</Badge>
+      <Badge variant="primary">Seleccionado</Badge>
+      <Badge variant="neutral">Borrador</Badge>
     </div>
   ),
 };
 
-export const Semanticos: Story = {
+/** A status chip always carries its word: never colour alone. */
+export const Status: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">
-      <Badge variant="success">Success</Badge>
-      <Badge variant="warning">Warning</Badge>
-      <Badge variant="error">Error</Badge>
-      <Badge variant="info">Info</Badge>
-    </div>
-  ),
-};
-
-export const Auxiliares: Story = {
-  render: () => (
-    <div className="flex flex-wrap gap-2">
-      <Badge variant="violet">Violet</Badge>
-      <Badge variant="rose">Rose</Badge>
-      <Badge variant="teal">Teal</Badge>
+      <Badge variant="success">Publicado</Badge>
+      <Badge variant="warning">Pendiente</Badge>
+      <Badge variant="error">Falló</Badge>
+      <Badge variant="info">En curso</Badge>
     </div>
   ),
 };
 
 export const Pill: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
-      <Badge variant="primary" pill>Primary</Badge>
-      <Badge variant="accent" pill>Accent</Badge>
-      <Badge variant="neutral" pill>Neutral</Badge>
-      <Badge variant="success" pill>Success</Badge>
-      <Badge variant="warning" pill>Warning</Badge>
-      <Badge variant="error" pill>Error</Badge>
-      <Badge variant="info" pill>Info</Badge>
-      <Badge variant="violet" pill>Violet</Badge>
-      <Badge variant="rose" pill>Rose</Badge>
-      <Badge variant="teal" pill>Teal</Badge>
+    <div className="flex flex-wrap gap-2">
+      <Badge variant="primary" pill>Seleccionado</Badge>
+      <Badge variant="neutral" pill>Borrador</Badge>
+      <Badge variant="success" pill>Publicado</Badge>
+      <Badge variant="warning" pill>Pendiente</Badge>
+      <Badge variant="error" pill>Falló</Badge>
+      <Badge variant="info" pill>En curso</Badge>
     </div>
   ),
 };
 
+/** The dot marks a live state and always sits next to its word. */
 export const Dot: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
-      <Badge variant="primary" dot />
-      <Badge variant="accent" dot />
-      <Badge variant="neutral" dot />
-      <Badge variant="success" dot />
-      <Badge variant="warning" dot />
-      <Badge variant="error" dot />
-      <Badge variant="info" dot />
-      <Badge variant="violet" dot />
-      <Badge variant="rose" dot />
-      <Badge variant="teal" dot />
+    <div className="flex flex-col gap-3">
+      <div className="flex items-center gap-2">
+        <Badge variant="success" dot />
+        <span>Activo</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <Badge variant="warning" dot />
+        <span>Pendiente</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <Badge variant="error" dot />
+        <span>Inactivo</span>
+      </div>
     </div>
   ),
 };
@@ -101,25 +90,6 @@ export const Sizes: Story = {
       <Badge size="sm">Small</Badge>
       <Badge size="md">Medium</Badge>
       <Badge size="lg">Large</Badge>
-    </div>
-  ),
-};
-
-export const StatusBadges: Story = {
-  render: () => (
-    <div className="flex flex-col gap-3">
-      <div className="flex items-center gap-2">
-        <Badge variant="success" dot />
-        <span>Active</span>
-      </div>
-      <div className="flex items-center gap-2">
-        <Badge variant="warning" dot />
-        <span>Pending</span>
-      </div>
-      <div className="flex items-center gap-2">
-        <Badge variant="error" dot />
-        <span>Inactive</span>
-      </div>
     </div>
   ),
 };

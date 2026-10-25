@@ -2,6 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { LoginPage } from '@omnitok/ui';
 
+/**
+ * v3 login (DESIGN.md, Components / Login; decision D26): split screen, the
+ * brand hero on the sidebar's navy and the form on white. Below 1024 px only
+ * the form shows.
+ */
 const meta: Meta<typeof LoginPage> = {
   title: 'Pages/LoginPage',
   component: LoginPage,
@@ -9,15 +14,21 @@ const meta: Meta<typeof LoginPage> = {
     layout: 'fullscreen',
   },
   tags: ['autodocs'],
+  args: {
+    variant: 'split',
+    onLoginSubmit: (email: string, password: string) => {
+      console.log('Login:', { email, password });
+    },
+    onForgotPassword: () => {
+      console.log('Forgot password clicked');
+    },
+  },
   argTypes: {
     language: {
       control: 'select',
       options: ['es', 'en'],
     },
-    variant: {
-      control: 'select',
-      options: ['gradient', 'split', 'centered'],
-    },
+    variant: { table: { disable: true } },
   },
 };
 
@@ -32,112 +43,33 @@ const LogoWideWhite = () => (
   <img src="/omnitok-logo.svg" alt="Omnitok" className="h-10 w-auto object-contain" />
 );
 
-export const NoForgotPassword: Story = {
-  args: {
-    logo: <LogoWideColor />,
-    logoWide: <LogoWideColor />,
-    language: 'en',
-    variant: 'gradient',
-    onLoginSubmit: (email, password) => {
-      console.log('Login:', { email, password });
-    },
-    onForgotPassword: () => {
-      console.log('Forgot password clicked');
-    },
-    showForgotPassword: false,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'LoginPage with showForgotPassword set to false. The forgot password button should not be visible.',
-      },
-    },
-  },
-};
-
-export const Gradient: Story = {
-  args: {
-    logo: <LogoWideColor />,
-    logoWide: <LogoWideColor />,
-    language: 'es',
-    variant: 'gradient',
-    onLoginSubmit: (email, password) => {
-      console.log('Login:', { email, password });
-    },
-    onForgotPassword: () => {
-      console.log('Forgot password clicked');
-    },
-  },
-};
-
+/** Omnitok's own products (builder, console): the logo on the hero. */
 export const Split: Story = {
   args: {
     logo: <LogoWideColor />,
     logoWide: <LogoWideColor />,
     splitLogo: <LogoWideWhite />,
     language: 'es',
-    variant: 'split',
-    onLoginSubmit: (email, password) => {
-      console.log('Login:', { email, password });
-    },
-    onForgotPassword: () => {
-      console.log('Forgot password clicked');
-    },
   },
 };
 
-/** D26: marca del tenant a la izquierda (nombre como texto, sin logo), formulario a la derecha. */
+/** A customer tenant: its name as text on the hero, no logo. */
 export const SplitTenantWordmark: Story = {
   args: {
     brandText: 'Brother Perú',
     language: 'es',
-    variant: 'split',
     showRememberMe: false,
     heroTitle: 'Disponibilidad, precios y búsqueda en un solo lugar',
     heroDescription: 'Ingresa para ver los reportes de tu marca en cada retailer.',
-    onLoginSubmit: (email, password) => {
-      console.log('Login:', { email, password });
-    },
   },
 };
 
-/** Split con error de credenciales. */
 export const SplitWithError: Story = {
   args: {
     brandText: 'Brother Perú',
     language: 'es',
-    variant: 'split',
     showRememberMe: false,
     error: 'El correo o la contraseña no coinciden.',
-  },
-};
-
-export const Centered: Story = {
-  args: {
-    logo: <LogoWideColor />,
-    logoWide: <LogoWideColor />,
-    language: 'es',
-    variant: 'centered',
-    onLoginSubmit: (email, password) => {
-      console.log('Login:', { email, password });
-    },
-    onForgotPassword: () => {
-      console.log('Forgot password clicked');
-    },
-  },
-};
-
-export const WithError: Story = {
-  args: {
-    logo: <LogoWideColor />,
-    logoWide: <LogoWideColor />,
-    language: 'es',
-    variant: 'gradient',
-    error: 'Credenciales inválidas. Por favor, verifica tu correo y contraseña.',
-    onLoginSubmit: (email, password) => {
-      console.log('Login:', { email, password });
-    },
   },
 };
 
@@ -145,12 +77,19 @@ export const Loading: Story = {
   args: {
     logo: <LogoWideColor />,
     logoWide: <LogoWideColor />,
+    splitLogo: <LogoWideWhite />,
     language: 'es',
-    variant: 'gradient',
     loading: true,
-    onLoginSubmit: (email, password) => {
-      console.log('Login:', { email, password });
-    },
+  },
+};
+
+export const NoForgotPassword: Story = {
+  args: {
+    logo: <LogoWideColor />,
+    logoWide: <LogoWideColor />,
+    splitLogo: <LogoWideWhite />,
+    language: 'es',
+    showForgotPassword: false,
   },
 };
 
@@ -158,15 +97,12 @@ export const WithFooter: Story = {
   args: {
     logo: <LogoWideColor />,
     logoWide: <LogoWideColor />,
+    splitLogo: <LogoWideWhite />,
     language: 'es',
-    variant: 'gradient',
-    onLoginSubmit: (email, password) => {
-      console.log('Login:', { email, password });
-    },
     footer: (
-      <p className="text-sm text-neutral-500">
+      <p className="text-sm text-neutral-600">
         ¿No tienes cuenta?{' '}
-        <a href="#" className="text-primary font-medium hover:underline">
+        <a href="#" className="font-medium text-primary hover:underline">
           Contacta al administrador
         </a>
       </p>
@@ -174,15 +110,12 @@ export const WithFooter: Story = {
   },
 };
 
+/** Below 1024 px the hero hides and the form fills the screen. */
 export const Mobile: Story = {
   args: {
-    logo: <LogoWideColor />,
-    logoWide: <LogoWideColor />,
+    brandText: 'Brother Perú',
     language: 'es',
-    variant: 'gradient',
-    onLoginSubmit: (email, password) => {
-      console.log('Login:', { email, password });
-    },
+    showRememberMe: false,
   },
   parameters: {
     viewport: {
@@ -195,35 +128,7 @@ export const English: Story = {
   args: {
     logo: <LogoWideColor />,
     logoWide: <LogoWideColor />,
-    language: 'en',
-    variant: 'gradient',
-    onLoginSubmit: (email, password) => {
-      console.log('Login:', { email, password });
-    },
-  },
-};
-
-export const EnglishSplit: Story = {
-  args: {
-    logo: <LogoWideColor />,
-    logoWide: <LogoWideColor />,
     splitLogo: <LogoWideWhite />,
     language: 'en',
-    variant: 'split',
-    onLoginSubmit: (email, password) => {
-      console.log('Login:', { email, password });
-    },
-  },
-};
-
-export const EnglishCentered: Story = {
-  args: {
-    logo: <LogoWideColor />,
-    logoWide: <LogoWideColor />,
-    language: 'en',
-    variant: 'centered',
-    onLoginSubmit: (email, password) => {
-      console.log('Login:', { email, password });
-    },
   },
 };

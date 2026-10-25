@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { FileDropzone } from '@omnitok/ui';
 
 const meta: Meta<typeof FileDropzone> = {
-  title: 'Drag and Drop/FileDropzone',
+  title: 'Components/FileDropzone',
   component: FileDropzone,
   parameters: {
     layout: 'padded',

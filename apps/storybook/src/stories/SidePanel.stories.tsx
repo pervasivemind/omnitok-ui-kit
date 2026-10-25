@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Layout, SidePanel, Card, Button, Input, Select, Textarea } from '@omnitok/ui';
+import { Layout, SidePanel, SidebarAccount, Card, Button, Input, Select, Textarea } from '@omnitok/ui';
 import {
   Home,
   Users,
@@ -23,34 +23,25 @@ const meta: Meta<typeof SidePanel> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const LogoExpanded = (
-  <img
-    src="/omnitok-logo.svg"
-    alt="Omnitok"
-    className="h-6 w-auto max-w-[140px] object-contain"
-  />
-);
-const LogoCollapsed = (
-  <img
-    src="/omnitok-icon.svg"
-    alt="Omnitok"
-    className="h-8 w-8 object-contain"
-  />
-);
-
 const sidebarItems = [
-  { id: 'dashboard', label: 'Dashboard', icon: <Home size={20} /> },
-  { id: 'users', label: 'Users', icon: <Users size={20} />, badge: 5 },
-  { id: 'products', label: 'Products', icon: <Package size={20} /> },
-  { id: 'orders', label: 'Orders', icon: <ShoppingCart size={20} />, badge: 12 },
-  { id: 'analytics', label: 'Analytics', icon: <BarChart3 size={20} /> },
-  { id: 'settings', label: 'Settings', icon: <Settings size={20} /> },
+  { id: 'dashboard', label: 'Dashboard', icon: <Home size={16} /> },
+  { id: 'users', label: 'Users', icon: <Users size={16} />, badge: 5 },
+  { id: 'products', label: 'Products', icon: <Package size={16} /> },
+  { id: 'orders', label: 'Orders', icon: <ShoppingCart size={16} />, badge: 12 },
+  { id: 'analytics', label: 'Analytics', icon: <BarChart3 size={16} /> },
+  { id: 'settings', label: 'Settings', icon: <Settings size={16} /> },
 ];
 
-const userInfo = {
-  name: 'Pablo Junyent',
-  role: 'Administrator',
-};
+const account = (
+  <SidebarAccount
+    name="Ana Pérez"
+    detail="ana@cliente.com"
+    version="3.1"
+    languages={[{ code: 'es' }, { code: 'en' }, { code: 'pt' }]}
+    language="es"
+  />
+);
+const accountCollapsed = <SidebarAccount collapsed name="Ana Pérez" />;
 
 const sampleProducts = [
   { id: 1, name: 'Wireless Headphones', category: 'Electronics', price: '$89.99', stock: 142 },
@@ -73,13 +64,10 @@ export const WithSidebar: Story = {
     return (
       <Layout
         sidebarItems={sidebarItems}
-        logo={LogoExpanded}
-        logoCollapsed={LogoCollapsed}
-        systemName="Admin Panel"
+        brandHeader={{ brandText: 'Omnitok', label: 'Productos' }}
         activeSidebarId="products"
-        headerTitle="Products"
-        user={userInfo}
-        notificationCount={3}
+        sidebarFooter={account}
+        sidebarFooterCollapsed={accountCollapsed}
         rightPanel={
           editorOpen && selectedProduct ? (
             <SidePanel
@@ -125,7 +113,7 @@ export const WithSidebar: Story = {
                   </div>
                   <Button
                     size="sm"
-                    variant="neutral"
+                    variant="primary"
                     ghost
                     onClick={() => openEditor(product)}
                   >
@@ -155,8 +143,7 @@ export const WithoutSidebar: Story = {
     return (
       <Layout
         hideSidebar
-        headerTitle="Products"
-        user={userInfo}
+        brandHeader={{ brandText: 'Omnitok', label: 'Productos' }}
         rightPanel={
           editorOpen && selectedProduct ? (
             <SidePanel
@@ -197,7 +184,7 @@ export const WithoutSidebar: Story = {
                   </div>
                   <Button
                     size="sm"
-                    variant="neutral"
+                    variant="primary"
                     ghost
                     onClick={() => openEditor(product)}
                   >
@@ -226,12 +213,10 @@ export const WithForm: Story = {
     return (
       <Layout
         sidebarItems={sidebarItems}
-        logo={LogoExpanded}
-        logoCollapsed={LogoCollapsed}
-        systemName="Admin Panel"
+        brandHeader={{ brandText: 'Omnitok', label: 'Usuarios' }}
         activeSidebarId="users"
-        headerTitle="Users"
-        user={userInfo}
+        sidebarFooter={account}
+        sidebarFooterCollapsed={accountCollapsed}
         rightPanel={
           editorOpen ? (
             <SidePanel
@@ -240,7 +225,7 @@ export const WithForm: Story = {
               onClose={() => setEditorOpen(false)}
               footer={
                 <>
-                  <Button variant="neutral" ghost onClick={() => setEditorOpen(false)}>
+                  <Button variant="secondary" onClick={() => setEditorOpen(false)}>
                     Cancel
                   </Button>
                   <Button type="submit" form="create-user-form">
@@ -309,12 +294,10 @@ export const CustomWidth: Story = {
     return (
       <Layout
         sidebarItems={sidebarItems}
-        logo={LogoExpanded}
-        logoCollapsed={LogoCollapsed}
-        systemName="Admin Panel"
+        brandHeader={{ brandText: 'Omnitok', label: 'Pedidos' }}
         activeSidebarId="orders"
-        headerTitle="Orders"
-        user={userInfo}
+        sidebarFooter={account}
+        sidebarFooterCollapsed={accountCollapsed}
         rightPanel={
           editorOpen ? (
             <SidePanel
@@ -323,7 +306,7 @@ export const CustomWidth: Story = {
               onClose={() => setEditorOpen(false)}
               footer={
                 <>
-                  <Button variant="neutral" ghost onClick={() => setEditorOpen(false)}>
+                  <Button variant="secondary" onClick={() => setEditorOpen(false)}>
                     Close
                   </Button>
                   <Button variant="primary">

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Badge, Pagination } from '@omnitok/ui';
+import { Pagination } from '@omnitok/ui';
 
 const meta: Meta<typeof Pagination> = {
   title: 'Components/Pagination',
@@ -12,18 +12,7 @@ const meta: Meta<typeof Pagination> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: [
-        'default',
-        'primary',
-        'accent',
-        'success',
-        'warning',
-        'error',
-        'info',
-        'violet',
-        'rose',
-        'teal',
-      ],
+      options: ['default', 'primary'],
     },
     size: {
       control: 'select',
@@ -167,34 +156,5 @@ export const CustomSiblingCount: Story = {
   render: () => {
     const [page, setPage] = useState(10);
     return <Pagination currentPage={page} totalPages={20} onChange={setPage} siblingCount={2} />;
-  },
-};
-
-const variants = [
-  'primary',
-  'accent',
-  'neutral',
-  'success',
-  'warning',
-  'error',
-  'info',
-  'violet',
-  'rose',
-  'teal',
-] as const;
-
-export const Variants: Story = {
-  render: () => {
-    const [page, setPage] = useState(5);
-    return (
-      <div className="flex flex-col gap-4">
-        {variants.map((variant) => (
-          <div key={variant} className="flex items-center gap-4">
-            <Pagination currentPage={page} totalPages={10} onChange={setPage} variant={variant} />
-            <Badge variant={variant}>{variant}</Badge>
-          </div>
-        ))}
-      </div>
-    );
   },
 };

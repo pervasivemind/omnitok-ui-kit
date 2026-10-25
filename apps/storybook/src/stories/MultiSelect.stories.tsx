@@ -127,18 +127,7 @@ const meta: Meta<typeof MultiSelect> = {
     },
     tagColor: {
       control: 'select',
-      options: [
-        'primary',
-        'accent',
-        'neutral',
-        'success',
-        'warning',
-        'error',
-        'info',
-        'violet',
-        'rose',
-        'teal',
-      ],
+      options: ['primary', 'neutral', 'success', 'warning', 'error', 'info'],
     },
   },
 };
@@ -400,59 +389,4 @@ export const FullWidth: Story = {
       />
     </div>
   ),
-};
-
-/** Demonstrates the `tagColor` prop applied globally to all badges. */
-export const TagColors: Story = {
-  render: () => {
-    const colors = [
-      'primary',
-      'accent',
-      'neutral',
-      'success',
-      'warning',
-      'error',
-      'info',
-      'violet',
-      'rose',
-      'teal',
-    ] as const;
-
-    return (
-      <div className="flex flex-col gap-6 w-96">
-        {colors.map((color) => (
-          <MultiSelect
-            key={color}
-            label={color.charAt(0).toUpperCase() + color.slice(1)}
-            options={languageOptions}
-            placeholder="Select languages..."
-            defaultValue={['typescript', 'python']}
-            tagColor={color}
-          />
-        ))}
-      </div>
-    );
-  },
-};
-
-/** Demonstrates per-option `color` overrides within a single MultiSelect. */
-export const PerOptionColors: Story = {
-  args: {
-    label: 'Team Skills',
-    options: [
-      { value: 'mobile', label: 'Mobile', color: 'primary' },
-      { value: 'design', label: 'Design', color: 'accent' },
-      { value: 'database', label: 'Database', color: 'neutral' },
-      { value: 'backend', label: 'Backend', color: 'success' },
-      { value: 'devops', label: 'DevOps', color: 'warning' },
-      { value: 'security', label: 'Security', color: 'error' },
-      { value: 'frontend', label: 'Frontend', color: 'info' },
-      { value: 'ai', label: 'AI/ML', color: 'violet' },
-      { value: 'integration', label: 'Integration', color: 'rose' },
-      { value: 'testing', label: 'Testing', color: 'teal' },
-    ],
-    placeholder: 'Select skills...',
-    defaultValue: ['frontend', 'backend', 'devops', 'design', 'security'],
-    helperText: 'Each skill has its own badge color defined per option',
-  },
 };

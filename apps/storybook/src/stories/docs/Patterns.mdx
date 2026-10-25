@@ -141,7 +141,7 @@ Para acciones destructivas:
   size="sm"
   footer={
     <>
-      <Button variant="neutral" ghost onClick={() => setShowConfirm(false)}>
+      <Button variant="secondary" onClick={() => setShowConfirm(false)}>
         Cancelar
       </Button>
       <Button variant="danger" onClick={handleDelete}>
@@ -201,7 +201,7 @@ Para filtros avanzados:
     </div>
   </CardBody>
   <CardFooter>
-    <Button variant="neutral" ghost>Limpiar</Button>
+    <Button variant="primary" ghost>Limpiar</Button>
     <Button variant="primary">Aplicar Filtros</Button>
   </CardFooter>
 </Card>
@@ -245,10 +245,7 @@ Para filtros avanzados:
 
 Ver componente `LoginPage` para implementación completa.
 
-**Variantes**:
-- `split` (recomendada, decisión D26): marca del cliente a la izquierda sobre el navy del sidebar, formulario a la derecha sobre blanco; bajo 1024 px solo el formulario
-- `centered`: tarjeta centrada sobre el canvas
-- `gradient`: fondo con el degradé de marca (forma v0.2)
+**Forma v3** (`variant="split"`, decisión D26): marca del cliente a la izquierda sobre el navy del sidebar, formulario a la derecha sobre blanco; bajo 1024 px solo el formulario.
 
 **Logos**:
 - Formulario: `omnitok-logo-primary.svg`

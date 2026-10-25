@@ -127,7 +127,7 @@ export const CustomContent: Story = {
         </div>
 
         <div className="flex justify-end gap-2 pt-1">
-          <Button size="sm" variant="neutral" ghost>
+          <Button size="sm" variant="primary" ghost>
             Reset
           </Button>
           <Button size="sm" type="submit">
@@ -328,7 +328,7 @@ export const Controlled: Story = {
           <Button size="sm" variant="outline" onClick={() => setOpen(true)}>
             Open externally
           </Button>
-          <Button size="sm" variant="neutral" ghost onClick={() => setOpen(false)}>
+          <Button size="sm" variant="primary" ghost onClick={() => setOpen(false)}>
             Close externally
           </Button>
         </div>

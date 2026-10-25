@@ -2,48 +2,32 @@ import { Meta, ColorPalette, ColorItem } from '@storybook/addon-docs/blocks';
 
 <Meta title="Introduction" />
 
-# Omnitok UI Kit
+# Omnitok UI v3
 
-Biblioteca de componentes React para sistemas administrativos y productos internos. Esta es la **línea v3** (`@omnitok/ui` 3.x), el look de la plataforma BI de Omnitok; su criterio de diseño está en `DESIGN.md`, en la raíz del repo.
+El kit de la plataforma BI de Omnitok (`@omnitok/ui` 3.x). Este Storybook muestra solo la línea v3: lo que define `DESIGN.md` (raíz del repo, aprobado el 2026-10-25) y lo que dibujan el portal, el builder y la consola. Los componentes BI (gráficos, KPIs, tablas, composición del reporte) están en la sección **BI** de la barra lateral.
 
-## 🎨 Características
+**North Star: "The Calm Control Room".** Un solo marco navy (cabecera y sidebar) que se queda quieto; el canvas frío y las superficies blancas llevan el trabajo. El color se usa poco y con significado: rosa para la única acción primaria de cada zona, violeta para lo compartido y lo seleccionado, verde para la pestaña del módulo. Los estados siempre llevan palabra o ícono.
 
-- **React 18 + TypeScript** - React moderno con type safety completo
-- **Tailwind CSS** - Styling con tokens de diseño personalizados
-- **Accesible** - Construido con accesibilidad en mente
-- **Customizable** - Fácil de personalizar con CSS variables y Tailwind
-- **Monorepo** - Organizado con pnpm workspaces
-- **Storybook 10** - Documentación interactiva de componentes
-
-## 📦 Instalación
-
-### Pre-requisitos
-
-```bash
-npm install lucide-react
-```
-
-Si tu proyecto usa Tailwind CSS, consulta la sección [🎯 Tailwind Preset](#-tailwind-preset) para configurar los tokens de diseño del UI Kit.
-
-### Paquete principal
+## Instalación
 
 ```bash
 # Línea v3 (canal pkg-v3, una etiqueta v3.x.y por versión)
-npm install github:pervasivemind/omnitok-ui-kit#pkg-v3
-
-# package.json
-"@omnitok/ui": "github:pervasivemind/omnitok-ui-kit#pkg-v3"
+npm install github:pervasivemind/omnitok-ui-kit#pkg-v3 lucide-react
 ```
 
-La rama `pkg` sigue en 0.2.x para los productos que no migraron. Las notas de cada versión, con las de migración, están en `packages/core/CHANGELOG.md`.
+```tsx
+// En el entry point (main.tsx)
+import '@omnitok/ui/styles.css';
+```
 
-## 🚀 Uso Básico
+Las notas de cada versión, con las de migración, están en `packages/core/CHANGELOG.md`.
 
-El shell v3: cabecera de marca navy, sidebar enmarcado y el bloque de cuenta al pie.
+## El shell v3
+
+Cabecera de marca navy, sidebar enmarcado con su selector de proyecto y el bloque de cuenta al pie. Detalle y variantes en **Layout / Shell v3**.
 
 ```tsx
 import { Button, Card, Layout, SidebarAccount } from '@omnitok/ui';
-import '@omnitok/ui/styles.css';
 import { BarChart3, FolderOpen, Settings } from 'lucide-react';
 
 function App() {
@@ -87,35 +71,9 @@ function App() {
 }
 ```
 
-Sin `brandHeader`, `Layout` conserva la forma v0.2 (logo en el sidebar y cabecera blanca) para los productos que todavía no migran.
+## Tailwind preset
 
-## 🎯 Tailwind Preset
-
-El UI Kit exporta un **preset de Tailwind CSS** con todos los tokens de diseño (colores, tipografía, spacing, sombras, animaciones, etc.).
-Esto permite que tu proyecto use las mismas clases utilitarias que los componentes internos del kit, manteniendo consistencia visual.
-
-### Instalar Tailwind CSS
-
-Si tu proyecto aún no tiene Tailwind CSS, instálalo junto con sus dependencias:
-
-```bash
-npm install -D tailwindcss @tailwindcss/postcss postcss autoprefixer
-```
-
-Crea un archivo `postcss.config.js` (o `.mjs`) en la raíz de tu proyecto:
-
-```js
-export default {
-  plugins: {
-    '@tailwindcss/postcss': {},
-    autoprefixer: {},
-  },
-};
-```
-
-### Configurar el preset
-
-Importa el preset de `@omnitok/ui` en tu `tailwind.config.ts` (o `.js`) y agrégalo al array `presets`:
+El preset trae los tokens de v3 (colores, tipografía, sombras, radios, animaciones), así una pantalla usa las mismas clases que los componentes.
 
 ```ts
 import type { Config } from 'tailwindcss';
@@ -129,63 +87,23 @@ const config: Config = {
 export default config;
 ```
 
-### ¿Qué incluye el preset?
-
-| Token | Ejemplo de clase | Descripción |
+| Token | Ejemplo de clase | Para qué |
 |---|---|---|
-| **Colores** | `bg-primary`, `text-accent`, `border-success` | Colores de marca, semánticos, chart |
-| **Tipografía** | `font-sans` (Inter), `font-display` (Nunito Sans), `font-mono` (Open Sans) | Familias y tamaños; `text-2xs` es el piso de 11 px |
-| **Spacing** | `w-sidebar`, `w-sidebar-collapsed` | Espaciados personalizados |
-| **Sombras** | `shadow-card`, `shadow-modal` | Box shadows |
-| **Gradientes** | `bg-[image:var(--omni-gradient-action)]` | El degradé de la acción primaria (variable que el cliente puede cambiar) |
-| **Animaciones** | `animate-fade-in`, `animate-slide-in` | Transiciones |
+| Colores | `bg-primary-soft`, `text-neutral-800`, `border-success` | Marca, estados y la escala de grises |
+| Tipografía | `font-sans` (Inter), `font-display` (Nunito Sans) | `text-2xs` es el piso de 11 px |
+| Sombras | `shadow-card`, `shadow-modal` | La elevación de tarjetas, menús y modales |
+| Degradé de acción | `bg-[image:var(--omni-gradient-action)]` | Solo el botón primario |
 
-### Importar estilos de componentes
+## Componentes
 
-El preset solo agrega los tokens de diseño. Para usar los componentes estilizados del kit, también necesitas importar el CSS compilado:
+- **Acciones:** Button (primario, secundario, outline, ghost; danger, accept e info solo en diálogos de confirmación).
+- **Campos:** Input, Textarea, Select, MultiSelect, Checkbox y Toggle, Radio, CodeEditor, FileDropzone.
+- **Contenido:** Card, Badge, Avatar, Alert, Table, Tabs, Pagination, Breadcrumb, Dropdown.
+- **Capas:** Modal y ConfirmModal, SidePanel, Toast.
+- **Layout:** Shell v3 (Layout con `brandHeader`), BrandHeader, SidebarAccount.
+- **Páginas:** LoginPage en pantalla dividida.
 
-```tsx
-// En tu entry point (main.tsx o App.tsx)
-import '@omnitok/ui/styles.css';
-```
-
-> **Tip**: Puedes usar el preset sin los componentes si solo necesitas los tokens, o combinar ambos para el flujo completo.
-
-## 📚 Componentes
-
-### Básicos
-- **Button** - Botones con múltiples variantes
-- **Input** - Campos de texto con validación
-- **Select** - Dropdowns personalizados
-- **Textarea** - Áreas de texto
-- **Checkbox** - Casillas de verificación
-- **Radio** - Botones de radio
-
-### Display
-- **Card** - Contenedores con header colorido
-- **Badge** - Etiquetas de estado
-- **Avatar** - Avatares de usuario
-- **Alert** - Mensajes de alerta
-
-### Layout
-- **Sidebar** - Navegación lateral con logo centrado
-- **Header** - Barra superior con búsqueda y usuario
-- **Layout** - Layout completo con sidebar + header
-- **Breadcrumb** - Migas de pan
-
-### Data
-- **Table** - Tablas con headers coloridos
-- **Tabs** - Pestañas con 3 variantes
-- **Pagination** - Paginación de datos
-
-### Feedback
-- **Modal** - Modales con header colorido
-- **Toast** - Notificaciones temporales
-
-### Pages
-- **LoginPage** - Página de login con 3 variantes
-
-## 🎨 Design System
+## Color
 
 <ColorPalette>
   <ColorItem title="Marco" subtitle="Cabecera de marca y sidebar" colors={{ Navy: '#1A1240' }} />
@@ -195,99 +113,9 @@ import '@omnitok/ui/styles.css';
   <ColorItem title="Texto" subtitle="Tinta, cuerpo y secundario (el más claro permitido)" colors={{ Tinta: '#252139', Cuerpo: '#465066', Secundario: '#5B6478' }} />
 </ColorPalette>
 
-Detalle en **Design System / Colors** y **Typography**, y las reglas para generar UI en **Design System / Reglas para agentes**.
+Detalle en **Design System / Colors** y **Typography**; las reglas para generar UI con un agente, en **Design System / Reglas para agentes**.
 
-### Tipografía
-- **Interfaz**: Inter (`font-sans`)
-- **Títulos y cifras**: Nunito Sans 800 (`font-display`)
-- **Editor de código**: Open Sans (`font-mono`)
-
-### Logos
-- **Sidebar expandido**: `omnitok-logo.svg` (horizontal blanco)
-- **Sidebar colapsado**: `omnitok-icon.svg` (cuadrado blanco)
-- **Login**: `omnitok-logo-primary.svg` (horizontal color)
-
-## 📖 Documentación
-
-Explora las secciones:
-
-- **Design System** - Colores, tipografía, layout, íconos, patrones
-- **Components** - Documentación de cada componente
-- **Layout** - Sidebar, Header, Layout completo
-- **Pages** - LoginPage y ejemplos completos
-- **Examples** - Dashboard, Forms, Tables
-- **PowerBI** - Integración de dashboards PowerBI
-- **Metabase** - Integración de dashboards Metabase
-
-## 🔧 Desarrollo Local
-
-### Setup del repositorio
-
-Recomendamos usar pnpm como package manager.
-
-https://pnpm.io/installation
-
-
-```bash
-# Clonar repositorio
-git clone https://github.com/pervasivemind/omnitok-ui-kit.git
-
-# Instalar dependencias
-pnpm install
-
-# Levantar instancia local
-pnpm dev
-```
-
-### Comandos útiles
-
-```bash
-# Desarrollar componentes
-pnpm --filter @omnitok/ui dev
-
-# Build solo core package
-pnpm --filter @omnitok/ui build
-
-# Ejecutar Storybook
-pnpm --filter storybook dev
-
-# Build Storybook
-pnpm --filter storybook build
-```
-
-## 🐳 Docker
-
-### Deployar Storybook
-
-```bash
-# Build imagen
-docker build -t omnitok-ui-storybook .
-
-# Run container
-docker run -p 8080:80 omnitok-ui-storybook
-
-# O usar docker-compose
-docker-compose up -d
-```
-
-Acceder en: http://localhost:8080
-
-### Assets (Logos)
-
-Descarga los logos del repositorio (`assets/`) y colócalos en tu carpeta `public/`:
-- `omnitok-logo.svg` → Sidebar expandido
-- `omnitok-icon.svg` → Sidebar colapsado
-- `omnitok-logo-primary.svg` → Login
-
-## 📖 Documentación Completa
-
-**Storybook** (esta misma aplicación):
-- **Design System**: Colors, Typography, Icons, Patterns, Cursor Rules
-- **Components**: Docs interactivos de cada componente
-- **Examples**: Dashboard, Forms, Tables, AI Analytics
-- **PowerBI & Metabase**: Guías de integración BI
-
-## 📝 Convenciones
+## Convenciones
 
 1. **El look vive en el componente**: no se restylea un componente del kit desde afuera.
 2. **Una acción primaria por zona**; el resto secundaria, outline o ghost.
@@ -296,16 +124,12 @@ Descarga los logos del repositorio (`assets/`) y colócalos en tu carpeta `publi
 5. **Íconos de Lucide** exclusivamente.
 6. **Responsive**: encabezados, acciones y pestañas envuelven en vez de desbordar.
 
-## 🤖 MCP Server (AI IDE Integration)
+## MCP
 
-Omnitok UI Kit cuenta con un servidor **MCP (Model Context Protocol)** que permite a editores con IA consultar la documentación y especificaciones de los componentes directamente desde el IDE. El MCP v3 sirve dos catálogos juntos: el del kit y el de los componentes BI de la plataforma (bi-components y dashboard-render, que este Storybook muestra en la sección BI).
+El servidor MCP v3 sirve los dos catálogos de este Storybook (el kit y los componentes BI) a los editores con IA.
 
 **Endpoint**: `https://ui-kit-v3.omnitok.cloud/mcp`
 
-### Configurar en Cursor
-
-Agrega la siguiente entrada en `.cursor/mcp.json` (a nivel de proyecto o global):
-
 ```json
 {
   "mcpServers": {
@@ -316,49 +140,12 @@ Agrega la siguiente entrada en `.cursor/mcp.json` (a nivel de proyecto o global)
 }
 ```
 
-### Configurar en VS Code (Copilot)
+Con el MCP conectado, el asistente puede listar los componentes, leer sus props y variantes y generar código con los componentes reales.
 
-Agrega la entrada en `.vscode/mcp.json`:
+## Desarrollo local
 
-```json
-{
-  "servers": {
-    "omnitok-ui-kit": {
-      "type": "sse",
-      "url": "https://ui-kit-v3.omnitok.cloud/mcp"
-    }
-  }
-}
+```bash
+pnpm install
+pnpm --filter storybook dev     # este Storybook
+pnpm --filter @omnitok/ui build # solo el paquete
 ```
-
-### Configurar en Windsurf
-
-Agrega la entrada en `~/.codeium/windsurf/mcp_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "omnitok-ui-kit": {
-      "serverUrl": "https://ui-kit-v3.omnitok.cloud/mcp"
-    }
-  }
-}
-```
-
-### ¿Qué puedes hacer con el MCP?
-
-Una vez conectado, tu asistente de IA puede:
-
-- **Listar todos los componentes** disponibles en el UI Kit
-- **Consultar la documentación** de un componente (props, variantes, ejemplos)
-- **Generar código** usando los componentes correctos con sus props reales
-- **Entender el Design System** (colores, tipografía, patrones)
-
-> **Tip**: Después de configurar el MCP, prueba pedirle a tu asistente: *"Usa los componentes de Omnitok UI Kit para crear un formulario de registro"*.
-
-## 🌐 Recursos
-
-- [Lucide Icons](https://lucide.dev)
-- [Tailwind CSS](https://tailwindcss.com)
-- [React Documentation](https://react.dev)
-- [MCP Server v3](https://ui-kit-v3.omnitok.cloud/mcp)

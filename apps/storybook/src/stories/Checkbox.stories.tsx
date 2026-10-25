@@ -12,7 +12,7 @@ const meta: Meta<typeof Checkbox> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'accent', 'neutral', 'success', 'info', 'violet', 'rose', 'teal'],
+      options: ['primary', 'success', 'info'],
     },
     toggle: {
       control: 'boolean',
@@ -63,21 +63,6 @@ export const Controlled: Story = {
   },
 };
 
-export const Variants: Story = {
-  render: () => (
-    <div className="flex flex-col gap-4">
-      <Checkbox variant="primary" label="Primary" defaultChecked />
-      <Checkbox variant="accent" label="Accent" defaultChecked />
-      <Checkbox variant="neutral" label="Neutral" defaultChecked />
-      <Checkbox variant="success" label="Success" defaultChecked />
-      <Checkbox variant="info" label="Info" defaultChecked />
-      <Checkbox variant="violet" label="Violet" defaultChecked />
-      <Checkbox variant="rose" label="Rose" defaultChecked />
-      <Checkbox variant="teal" label="Teal" defaultChecked />
-    </div>
-  ),
-};
-
 export const WithError: Story = {
   args: {
     label: 'I agree to the terms',
@@ -112,21 +97,6 @@ export const ToggleSwitch: Story = {
     toggle: true,
     label: 'Enable dark mode',
   },
-};
-
-export const ToggleVariants: Story = {
-  render: () => (
-    <div className="flex flex-col gap-4">
-      <Checkbox toggle variant="primary" label="Primary" defaultChecked />
-      <Checkbox toggle variant="accent" label="Accent" defaultChecked />
-      <Checkbox toggle variant="neutral" label="Neutral" defaultChecked />
-      <Checkbox toggle variant="success" label="Success" defaultChecked />
-      <Checkbox toggle variant="info" label="Info" defaultChecked />
-      <Checkbox toggle variant="violet" label="Violet" defaultChecked />
-      <Checkbox toggle variant="rose" label="Rose" defaultChecked />
-      <Checkbox toggle variant="teal" label="Teal" defaultChecked />
-    </div>
-  ),
 };
 
 export const ToggleWithLabel: Story = {

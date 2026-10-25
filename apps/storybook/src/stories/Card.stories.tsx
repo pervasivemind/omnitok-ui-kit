@@ -69,7 +69,7 @@ export const WithFooter: Story = {
         </p>
       </CardBody>
       <CardFooter>
-        <Button variant="neutral" ghost>Cancel</Button>
+        <Button variant="secondary">Cancel</Button>
         <Button variant="primary">Save Changes</Button>
       </CardFooter>
     </Card>
@@ -103,26 +103,5 @@ export const Variants: Story = {
         <p className="text-sm text-neutral-600">Elevated</p>
       </Card>
     </div>
-  ),
-};
-
-export const ProductCard: Story = {
-  render: () => (
-    <Card className="w-72" noPadding>
-      <div className="h-40 bg-neutral-200 rounded-t-lg" />
-      <div className="p-4">
-        <div className="flex items-start justify-between mb-2">
-          <h3 className="font-semibold">Product Name</h3>
-          <Badge variant="success">In Stock</Badge>
-        </div>
-        <p className="text-sm text-neutral-500 mb-4">
-          Short product description goes here.
-        </p>
-        <div className="flex items-center justify-between">
-          <span className="text-lg font-bold text-primary">$99.00</span>
-          <Button size="sm">Add to Cart</Button>
-        </div>
-      </div>
-    </Card>
   ),
 };
