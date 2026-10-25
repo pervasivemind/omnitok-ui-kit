@@ -1,0 +1,275 @@
+/* Import Google Fonts — must precede all other statements (CSS @import rule) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ── Omnitok UI v3 tokens (the single place these values live) ──
+       Consumers read them as CSS variables; bi-components and
+       dashboard-render do not repeat the hex values. */
+    --omni-navy: #1A1240;          /* chrome: header + sidebar */
+    --omni-navy-line: #302453;     /* sidebar frame border */
+    --omni-navy-border: #362B59;   /* header bottom border */
+    --omni-pink: #FF177B;          /* identity + selection */
+    --omni-violet: #4D4A9D;        /* shared actions */
+    --omni-canvas: #F5F6F9;        /* page background */
+    --omni-surface: #FFFFFF;       /* cards, panels, menus */
+    --omni-ink: #252139;           /* headings, KPI values */
+    --omni-text: #465066;          /* body text */
+    --omni-muted: #5B6478;         /* captions, hints: 5.93:1 on white, 5.49 on canvas, 5.20 on violet-soft (D37, 2026-10-25) */
+    --omni-muted-on-tint: #5B6478; /* same as --omni-muted since D37; kept for consumers */
+    --omni-accent-fill: #E0156D;   /* accent fill under white text (4.67:1) */
+    --omni-accent-ink: #C8105F;    /* accent as text on white (5.68:1) */
+    --omni-focus: #6251A3;         /* focus ring */
+    --omni-violet-soft: #F0EFF8;   /* secondary action, selected option */
+    --omni-violet-ink: #3B3880;    /* text on violet-soft */
+    /* Selected tab / page: the module colour (Disponibilidad green by default,
+       5.30:1 under white text). A module or tenant can override it. */
+    --omni-selected: #0B7A5F;
+    /* Primary action: pink to violet. Tenants may override it (D14). */
+    --omni-gradient-action: linear-gradient(105deg, #E0156D, #6D2DD6);
+    --omni-shadow-action: 0 5px 15px #FF177B20;
+    --omni-line: #E4E5ED;          /* hairlines, card borders */
+    --omni-active: #EAE7F5;        /* selected row on light surfaces */
+    --omni-accent: #6251A3;        /* selected text on light surfaces */
+    --omni-sb-text: #D8D2E8;       /* sidebar item text */
+    --omni-sb-muted: #B8B0D1;      /* sidebar icons + captions */
+    /* Shell tint (D14). A tenant may override these; the defaults are
+       Omnitok's. --omni-sb-bg may be a gradient (it is used as `background`).
+       Every value must keep white text >= 4.5:1 (tenancy.theming gate). */
+    --omni-sb-bg: var(--omni-navy);      /* sidebar and login hero */
+    --omni-sb-accent: #FF177B;           /* selection bar, active dot */
+    --omni-sb-accent-ink: #FF6AAA;       /* selected icon on the sidebar */
+    --omni-sb-badge: var(--omni-accent-fill); /* count badge: white text 4.67:1 */
+    --omni-header-bg: var(--omni-navy);  /* brand header */
+    --omni-shadow-card: 0 2px 4px #21183F04, 0 6px 18px #21183F09;
+    --omni-shadow-menu: 0 10px 30px #1A124022;
+    --omni-radius-control: 8px;
+    --omni-radius-card: 12px;
+    --omni-radius-panel: 14px;
+    --omni-font-ui: 'Inter', system-ui, sans-serif;
+    --omni-font-display: 'Nunito Sans', 'Inter', system-ui, sans-serif;
+    --omni-header-height: 42px;
+    --omni-sidebar-width: 250px;
+    --omni-sidebar-width-collapsed: 64px;
+
+    /* Brand Colors */
+    --color-sidebar: #1A1240;
+    --color-primary: #4D4A9D;
+    --color-primary-dark: #3d3a8c;
+    --color-primary-light: #6b68b3;
+    --color-accent: #E0156D;
+    --color-accent-dark: #C8105F;
+    --color-accent-light: #FF177B;
+
+    /* Code editor syntax hues (only the editor uses them) */
+    --omni-code-string: #086049;
+    --omni-code-function: #763894;
+    --omni-code-regex: #94304C;
+
+    /* Neutral Colors */
+    --color-neutral-50: #F8F9FB;
+    --color-neutral-100: #F2F3F7;
+    --color-neutral-200: #E4E5ED;
+    --color-neutral-300: #D0D4DE;
+    --color-neutral-400: #98A1B3;
+    --color-neutral-500: #5B6478;
+    --color-neutral-600: #465066;
+    --color-neutral-700: #343A4D;
+    --color-neutral-800: #252139;
+    --color-neutral-900: #1A1240;
+
+    /* Semantic Colors */
+    --color-success: #166534;
+    --color-warning: #8A5A16;
+    --color-error: #C4476A;
+    --color-info: #4D4A9D;
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+
+    /* Transitions */
+    --transition-fast: 150ms;
+    --transition-normal: 200ms;
+    --transition-slow: 300ms;
+  }
+
+  html {
+    font-family: var(--omni-font-ui);
+  }
+
+  body {
+    background-color: var(--omni-canvas);
+    color: var(--omni-text);
+  }
+
+  /* Browser surfaces (v3, 2026-10-24): themed from the palette. */
+  :root {
+    accent-color: var(--omni-violet);
+    scrollbar-color: #C9C3E2 transparent;
+  }
+  * {
+    scrollbar-width: thin;
+  }
+  ::selection {
+    background: #FF177B2E;
+  }
+  :focus-visible {
+    outline: 2px solid var(--omni-focus);
+    outline-offset: 2px;
+  }
+  /* Numbers line up in KPIs, tables and numeric chips. */
+  table,
+  [data-kpi] {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  /* Focus ring utility */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+  }
+
+  /* Gradient active state for sidebar */
+  .gradient-active {
+    background: linear-gradient(90deg, #E0156D 0%, #4D4A9D 100%);
+  }
+}
+
+@layer utilities {
+  /* Text truncate */
+  .truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .truncate-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Scrollbar styling */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-neutral-300) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: var(--color-neutral-300);
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-neutral-400);
+  }
+}
+
+@layer components {
+  /* CodeEditor (Prism) syntax theme — scoped so it only affects the component
+     and bundles into the single dist/styles.css. Token colors map to the kit palette. */
+  .omnitok-code-editor pre,
+  .omnitok-code-editor textarea,
+  .omnitok-code-editor code {
+    color: var(--color-neutral-800);
+    white-space: pre;
+    word-break: normal;
+    tab-size: 2;
+  }
+
+  .omnitok-code-editor .token.comment,
+  .omnitok-code-editor .token.prolog,
+  .omnitok-code-editor .token.doctype,
+  .omnitok-code-editor .token.cdata {
+    /* v3: comments are text; neutral-500 keeps 4.97:1 on white. */
+    color: var(--color-neutral-500);
+    font-style: italic;
+  }
+
+  .omnitok-code-editor .token.punctuation {
+    color: var(--color-neutral-500);
+  }
+
+  .omnitok-code-editor .token.property,
+  .omnitok-code-editor .token.tag,
+  .omnitok-code-editor .token.boolean,
+  .omnitok-code-editor .token.number,
+  .omnitok-code-editor .token.constant,
+  .omnitok-code-editor .token.symbol,
+  .omnitok-code-editor .token.deleted {
+    color: var(--color-accent);
+  }
+
+  .omnitok-code-editor .token.selector,
+  .omnitok-code-editor .token.attr-name,
+  .omnitok-code-editor .token.string,
+  .omnitok-code-editor .token.char,
+  .omnitok-code-editor .token.builtin,
+  .omnitok-code-editor .token.inserted {
+    color: var(--omni-code-string);
+  }
+
+  .omnitok-code-editor .token.operator,
+  .omnitok-code-editor .token.entity,
+  .omnitok-code-editor .token.url {
+    color: var(--color-neutral-600);
+  }
+
+  .omnitok-code-editor .token.atrule,
+  .omnitok-code-editor .token.attr-value,
+  .omnitok-code-editor .token.keyword {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  .omnitok-code-editor .token.function,
+  .omnitok-code-editor .token.class-name {
+    color: var(--omni-code-function);
+  }
+
+  .omnitok-code-editor .token.regex,
+  .omnitok-code-editor .token.important,
+  .omnitok-code-editor .token.variable {
+    color: var(--omni-code-regex);
+  }
+
+  .omnitok-code-editor .token.important,
+  .omnitok-code-editor .token.bold {
+    font-weight: 700;
+  }
+
+  .omnitok-code-editor .token.italic {
+    font-style: italic;
+  }
+}
