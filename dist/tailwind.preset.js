@@ -10,8 +10,8 @@ export default {
         surface: '#FFFFFF',
         ink: '#252139',
         body: '#465066',
-        muted: '#667085', // v3 (2026-10-24): 4.97:1 on white, 4.60:1 on canvas
-        'muted-on-tint': '#5B6478',
+        muted: '#5B6478', // D37 (2026-10-25): 5.93:1 on white, 5.49 on canvas, 5.20 on violet-soft
+        'muted-on-tint': '#5B6478', // same as muted since D37; kept for consumers
         line: '#E4E5ED',
         primary: {
           DEFAULT: '#4D4A9D',
@@ -52,7 +52,7 @@ export default {
 
         // Neutral Colors
         // v3: cool greys of the approved reference. 500 is the secondary text
-        // (#667085), 600 the body text, 800 the ink; 400 is for icons and
+        // (#5B6478, 4.5:1 or more on white, canvas and tints since D37), 600 the body text, 800 the ink; 400 is for icons and
         // borders only (2.6:1), never for text. bi-components and
         // dashboard-render resolve `neutral-*` through this preset too.
         neutral: {
@@ -61,7 +61,7 @@ export default {
           200: '#E4E5ED',
           300: '#D0D4DE',
           400: '#98A1B3',
-          500: '#667085',
+          500: '#5B6478',
           600: '#465066',
           700: '#343A4D',
           800: '#252139',
