@@ -4,6 +4,16 @@ The v3 line is published on the `pkg-v3` branch with a `v3.x.y` tag per
 release. The `pkg` branch (0.2.x) is unchanged and is what the other
 consumer repos still follow.
 
+## 3.1.3 (2026-10-25): one secondary grey that passes everywhere
+
+- `neutral-500`, `muted` and `--omni-muted` move from `#667085` to `#5B6478`
+  (decision D37). The old value gave 4.36:1 on the violet tint and 4.49:1 on
+  `neutral-100`, under the 4.5:1 floor, so tinted surfaces needed a second
+  grey; `#5B6478` gives 5.93:1 on white, 5.49:1 on canvas and 5.20:1 on the
+  violet tint. `muted-on-tint` keeps its name and now has the same value.
+  No API change; secondary text gets slightly darker everywhere.
+- `DESIGN.md` (repo root) approved as written (D38).
+
 ## 3.1.2 (2026-10-24): tabs wrap instead of truncating
 
 - `Tabs` (not `fullWidth`): when the tabs do not fit, they wrap onto

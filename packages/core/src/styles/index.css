@@ -19,8 +19,8 @@
     --omni-surface: #FFFFFF;       /* cards, panels, menus */
     --omni-ink: #252139;           /* headings, KPI values */
     --omni-text: #465066;          /* body text */
-    --omni-muted: #667085;         /* captions, hints: 4.97:1 on white (v3, 2026-10-24) */
-    --omni-muted-on-tint: #5B6478; /* captions on tinted surfaces */
+    --omni-muted: #5B6478;         /* captions, hints: 5.93:1 on white, 5.49 on canvas, 5.20 on violet-soft (D37, 2026-10-25) */
+    --omni-muted-on-tint: #5B6478; /* same as --omni-muted since D37; kept for consumers */
     --omni-accent-fill: #E0156D;   /* accent fill under white text (4.67:1) */
     --omni-accent-ink: #C8105F;    /* accent as text on white (5.68:1) */
     --omni-focus: #6251A3;         /* focus ring */
@@ -82,7 +82,7 @@
     --color-neutral-200: #E4E5ED;
     --color-neutral-300: #D0D4DE;
     --color-neutral-400: #98A1B3;
-    --color-neutral-500: #667085;
+    --color-neutral-500: #5B6478;
     --color-neutral-600: #465066;
     --color-neutral-700: #343A4D;
     --color-neutral-800: #252139;

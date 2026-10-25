@@ -10,7 +10,7 @@ Tres reglas antes de elegir un color:
 
 - **Una acción rosa por zona.** Un encabezado o un diálogo tiene como máximo una acción primaria; el resto es secundaria (violeta), outline o ghost.
 - **Nunca solo color.** Todo estado, delta o selección se dice también con una palabra, un ícono, un check o una forma.
-- **Piso del gris.** Ningún texto más claro que `muted` (`#667085`) sobre blanco, o `muted-on-tint` (`#5B6478`) sobre un tinte. `neutral-400` es para íconos y bordes, nunca para texto.
+- **Piso del gris.** Ningún texto más claro que `muted` (`#5B6478`, `neutral-500`): pasa 4,5:1 sobre blanco, canvas y tintes (decisión D37). `neutral-400` es para íconos y bordes, nunca para texto.
 
 ## Marco y superficies
 
@@ -67,8 +67,8 @@ Tres reglas antes de elegir un color:
   />
   <ColorItem
     title="Secundario"
-    subtitle="Captions y ayudas: 4,97:1 sobre blanco. Sobre un tinte, muted-on-tint"
-    colors={{ Muted: '#667085', 'Muted sobre tinte': '#5B6478', 'Solo íconos': '#98A1B3' }}
+    subtitle="Captions y ayudas: 5,93:1 sobre blanco, 5,49 sobre canvas, 5,20 sobre el tinte violeta"
+    colors={{ Muted: '#5B6478', 'Solo íconos': '#98A1B3' }}
   />
 </ColorPalette>
 
@@ -84,7 +84,7 @@ Tres reglas antes de elegir un color:
       200: '#E4E5ED',
       300: '#D0D4DE',
       400: '#98A1B3',
-      500: '#667085',
+      500: '#5B6478',
       600: '#465066',
       700: '#343A4D',
       800: '#252139',

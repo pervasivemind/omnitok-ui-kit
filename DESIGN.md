@@ -17,8 +17,7 @@ colors:
   surface: "#FFFFFF"
   ink: "#252139"
   body-text: "#465066"
-  muted-text: "#667085"
-  muted-on-tint: "#5B6478"
+  muted-text: "#5B6478"
   icon-grey: "#98A1B3"
   control-line: "#D0D4DE"
   hairline: "#E4E5ED"
@@ -112,9 +111,10 @@ components:
 
 # Design System: Omnitok UI v3
 
-<!-- Derived from the code of @omnitok/ui 3.1.2 (packages/core/tailwind.preset.js,
+<!-- Derived from the code of @omnitok/ui 3.x (packages/core/tailwind.preset.js,
      packages/core/src/styles/index.css and the components) on 2026-10-24.
-     The North Star and the colour names are a proposal pending review. -->
+     North Star and colour names approved by Pablo on 2026-10-25 (D38);
+     secondary grey changed to #5B6478 the same day (D37). -->
 
 ## Overview
 
@@ -157,8 +157,7 @@ A restrained palette: a navy frame, cool greys on paper, one identity pink and o
 - **Surface** (`surface`): cards, panels, menus, modals, inputs.
 - **Ink** (`ink`): headings and KPI values.
 - **Body Text** (`body-text`): running text.
-- **Muted Text** (`muted-text`): captions and hints; 4.97:1 on white, 4.60:1 on canvas. The lightest grey allowed for text.
-- **Muted on Tint** (`muted-on-tint`): captions on tinted surfaces, where muted text would fall under 4.5:1.
+- **Muted Text** (`muted-text`): captions and hints; 5.93:1 on white, 5.49:1 on canvas, 5.20:1 on the violet tint. The lightest grey allowed for text, on any surface (the old `muted-on-tint` now has the same value).
 - **Icon Grey** (`icon-grey`): icons and decorative borders only (2.6:1).
 - **Control Line** (`control-line`): the border of inputs, selects and textareas.
 - **Hairline** (`hairline`): card borders, dividers, table rules.
@@ -171,7 +170,7 @@ A restrained palette: a navy frame, cool greys on paper, one identity pink and o
 
 **The Never By Colour Alone Rule.** Every status, delta and selection is also told by a word, an icon, a check or a shape (the owner of the product is red-green colour-blind).
 
-**The Muted Floor Rule.** No text lighter than `muted-text` on white or `muted-on-tint` on a tint; `icon-grey` is never text.
+**The Muted Floor Rule.** No text lighter than `muted-text`, on white, canvas or a tint; `icon-grey` is never text.
 
 ## Typography
 

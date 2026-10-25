@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-24T20:09:16+00:00",
+  "generatedAt": "2026-10-25T14:00:43+00:00",
   "title": "Design System: Omnitok UI v3",
   "extensions": {
     "colorMeta": {
@@ -38,7 +38,7 @@
           "#252139",
           "#343A4D",
           "#465066",
-          "#667085",
+          "#5B6478",
           "#98A1B3",
           "#D0D4DE",
           "#E4E5ED",
@@ -153,7 +153,7 @@
       "refersTo": "input",
       "description": "White field, control-line border, violet focus ring.",
       "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Correo</span><input class=\"ds-input\" placeholder=\"tu@email.com\"></label>",
-      "css": ".ds-field{display:flex;flex-direction:column;gap:6px;font-family:Inter,system-ui,sans-serif}.ds-field-label{font:600 12px/16px Inter,system-ui,sans-serif;color:#252139}.ds-input{background:#fff;border:1px solid #D0D4DE;border-radius:10px;padding:8px 14px;font:400 13px/20px Inter,system-ui,sans-serif;color:#252139}.ds-input::placeholder{color:#667085}.ds-input:focus{outline:none;border-color:#4D4A9D;box-shadow:0 0 0 2px #4D4A9D}"
+      "css": ".ds-field{display:flex;flex-direction:column;gap:6px;font-family:Inter,system-ui,sans-serif}.ds-field-label{font:600 12px/16px Inter,system-ui,sans-serif;color:#252139}.ds-input{background:#fff;border:1px solid #D0D4DE;border-radius:10px;padding:8px 14px;font:400 13px/20px Inter,system-ui,sans-serif;color:#252139}.ds-input::placeholder{color:#5B6478}.ds-input:focus{outline:none;border-color:#4D4A9D;box-shadow:0 0 0 2px #4D4A9D}"
     },
     {
       "name": "Card",
@@ -212,7 +212,7 @@
       },
       {
         "name": "The Muted Floor Rule",
-        "body": "No text lighter than `muted-text` on white or `muted-on-tint` on a tint; `icon-grey` is never text.",
+        "body": "No text lighter than `muted-text`, on white, canvas or a tint; `icon-grey` is never text.",
         "section": "colors"
       },
       {
