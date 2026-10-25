@@ -1,4 +1,4 @@
-import { c as p } from "./index-DczAGeHV.js";
+import { c as p } from "./index-xOaLSbxG.js";
 import Ie from "react";
 function Pe(a, t) {
   for (var s = 0; s < t.length; s++) {
@@ -83,7 +83,7 @@ var h = ze(Ie), Be = 89, R = 90, Ne = 77, ne = 57, re = 219, ae = 222, ie = 192,
   var o = t.autoFocus, l = t.disabled, k = t.form, le = t.highlight, Y = t.ignoreTabKey, se = Y === void 0 ? !1 : Y, A = t.insertSpaces, ce = A === void 0 ? !0 : A, ue = t.maxLength, fe = t.minLength, de = t.name, ve = t.onBlur, ge = t.onClick, he = t.onFocus, H = t.onKeyDown, ye = t.onKeyUp, T = t.onValueChange, U = t.padding, g = U === void 0 ? 0 : U, pe = t.placeholder, me = t.preClassName, be = t.readOnly, _e = t.required, Ee = t.style, q = t.tabSize, Se = q === void 0 ? 2 : q, G = t.textareaClassName, Ce = t.textareaId, Q = t.value, ke = Fe(t, ["autoFocus", "disabled", "form", "highlight", "ignoreTabKey", "insertSpaces", "maxLength", "minLength", "name", "onBlur", "onClick", "onFocus", "onKeyDown", "onKeyUp", "onValueChange", "padding", "placeholder", "preClassName", "readOnly", "required", "style", "tabSize", "textareaClassName", "textareaId", "value"]), c = h.useRef({
     stack: [],
     offset: -1
-  }), I = h.useRef(null), V = h.useState(!0), Oe = V[0], Ke = V[1], Z = {
+  }), I = h.useRef(null), V = h.useState(!0), Oe = V[0], Ke = V[1], $ = {
     paddingTop: typeof g == "object" ? g.top : g,
     paddingRight: typeof g == "object" ? g.right : g,
     paddingBottom: typeof g == "object" ? g.bottom : g,
@@ -115,7 +115,7 @@ var h = ze(Ie), Be = 89, R = 90, Ne = 77, ne = 57, re = 219, ae = 222, ie = 192,
       }
     }
     c.current.stack.push(f(f({}, e), { timestamp: y })), c.current.offset++;
-  }, []), $ = h.useCallback(function() {
+  }, []), Z = h.useCallback(function() {
     var e = I.current;
     if (e) {
       var i = e.value, n = e.selectionStart, r = e.selectionEnd;
@@ -248,8 +248,8 @@ var h = ze(Ie), Be = 89, R = 90, Ne = 77, ne = 57, re = 219, ae = 222, ie = 192,
     }, !0), T(n);
   };
   return h.useEffect(function() {
-    $();
-  }, [$]), h.useImperativeHandle(s, function() {
+    Z();
+  }, [Z]), h.useImperativeHandle(s, function() {
     return {
       get session() {
         return {
@@ -263,10 +263,10 @@ var h = ze(Ie), Be = 89, R = 90, Ne = 77, ne = 57, re = 219, ae = 222, ie = 192,
   }, []), h.createElement(
     "div",
     f({}, ke, { style: f(f({}, D.container), Ee) }),
-    h.createElement("pre", f({ className: me, "aria-hidden": "true", style: f(f(f({}, D.editor), D.highlight), Z) }, typeof F == "string" ? { dangerouslySetInnerHTML: { __html: F + "<br />" } } : { children: F })),
+    h.createElement("pre", f({ className: me, "aria-hidden": "true", style: f(f(f({}, D.editor), D.highlight), $) }, typeof F == "string" ? { dangerouslySetInnerHTML: { __html: F + "<br />" } } : { children: F })),
     h.createElement("textarea", { ref: function(e) {
       return I.current = e;
-    }, style: f(f(f({}, D.editor), D.textarea), Z), className: z + (G ? " ".concat(G) : ""), id: Ce, value: Q, onChange: De, onKeyDown: je, onClick: ge, onKeyUp: ye, onFocus: he, onBlur: ve, disabled: l, form: k, maxLength: ue, minLength: fe, name: de, placeholder: pe, readOnly: be, required: _e, autoFocus: o, autoCapitalize: "off", autoComplete: "off", autoCorrect: "off", spellCheck: !1, "data-gramm": !1 }),
+    }, style: f(f(f({}, D.editor), D.textarea), $), className: z + (G ? " ".concat(G) : ""), id: Ce, value: Q, onChange: De, onKeyDown: je, onClick: ge, onKeyUp: ye, onFocus: he, onBlur: ve, disabled: l, form: k, maxLength: ue, minLength: fe, name: de, placeholder: pe, readOnly: be, required: _e, autoFocus: o, autoCapitalize: "off", autoComplete: "off", autoCorrect: "off", spellCheck: !1, "data-gramm": !1 }),
     h.createElement("style", { dangerouslySetInnerHTML: { __html: Ye } })
   );
 }), D = {
@@ -323,4 +323,4 @@ const Ge = /* @__PURE__ */ Pe({
 export {
   Ge as i
 };
-//# sourceMappingURL=index-3camMQQh.js.map
+//# sourceMappingURL=index-B9G-pX6f.js.map

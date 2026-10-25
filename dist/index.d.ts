@@ -1,7 +1,6 @@
 import { Accept } from 'react-dropzone';
 import { ButtonHTMLAttributes } from 'react';
 import { ClassValue } from 'clsx';
-import { default as default_2 } from 'react';
 import { FileRejection } from 'react-dropzone';
 import { ForwardRefExoticComponent } from 'react';
 import { HTMLAttributes } from 'react';
@@ -66,7 +65,7 @@ export declare interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 
 export declare type BadgeSize = 'sm' | 'md' | 'lg';
 
-export declare type BadgeVariant = 'primary' | 'accent' | 'neutral' | 'success' | 'warning' | 'error' | 'info' | 'violet' | 'rose' | 'teal';
+export declare type BadgeVariant = 'primary' | 'neutral' | 'success' | 'warning' | 'error' | 'info';
 
 export declare const BrandHeader: ForwardRefExoticComponent<BrandHeaderProps & RefAttributes<HTMLElement>>;
 
@@ -134,7 +133,11 @@ export declare interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElem
     leftIcon?: ReactNode;
     /** Icon to show after text */
     rightIcon?: ReactNode;
-    /** Render as ghost (transparent bg, colored text) */
+    /**
+     * Quiet button for icons and minor actions: ink text at rest, a violet
+     * tint on hover (D40). With `variant="danger"` the hover turns red (D41).
+     * Other variants are ignored while ghost.
+     */
     ghost?: boolean;
     /** Full width button */
     fullWidth?: boolean;
@@ -144,7 +147,12 @@ export declare interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElem
 
 export declare type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
-export declare type ButtonVariant = 'primary' | 'accent' | 'neutral' | 'accept' | 'danger' | 'info' | 'violet' | 'rose' | 'teal' | 'outline' | 'secondary';
+/**
+ * v3 (DESIGN.md, Buttons): `primary` for the one action of an area,
+ * `secondary` for shared actions, `outline` for the rest. `danger`,
+ * `accept` and `info` exist for confirmation dialogs only.
+ */
+export declare type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'danger' | 'accept' | 'info';
 
 export declare const Card: ForwardRefExoticComponent<CardProps & RefAttributes<HTMLDivElement>>;
 
@@ -195,15 +203,11 @@ export declare interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInpu
     error?: string;
     /** Indeterminate state */
     indeterminate?: boolean;
-    /** Color variant */
-    variant?: CheckboxVariant;
     /** Render as a toggle switch */
     toggle?: boolean;
     /** Callback when checked state changes, provides the new boolean value */
     onCheckedChange?: (checked: boolean) => void;
 }
-
-export declare type CheckboxVariant = 'primary' | 'accent' | 'neutral' | 'success' | 'info' | 'violet' | 'rose' | 'teal';
 
 /**
  * Utility function to merge class names with clsx
@@ -261,7 +265,7 @@ export declare interface ConfirmModalProps extends Omit<ModalProps, 'children' |
     /** Cancel button text */
     cancelText?: string;
     /** Confirm button variant */
-    confirmVariant?: 'primary' | 'danger' | 'accent';
+    confirmVariant?: 'primary' | 'danger';
     /** Confirm handler */
     onConfirm: () => void;
     /** Loading state */
@@ -283,23 +287,6 @@ declare interface CreateTranslatorOptions {
 }
 
 export declare const defaultMessages: Record<SupportedLanguage, Record<string, string>>;
-
-export declare function DraggableCard({ items, onReorder, className, cardClassName, droppableId, direction, }: DraggableCardProps): JSX_2.Element;
-
-export declare interface DraggableCardItem {
-    id: string;
-    title?: string;
-    children: default_2.ReactNode;
-}
-
-export declare interface DraggableCardProps {
-    items: DraggableCardItem[];
-    onReorder: (items: DraggableCardItem[]) => void;
-    className?: string;
-    cardClassName?: string;
-    droppableId?: string;
-    direction?: 'vertical' | 'horizontal';
-}
 
 export declare const Dropdown: ForwardRefExoticComponent<DropdownProps & RefAttributes<HTMLDivElement>>;
 
@@ -385,43 +372,6 @@ export declare interface FileDropzoneProps {
     showPreview?: boolean;
 }
 
-export declare const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<HTMLElement>>;
-
-export declare interface HeaderProps extends HTMLAttributes<HTMLElement> {
-    /** Title displayed in header */
-    title?: string;
-    /** Search placeholder text */
-    searchPlaceholder?: string;
-    /** Show search input */
-    showSearch?: boolean;
-    /** Search value */
-    searchValue?: string;
-    /** Search change handler */
-    onSearchChange?: (value: string) => void;
-    /** Show notifications button */
-    showNotifications?: boolean;
-    /** Notification menu */
-    notificationMenu?: NotificationMenuProps;
-    /** User info for avatar */
-    user?: {
-        name: string;
-        email?: string;
-        avatar?: string;
-        role?: string;
-        status?: 'online' | 'offline' | 'busy' | 'away';
-    };
-    /** User menu items */
-    userMenuItems?: DropdownMenuItem[];
-    /** User click handler */
-    onUserClick?: () => void;
-    /** Mobile menu toggle handler */
-    onMenuToggle?: () => void;
-    /** Show mobile menu button */
-    showMenuToggle?: boolean;
-    /** Extra actions */
-    actions?: ReactNode;
-}
-
 export declare interface I18nContextValue {
     language: string;
     messagesByLanguage: MessagesByLanguage;
@@ -461,44 +411,14 @@ export declare interface InputProps extends Omit<InputHTMLAttributes<HTMLInputEl
 
 export declare type InputSize = 'sm' | 'md' | 'lg';
 
-export declare function KanbanBoard({ columns, onCardMove, className }: KanbanBoardProps): JSX_2.Element;
-
-export declare interface KanbanBoardProps {
-    columns: KanbanColumn[];
-    onCardMove: (cardId: string, sourceColumnId: string, destinationColumnId: string, sourceIndex: number, destinationIndex: number) => void;
-    className?: string;
-}
-
-export declare interface KanbanCard {
-    id: string;
-    title: string;
-    description?: string;
-    tags?: {
-        label: string;
-        variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
-    }[];
-}
-
-export declare interface KanbanColumn {
-    id: string;
-    title: string;
-    cards: KanbanCard[];
-    color?: string;
-}
-
 export declare const Layout: ForwardRefExoticComponent<LayoutProps & RefAttributes<HTMLDivElement>>;
 
 /**
  * Omnitok UI v3 — application shell.
  *
- * With `brandHeader` the layout is the v3 shell: a 42 px brand header
- * across the top, the framed navy sidebar on the left, the content on
- * the canvas. The header's menu button collapses the sidebar on desktop
- * and opens it as a drawer on small screens.
- *
- * Without `brandHeader` the layout keeps its v0.2 shape (sidebar with the
- * logo, white header with search and user menu), so existing products
- * keep working until they adopt the brand header.
+ * A 42 px brand header across the top, the framed navy sidebar on the
+ * left, the content on the canvas. The header's menu button collapses the
+ * sidebar on desktop and opens it as a drawer on small screens.
  */
 export declare interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
     /** Main content */
@@ -507,61 +427,27 @@ export declare interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
     sidebar?: ReactNode;
     /** Sidebar navigation items */
     sidebarItems?: SidebarItem[];
-    /** Whether the default sidebar is collapsible */
-    collapsibleSidebar?: boolean;
-    /** Logo element for sidebar (legacy shell) */
-    logo?: ReactNode;
-    /** Logo element for collapsed sidebar (legacy shell) */
-    logoCollapsed?: ReactNode;
-    /** System name displayed below logo (legacy shell) */
-    systemName?: string;
     /** Sidebar footer content */
     sidebarFooter?: ReactNode;
-    /** Sidebar footer content while collapsed (v3) */
+    /** Sidebar footer content while collapsed */
     sidebarFooterCollapsed?: ReactNode;
     /** Active sidebar item ID */
     activeSidebarId?: string;
     /** Sidebar item click handler */
     onSidebarItemClick?: (item: SidebarItem) => void;
-    /** Project selector card at the top of the sidebar (v3) */
+    /** Project selector card at the top of the sidebar */
     projectSelector?: SidebarProjectSelector;
-    /** Open sidebar groups (controlled, v3) */
+    /** Open sidebar groups (controlled) */
     sidebarExpandedIds?: string[];
-    /** Group toggled (controlled, v3) */
+    /** Group toggled (controlled) */
     onSidebarExpandedChange?: (id: string, expanded: boolean) => void;
     /** Collapsed state of the sidebar (controlled). Uncontrolled when omitted. */
     sidebarCollapsed?: boolean;
     /** Collapse state change */
     onSidebarCollapsedChange?: (collapsed: boolean) => void;
-    /** The v3 brand header. Its `onMenuToggle` is wired by the layout. */
-    brandHeader?: Omit<BrandHeaderProps, 'onMenuToggle'>;
-    /** Header title (legacy shell) */
-    headerTitle?: string;
-    /** User info for header (legacy shell) */
-    user?: {
-        name: string;
-        email?: string;
-        avatar?: string;
-        role?: string;
-        status?: 'online' | 'offline' | 'busy' | 'away';
-    };
-    /** User menu items (legacy shell) */
-    userMenuItems?: DropdownMenuItem[];
-    /** User click handler (legacy shell) */
-    onUserClick?: () => void;
-    /** Show notifications button (legacy shell) */
-    showNotifications?: boolean;
-    /** Notification menu (legacy shell) */
-    notificationMenu?: NotificationMenuProps;
-    /** Show header search (legacy shell) */
-    showSearch?: boolean;
-    /** Search value (legacy shell) */
-    searchValue?: string;
-    /** Search change handler (legacy shell) */
-    onSearchChange?: (value: string) => void;
-    /** Header actions (legacy shell) */
-    headerActions?: ReactNode;
-    /** Custom header node */
+    /** The brand header. Its `onMenuToggle` is wired by the layout. */
+    brandHeader: Omit<BrandHeaderProps, 'onMenuToggle'>;
+    /** Custom header node, instead of the brand header */
     header?: ReactNode;
     /** Hide sidebar */
     hideSidebar?: boolean;
@@ -580,10 +466,9 @@ export declare const LoginPage: ForwardRefExoticComponent<LoginPageProps & RefAt
 /**
  * Omnitok UI v3 — sign-in page.
  *
- * `split` (the v3 default for products, D26): the customer's brand on the
- * left over the sidebar colour (so a tenant tint reaches it), the form on
- * the right on white. Below `lg` the hero folds away and the brand sits
- * above the form. `centered` and `gradient` keep the form in a card.
+ * Split screen (D26): the customer's brand on the left over the sidebar
+ * colour (so a tenant tint reaches it), the form on the right on white.
+ * Below `lg` the hero folds away and the brand sits above the form.
  *
  * The brand is the customer's: a logo node or, without one, its name as a
  * wordmark (`brandText`). The platform keeps the "powered by" mark.
@@ -619,8 +504,6 @@ export declare interface LoginPageProps extends Omit<HTMLAttributes<HTMLDivEleme
     showForgotPassword?: boolean;
     /** Footer content */
     footer?: ReactNode;
-    /** Background variant */
-    variant?: 'gradient' | 'split' | 'centered';
     /**
      * Prefix for the field ids. Default: none, so the fields keep the stable
      * ids `email` and `password` that hosts and tests rely on. Set it when two
@@ -666,8 +549,6 @@ export declare interface MultiSelectOption {
     value: string;
     label: string;
     disabled?: boolean;
-    /** Badge color for this specific option (overrides the component-level tagColor) */
-    color?: MultiSelectTagColor;
 }
 
 export declare interface MultiSelectProps {
@@ -699,8 +580,6 @@ export declare interface MultiSelectProps {
     searchable?: boolean;
     /** Icon to show on the left */
     leftIcon?: ReactNode;
-    /** Badge color applied to all selected tags (can be overridden per option) */
-    tagColor?: MultiSelectTagColor;
     /** Additional class name */
     className?: string;
     /** Element id */
@@ -708,20 +587,6 @@ export declare interface MultiSelectProps {
 }
 
 export declare type MultiSelectSize = 'sm' | 'md' | 'lg';
-
-export declare type MultiSelectTagColor = 'primary' | 'accent' | 'neutral' | 'success' | 'warning' | 'error' | 'info' | 'violet' | 'rose' | 'teal';
-
-export declare const NotificationMenu: ForwardRefExoticComponent<NotificationMenuProps & RefAttributes<HTMLDivElement>>;
-
-export declare interface NotificationMenuProps {
-    items: DropdownMenuItem[];
-    count?: number;
-    searchValue?: string;
-    searchPlaceholder?: string;
-    filterLabel?: string;
-    onSearchChange?: (value: string) => void;
-    onFilterChange?: (filter: boolean) => void;
-}
 
 export declare const Pagination: ForwardRefExoticComponent<PaginationProps & RefAttributes<HTMLElement>>;
 
@@ -752,13 +617,9 @@ export declare interface PaginationProps extends Omit<HTMLAttributes<HTMLElement
     disabled?: boolean;
     /** Size variant */
     size?: 'sm' | 'md' | 'lg';
-    /** Color variant */
-    variant?: PaginationVariant;
     /** Language */
     language?: SupportedLanguage;
 }
-
-export declare type PaginationVariant = 'primary' | 'accent' | 'neutral' | 'success' | 'warning' | 'error' | 'info' | 'violet' | 'rose' | 'teal';
 
 export declare const Radio: ForwardRefExoticComponent<RadioProps & RefAttributes<HTMLInputElement>>;
 
@@ -933,12 +794,6 @@ export declare interface SidebarProjectSelector {
 export declare interface SidebarProps extends HTMLAttributes<HTMLElement> {
     /** Navigation items */
     items: SidebarItem[];
-    /** Logo element (legacy: v3 shells put the brand in the header instead) */
-    logo?: ReactNode;
-    /** Logo element for collapsed state */
-    logoCollapsed?: ReactNode;
-    /** System name displayed below logo */
-    systemName?: string;
     /** Footer content (expanded) */
     footer?: ReactNode;
     /** Footer content while collapsed. Without it the footer is hidden when collapsed. */
@@ -947,8 +802,6 @@ export declare interface SidebarProps extends HTMLAttributes<HTMLElement> {
     collapsed?: boolean;
     /** Callback when collapse state changes */
     onCollapsedChange?: (collapsed: boolean) => void;
-    /** Show the collapse toggle button inside the rail */
-    collapsible?: boolean;
     /** Custom active item ID */
     activeId?: string;
     /**
@@ -964,11 +817,6 @@ export declare interface SidebarProps extends HTMLAttributes<HTMLElement> {
     expandedIds?: string[];
     /** Called when a group header is clicked (controlled mode). */
     onExpandedChange?: (id: string, expanded: boolean) => void;
-    /**
-     * `framed` (default): rounded rail with a margin, as in the v3 shell.
-     * `flush`: edge to edge, full height (legacy layouts).
-     */
-    frame?: 'framed' | 'flush';
 }
 
 export declare const SidePanel: ForwardRefExoticComponent<SidePanelProps & RefAttributes<HTMLDivElement>>;
@@ -984,32 +832,6 @@ export declare interface SidePanelProps extends Omit<HTMLAttributes<HTMLDivEleme
     children: ReactNode;
     /** Sticky footer content (e.g., action buttons) */
     footer?: ReactNode;
-}
-
-export declare function SingleDraggableCard({ title, children, className, isDragging, dragHandleProps, }: SingleDraggableCardProps): JSX_2.Element;
-
-export declare interface SingleDraggableCardProps {
-    id: string;
-    title?: string;
-    children: default_2.ReactNode;
-    className?: string;
-    isDragging?: boolean;
-    dragHandleProps?: Record<string, unknown>;
-}
-
-export declare interface SortableItem {
-    id: string;
-    content: default_2.ReactNode;
-}
-
-export declare function SortableList({ items, onReorder, className, itemClassName, droppableId, }: SortableListProps): JSX_2.Element;
-
-export declare interface SortableListProps {
-    items: SortableItem[];
-    onReorder: (items: SortableItem[]) => void;
-    className?: string;
-    itemClassName?: string;
-    droppableId?: string;
 }
 
 export declare type SortDirection = 'asc' | 'desc' | null;
