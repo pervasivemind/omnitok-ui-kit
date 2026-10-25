@@ -4,6 +4,15 @@ The v3 line is published on the `pkg-v3` branch with a `v3.x.y` tag per
 release. The `pkg` branch (0.2.x) is unchanged and is what the other
 consumer repos still follow.
 
+## 3.2.1 (2026-10-25): the package carries its source
+
+No component changes. The package now ships `src/` next to `dist/`, so the
+one Storybook of the platform (`tools/storybook` in the BI monorepo,
+published at ui-kit-v3.omnitok.cloud) reads each component's props from
+the exact commit the apps install. This repo no longer builds a Storybook
+of its own; the MCP Worker serves that site. The `pkg-v3` commit message
+names the `v3` commit it was built from.
+
 ## 3.2.0 (2026-10-25): only the v3 look is left
 
 Breaking within the 3.x line on purpose: the only consumer of `pkg-v3` is

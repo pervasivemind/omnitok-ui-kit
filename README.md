@@ -8,7 +8,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Storybook](https://img.shields.io/badge/Storybook-Docs-FF4785?logo=storybook)](https://storybook.js.org/docs)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
@@ -21,13 +21,14 @@
 - 🎯 **Tailwind CSS** - Tokens de diseño personalizados
 - ♿ **Accesible** - Cumple WCAG 2.1
 - 📦 **Tree-shakeable** - Solo importa lo que usas
-- 📚 **Storybook 10** - Documentación interactiva
+- 📚 **Storybook** - Documentación interactiva (la de v3 vive en el monorepo BI)
 - 🔧 **Monorepo** - Organizado con pnpm workspaces
 
 ## 📚 Storybook
 Documentacion completa para uso con ejemplos
 
-<a href="https://ui-kit.omnitok.cloud/" target="_blank">https://ui-kit.omnitok.cloud/</a>
+- **v3 (`pkg-v3`)**: <a href="https://ui-kit-v3.omnitok.cloud/" target="_blank">https://ui-kit-v3.omnitok.cloud/</a>. Es el Storybook único de la plataforma BI: vive en el monorepo BI (`tools/storybook`), muestra el kit en el mismo commit que instalan el portal, el builder y la consola, y suma las guías y los componentes BI. Este repo ya no construye un Storybook propio para v3.
+- **0.2.x (`pkg`)**: <a href="https://ui-kit.omnitok.cloud/" target="_blank">https://ui-kit.omnitok.cloud/</a>
 
 ## 📦 Instalación
 
@@ -157,7 +158,6 @@ Recomendamos usar pnpm como package manager.
 
 https://pnpm.io/installation
 
-
 ```bash
 # Clonar repositorio
 git clone https://github.com/pervasivemind/omnitok-ui-kit.git
@@ -177,53 +177,19 @@ pnpm --filter @omnitok/ui dev
 
 # Build solo core package
 pnpm --filter @omnitok/ui build
-
-# Ejecutar Storybook
-pnpm --filter storybook dev
-
-# Build Storybook
-pnpm --filter storybook build
 ```
 
-## 🐳 Docker
-
-### Build y Run
-
-```bash
-# Build imagen
-docker build -t omnitok-ui-storybook .
-
-# Run container
-docker run -p 8080:80 omnitok-ui-storybook
-
-# O usar docker-compose
-docker-compose up -d
-```
-
-Accede a Storybook en: http://localhost:8080
-
-### Deploy en Producción
-
-```bash
-# Build para producción
-docker build -t omnitok-ui-storybook:latest .
-
-# Push a registry
-docker tag omnitok-ui-storybook:latest registry.ejemplo.com/omnitok-ui-storybook:latest
-docker push registry.ejemplo.com/omnitok-ui-storybook:latest
-```
+Para ver un cambio en el Storybook v3: publica el paquete (push a `v3`), actualiza el commit del kit en los lockfiles del monorepo BI y corre `npm --prefix tools/storybook run dev` allá.
 
 ## 📖 Documentación Completa
 
-Visita nuestro **Storybook** para documentación interactiva completa:
+Visita el **Storybook v3** (https://ui-kit-v3.omnitok.cloud/) para documentación interactiva completa:
 
 - 🎨 **Design System**: Colors, Typography, Layout, Icons, Patterns
 - 📦 **Components**: Documentación de cada componente con ejemplos en vivo
 - 📄 **Pages**: LoginPage y ejemplos completos
 - 📊 **PowerBI & Metabase**: Guías de integración
 - 💡 **AI Analytics**: Ejemplo con panel de insights
-
-**Live Demo**: https://pervasivemind.github.io/omnitok-ui-kit
 
 ## 🔗 Integración en Proyectos
 
@@ -373,25 +339,13 @@ omnitok-ui-kit/
 │       ├── tailwind.config.ts
 │       ├── tailwind.preset.js
 │       └── vite.config.ts
-├── apps/
-│   └── storybook/           # Documentación interactiva
-│       ├── .storybook/      # Configuración de Storybook
-│       ├── src/stories/
-│       │   ├── docs/        # Documentación del Design System
-│       │   └── examples/    # Ejemplos de páginas completas
-│       ├── package.json
-│       └── tailwind.config.ts
 ├── workers/
 │   └── mcp/                 # MCP Server (Cloudflare Worker)
-│       ├── src/index.ts     # Handler del MCP con @storybook/mcp
+│       ├── src/index.ts     # Handler del MCP: sirve el Storybook del monorepo BI
 │       ├── wrangler.toml    # Configuración Cloudflare
 │       └── package.json
 ├── docs/                    # Documentación adicional de componentes
 ├── .github/workflows/       # CI/CD pipelines
-├── Dockerfile               # Para deployar Storybook
-├── docker-compose.yml
-├── nginx.conf               # Configuración Nginx para Storybook
-├── turbo.json               # Configuración Turborepo
 └── pnpm-workspace.yaml
 ```
 
@@ -403,14 +357,6 @@ omnitok-ui-kit/
 4. **Botón de colapsar** siempre visible
 5. **Íconos de Lucide** exclusivamente
 6. **Responsive** - Mobile-first approach
-
-## 📝 Ejemplos Completos
-
-Ver en Storybook > Examples:
-- **Dashboard** - Dashboard con KPIs y gráficos
-- **Forms** - Formularios de productos y usuarios
-- **Tables** - Listados con acciones
-- **AI Analytics** - Dashboard con panel de insights IA
 
 ## 🤝 Contribuir
 
@@ -429,8 +375,8 @@ MIT © Omnitok
 ## 🔗 Links
 
 - **GitHub**: https://github.com/pervasivemind/omnitok-ui-kit
-- **Storybook**: https://pervasivemind.github.io/omnitok-ui-kit
-- **MCP Server**: https://ui-kit.omnitok.cloud/mcp
+- **Storybook v3**: https://ui-kit-v3.omnitok.cloud (0.2.x: https://ui-kit.omnitok.cloud)
+- **MCP Server v3**: https://ui-kit-v3.omnitok.cloud/mcp (0.2.x: https://ui-kit.omnitok.cloud/mcp)
 - **NPM**: https://www.npmjs.com/package/@omnitok/ui (cuando se publique)
 
 ## 💬 Soporte

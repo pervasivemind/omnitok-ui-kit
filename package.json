@@ -6,10 +6,7 @@
   "scripts": {
     "dev": "pnpm run '/^watch:.*/'",
     "build": "pnpm run '/^build:.*/'",
-    "storybook": "pnpm --filter storybook dev",
-    "build:storybook": "pnpm --filter storybook build",
     "build:core": "pnpm --filter @omnitok/ui build",
-    "watch:storybook": "pnpm --filter storybook dev",
     "watch:core": "pnpm --filter @omnitok/ui dev",
     "prepare": "git config core.hooksPath .githooks && chmod +x .githooks/pre-commit"
   },

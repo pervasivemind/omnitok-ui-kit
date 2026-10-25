@@ -239,33 +239,8 @@ function Login() {
 
 ## 🎯 Ejemplos Completos
 
-Ver ejemplos completos en **Storybook > Examples**:
+Ver los componentes y la estructura de la aplicación en el **Storybook v3** (https://ui-kit-v3.omnitok.cloud/), secciones **Kit** y **BI**.
 
-- **Dashboard** - Dashboard con KPIs, gráficos y actividad reciente
-- **Forms** - Formularios de productos y usuarios
-- **Tables** - Listados con filtros, búsqueda y acciones
-- **AI Analytics** - Dashboard con panel de insights IA
-
-## 🐳 Deploy con Docker
-
-### Storybook en Docker
-
-```bash
-# Build
-docker build -t omnitok-ui-storybook .
-
-# Run
-docker run -p 8080:80 omnitok-ui-storybook
-
-# Acceder
-open http://localhost:8080
-```
-
-### Docker Compose
-
-```bash
-docker-compose up -d
-```
 
 ## 🚀 Publicar en NPM (Para Maintainers)
 
