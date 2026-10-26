@@ -4,7 +4,7 @@ The v3 line is published on the `pkg-v3` branch with a `v3.x.y` tag per
 release. The `pkg` branch (0.2.x) is unchanged and is what the other
 consumer repos still follow.
 
-## 3.2.2 (2026-10-26): Modal focus contract, chart series
+## 3.2.4 (2026-10-26): Modal focus contract, chart series
 
 - `Modal` keeps the focus inside while open: it moves to the first control
   (or the dialog), Tab and Shift+Tab wrap inside it, and closing returns

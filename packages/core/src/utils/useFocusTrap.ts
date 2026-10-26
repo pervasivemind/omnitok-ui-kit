@@ -10,13 +10,13 @@ function focusables(root: HTMLElement): HTMLElement[] {
 }
 
 /**
- * The focus contract of a dialog (3.2.2): while ``active``, the focus moves
+ * The focus contract of a dialog: while ``active``, the focus moves
  * into ``containerRef`` (its first control, else the container itself),
  * Tab and Shift+Tab stay inside it, and on close the focus goes back to
  * what had it before (the trigger). Escape is the caller's (the Modal
  * already owns it through ``closeOnEscape``).
  *
- * Before 3.2.2 the Modal handled Escape only: Tab walked out to the page
+ * Before this hook the Modal handled Escape only: Tab walked out to the page
  * behind the overlay and closing left the focus on ``body`` (QA look v3,
  * 2026-10-26, F14).
  */

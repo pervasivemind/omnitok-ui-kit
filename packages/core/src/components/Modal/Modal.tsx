@@ -59,7 +59,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
     ref
   ) => {
     // The content box is both the caller's ref and the focus trap's: merge
-    // them so a caller ref keeps working (3.2.2).
+    // them so a caller ref keeps working.
     const contentRef = useRef<HTMLDivElement | null>(null);
     const setContentRef = useCallback(
       (node: HTMLDivElement | null) => {

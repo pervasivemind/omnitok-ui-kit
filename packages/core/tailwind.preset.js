@@ -78,7 +78,7 @@ export default {
           soft: '#F0EFF8',
         },
 
-        // BI chart series (3.2.2): the same list as the BI monorepo's
+        // BI chart series (3.2.4): the same list as the BI monorepo's
         // brand.palette (DQ3): violet first, then the action pink, the rest
         // apart under deuteranopia and >= 3:1 on white. Were the Recharts
         // defaults.
