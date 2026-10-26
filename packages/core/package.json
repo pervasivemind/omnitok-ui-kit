@@ -1,6 +1,6 @@
 {
   "name": "@omnitok/ui",
-  "version": "3.2.1",
+  "version": "3.2.3",
   "description": "Omnitok UI Kit - React Component Library",
   "type": "module",
   "main": "./dist/index.cjs",

@@ -4,6 +4,16 @@ The v3 line is published on the `pkg-v3` branch with a `v3.x.y` tag per
 release. The `pkg` branch (0.2.x) is unchanged and is what the other
 consumer repos still follow.
 
+## 3.2.2 (2026-10-26): Modal focus contract, chart series
+
+- `Modal` keeps the focus inside while open: it moves to the first control
+  (or the dialog), Tab and Shift+Tab wrap inside it, and closing returns
+  the focus to what had it before. The dialog is labelled by its title
+  (`aria-labelledby`). Before, it handled Escape only (QA look v3, F14).
+  New `useFocusTrap(active, ref)` in `utils` for other overlays.
+- `chart.1..8` are the BI series palette (violet, action pink, amber,
+  blue, teal, orange, purple, olive) instead of the Recharts defaults.
+
 ## 3.2.1 (2026-10-25): the package carries its source
 
 No component changes. The package now ships `src/` next to `dist/`, so the

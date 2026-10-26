@@ -1,6 +1,7 @@
-import { forwardRef, type HTMLAttributes, type ReactNode, useEffect, useCallback } from 'react';
+import { forwardRef, type HTMLAttributes, type ReactNode, useEffect, useCallback, useId, useRef } from 'react';
 import { X } from 'lucide-react';
 import { cn } from '../../utils/cn';
+import { useFocusTrap } from '../../utils/useFocusTrap';
 import { Button } from '../Button';
 
 export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
@@ -57,6 +58,20 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
     },
     ref
   ) => {
+    // The content box is both the caller's ref and the focus trap's: merge
+    // them so a caller ref keeps working (3.2.2).
+    const contentRef = useRef<HTMLDivElement | null>(null);
+    const setContentRef = useCallback(
+      (node: HTMLDivElement | null) => {
+        contentRef.current = node;
+        if (typeof ref === 'function') ref(node);
+        else if (ref) ref.current = node;
+      },
+      [ref]
+    );
+    useFocusTrap(open, contentRef);
+    const titleId = useId();
+
     const handleEscape = useCallback(
       (e: KeyboardEvent) => {
         if (e.key === 'Escape' && closeOnEscape) {
@@ -84,6 +99,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         className="fixed inset-0 z-50 flex overflow-y-auto"
         role="dialog"
         aria-modal="true"
+        aria-labelledby={title ? titleId : undefined}
       >
         {/* Overlay */}
         <div
@@ -100,7 +116,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         >
           {/* Modal content */}
           <div
-            ref={ref}
+            ref={setContentRef}
             className={cn(
               // v3: radius 18, line border, deep soft shadow; the header is white.
               'relative w-full bg-white rounded-[18px] border border-neutral-200 shadow-modal',
@@ -116,7 +132,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
               <div className="flex items-start justify-between gap-3 px-5 py-4 bg-white border-b border-neutral-200 rounded-t-[18px]">
                 <div className="min-w-0">
                   {title && (
-                    <h2 className="font-display text-[17px] font-extrabold leading-6 text-neutral-800">{title}</h2>
+                    <h2 id={titleId} className="font-display text-[17px] font-extrabold leading-6 text-neutral-800">{title}</h2>
                   )}
                   {description && (
                     <p className="mt-0.5 text-[13px] leading-5 text-neutral-600">{description}</p>

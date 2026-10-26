@@ -78,16 +78,19 @@ export default {
           soft: '#F0EFF8',
         },
 
-        // BI Chart Colors
+        // BI chart series (3.2.2): the same list as the BI monorepo's
+        // brand.palette (DQ3): violet first, then the action pink, the rest
+        // apart under deuteranopia and >= 3:1 on white. Were the Recharts
+        // defaults.
         chart: {
           1: '#4D4A9D',
-          2: '#FF177B',
-          3: '#00C49F',
-          4: '#FFBB28',
-          5: '#0088FE',
-          6: '#FF8042',
-          7: '#8884D8',
-          8: '#82CA9D',
+          2: '#E0156D',
+          3: '#B26A00',
+          4: '#2A78D6',
+          5: '#00876A',
+          6: '#C2501F',
+          7: '#8E3C97',
+          8: '#6E7F00',
         },
       },
 
