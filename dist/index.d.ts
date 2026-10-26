@@ -9,6 +9,7 @@ import { InputHTMLAttributes } from 'react';
 import { JSX as JSX_2 } from 'react/jsx-runtime';
 import { ReactNode } from 'react';
 import { RefAttributes } from 'react';
+import { RefObject } from 'react';
 import { SelectHTMLAttributes } from 'react';
 import { TextareaHTMLAttributes } from 'react';
 
@@ -994,6 +995,19 @@ export declare interface ToastProviderProps {
 }
 
 export declare type ToastVariant = 'info' | 'success' | 'warning' | 'error';
+
+/**
+ * The focus contract of a dialog: while ``active``, the focus moves
+ * into ``containerRef`` (its first control, else the container itself),
+ * Tab and Shift+Tab stay inside it, and on close the focus goes back to
+ * what had it before (the trigger). Escape is the caller's (the Modal
+ * already owns it through ``closeOnEscape``).
+ *
+ * Before this hook the Modal handled Escape only: Tab walked out to the page
+ * behind the overlay and closing left the focus on ``body`` (QA look v3,
+ * 2026-10-26, F14).
+ */
+export declare function useFocusTrap(active: boolean, containerRef: RefObject<HTMLElement | null>): void;
 
 export declare function useI18n(): I18nContextValue;
 
