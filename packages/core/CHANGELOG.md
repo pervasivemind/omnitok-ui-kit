@@ -4,6 +4,13 @@ The v3 line is published on the `pkg-v3` branch with a `v3.x.y` tag per
 release. The `pkg` branch (0.2.x) is unchanged and is what the other
 consumer repos still follow.
 
+## 3.2.5 (2026-11-11): Omnitok's wordmark in "Powered by"
+
+- The "POWERED BY omnitok" mark (`BrandHeader`, `LoginPage` hero) draws
+  the official wordmark (`assets/omnitok-logo.svg`) in white on the primary
+  violet `#4D4A9D`, instead of the word "omnitok" typed in the display font
+  on a white pill. Same badge as the Ventis POC.
+
 ## 3.2.4 (2026-10-26): Modal focus contract, chart series
 
 - `Modal` keeps the focus inside while open: it moves to the first control
